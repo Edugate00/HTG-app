@@ -5,17 +5,39 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/viz/ui5/data/DimensionDefinition",
+    "sap/ui/core/Item"
   ],
   function (
     BaseController,
-    JSONModel,
-    Filter,
-    FilterOperator,
-    DimensionDefinition
+	JSONModel,
+	Filter,
+	FilterOperator,
+	DimensionDefinition,
+	Item
   ) {
     "use strict";
 
-    const dataPenggunaanAir = null;
+    const itemsForTenant = [
+      {key: "3bulan", text: "3 Bulan"},
+      {key: "6bulan", text: "6 Bulan"},
+      {key: "1tahun", text: "1 Tahun"},
+      {key: "*", text: "Semua"},
+    ];
+
+    const itemsForAllTenants = [
+      {key: "1", text: "Januari"},
+      {key: "2", text: "Februari"},
+      {key: "3", text: "Maret"},
+      {key: "4", text: "April"},
+      {key: "5", text: "Mei"},
+      {key: "6", text: "Juni"},
+      {key: "7", text: "Juli"},
+      {key: "8", text: "Agustus"},
+      {key: "9", text: "September"},
+      {key: "10", text: "Oktober"},
+      {key: "11", text: "November"},
+      {key: "12", text: "Desember"},
+    ];
 
     return BaseController.extend("lrlpapp.controller.Dashboard", {
       onInit: function () {
@@ -234,15 +256,6 @@ sap.ui.define(
           ],
         };
 
-        // const penggunaanAir = {data: [
-        //     {tenant: "tenant1", value: "105", month: "January"},
-        //     {tenant: "tenant2", value: "148", month: "January"},
-        //     {tenant: "tenant3", value: "204", month: "January"},
-        //     {tenant: "tenant4", value: "124", month: "January"},
-        //     {tenant: "tenant5", value: "156", month: "January"},
-        //     {tenant: "tenant6", value: "172", month: "January"}
-        // ]}
-
         const penggunaanAirModel = new JSONModel(penggunaanAir);
         oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
       },
@@ -267,6 +280,11 @@ sap.ui.define(
             title: { visible: true, text: `${tenantSelected}` },
           });
           
+          oComboBoxMonth.destroyItems();
+          itemsForTenant.forEach(el => {
+            oComboBoxMonth.addItem(new Item(el));
+          })
+          oComboBoxMonth.setSelectedKey("3bulan")
           oDataset.removeDimension(oDimension);
 
           const oNewDimension = new DimensionDefinition({
@@ -281,6 +299,13 @@ sap.ui.define(
           oVizFrame.setVizProperties({
             title: { visible: true, text: "Semua Tenant bulan Februari" },
           });
+
+          oComboBoxMonth.destroyItems();
+          itemsForAllTenants.forEach(el => {
+            oComboBoxMonth.addItem(new Item(el));
+          })
+          oComboBoxMonth.setSelectedKey("2")
+          oDataset.removeDimension(oDimension);
 
           oDataset.removeDimension(oDimension);
           const oNewDimension = new DimensionDefinition({
