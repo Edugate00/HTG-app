@@ -18,7 +18,7 @@
 		<VBox
 			class="card"
 			width="100%"
-			height="85%"
+			height="80%"
 		>
 			<HBox class="card-header">
 				<Text
@@ -29,37 +29,39 @@
 			<VBox class="sapUiMediumMarginBeginEnd">
 				<VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Point"/>
-					<Text
+					<Input
 						id="CurrentMeasPoint"
-						text="Measurement Point"
+						type="Number"
+						placeholder="Input Measurement Point"
 					/>
 				</VBox>
-				<VBox class="sapUiSmallMarginTopBottom">
+				<!-- <VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Description"/>
 					<Text
 						id="CurrentMeasDescription"
-						text="Measurement Description"
+						text="-"
 					/>
-				</VBox>
+				</VBox> -->
 				<VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Date and time"/>
 					<Text
 						id="CurrentMeasDateTime"
-						text="Measurement Date and time"
+						text="-"
 					/>
 				</VBox>
 				<VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Reader"/>
 					<Text
 						id="CurrentMeasReader"
-						text="Measurement Reader"
+						text="abap1"
 					/>
 				</VBox>
 				<VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Value"/>
 					<Input
 						id="CurrentMeasValue"
-						value="Measurement Value"
+						type="Number"
+						placeholder="Input Measurement Value"
 					/>
 				</VBox>
 				<HBox>
@@ -68,9 +70,16 @@
 						type="Emphasized"
 						press="OnPostMeasurement"
 					/>
-					<Button
+					<!-- <Button
 						class="sapUiSmallMarginBeginEnd"
 						text="Scan QR"
+						press="OnScanQR"
+					/> -->
+					<ndc:BarcodeScannerButton
+						id="barcodeScannerDialog"
+						class="sapUiSmallMarginBeginEnd"
+						scanSuccess="onScanSuccess"
+						scanFail="onScanError"
 					/>
 				</HBox>
 			</VBox>
@@ -78,7 +87,7 @@
 		<VBox
 			class="card"
 			width="100%"
-			height="85%"
+			height="80%"
 		>
 			<HBox class="card-header">
 				<Text
@@ -91,42 +100,42 @@
 					<Title text="Measurement Document"/>
 					<Text
 						id="PrevMeasDocument"
-						text="Measurement Document"
+						text="-"
 					/>
 				</VBox>
 				<VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Point"/>
 					<Text
 						id="PrevMeasPoint"
-						text="Measurement Point"
+						text="-"
 					/>
 				</VBox>
-				<VBox class="sapUiSmallMarginTopBottom">
+				<!-- <VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Description"/>
 					<Text
 						id="PrevMeasDescription"
-						text="Measurement Description"
+						text="-"
 					/>
-				</VBox>
+				</VBox> -->
 				<VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Date and time"/>
 					<Text
 						id="PrevMeasDateTime"
-						text="Measurement Date and time"
+						text="-"
 					/>
 				</VBox>
 				<VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Value"/>
 					<Text
 						id="PrevMeasValue"
-						text="Measurement Value"
+						text="-"
 					/>
 				</VBox>
 				<VBox class="sapUiSmallMarginTopBottom">
 					<Title text="Measurement Reader"/>
 					<Text
 						id="PrevMeasReader"
-						text="Measurement Reader"
+						text="-"
 					/>
 				</VBox>
 			</VBox>
