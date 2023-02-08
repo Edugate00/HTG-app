@@ -1,0 +1,135 @@
+<mvc:View
+	controllerName="lrlpapp.controller.Utility"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:ndc="sap.ndc"
+	xmlns="sap.m"
+>
+	<VBox class="header-container">
+		<Button
+			text="Back"
+			icon="sap-icon://nav-back"
+			press="onNavBack"
+		/>
+	</VBox>
+	<HBox
+		class="wrapper"
+		height="600px"
+	>
+		<VBox
+			class="card"
+			width="100%"
+			height="85%"
+		>
+			<HBox class="card-header">
+				<Text
+					class="card-title"
+					text="Current measurement"
+				/>
+			</HBox>
+			<VBox class="sapUiMediumMarginBeginEnd">
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Point"/>
+					<Text
+						id="CurrentMeasPoint"
+						text="Measurement Point"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Description"/>
+					<Text
+						id="CurrentMeasDescription"
+						text="Measurement Description"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Date and time"/>
+					<Text
+						id="CurrentMeasDateTime"
+						text="Measurement Date and time"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Reader"/>
+					<Text
+						id="CurrentMeasReader"
+						text="Measurement Reader"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Value"/>
+					<Input
+						id="CurrentMeasValue"
+						value="Measurement Value"
+					/>
+				</VBox>
+				<HBox>
+					<Button
+						text="Post Measurement"
+						type="Emphasized"
+						press="OnPostMeasurement"
+					/>
+					<Button
+						class="sapUiSmallMarginBeginEnd"
+						text="Scan QR"
+					/>
+				</HBox>
+			</VBox>
+		</VBox>
+		<VBox
+			class="card"
+			width="100%"
+			height="85%"
+		>
+			<HBox class="card-header">
+				<Text
+					class="card-title"
+					text="Previous measurements"
+				/>
+			</HBox>
+			<VBox class="sapUiMediumMarginBeginEnd">
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Document"/>
+					<Text
+						id="PrevMeasDocument"
+						text="Measurement Document"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Point"/>
+					<Text
+						id="PrevMeasPoint"
+						text="Measurement Point"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Description"/>
+					<Text
+						id="PrevMeasDescription"
+						text="Measurement Description"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Date and time"/>
+					<Text
+						id="PrevMeasDateTime"
+						text="Measurement Date and time"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Value"/>
+					<Text
+						id="PrevMeasValue"
+						text="Measurement Value"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Measurement Reader"/>
+					<Text
+						id="PrevMeasReader"
+						text="Measurement Reader"
+					/>
+				</VBox>
+			</VBox>
+		</VBox>
+	</HBox>
+</mvc:View>

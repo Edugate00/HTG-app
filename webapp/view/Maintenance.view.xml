@@ -1,0 +1,8 @@
+<mvc:View
+	controllerName="lrlpapp.controller.Maintenance"
+	xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true"
+	xmlns="sap.m"
+>
+	<Text text="Maintenance"/>
+</mvc:View>

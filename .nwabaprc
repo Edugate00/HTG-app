@@ -1,0 +1,11 @@
+{
+  "base": "./dist",
+  "conn_usestrictssl": false,
+  "conn_server": "https://lrna.edugate.web.id:8080",
+  "conn_client": "116",
+  "conn_user": "abap1",
+  "conn_password": "Halobca321",
+  "abap_package": "$TMP",
+  "abap_bsp": "ZLORENA_APP",
+  "abap_bsp_text": "Lorena Application"
+}

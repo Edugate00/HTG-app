@@ -1,0 +1,151 @@
+{
+  "_version": "1.40.0",
+  "sap.app": {
+    "id": "lrlpapp",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.7.3",
+      "toolsId": "da2fd48a-4ad8-41a8-85a7-0b571c64ab90"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZLRLP_APP_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.109.3",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "lrlpapp.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "type": "View",
+        "viewType": "XML",
+        "path": "lrlpapp.view",
+        "controlId": "mainContents",
+        "controlAggregation": "pages",
+        "transition": "slide",
+        "bypassed": {
+          "target": "notFound"
+        },
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "dashboard",
+          "target": "dashboard"
+        },
+        {
+          "pattern": "utility",
+          "name": "utility",
+          "target": "utility"
+        },
+        {
+          "pattern": "rental",
+          "name": "rental",
+          "target": "rental"
+        },
+        {
+          "pattern": "maintenance",
+          "name": "maintenance",
+          "target": "maintenance"
+        }
+      ],
+      "targets": {
+        "dashboard": {
+          "id": "dashboard",
+          "name": "dashboard",
+          "viewLevel": 1
+        },
+        "utility": {
+          "id": "utility",
+          "name": "utility",
+          "viewLevel": 1
+        },
+        "rental": {
+          "id": "rental",
+          "name": "rental",
+          "viewLevel": 1
+        },
+        "maintenance": {
+          "id": "maintenance",
+          "name": "maintenance",
+          "viewLevel": 1
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "lrlpapp.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  }
+}

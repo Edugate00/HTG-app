@@ -1,0 +1,388 @@
+<mvc:View
+	controllerName="lrlpapp.controller.Dashboard"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:viz.data="sap.viz.ui5.data"
+>
+	<Page showHeader="false">
+		<VBox class="header-container">
+			<!-- <FormattedText class="pageTitle" htmlText="Dashboard" /> -->
+		</VBox>
+		<HBox class="wrapper">
+			<VBox class="tile">
+				<FlexBox
+					justifyContent="Start"
+					alignItems="Center"
+				>
+					<VBox class="tile-icon sapUiSmallMarginEnd">
+						<core:Icon
+							src="sap-icon://qr-code"
+							class="size1"
+							color="#5d41d4"
+						/>
+					</VBox>
+					<Text
+						class="tile-title"
+						text="Pindai Meteran Air"
+					/>
+				</FlexBox>
+				<VBox class="tile-info">
+					<Text
+						class="dynamic-number"
+						text="5"
+					/>
+					<Text text="7 Days left before billing"/>
+				</VBox>
+			</VBox>
+			<VBox class="tile">
+				<FlexBox
+					justifyContent="Start"
+					alignItems="Center"
+				>
+					<VBox class="tile-icon sapUiSmallMarginEnd">
+						<core:Icon
+							src="sap-icon://blur"
+							class="size1"
+							color="#5d41d4"
+						/>
+					</VBox>
+					<Text
+						class="tile-title"
+						text="Tagihan Air"
+					/>
+				</FlexBox>
+				<VBox class="tile-info">
+					<Text
+						class="dynamic-number"
+						text="5"
+					/>
+					<Text text="7 Days left before billing"/>
+				</VBox>
+			</VBox>
+			<VBox class="tile">
+				<FlexBox
+					justifyContent="Start"
+					alignItems="Center"
+				>
+					<VBox class="tile-icon sapUiSmallMarginEnd">
+						<core:Icon
+							src="sap-icon://building"
+							class="size1"
+							color="#5d41d4"
+						/>
+					</VBox>
+					<Text
+						class="tile-title"
+						text="Tagihan Sewa"
+					/>
+				</FlexBox>
+				<VBox class="tile-info">
+					<Text
+						class="dynamic-number"
+						text="5"
+					/>
+					<Text text="7 Days left before billing"/>
+				</VBox>
+			</VBox>
+			<VBox class="tile tile-danger">
+				<FlexBox
+					justifyContent="Start"
+					alignItems="Center"
+				>
+					<VBox class="tile-icon sapUiSmallMarginEnd">
+						<core:Icon
+							src="sap-icon://sales-order-item"
+							class="size1"
+							color="#e80b00"
+						/>
+					</VBox>
+					<Text
+						class="tile-title"
+						text="Terlambat Dicetak"
+					/>
+				</FlexBox>
+				<VBox class="tile-info">
+					<Text
+						class="dynamic-number"
+						text="5"
+					/>
+					<Text text="7 Days left before billing"/>
+				</VBox>
+			</VBox>
+		</HBox>
+		<FlexBox
+			class="cards-container"
+			direction="Row"
+			height="600px"
+		>
+			<VBox
+				class="card"
+				width="100%"
+				height="80%"
+			>
+				<FlexBox
+					class="card-header"
+					direction="Row"
+					justifyContent="SpaceBetween"
+					alignItems="Center"
+				>
+					<Text
+						class="card-title"
+						text="Tagihan"
+					/>
+					<HBox>
+						<ComboBox
+							width="120px"
+							placeholder="Select Item"
+							selectionChange="onStatusSelect"
+							selectedKey="*"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							items=""
+						>
+							<core:Item
+								key="item1"
+								text="item1"
+							/>
+							<core:Item
+								key="item2"
+								text="item2"
+							/>
+							<core:Item
+								key="item3"
+								text="item3"
+							/>
+						</ComboBox>
+						<ComboBox
+							width="120px"
+							placeholder="Select Item"
+							selectionChange="onStatusSelect"
+							selectedKey="*"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							items=""
+						>
+							<core:Item
+								key="item1"
+								text="item1"
+							/>
+							<core:Item
+								key="item2"
+								text="item2"
+							/>
+							<core:Item
+								key="item3"
+								text="item3"
+							/>
+						</ComboBox>
+					</HBox>
+				</FlexBox>
+				<ScrollContainer
+					height="80%"
+					vertical="true"
+				>
+					<List>
+						<StandardListItem
+							type="Active"
+							title="List item 1"
+							description="test test test"
+							press=".test"
+						/>
+						<StandardListItem
+							type="Active"
+							title="List item 2"
+							description="test test test"
+							press=".test"
+						/>
+						<StandardListItem
+							type="Active"
+							title="List item 3"
+							description="test test test"
+							press=".test"
+						/>
+						<StandardListItem
+							type="Active"
+							title="List item 4"
+							description="test test test"
+							press=".test"
+						/>
+						<StandardListItem
+							type="Active"
+							title="List item 5"
+							description="test test test"
+							press=".test"
+						/>
+						<StandardListItem
+							type="Active"
+							title="List item 6"
+							description="test test test"
+							press=".test"
+						/>
+					</List>
+				</ScrollContainer>
+			</VBox>
+			<VBox
+				class="card"
+				width="100%"
+				height="80%"
+			>
+				<FlexBox
+					class="card-header"
+					direction="Row"
+					justifyContent="SpaceBetween"
+					alignItems="Center"
+				>
+					<Text
+						class="card-title"
+						text="Penggunaan Air"
+					/>
+					<HBox>
+						<ComboBox
+							id="ComboBoxTenant"
+							width="120px"
+							placeholder="Select Item"
+							selectionChange="onTenantSelected"
+							selectedKey="*"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							items=""
+						>
+							<core:Item
+								key="*"
+								text="All Tenant"
+							/>
+							<core:Item
+								key="Tenant A"
+								text="Tenant A"
+							/>
+							<core:Item
+								key="Tenant B"
+								text="Tenant B"
+							/>
+							<core:Item
+								key="Tenant C"
+								text="Tenant C"
+							/>
+							<core:Item
+								key="Tenant D"
+								text="Tenant D"
+							/>
+							<core:Item
+								key="Tenant E"
+								text="Tenant E"
+							/>
+							<core:Item
+								key="Tenant F"
+								text="Tenant F"
+							/>
+						</ComboBox>
+						<ComboBox
+							id="ComboBoxMonth"
+							width="120px"
+							placeholder="Select Item"
+							selectionChange="onMonthSelected"
+							selectedKey="*"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							items=""
+						>
+							<core:Item
+								key="*"
+								text="All Months"
+							/>
+							<core:Item
+								key="Januari"
+								text="Januari"
+							/>
+							<core:Item
+								key="Februari"
+								text="Februari"
+							/>
+							<core:Item
+								key="Maret"
+								text="Maret"
+							/>
+							<core:Item
+								key="April"
+								text="April"
+							/>
+							<core:Item
+								key="Mei"
+								text="Mei"
+							/>
+							<core:Item
+								key="Juni"
+								text="Juni"
+							/>
+							<core:Item
+								key="Juli"
+								text="Juli"
+							/>
+							<core:Item
+								key="Agustus"
+								text="Agustus"
+							/>
+							<core:Item
+								key="September"
+								text="September"
+							/>
+							<core:Item
+								key="Oktober"
+								text="Oktober"
+							/>
+							<core:Item
+								key="November"
+								text="November"
+							/>
+							<core:Item
+								key="Desember"
+								text="Desember"
+							/>
+						</ComboBox>
+					</HBox>
+				</FlexBox>
+				<VBox>
+					<viz:VizFrame
+						id="vizPenggunaanAir"
+						height="400px"
+						width="100%"
+						vizType="column"
+						busyIndicatorDelay="500"
+						legendVisible="false"
+					>
+						<viz:dataset>
+							<viz.data:FlattenedDataset data="{penggunaanAir>/data}">
+								<viz.data:dimensions>
+									<viz.data:DimensionDefinition
+										name="Category"
+										value="{penggunaanAir>month}"
+									/>
+								</viz.data:dimensions>
+								<viz.data:measures>
+									<viz.data:MeasureDefinition
+										name="Value"
+										value="{penggunaanAir>value}"
+									/>
+								</viz.data:measures>
+							</viz.data:FlattenedDataset>
+						</viz:dataset>
+						<viz:feeds>
+							<viz.feeds:FeedItem
+								id="valueAxisFeed"
+								uid="valueAxis"
+								type="Measure"
+								values="Value"
+							/>
+							<viz.feeds:FeedItem
+								id="categoryAxisFeed"
+								uid="categoryAxis"
+								type="Dimension"
+								values="Category"
+							/>
+						</viz:feeds>
+					</viz:VizFrame>
+				</VBox>
+			</VBox>
+		</FlexBox>
+	</Page>
+</mvc:View>
