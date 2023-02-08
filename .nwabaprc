@@ -6,6 +6,6 @@
   "conn_user": "abap1",
   "conn_password": "Halobca321",
   "abap_package": "$TMP",
-  "abap_bsp": "ZLORENA_APP",
-  "abap_bsp_text": "Lorena Application"
+  "abap_bsp": "ZLRLP_APP",
+  "abap_bsp_text": "Lorena Latersia Application"
 }
