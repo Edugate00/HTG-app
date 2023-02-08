@@ -248,9 +248,11 @@ sap.ui.define(
       },
 
       onTenantSelected: function (oEvent) {
-        let oFilterTenant, oFilterMonth;
+        let oFilterTenant, oFilterMonth, filters;
+
         const oVizFrame = this.getView().byId("vizPenggunaanAir");
-        const oDataset = oVizFrame.getDataset().getBinding("data");
+        const oDataset = oVizFrame.getDataset();
+        const oDimension = oDataset.getDimensions()[0];
 
         const oComboBoxTenant = oEvent.getSource();
         const oComboBoxMonth = this.getView().byId("ComboBoxMonth");
@@ -262,17 +264,30 @@ sap.ui.define(
         if (tenantSelected !== "*") {
           oVizFrame.setVizType("line");
           oVizFrame.setVizProperties({
-            title: { visible: true, text: `Penggunaan Air ${tenantSelected}` },
+            title: { visible: true, text: `${tenantSelected}` },
+          });
+          
+          oDataset.removeDimension(oDimension);
+
+          const oNewDimension = new DimensionDefinition({
+            name: "Category", value: "{penggunaanAir>month}"
           });
 
-          oDataset.filter(oFilterTenant);
+          oDataset.addDimension(oNewDimension);
+          oDataset.getBinding("data").filter(oFilterTenant);
+
         } else {
           oVizFrame.setVizType("column");
           oVizFrame.setVizProperties({
-            title: { visible: false, text: "" },
+            title: { visible: true, text: "Semua Tenant bulan Februari" },
           });
 
-          // oDataset.filter(filters);
+          oDataset.removeDimension(oDimension);
+          const oNewDimension = new DimensionDefinition({
+            name: "Category", value: "{penggunaanAir>tenant}"
+          });
+          oDataset.addDimension(oNewDimension);
+          oDataset.getBinding("data").filter(oFilterMonth);
         }
       },
     });

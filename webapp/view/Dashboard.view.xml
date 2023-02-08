@@ -35,7 +35,7 @@
 						class="dynamic-number"
 						text="5"
 					/>
-					<Text text="7 Days left before billing"/>
+					<Text text="7 Days left before billing" />
 				</VBox>
 			</VBox>
 			<VBox class="tile">
@@ -60,7 +60,7 @@
 						class="dynamic-number"
 						text="5"
 					/>
-					<Text text="7 Days left before billing"/>
+					<Text text="7 Days left before billing" />
 				</VBox>
 			</VBox>
 			<VBox class="tile">
@@ -85,7 +85,7 @@
 						class="dynamic-number"
 						text="5"
 					/>
-					<Text text="7 Days left before billing"/>
+					<Text text="7 Days left before billing" />
 				</VBox>
 			</VBox>
 			<VBox class="tile tile-danger">
@@ -110,7 +110,7 @@
 						class="dynamic-number"
 						text="5"
 					/>
-					<Text text="7 Days left before billing"/>
+					<Text text="7 Days left before billing" />
 				</VBox>
 			</VBox>
 		</HBox>
@@ -348,21 +348,18 @@
 						width="100%"
 						vizType="column"
 						busyIndicatorDelay="500"
-						legendVisible="false"
-					>
+						legendVisible="false">
 						<viz:dataset>
 							<viz.data:FlattenedDataset data="{penggunaanAir>/data}">
 								<viz.data:dimensions>
 									<viz.data:DimensionDefinition
 										name="Category"
-										value="{penggunaanAir>month}"
-									/>
+										value="{penggunaanAir>tenant}" />
 								</viz.data:dimensions>
 								<viz.data:measures>
 									<viz.data:MeasureDefinition
 										name="Value"
-										value="{penggunaanAir>value}"
-									/>
+										value="{penggunaanAir>value}" />
 								</viz.data:measures>
 							</viz.data:FlattenedDataset>
 						</viz:dataset>
@@ -371,14 +368,12 @@
 								id="valueAxisFeed"
 								uid="valueAxis"
 								type="Measure"
-								values="Value"
-							/>
+								values="Value" />
 							<viz.feeds:FeedItem
 								id="categoryAxisFeed"
 								uid="categoryAxis"
 								type="Dimension"
-								values="Category"
-							/>
+								values="Category" />
 						</viz:feeds>
 					</viz:VizFrame>
 				</VBox>
