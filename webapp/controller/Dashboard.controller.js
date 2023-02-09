@@ -47,6 +47,20 @@ sap.ui.define(
           pageTitle: "<h2 style='color: #fff'>Dashboard</h2>",
         });
         this.getView().setModel(oTitle);
+        const oTagihan = [];
+        const tagihan = this.getOwnerComponent().getModel("tagihan").getData();
+        tagihan.data.forEach(el => {
+            if (el.status === "paid"){
+              el.status = "Sudah dibayar";
+              el.tipeStatus = "Success";
+            } else {
+              el. status = "Belum dibayar";
+              el.tipeStatus = "Error";
+            }
+            oTagihan.push(el)
+        })
+        
+        this.getView().setModel(new JSONModel({ tagihan: oTagihan }), "tagihan");
 
         // Vizframe chart for Penggunaan Air
         const oVizFrame = this.getView().byId("vizPenggunaanAir");
@@ -73,16 +87,15 @@ sap.ui.define(
           },
         });
 
+        const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
+        const penggunaanAirModel = new JSONModel(penggunaanAir);
+        const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
+
         const tileTagihanAir = this.getView().byId("tileTagihanAir");
         const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
 
         tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
         tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
-
-
-        const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
-        const penggunaanAirModel = new JSONModel(penggunaanAir);
-        const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
 
         oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
         oComboBoxTenant.fireSelectionChange();

@@ -136,81 +136,21 @@
 				<ScrollContainer
 					height="83%"
 					vertical="true">
-					<List>
+					<List items="{tagihan>/tagihan}">
 						<items>
 							<ObjectListItem
 								type="Active"
-								title="9001 - Tenant A">
+								title="{tagihan>noTagihan} - {tagihan>tenant}">
 								<ObjectAttribute
 									title="Tipe"
-									text="Tagihan Air" />
+									text="{tagihan>tipe}" />
 								<ObjectAttribute
 									title="Tanggal"
-									text="09 Feb, 2023" />
+									text="{tagihan>dueDate}" />
 								<secondStatus>
 									<ObjectStatus
-										text="Sudah dibayar"
-										state="Success" />
-								</secondStatus>
-							</ObjectListItem>
-							<ObjectListItem
-								type="Active"
-								title="9002 - Tenant B">
-								<ObjectAttribute
-									title="Tipe"
-									text="Tagihan Sewa" />
-								<ObjectAttribute
-									title="Tanggal"
-									text="09 Feb, 2023" />
-								<secondStatus>
-									<ObjectStatus
-										text="Belum dibayar"
-										state="Error" />
-								</secondStatus>
-							</ObjectListItem>
-							<ObjectListItem
-								type="Active"
-								title="9003 - Tenant C">
-								<ObjectAttribute
-									title="Tipe"
-									text="Tagihan Air" />
-								<ObjectAttribute
-									title="Tanggal"
-									text="09 Feb, 2023" />
-								<secondStatus>
-									<ObjectStatus
-										text="Belum dibayar"
-										state="Error" />
-								</secondStatus>
-							</ObjectListItem>
-							<ObjectListItem
-								type="Active"
-								title="9004 - Tenant D">
-								<ObjectAttribute
-									title="Tipe"
-									text="Tagihan Air" />
-								<ObjectAttribute
-									title="Tanggal"
-									text="09 Feb, 2023" />
-								<secondStatus>
-									<ObjectStatus
-										text="Sudah dibayar"
-										state="Success" />
-								</secondStatus>
-							</ObjectListItem>
-							<ObjectListItem
-								type="Active"
-								title="9005 - Tenant E">
-								<ObjectAttribute
-									title="Tipe"
-									text="Tagihan Pengelolaan" />
-								<ObjectAttribute
-									title="Tanggal"
-									text="09 Feb, 2023" />
-								<secondStatus>
-									<ObjectStatus
-										text="Belum dibayar"
-										state="Error" />
+										text="{tagihan>status}"
+										state="{tagihan>tipeStatus}" />
 								</secondStatus>
 							</ObjectListItem>
 						</items>
