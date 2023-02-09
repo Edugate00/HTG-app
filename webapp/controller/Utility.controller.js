@@ -58,6 +58,9 @@ sap.ui.define(
       },
 
       onScanSuccess: async function (oEvent) {
+        // show busy indicator
+        BusyIndicator.show();
+
         let scanResult = oEvent.getParameter("text");
 
         if (scanResult) {
@@ -67,27 +70,39 @@ sap.ui.define(
         }
 
         // call function odata read
-        let response = await this.ReadOdataMeasDocument(scanResult),
-          data = response.result;
+        const fullPoint = scanResult.padStart(12, "0");
+        const response = await this.ReadOdataMeasDocument(fullPoint);
+        const data = response.result;
+
+        console.log(response);
+        console.log(data);
+
+        const convert = this.ConvertDateTime(data.Date, data.Time);
+        const fullDate = `${convert.date} / ${convert.time}`;
+
+        const intDocument = parseInt(data.Document);
+        const intPoint = parseInt(data.Point);
+        const valueUnit = `${data.Value} ${data.Unit}`;
 
         // check return value
         if (data.Document) {
           // call function set text
           this.SetLabelPrevMeasurement(
-            data.Document,
-            data.Point,
+            intDocument,
+            intPoint,
             // data.Description,
-            data.Value,
-            data.Unit,
-            data.Date,
-            data.Time,
+            valueUnit,
+            fullDate,
             data.Reader
           );
         } else {
           MessageBox.error("Measurement point not found.");
 
-          this.SetLabelPrevMeasurement("-", "-", "-", "-", "-", "-", "-");
+          this.SetLabelPrevMeasurement("-", "-", "-", "-", "-");
         }
+
+        // hide busy indicator
+        BusyIndicator.hide();
       },
 
       onScanError: function (oEvent) {
@@ -105,72 +120,53 @@ sap.ui.define(
       //   });
       // },
 
-      // odataReadprevMeasDoc: async function () {
-      //   let request = currentMeasPoint.getValue(),
-      //     response = null;
-
-      //   //  show busy indicator
-      //   BusyIndicator.show();
-
-      //   // call odata request
-      //   response = await this.readOdataService(request);
-      //   console.log(response);
-
-      //   // hide busy indicator
-      //   BusyIndicator.hide();
-
-      //   // check return value
-      //   if (response.result.MeasurementDoc) {
-      //     this.setLabelprevKwh(
-      //       response.result.MeasurementPoint,
-      //       response.result.MeasurementDoc,
-      //       response.result.MeasurementValue,
-      //       response.result.MeasurementUnit,
-      //       `${response.result.ReadingDate} /`,
-      //       response.result.ReadingTime,
-      //       response.result.Reader
-      //     );
-      //   } else {
-      //     this.setLabelprevKwh("", "", "", "", "", "", "");
-
-      //     MessageBox.error("Measurement point not found.");
-      //   }
-      // },
-
       OnPostMeasurement: async function () {
         console.log("post");
-
-        let request = {};
+        class InputRequest {
+          constructor(point, value, unit, date, time, reader, text) {
+            this.Point = point;
+            this.Value = value;
+            this.Unit = unit;
+            this.Date = date;
+            this.Time = time;
+            this.Reader = reader;
+            this.Text = text;
+          }
+        }
 
         //  show busy indicator
-        // BusyIndicator.show();
+        BusyIndicator.show();
 
-        // create request
-        request.Point = "000000011443";
-        request.Value = "18,412";
-        request.Unit = "l";
-        request.Date = "20230206";
-        request.Time = "160116";
-        request.Reader = "ABAP1";
-        request.Text = "From ui5";
+        const inputPoint = currentMeasurementPoint.getValue();
+        const inputDateTime = currentMeasurementDateTime.getText();
+        const splitDateTime = inputDateTime.split("/");
+        const convertDate = splitDateTime[0]
+          .split("-")
+          .reverse()
+          .join("")
+          .replace(/\s/g, ""); // remove spaces
+        const convertTime = splitDateTime[1]
+          .split(":")
+          .join("")
+          .replace(/\s/g, ""); // remove spaces;
+        const inputValue = currentMeasurementValue.getValue().replace(".", ",");
+        const inputReader = currentMeasurementReader.getText();
+
+        const request = new InputRequest(
+          inputPoint,
+          inputValue,
+          "l",
+          convertDate,
+          convertTime,
+          inputReader,
+          "from ui5"
+        );
 
         console.log(request);
 
         // call odata request
-        let response = await this.CreateOdataMeasDocument(request);
-        console.log(response);
-
-        // hide busy indicator
-        // BusyIndicator.hide();
-      },
-
-      OnScanQR: async function () {
-        // show busy indicator
-        BusyIndicator.show();
-
-        // call function odata read
-        let response = await this.ReadOdataMeasDocument("000000011443"),
-          data = response.result;
+        const response = await this.CreateOdataMeasDocument(request);
+        const data = response.result;
 
         console.log(response);
         console.log(data);
@@ -178,58 +174,36 @@ sap.ui.define(
         // hide busy indicator
         BusyIndicator.hide();
 
-        // call function set text
-        this.SetLabelPrevMeasurement(
-          data.Document,
-          data.Point,
-          // data.Description,
-          data.Value,
-          data.Unit,
-          data.Date,
-          data.Time,
-          data.Reader
-        );
+        if (!data.Document) {
+          MessageBox.error(data.Message);
+        } else {
+          MessageBox.success(
+            `${data.Message}, Measurement Document ${parseInt(
+              data.Document
+            )} created.`
+          );
+        }
       },
 
       SetLabelPrevMeasurement: function (
         document,
         point,
         // description,
-        value,
-        unit,
-        date,
-        time,
+        valueUnit,
+        dateTime,
         reader
       ) {
-        const convert = this.ConvertDateTime(date, time);
-        console.log(convert);
         // set text properties
-        prevMeasurementDoc.setText(parseInt(document));
-        prevMeasurementPoint.setText(parseInt(point));
+        prevMeasurementDoc.setText(document);
+        prevMeasurementPoint.setText(point);
         // prevMeasurementDescription.setText(description);
-        prevMeasurementValue.setText(`${value} ${unit}`);
-        prevMeasurementDateTime.setText(`${convert.date} / ${convert.time}`);
+        prevMeasurementValue.setText(valueUnit);
+        prevMeasurementDateTime.setText(dateTime);
         prevMeasurementReader.setText(reader);
       },
 
       CreateOdataMeasDocument: function (requestData) {
         return new Promise(function (resolve) {
-          // oModel.setHeaders({
-          //   "content-type": "application/json;odata.metadata=minimal",
-          //   accept: "application/json",
-          // });
-          // oModel.create(
-          //   "/measurementDocumentSet",
-          //   requestData,
-          //   null,
-          //   function () {
-          //     alert("Create successful");
-          //   },
-          //   function () {
-          //     alert("Create failed");
-          //   }
-          // );
-
           oModel.create("/measurementDocumentSet", requestData, {
             success: function (oResponse) {
               console.log("Call answered by server");
