@@ -115,38 +115,21 @@
 						text="Tagihan" />
 					<HBox>
 						<ComboBox
-							width="120px"
-							placeholder="Select Item"
+							width="132px"
+							placeholder="Select Status"
 							selectionChange="onStatusSelect"
 							selectedKey="*"
 							class="sapUiTinyMarginEnd sapMCbAutoFocus"
 							items="">
 							<core:Item
-								key="item1"
-								text="item1" />
+								key="*"
+								text="Semua" />
 							<core:Item
-								key="item2"
-								text="item2" />
+								key="paid"
+								text="Sudah dibayar" />
 							<core:Item
-								key="item3"
-								text="item3" />
-						</ComboBox>
-						<ComboBox
-							width="120px"
-							placeholder="Select Item"
-							selectionChange="onStatusSelect"
-							selectedKey="*"
-							class="sapUiTinyMarginEnd sapMCbAutoFocus"
-							items="">
-							<core:Item
-								key="item1"
-								text="item1" />
-							<core:Item
-								key="item2"
-								text="item2" />
-							<core:Item
-								key="item3"
-								text="item3" />
+								key="unpaid"
+								text="Belum dibayar" />
 						</ComboBox>
 					</HBox>
 				</FlexBox>
@@ -166,7 +149,7 @@
 									text="09 Feb, 2023" />
 								<secondStatus>
 									<ObjectStatus
-										text="Paid"
+										text="Sudah dibayar"
 										state="Success" />
 								</secondStatus>
 							</ObjectListItem>
@@ -181,7 +164,7 @@
 									text="09 Feb, 2023" />
 								<secondStatus>
 									<ObjectStatus
-										text="Unpaid"
+										text="Belum dibayar"
 										state="Error" />
 								</secondStatus>
 							</ObjectListItem>
@@ -196,7 +179,7 @@
 									text="09 Feb, 2023" />
 								<secondStatus>
 									<ObjectStatus
-										text="Unpaid"
+										text="Belum dibayar"
 										state="Error" />
 								</secondStatus>
 							</ObjectListItem>
@@ -211,7 +194,7 @@
 									text="09 Feb, 2023" />
 								<secondStatus>
 									<ObjectStatus
-										text="Paid"
+										text="Sudah dibayar"
 										state="Success" />
 								</secondStatus>
 							</ObjectListItem>
@@ -226,7 +209,7 @@
 									text="09 Feb, 2023" />
 								<secondStatus>
 									<ObjectStatus
-										text="Unpaid"
+										text="Belum dibayar"
 										state="Error" />
 								</secondStatus>
 							</ObjectListItem>
@@ -249,7 +232,7 @@
 					<HBox>
 						<ComboBox
 							id="ComboBoxTenant"
-							width="120px"
+							width="132px"
 							placeholder="Pilih Tenant"
 							selectionChange="onTenantSelected"
 							selectedKey="*"
@@ -257,7 +240,7 @@
 							items="">
 							<core:Item
 								key="*"
-								text="All Tenants" />
+								text="Semua Tenant" />
 							<core:Item
 								key="Tenant A"
 								text="Tenant A" />

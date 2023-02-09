@@ -4,13 +4,14 @@
     <Dialog
         id="tagihanAirDialog"
         title="Tagihan Air untuk dicetak"
-        type="Standard">
+        type="Standard"
+        contentHeight="400px">
         <content>
             <List items="{tagihanAir>/tagihanAir}">
                 <StandardListItem
                     type="Active"
-                    title="{tagihanAir>nama}"
-                    description="{tagihanAir>noTagihan} - {tagihanAir>dueDate}" />
+                    title="{tagihanAir>noTagihan} - {tagihanAir>nama}"
+                    description="{tagihanAir>dueDate}" />
             </List>
         </content>
         <endButton>
