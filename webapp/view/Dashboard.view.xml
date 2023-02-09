@@ -20,7 +20,7 @@
 						<core:Icon
 							src="sap-icon://qr-code"
 							class="size1"
-							color="#5d41d4" />
+							color="#ffffff" />
 					</VBox>
 					<Text
 						class="tile-title"
@@ -41,7 +41,7 @@
 						<core:Icon
 							src="sap-icon://blur"
 							class="size1"
-							color="#5d41d4" />
+							color="#ffffff" />
 					</VBox>
 					<Text
 						class="tile-title"
@@ -62,7 +62,7 @@
 						<core:Icon
 							src="sap-icon://building"
 							class="size1"
-							color="#5d41d4" />
+							color="#ffffff" />
 					</VBox>
 					<Text
 						class="tile-title"
@@ -83,7 +83,7 @@
 						<core:Icon
 							src="sap-icon://sales-order-item"
 							class="size1"
-							color="#e80b00" />
+							color="#ffffff" />
 					</VBox>
 					<Text
 						class="tile-title"
