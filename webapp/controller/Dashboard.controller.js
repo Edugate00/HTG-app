@@ -257,7 +257,9 @@ sap.ui.define(
         };
 
         const penggunaanAirModel = new JSONModel(penggunaanAir);
+        const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
         oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
+        oComboBoxTenant.fireSelectionChange();
       },
 
       onTenantSelected: function (oEvent) {
