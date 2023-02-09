@@ -2,8 +2,8 @@
     xmlns="sap.m"
     xmlns:c="sap.ui.core">
     <Dialog
-        id="tagihanAirDialog"
-        title="Tagihan Air untuk dicetak"
+        id="tagihanSewaDialog"
+        title="Tagihan Sewa untuk dicetak"
         type="Standard"
         contentHeight="400px">
         <content>
@@ -18,7 +18,7 @@
             <Button
                 text="Close"
                 type="Emphasized"
-                press="onTagihanAirDialogClose" />
+                press="onTagihanSewaDialogClose" />
         </endButton>
     </Dialog>
 </c:FragmentDefinition>

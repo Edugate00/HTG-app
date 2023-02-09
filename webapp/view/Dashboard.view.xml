@@ -115,119 +115,44 @@
 						text="Tagihan" />
 					<HBox>
 						<ComboBox
-							width="120px"
-							placeholder="Select Item"
+							width="132px"
+							placeholder="Select Status"
 							selectionChange="onStatusSelect"
 							selectedKey="*"
 							class="sapUiTinyMarginEnd sapMCbAutoFocus"
 							items="">
 							<core:Item
-								key="item1"
-								text="item1" />
+								key="*"
+								text="Semua" />
 							<core:Item
-								key="item2"
-								text="item2" />
+								key="paid"
+								text="Sudah dibayar" />
 							<core:Item
-								key="item3"
-								text="item3" />
-						</ComboBox>
-						<ComboBox
-							width="120px"
-							placeholder="Select Item"
-							selectionChange="onStatusSelect"
-							selectedKey="*"
-							class="sapUiTinyMarginEnd sapMCbAutoFocus"
-							items="">
-							<core:Item
-								key="item1"
-								text="item1" />
-							<core:Item
-								key="item2"
-								text="item2" />
-							<core:Item
-								key="item3"
-								text="item3" />
+								key="unpaid"
+								text="Belum dibayar" />
 						</ComboBox>
 					</HBox>
 				</FlexBox>
 				<ScrollContainer
 					height="83%"
 					vertical="true">
-					<List>
+					<List
+						id="tagihanList"
+						items="{tagihan>/tagihan}">
 						<items>
 							<ObjectListItem
 								type="Active"
-								title="9001 - Tenant A">
+								title="{tagihan>noTagihan} - {tagihan>tenant}">
 								<ObjectAttribute
 									title="Tipe"
-									text="Tagihan Air" />
+									text="{tagihan>tipe}" />
 								<ObjectAttribute
 									title="Tanggal"
-									text="09 Feb, 2023" />
+									text="{tagihan>dueDate}" />
 								<secondStatus>
 									<ObjectStatus
-										text="Paid"
-										state="Success" />
-								</secondStatus>
-							</ObjectListItem>
-							<ObjectListItem
-								type="Active"
-								title="9002 - Tenant B">
-								<ObjectAttribute
-									title="Tipe"
-									text="Tagihan Sewa" />
-								<ObjectAttribute
-									title="Tanggal"
-									text="09 Feb, 2023" />
-								<secondStatus>
-									<ObjectStatus
-										text="Unpaid"
-										state="Error" />
-								</secondStatus>
-							</ObjectListItem>
-							<ObjectListItem
-								type="Active"
-								title="9003 - Tenant C">
-								<ObjectAttribute
-									title="Tipe"
-									text="Tagihan Air" />
-								<ObjectAttribute
-									title="Tanggal"
-									text="09 Feb, 2023" />
-								<secondStatus>
-									<ObjectStatus
-										text="Unpaid"
-										state="Error" />
-								</secondStatus>
-							</ObjectListItem>
-							<ObjectListItem
-								type="Active"
-								title="9004 - Tenant D">
-								<ObjectAttribute
-									title="Tipe"
-									text="Tagihan Air" />
-								<ObjectAttribute
-									title="Tanggal"
-									text="09 Feb, 2023" />
-								<secondStatus>
-									<ObjectStatus
-										text="Paid"
-										state="Success" />
-								</secondStatus>
-							</ObjectListItem>
-							<ObjectListItem
-								type="Active"
-								title="9005 - Tenant E">
-								<ObjectAttribute
-									title="Tipe"
-									text="Tagihan Pengelolaan" />
-								<ObjectAttribute
-									title="Tanggal"
-									text="09 Feb, 2023" />
-								<secondStatus>
-									<ObjectStatus
-										text="Unpaid"
-										state="Error" />
+										text="{tagihan>status}"
+										state="{tagihan>tipeStatus}" />
 								</secondStatus>
 							</ObjectListItem>
 						</items>
@@ -249,7 +174,7 @@
 					<HBox>
 						<ComboBox
 							id="ComboBoxTenant"
-							width="120px"
+							width="132px"
 							placeholder="Pilih Tenant"
 							selectionChange="onTenantSelected"
 							selectedKey="*"
@@ -257,7 +182,7 @@
 							items="">
 							<core:Item
 								key="*"
-								text="All Tenants" />
+								text="Semua Tenant" />
 							<core:Item
 								key="Tenant A"
 								text="Tenant A" />

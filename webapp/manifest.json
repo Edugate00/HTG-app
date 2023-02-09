@@ -73,6 +73,10 @@
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/penggunaanAir.json"
       },
+      "tagihan": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/tagihan.json"
+      },
       "": {
         "dataSource": "mainService",
         "preload": true,

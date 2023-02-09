@@ -1,0 +1,75 @@
+{
+    "data" : [
+        {
+            "noTagihan": "9001",
+            "tenant": "Tenant A",
+            "tipe": "Tagihan Air",
+            "dueDate": "09 Feb, 2023",
+            "status": "paid"
+        },
+        {
+            "noTagihan": "9002",
+            "tenant": "Tenant B",
+            "tipe": "Tagihan Air",
+            "dueDate": "09 Feb, 2023",
+            "status": "paid"
+        },
+        {
+            "noTagihan": "9003",
+            "tenant": "Tenant C",
+            "tipe": "Tagihan Air",
+            "dueDate": "09 Feb, 2023",
+            "status": "unpaid"
+        },
+        {
+            "noTagihan": "9004",
+            "tenant": "Tenant D",
+            "tipe": "Tagihan Sewa",
+            "dueDate": "09 Feb, 2023",
+            "status": "unpaid"
+        },
+        {
+            "noTagihan": "9005",
+            "tenant": "Tenant E",
+            "tipe": "Tagihan Sewa",
+            "tipe": "Tagihan Air",
+            "dueDate": "09 Feb, 2023",
+            "status": "paid"
+        },
+        {
+            "noTagihan": "9006",
+            "tenant": "Tenant F",
+            "tipe": "Tagihan Air",
+            "dueDate": "09 Feb, 2023",
+            "status": "paid"
+        },
+        {
+            "noTagihan": "9007",
+            "tenant": "Tenant A",
+            "tipe": "Tagihan Pengelolaan",
+            "dueDate": "09 Feb, 2023",
+            "status": "unpaid"
+        },
+        {
+            "noTagihan": "9008",
+            "tenant": "Tenant B",
+            "tipe": "Tagihan Sewa",
+            "dueDate": "09 Feb, 2023",
+            "status": "paid"
+        },
+        {
+            "noTagihan": "9009",
+            "tenant": "Tenant C",
+            "tipe": "Tagihan Air",
+            "dueDate": "09 Feb, 2023",
+            "status": "unpaid"
+        },
+        {
+            "noTagihan": "9010",
+            "tenant": "Tenant D",
+            "tipe": "Tagihan Pengelolaan",
+            "dueDate": "09 Feb, 2023",
+            "status": "paid"
+        }
+    ]
+}
