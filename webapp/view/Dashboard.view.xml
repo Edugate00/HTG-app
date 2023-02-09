@@ -12,7 +12,7 @@
 			<!-- <FormattedText class="pageTitle" htmlText="Dashboard" /> -->
 		</VBox>
 		<HBox class="wrapper">
-			<VBox class="tile">
+			<VBox class="tile" id="tilePindaiMeteran">
 				<FlexBox
 					justifyContent="Start"
 					alignItems="Center">
@@ -20,7 +20,7 @@
 						<core:Icon
 							src="sap-icon://qr-code"
 							class="size1"
-							color="#5d41d4" />
+							color="#ffffff" />
 					</VBox>
 					<Text
 						class="tile-title"
@@ -29,11 +29,11 @@
 				<VBox class="tile-info">
 					<Text
 						class="dynamic-number"
-						text="5" />
-					<Text text="7 Days left before billing" />
+						text="0" />
+					<Text text="Meteran perlu dipindai" />
 				</VBox>
 			</VBox>
-			<VBox class="tile">
+			<VBox class="tile" id="tileTagihanAir">
 				<FlexBox
 					justifyContent="Start"
 					alignItems="Center">
@@ -41,7 +41,7 @@
 						<core:Icon
 							src="sap-icon://blur"
 							class="size1"
-							color="#5d41d4" />
+							color="#ffffff" />
 					</VBox>
 					<Text
 						class="tile-title"
@@ -51,10 +51,10 @@
 					<Text
 						class="dynamic-number"
 						text="5" />
-					<Text text="7 Days left before billing" />
+					<Text text="Tagihan untuk dicetak" />
 				</VBox>
 			</VBox>
-			<VBox class="tile">
+			<VBox class="tile" id="tileTagihanSewa">
 				<FlexBox
 					justifyContent="Start"
 					alignItems="Center">
@@ -62,7 +62,7 @@
 						<core:Icon
 							src="sap-icon://building"
 							class="size1"
-							color="#5d41d4" />
+							color="#ffffff" />
 					</VBox>
 					<Text
 						class="tile-title"
@@ -71,11 +71,11 @@
 				<VBox class="tile-info">
 					<Text
 						class="dynamic-number"
-						text="5" />
-					<Text text="7 Days left before billing" />
+						text="3" />
+					<Text text="Tagihan untuk dicetak" />
 				</VBox>
 			</VBox>
-			<VBox class="tile tile-danger">
+			<VBox class="tile tile-danger" id="tileTagihanTerlambat">
 				<FlexBox
 					justifyContent="Start"
 					alignItems="Center">
@@ -83,7 +83,7 @@
 						<core:Icon
 							src="sap-icon://sales-order-item"
 							class="size1"
-							color="#e80b00" />
+							color="#ffffff" />
 					</VBox>
 					<Text
 						class="tile-title"
@@ -92,8 +92,8 @@
 				<VBox class="tile-info">
 					<Text
 						class="dynamic-number"
-						text="5" />
-					<Text text="7 Days left before billing" />
+						text="0" />
+					<Text text="Tagihan untuk dicetak" />
 				</VBox>
 			</VBox>
 		</HBox>
@@ -151,39 +151,86 @@
 					</HBox>
 				</FlexBox>
 				<ScrollContainer
-					height="80%"
+					height="83%"
 					vertical="true">
 					<List>
-						<StandardListItem
-							type="Active"
-							title="List item 1"
-							description="test test test"
-							press=".test" />
-						<StandardListItem
-							type="Active"
-							title="List item 2"
-							description="test test test"
-							press=".test" />
-						<StandardListItem
-							type="Active"
-							title="List item 3"
-							description="test test test"
-							press=".test" />
-						<StandardListItem
-							type="Active"
-							title="List item 4"
-							description="test test test"
-							press=".test" />
-						<StandardListItem
-							type="Active"
-							title="List item 5"
-							description="test test test"
-							press=".test" />
-						<StandardListItem
-							type="Active"
-							title="List item 6"
-							description="test test test"
-							press=".test" />
+						<items>
+							<ObjectListItem
+								type="Active"
+								title="9001 - Tenant A">
+								<ObjectAttribute
+									title="Tipe"
+									text="Tagihan Air" />
+								<ObjectAttribute
+									title="Tanggal"
+									text="09 Feb, 2023" />
+								<secondStatus>
+									<ObjectStatus
+										text="Paid"
+										state="Success" />
+								</secondStatus>
+							</ObjectListItem>
+							<ObjectListItem
+								type="Active"
+								title="9002 - Tenant B">
+								<ObjectAttribute
+									title="Tipe"
+									text="Tagihan Sewa" />
+								<ObjectAttribute
+									title="Tanggal"
+									text="09 Feb, 2023" />
+								<secondStatus>
+									<ObjectStatus
+										text="Unpaid"
+										state="Error" />
+								</secondStatus>
+							</ObjectListItem>
+							<ObjectListItem
+								type="Active"
+								title="9003 - Tenant C">
+								<ObjectAttribute
+									title="Tipe"
+									text="Tagihan Air" />
+								<ObjectAttribute
+									title="Tanggal"
+									text="09 Feb, 2023" />
+								<secondStatus>
+									<ObjectStatus
+										text="Unpaid"
+										state="Error" />
+								</secondStatus>
+							</ObjectListItem>
+							<ObjectListItem
+								type="Active"
+								title="9004 - Tenant D">
+								<ObjectAttribute
+									title="Tipe"
+									text="Tagihan Air" />
+								<ObjectAttribute
+									title="Tanggal"
+									text="09 Feb, 2023" />
+								<secondStatus>
+									<ObjectStatus
+										text="Paid"
+										state="Success" />
+								</secondStatus>
+							</ObjectListItem>
+							<ObjectListItem
+								type="Active"
+								title="9005 - Tenant E">
+								<ObjectAttribute
+									title="Tipe"
+									text="Tagihan Pengelolaan" />
+								<ObjectAttribute
+									title="Tanggal"
+									text="09 Feb, 2023" />
+								<secondStatus>
+									<ObjectStatus
+										text="Unpaid"
+										state="Error" />
+								</secondStatus>
+							</ObjectListItem>
+						</items>
 					</List>
 				</ScrollContainer>
 			</VBox>
