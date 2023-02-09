@@ -12,7 +12,7 @@
 			<!-- <FormattedText class="pageTitle" htmlText="Dashboard" /> -->
 		</VBox>
 		<HBox class="wrapper">
-			<VBox class="tile">
+			<VBox class="tile" id="tilePindaiMeteran">
 				<FlexBox
 					justifyContent="Start"
 					alignItems="Center">
@@ -29,11 +29,11 @@
 				<VBox class="tile-info">
 					<Text
 						class="dynamic-number"
-						text="5" />
-					<Text text="7 Days left before billing" />
+						text="0" />
+					<Text text="Meteran perlu dipindai" />
 				</VBox>
 			</VBox>
-			<VBox class="tile">
+			<VBox class="tile" id="tileTagihanAir">
 				<FlexBox
 					justifyContent="Start"
 					alignItems="Center">
@@ -51,10 +51,10 @@
 					<Text
 						class="dynamic-number"
 						text="5" />
-					<Text text="7 Days left before billing" />
+					<Text text="Tagihan untuk dicetak" />
 				</VBox>
 			</VBox>
-			<VBox class="tile">
+			<VBox class="tile" id="tileTagihanSewa">
 				<FlexBox
 					justifyContent="Start"
 					alignItems="Center">
@@ -71,11 +71,11 @@
 				<VBox class="tile-info">
 					<Text
 						class="dynamic-number"
-						text="5" />
-					<Text text="7 Days left before billing" />
+						text="3" />
+					<Text text="Tagihan untuk dicetak" />
 				</VBox>
 			</VBox>
-			<VBox class="tile tile-danger">
+			<VBox class="tile tile-danger" id="tileTagihanTerlambat">
 				<FlexBox
 					justifyContent="Start"
 					alignItems="Center">
@@ -92,8 +92,8 @@
 				<VBox class="tile-info">
 					<Text
 						class="dynamic-number"
-						text="5" />
-					<Text text="7 Days left before billing" />
+						text="0" />
+					<Text text="Tagihan untuk dicetak" />
 				</VBox>
 			</VBox>
 		</HBox>

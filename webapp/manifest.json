@@ -69,6 +69,10 @@
           "bundleName": "lrlpapp.i18n.i18n"
         }
       },
+      "penggunaanAir": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/penggunaanAir.json"
+      },
       "": {
         "dataSource": "mainService",
         "preload": true,

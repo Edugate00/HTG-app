@@ -1,0 +1,23 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <Dialog
+        id="tagihanAirDialog"
+        title="Tagihan Air untuk dicetak"
+        type="Standard">
+        <content>
+            <List items="{tagihanAir>/tagihanAir}">
+                <StandardListItem
+                    type="Active"
+                    title="{tagihanAir>nama}"
+                    description="{tagihanAir>noTagihan} - {tagihanAir>dueDate}" />
+            </List>
+        </content>
+        <endButton>
+            <Button
+                text="Close"
+                type="Emphasized"
+                press="onTagihanAirDialogClose" />
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>

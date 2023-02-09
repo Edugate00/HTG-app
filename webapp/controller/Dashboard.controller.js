@@ -5,7 +5,8 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/viz/ui5/data/DimensionDefinition",
-    "sap/ui/core/Item"
+    "sap/ui/core/Item",
+	"sap/ui/core/Fragment"
   ],
   function (
     BaseController,
@@ -13,7 +14,8 @@ sap.ui.define(
 	Filter,
 	FilterOperator,
 	DimensionDefinition,
-	Item
+	Item,
+	Fragment
   ) {
     "use strict";
 
@@ -71,193 +73,49 @@ sap.ui.define(
           },
         });
 
-        const penggunaanAir = {
-          data: [
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "January",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "Februari",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "Maret",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "April",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "Mei",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "Juni",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "Juli",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "Agustus",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "September",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "Oktober",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "November",
-            },
-            {
-              tenant: "Tenant A",
-              value: Math.floor(Math.random() * 201),
-              month: "Desember",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "January",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "Februari",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "Maret",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "April",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "Mei",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "Juni",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "Juli",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "Agustus",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "September",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "Oktober",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "November",
-            },
-            {
-              tenant: "Tenant B",
-              value: Math.floor(Math.random() * 201),
-              month: "Desember",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "January",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "Februari",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "Maret",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "April",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "Mei",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "Juni",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "Juli",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "Agustus",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "September",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "Oktober",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "November",
-            },
-            {
-              tenant: "Tenant C",
-              value: Math.floor(Math.random() * 201),
-              month: "Desember",
-            },
-          ],
-        };
+        const tileTagihanAir = this.getView().byId("tileTagihanAir");
+        tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
 
+        const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
         const penggunaanAirModel = new JSONModel(penggunaanAir);
+        const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
+
         oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
+        oComboBoxTenant.fireSelectionChange();
+      },
+
+      _onTagihanAirClick: function (oEvent) {
+        const oView = this.getView();
+        const oTagihanAirModel = [
+          {nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023"},
+          {nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023"},
+          {nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023"},
+          {nama: "Tenant D", noTagihan: "90046018", dueDate: "09 Feb, 2023"},
+          {nama: "Tenant E", noTagihan: "90046019", dueDate: "09 Feb, 2023"}
+        ];
+
+        if (!this.tagihanAirDialog) {
+          this.tagihanAirDialog = Fragment.load({
+              id: oView.getId(),
+              name: "lrlpapp.view.fragments.TagihanAirDialog",
+              controller: this,
+          }).then(function (oDialog) {
+            oDialog.setModel(oView.getModel());
+            oDialog.setModel(new JSONModel({ 
+              tagihanAir: oTagihanAirModel
+            }), "tagihanAir");
+            return oDialog;
+          })
+        }
+
+        this.tagihanAirDialog.then(function(oDialog) {
+          oDialog.setModel(oView.getModel());
+            oDialog.setModel(new JSONModel({ 
+              tagihanAir: oTagihanAirModel
+            }), "tagihanAir");
+            
+            oDialog.open();
+        })
       },
 
       onTenantSelected: function (oEvent) {
@@ -315,6 +173,11 @@ sap.ui.define(
           oDataset.getBinding("data").filter(oFilterMonth);
         }
       },
+
+      // Dialogs Close
+      onTagihanAirDialogClose: function() {
+        this.byId("tagihanAirDialog").close()
+      }
     });
   }
 );
