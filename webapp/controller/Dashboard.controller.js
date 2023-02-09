@@ -74,7 +74,11 @@ sap.ui.define(
         });
 
         const tileTagihanAir = this.getView().byId("tileTagihanAir");
+        const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
+
         tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
+        tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
+
 
         const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
         const penggunaanAirModel = new JSONModel(penggunaanAir);
@@ -112,6 +116,38 @@ sap.ui.define(
           oDialog.setModel(oView.getModel());
             oDialog.setModel(new JSONModel({ 
               tagihanAir: oTagihanAirModel
+            }), "tagihanAir");
+            
+            oDialog.open();
+        })
+      },
+
+      _onTagihanSewaClick: function (oEvent) {
+        const oView = this.getView();
+        const oTagihanSewaModel = [
+          {nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023"},
+          {nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023"},
+          {nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023"}
+        ];
+
+        if (!this.tagihanSewaDialog) {
+          this.tagihanSewaDialog = Fragment.load({
+              id: oView.getId(),
+              name: "lrlpapp.view.fragments.TagihanSewaDialog",
+              controller: this,
+          }).then(function (oDialog) {
+            oDialog.setModel(oView.getModel());
+            oDialog.setModel(new JSONModel({ 
+              tagihanAir: oTagihanSewaModel
+            }), "tagihanAir");
+            return oDialog;
+          })
+        }
+
+        this.tagihanSewaDialog.then(function(oDialog) {
+          oDialog.setModel(oView.getModel());
+            oDialog.setModel(new JSONModel({ 
+              tagihanAir: oTagihanSewaModel
             }), "tagihanAir");
             
             oDialog.open();
@@ -177,6 +213,9 @@ sap.ui.define(
       // Dialogs Close
       onTagihanAirDialogClose: function() {
         this.byId("tagihanAirDialog").close()
+      },
+      onTagihanSewaDialogClose: function() {
+        this.byId("tagihanSewaDialog").close()
       }
     });
   }
