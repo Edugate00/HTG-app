@@ -71,12 +71,19 @@ sap.ui.define(
           },
         });
 
-        const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
+        const tileTagihanAir = this.getView().byId("tileTagihanAir");
+        tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, false);
 
+        const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
         const penggunaanAirModel = new JSONModel(penggunaanAir);
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
+
         oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
         oComboBoxTenant.fireSelectionChange();
+      },
+
+      _onTagihanAirClick: function () {
+        console.log("WAODKOWAKDOA");
       },
 
       onTenantSelected: function (oEvent) {
