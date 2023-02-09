@@ -136,7 +136,9 @@
 				<ScrollContainer
 					height="83%"
 					vertical="true">
-					<List items="{tagihan>/tagihan}">
+					<List
+						id="tagihanList"
+						items="{tagihan>/tagihan}">
 						<items>
 							<ObjectListItem
 								type="Active"

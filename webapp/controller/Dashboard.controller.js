@@ -59,7 +59,7 @@ sap.ui.define(
             }
             oTagihan.push(el)
         })
-        
+
         this.getView().setModel(new JSONModel({ tagihan: oTagihan }), "tagihan");
 
         // Vizframe chart for Penggunaan Air
@@ -165,6 +165,23 @@ sap.ui.define(
             
             oDialog.open();
         })
+      },
+
+      onStatusSelect: function (oEvent) {
+        let oFilter, oSorter;
+        const oComboBoxStatus = oEvent.getSource();
+        const statuSelected = oComboBoxStatus.getSelectedKey();
+        const tagihanList = this.byId("tagihanList");
+
+        if (statuSelected === "paid") {
+          oFilter = new Filter("status", FilterOperator.EQ, "Sudah dibayar");
+        } else if (statuSelected === "unpaid") {
+          oFilter = new Filter("status", FilterOperator.EQ, "Belum dibayar")
+        } else {
+          oFilter = [];
+        }
+
+        tagihanList.getBinding("items").filter(oFilter);
       },
 
       onTenantSelected: function (oEvent) {
