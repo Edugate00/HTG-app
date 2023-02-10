@@ -221,6 +221,19 @@ sap.ui.define(
         tagihanList.getBinding("items").filter(oFilters);
       },
 
+      onUtilitiSelected: function(oEvent) {
+        const oComboBoxUtility = oEvent.getSource();
+        const utilitySelected = oComboBoxUtility.getSelectedKey();
+
+        const utilityCardTitle = this.byId("utilityTitle");
+
+        if (utilitySelected === "air") {
+          utilityCardTitle.setText("Penggunaan Air")
+        } else {
+          utilityCardTitle.setText("Penggunaan Listirk")
+        }
+      },
+
       onTenantSelected: function (oEvent) {
         let oFilterTenant, oFilterMonth, filters;
 

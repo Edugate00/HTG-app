@@ -200,6 +200,7 @@
 					justifyContent="SpaceBetween"
 					alignItems="Center">
 					<Text
+						id="utilityTitle"
 						class="card-title"
 						text="Penggunaan Air" />
 					<HBox>
