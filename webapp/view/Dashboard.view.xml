@@ -115,6 +115,37 @@
 						text="Tagihan" />
 					<HBox>
 						<ComboBox
+							id="ComboBoxTagihanTenant"
+							width="132px"
+							placeholder="Pilih Tenant"
+							selectionChange="onTagihanTenantSelected"
+							selectedKey="*"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							items="">
+							<core:Item
+								key="*"
+								text="Semua Tenant" />
+							<core:Item
+								key="Tenant A"
+								text="Tenant A" />
+							<core:Item
+								key="Tenant B"
+								text="Tenant B" />
+							<core:Item
+								key="Tenant C"
+								text="Tenant C" />
+							<core:Item
+								key="Tenant D"
+								text="Tenant D" />
+							<core:Item
+								key="Tenant E"
+								text="Tenant E" />
+							<core:Item
+								key="Tenant F"
+								text="Tenant F" />
+						</ComboBox>
+						<ComboBox
+							id="ComboBoxTagihanStatus"
 							width="132px"
 							placeholder="Select Status"
 							selectionChange="onStatusSelect"

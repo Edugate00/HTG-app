@@ -167,21 +167,58 @@ sap.ui.define(
         })
       },
 
-      onStatusSelect: function (oEvent) {
-        let oFilter, oSorter;
-        const oComboBoxStatus = oEvent.getSource();
+      onTagihanTenantSelected: function (oEvent) {
+        let oFilter1, oFilter2, oFilters;
+        const oComboBoxTenant = oEvent.getSource();
+        const oComboBoxStatus = this.getView().byId("ComboBoxTagihanStatus");
+        const tenantSelected = oComboBoxTenant.getSelectedKey();
         const statuSelected = oComboBoxStatus.getSelectedKey();
+
+        const tagihanList = this.byId("tagihanList");
+
+        if (tenantSelected !== "*") {
+          oFilter1 = new Filter("tenant", FilterOperator.EQ, tenantSelected);
+        } else {
+          oFilter1 = []
+        }
+
+        if (statuSelected === "paid") {
+          oFilter2 = new Filter("status", FilterOperator.EQ, "Sudah dibayar");
+        } else if (statuSelected === "unpaid") {
+          oFilter2 = new Filter("status", FilterOperator.EQ, "Belum dibayar")
+        } else {
+          oFilter2 = [];
+        }
+
+        oFilters = new Filter({filters: [oFilter1, oFilter2], and: true})
+        tagihanList.getBinding("items").filter(oFilters);
+      },
+
+      onStatusSelect: function (oEvent) {
+        let oFilter1, oFilter2, oFilters;
+        const oComboBoxStatus = oEvent.getSource();
+        const oComboBoxTenant = this.getView().byId("ComboBoxTagihanTenant");
+        const statuSelected = oComboBoxStatus.getSelectedKey();
+        const tenantSelected = oComboBoxTenant.getSelectedKey();
+
         const tagihanList = this.byId("tagihanList");
 
         if (statuSelected === "paid") {
-          oFilter = new Filter("status", FilterOperator.EQ, "Sudah dibayar");
+          oFilter1 = new Filter("status", FilterOperator.EQ, "Sudah dibayar");
         } else if (statuSelected === "unpaid") {
-          oFilter = new Filter("status", FilterOperator.EQ, "Belum dibayar")
+          oFilter1 = new Filter("status", FilterOperator.EQ, "Belum dibayar")
         } else {
-          oFilter = [];
+          oFilter1 = [];
         }
 
-        tagihanList.getBinding("items").filter(oFilter);
+        if (tenantSelected !== "*") {
+          oFilter2 = new Filter("tenant", FilterOperator.EQ, tenantSelected);
+        } else {
+          oFilter2 = []
+        }
+
+        oFilters = new Filter({filters: [oFilter1, oFilter2], and: true})
+        tagihanList.getBinding("items").filter(oFilters);
       },
 
       onTenantSelected: function (oEvent) {
