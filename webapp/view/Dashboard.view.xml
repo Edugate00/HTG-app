@@ -150,7 +150,7 @@
 							placeholder="Select Status"
 							selectionChange="onStatusSelect"
 							selectedKey="*"
-							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							class="sapMCbAutoFocus"
 							items="">
 							<core:Item
 								key="*"
@@ -200,10 +200,27 @@
 					justifyContent="SpaceBetween"
 					alignItems="Center">
 					<Text
+						id="utilityTitle"
 						class="card-title"
 						text="Penggunaan Air" />
 					<HBox>
 						<ComboBox
+							id="ComboBoxUtilitiChart"
+							width="104px"
+							placeholder="Pilih Utiliti"
+							selectionChange="onUtilitiSelected"
+							selectedKey="air"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							items="">
+							<core:Item
+								key="air"
+								text="Air" />
+							<core:Item
+								key="listrik"
+								text="Listrik" />
+						</ComboBox>
+						<Button icon="sap-icon://filter" press="onUtilitiFilterPress" />
+						<!-- <ComboBox
 							id="ComboBoxTenant"
 							width="132px"
 							placeholder="Pilih Tenant"
@@ -277,7 +294,7 @@
 							<core:Item
 								key="Desember"
 								text="Desember" />
-						</ComboBox>
+						</ComboBox> -->
 					</HBox>
 				</FlexBox>
 				<VBox>
@@ -310,6 +327,40 @@
 								values="Value" />
 							<viz.feeds:FeedItem
 								id="categoryAxisFeed"
+								uid="categoryAxis"
+								type="Dimension"
+								values="Category" />
+						</viz:feeds>
+					</viz:VizFrame>
+					<viz:VizFrame
+						id="vizPenggunaanListrik"
+						height="400px"
+						width="100%"
+						vizType="column"
+						busyIndicatorDelay="500"
+						legendVisible="false">
+						<viz:dataset>
+							<viz.data:FlattenedDataset data="{penggunaanListrik>/data}">
+								<viz.data:dimensions>
+									<viz.data:DimensionDefinition
+										name="Category"
+										value="{penggunaanListrik>tenant}" />
+								</viz.data:dimensions>
+								<viz.data:measures>
+									<viz.data:MeasureDefinition
+										name="Value"
+										value="{penggunaanListrik>value}" />
+								</viz.data:measures>
+							</viz.data:FlattenedDataset>
+						</viz:dataset>
+						<viz:feeds>
+							<viz.feeds:FeedItem
+								id="listrikValueAxisFeed"
+								uid="valueAxis"
+								type="Measure"
+								values="Value" />
+							<viz.feeds:FeedItem
+								id="listrikCategoryAxisFeed"
 								uid="categoryAxis"
 								type="Dimension"
 								values="Category" />

@@ -1,0 +1,184 @@
+{
+    "data": [
+        {
+            "tenant": "Tenant A",
+            "value": "116",
+            "month": "January"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "142",
+            "month": "February"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "170",
+            "month": "March"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "106",
+            "month": "April"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "194",
+            "month": "May"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "114",
+            "month": "June"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "186",
+            "month": "July"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "112",
+            "month": "August"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "106",
+            "month": "September"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "160",
+            "month": "October"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "102",
+            "month": "November"
+        },
+        {
+            "tenant": "Tenant A",
+            "value": "126",
+            "month": "December"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "145",
+            "month": "January"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "131",
+            "month": "February"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "166",
+            "month": "March"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "116",
+            "month": "April"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "191",
+            "month": "May"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "102",
+            "month": "June"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "167",
+            "month": "July"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "118",
+            "month": "August"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "111",
+            "month": "September"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "142",
+            "month": "October"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "182",
+            "month": "November"
+        },
+        {
+            "tenant": "Tenant B",
+            "value": "169",
+            "month": "December"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "114",
+            "month": "January"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "179",
+            "month": "February"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "99",
+            "month": "March"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "128",
+            "month": "April"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "96",
+            "month": "May"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "157",
+            "month": "June"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "114",
+            "month": "July"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "114",
+            "month": "August"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "165",
+            "month": "September"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "122",
+            "month": "October"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "117",
+            "month": "November"
+        },
+        {
+            "tenant": "Tenant C",
+            "value": "172",
+            "month": "December"
+        }
+    ]
+}
