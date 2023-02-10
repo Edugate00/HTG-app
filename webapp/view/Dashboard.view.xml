@@ -150,7 +150,7 @@
 							placeholder="Select Status"
 							selectionChange="onStatusSelect"
 							selectedKey="*"
-							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							class="sapMCbAutoFocus"
 							items="">
 							<core:Item
 								key="*"
@@ -204,6 +204,22 @@
 						text="Penggunaan Air" />
 					<HBox>
 						<ComboBox
+							id="ComboBoxUtilitiChart"
+							width="104px"
+							placeholder="Pilih Utiliti"
+							selectionChange="onUtilitiSelected"
+							selectedKey="air"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							items="">
+							<core:Item
+								key="air"
+								text="Air" />
+							<core:Item
+								key="listrik"
+								text="Listrik" />
+						</ComboBox>
+						<Button icon="sap-icon://filter" />
+						<!-- <ComboBox
 							id="ComboBoxTenant"
 							width="132px"
 							placeholder="Pilih Tenant"
@@ -277,7 +293,7 @@
 							<core:Item
 								key="Desember"
 								text="Desember" />
-						</ComboBox>
+						</ComboBox> -->
 					</HBox>
 				</FlexBox>
 				<VBox>

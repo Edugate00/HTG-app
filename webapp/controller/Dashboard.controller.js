@@ -98,7 +98,7 @@ sap.ui.define(
         tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
 
         oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
-        oComboBoxTenant.fireSelectionChange();
+        // oComboBoxTenant.fireSelectionChange();
       },
 
       _onTagihanAirClick: function (oEvent) {
