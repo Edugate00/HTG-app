@@ -62,6 +62,12 @@ sap.ui.define(
 
         this.getView().setModel(new JSONModel({ tagihan: oTagihan }), "tagihan");
 
+        const tileTagihanAir = this.getView().byId("tileTagihanAir");
+        const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
+
+        tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
+        tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
+
         // Vizframe chart for Penggunaan Air
         const vizAir = this.getView().byId("vizPenggunaanAir");
         const vizListrik = this.byId("vizPenggunaanListrik")
@@ -114,17 +120,15 @@ sap.ui.define(
         });
 
         const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
+        const PenggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
+
         const penggunaanAirModel = new JSONModel(penggunaanAir);
+        const penggunaanListrikModel = new JSONModel(PenggunaanListrik);
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
-
-        const tileTagihanAir = this.getView().byId("tileTagihanAir");
-        const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
-
-        tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
-        tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
 
         vizListrik.setVisible(false);
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
+        vizAir.setModel(penggunaanListrikModel, "penggunaanListrik");
         // oComboBoxTenant.fireSelectionChange();
       },
 
