@@ -1,0 +1,62 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:c="sap.ui.core">
+    <Dialog
+        id="filterUtilityChart"
+        title="Filter"
+        type="Standard"
+        contentHeight="320px">
+        <content>
+            <Page showHeader="false" class="sapUiContentPadding">
+                <FlexBox width="100%" height="100%" direction="Column">
+                    <FlexBox width="100%" direction="Column">
+                        <Text text="Tenant" />
+                        <ComboBox
+							id="ComboBoxTenant"
+							width="132px"
+							placeholder="Pilih Tenant"
+							selectionChange="onTenantSelected"
+							selectedKey="*"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							items="">
+							<core:Item
+								key="*"
+								text="Semua Tenant" />
+							<core:Item
+								key="Tenant A"
+								text="Tenant A" />
+							<core:Item
+								key="Tenant B"
+								text="Tenant B" />
+							<core:Item
+								key="Tenant C"
+								text="Tenant C" />
+							<core:Item
+								key="Tenant D"
+								text="Tenant D" />
+							<core:Item
+								key="Tenant E"
+								text="Tenant E" />
+							<core:Item
+								key="Tenant F"
+								text="Tenant F" />
+						</ComboBox>
+                    </FlexBox>
+                </FlexBox>
+            </Page>
+        </content>
+        <beginButton>
+            <Button
+                text="Close"
+                type="Default"
+                press="onFilterUtilityChartDialog" />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Apply Filter"
+                type="Emphasized"
+                press="onFilterApply" />
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>
