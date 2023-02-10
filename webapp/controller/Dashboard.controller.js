@@ -63,13 +63,39 @@ sap.ui.define(
         this.getView().setModel(new JSONModel({ tagihan: oTagihan }), "tagihan");
 
         // Vizframe chart for Penggunaan Air
-        const oVizFrame = this.getView().byId("vizPenggunaanAir");
-        oVizFrame.setVizProperties({
+        const vizAir = this.getView().byId("vizPenggunaanAir");
+        const vizListrik = this.byId("vizPenggunaanListrik")
+        
+
+        vizAir.setVizProperties({
           plotArea: {
             dataLabel: {
               visible: true,
             },
             colorPalette: ["#00925D"],
+          },
+          valueAxis: {
+            title: {
+              visible: false,
+            },
+          },
+          categoryAxis: {
+            title: {
+              visible: false,
+            },
+          },
+          title: {
+            visible: false,
+            text: "",
+          },
+        });
+
+        vizListrik.setVizProperties({
+          plotArea: {
+            dataLabel: {
+              visible: true,
+            },
+            colorPalette: ["#FF942E"],
           },
           valueAxis: {
             title: {
@@ -97,7 +123,8 @@ sap.ui.define(
         tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
         tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
 
-        oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
+        vizListrik.setVisible(false);
+        vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         // oComboBoxTenant.fireSelectionChange();
       },
 
@@ -224,13 +251,19 @@ sap.ui.define(
       onUtilitiSelected: function(oEvent) {
         const oComboBoxUtility = oEvent.getSource();
         const utilitySelected = oComboBoxUtility.getSelectedKey();
+        const vizAir = this.byId("vizPenggunaanAir")
+        const vizListrik = this.byId("vizPenggunaanListrik")
 
         const utilityCardTitle = this.byId("utilityTitle");
 
         if (utilitySelected === "air") {
           utilityCardTitle.setText("Penggunaan Air")
+          vizAir.setVisible(true);
+          vizListrik.setVisible(false);
         } else {
           utilityCardTitle.setText("Penggunaan Listirk")
+          vizAir.setVisible(false);
+          vizListrik.setVisible(true);
         }
       },
 
