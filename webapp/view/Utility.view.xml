@@ -70,11 +70,6 @@
 						type="Emphasized"
 						press="OnPostMeasurement"
 					/>
-					<!-- <Button
-						class="sapUiSmallMarginBeginEnd"
-						text="Scan QR"
-						press="OnScanQR"
-					/> -->
 					<ndc:BarcodeScannerButton
 						id="barcodeScannerDialog"
 						class="sapUiSmallMarginBeginEnd"
