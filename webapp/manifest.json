@@ -73,6 +73,10 @@
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/penggunaanAir.json"
       },
+      "penggunaanListrik": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/penggunaanListrik.json"
+      },
       "tagihan": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/tagihan.json"

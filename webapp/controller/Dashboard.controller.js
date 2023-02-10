@@ -62,9 +62,18 @@ sap.ui.define(
 
         this.getView().setModel(new JSONModel({ tagihan: oTagihan }), "tagihan");
 
+        const tileTagihanAir = this.getView().byId("tileTagihanAir");
+        const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
+
+        tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
+        tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
+
         // Vizframe chart for Penggunaan Air
-        const oVizFrame = this.getView().byId("vizPenggunaanAir");
-        oVizFrame.setVizProperties({
+        const vizAir = this.getView().byId("vizPenggunaanAir");
+        const vizListrik = this.byId("vizPenggunaanListrik")
+        
+
+        vizAir.setVizProperties({
           plotArea: {
             dataLabel: {
               visible: true,
@@ -87,18 +96,40 @@ sap.ui.define(
           },
         });
 
+        vizListrik.setVizProperties({
+          plotArea: {
+            dataLabel: {
+              visible: true,
+            },
+            colorPalette: ["#FF942E"],
+          },
+          valueAxis: {
+            title: {
+              visible: false,
+            },
+          },
+          categoryAxis: {
+            title: {
+              visible: false,
+            },
+          },
+          title: {
+            visible: false,
+            text: "",
+          },
+        });
+
         const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
+        const PenggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
+
         const penggunaanAirModel = new JSONModel(penggunaanAir);
+        const penggunaanListrikModel = new JSONModel(PenggunaanListrik);
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
 
-        const tileTagihanAir = this.getView().byId("tileTagihanAir");
-        const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
-
-        tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
-        tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
-
-        oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
-        oComboBoxTenant.fireSelectionChange();
+        vizListrik.setVisible(false);
+        vizAir.setModel(penggunaanAirModel, "penggunaanAir");
+        vizAir.setModel(penggunaanListrikModel, "penggunaanListrik");
+        // oComboBoxTenant.fireSelectionChange();
       },
 
       _onTagihanAirClick: function (oEvent) {
@@ -219,6 +250,25 @@ sap.ui.define(
 
         oFilters = new Filter({filters: [oFilter1, oFilter2], and: true})
         tagihanList.getBinding("items").filter(oFilters);
+      },
+
+      onUtilitiSelected: function(oEvent) {
+        const oComboBoxUtility = oEvent.getSource();
+        const utilitySelected = oComboBoxUtility.getSelectedKey();
+        const vizAir = this.byId("vizPenggunaanAir")
+        const vizListrik = this.byId("vizPenggunaanListrik")
+
+        const utilityCardTitle = this.byId("utilityTitle");
+
+        if (utilitySelected === "air") {
+          utilityCardTitle.setText("Penggunaan Air")
+          vizAir.setVisible(true);
+          vizListrik.setVisible(false);
+        } else {
+          utilityCardTitle.setText("Penggunaan Listirk")
+          vizAir.setVisible(false);
+          vizListrik.setVisible(true);
+        }
       },
 
       onTenantSelected: function (oEvent) {
