@@ -114,28 +114,24 @@ sap.ui.define(
         });
 
         const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
+        const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanAir").getData();
         const penggunaanAirModel = new JSONModel(penggunaanAir);
-        const penggunaanListrikModel = new JSONModel(PenggunaanListrik);
+        const penggunaanListrikModel = new JSONModel(penggunaanListrik);
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
 
-<<<<<<< HEAD
-        vizAir.setModel(penggunaanAirModel, "penggunaanAir");
-        vizAir.setModel(penggunaanListrikModel, "penggunaanListrik");
-        oComboBoxTenant.fireSelectionChange();
-=======
         const tileTagihanAir = this.getView().byId("tileTagihanAir");
         const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
 
         tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
         tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
 
-        oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
+        vizAir.setModel(penggunaanAirModel, "penggunaanAir");
+        vizListrik.setModel(penggunaanListrikModel, "penggunaanListrik");
         oComboBoxTenant.fireSelectionChange();
       },
 
       _onPindaiMeteranClick: function () {
         this.getRouter().navTo("utility");
->>>>>>> b37b6c99fdcb99f66cb8a748ac55115ef2b513a3
       },
 
       _onTagihanAirClick: function (oEvent) {
