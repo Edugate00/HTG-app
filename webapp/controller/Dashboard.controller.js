@@ -252,25 +252,6 @@ sap.ui.define(
         tagihanList.getBinding("items").filter(oFilters);
       },
 
-      onUtilitiSelected: function(oEvent) {
-        const oComboBoxUtility = oEvent.getSource();
-        const utilitySelected = oComboBoxUtility.getSelectedKey();
-        const vizAir = this.byId("vizPenggunaanAir")
-        const vizListrik = this.byId("vizPenggunaanListrik")
-
-        const utilityCardTitle = this.byId("utilityTitle");
-
-        if (utilitySelected === "air") {
-          utilityCardTitle.setText("Penggunaan Air")
-          vizAir.setVisible(true);
-          vizListrik.setVisible(false);
-        } else {
-          utilityCardTitle.setText("Penggunaan Listirk")
-          vizAir.setVisible(false);
-          vizListrik.setVisible(true);
-        }
-      },
-
       onTenantSelected: function (oEvent) {
         let oFilterTenant, oFilterMonth, filters;
 
