@@ -118,6 +118,11 @@ sap.ui.define(
         const penggunaanListrikModel = new JSONModel(PenggunaanListrik);
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
 
+<<<<<<< HEAD
+        vizAir.setModel(penggunaanAirModel, "penggunaanAir");
+        vizAir.setModel(penggunaanListrikModel, "penggunaanListrik");
+        oComboBoxTenant.fireSelectionChange();
+=======
         const tileTagihanAir = this.getView().byId("tileTagihanAir");
         const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
 
@@ -130,6 +135,7 @@ sap.ui.define(
 
       _onPindaiMeteranClick: function () {
         this.getRouter().navTo("utility");
+>>>>>>> b37b6c99fdcb99f66cb8a748ac55115ef2b513a3
       },
 
       _onTagihanAirClick: function (oEvent) {
@@ -262,25 +268,6 @@ sap.ui.define(
 
         oFilters = new Filter({filters: [oFilter1, oFilter2], and: true})
         tagihanList.getBinding("items").filter(oFilters);
-      },
-
-      onUtilitiSelected: function(oEvent) {
-        const oComboBoxUtility = oEvent.getSource();
-        const utilitySelected = oComboBoxUtility.getSelectedKey();
-        const vizAir = this.byId("vizPenggunaanAir")
-        const vizListrik = this.byId("vizPenggunaanListrik")
-
-        const utilityCardTitle = this.byId("utilityTitle");
-
-        if (utilitySelected === "air") {
-          utilityCardTitle.setText("Penggunaan Air")
-          vizAir.setVisible(true);
-          vizListrik.setVisible(false);
-        } else {
-          utilityCardTitle.setText("Penggunaan Listirk")
-          vizAir.setVisible(false);
-          vizListrik.setVisible(true);
-        }
       },
 
       onTenantSelected: function (oEvent) {
