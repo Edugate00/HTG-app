@@ -236,7 +236,7 @@ sap.ui.define(
           month = now.getMonth() + 1,
           day = now.getDate(),
           hour = now.getHours(),
-          minute = now.getMinutes(),
+          minute = now.getMinutes() - 1,
           second = now.getSeconds();
 
         if (month.toString().length == 1) {

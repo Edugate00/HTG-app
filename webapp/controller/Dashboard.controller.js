@@ -6,39 +6,39 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/viz/ui5/data/DimensionDefinition",
     "sap/ui/core/Item",
-	"sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
   ],
   function (
     BaseController,
-	JSONModel,
-	Filter,
-	FilterOperator,
-	DimensionDefinition,
-	Item,
-	Fragment
+    JSONModel,
+    Filter,
+    FilterOperator,
+    DimensionDefinition,
+    Item,
+    Fragment
   ) {
     "use strict";
 
     const itemsForTenant = [
-      {key: "3bulan", text: "3 Bulan"},
-      {key: "6bulan", text: "6 Bulan"},
-      {key: "1tahun", text: "1 Tahun"},
-      {key: "*", text: "Semua"},
+      { key: "3bulan", text: "3 Bulan" },
+      { key: "6bulan", text: "6 Bulan" },
+      { key: "1tahun", text: "1 Tahun" },
+      { key: "*", text: "Semua" },
     ];
 
     const itemsForAllTenants = [
-      {key: "1", text: "Januari"},
-      {key: "2", text: "Februari"},
-      {key: "3", text: "Maret"},
-      {key: "4", text: "April"},
-      {key: "5", text: "Mei"},
-      {key: "6", text: "Juni"},
-      {key: "7", text: "Juli"},
-      {key: "8", text: "Agustus"},
-      {key: "9", text: "September"},
-      {key: "10", text: "Oktober"},
-      {key: "11", text: "November"},
-      {key: "12", text: "Desember"},
+      { key: "1", text: "Januari" },
+      { key: "2", text: "Februari" },
+      { key: "3", text: "Maret" },
+      { key: "4", text: "April" },
+      { key: "5", text: "Mei" },
+      { key: "6", text: "Juni" },
+      { key: "7", text: "Juli" },
+      { key: "8", text: "Agustus" },
+      { key: "9", text: "September" },
+      { key: "10", text: "Oktober" },
+      { key: "11", text: "November" },
+      { key: "12", text: "Desember" },
     ];
 
     return BaseController.extend("lrlpapp.controller.Dashboard", {
@@ -49,24 +49,18 @@ sap.ui.define(
         this.getView().setModel(oTitle);
         const oTagihan = [];
         const tagihan = this.getOwnerComponent().getModel("tagihan").getData();
-        tagihan.data.forEach(el => {
-            if (el.status === "paid"){
-              el.status = "Sudah dibayar";
-              el.tipeStatus = "Success";
-            } else {
-              el. status = "Belum dibayar";
-              el.tipeStatus = "Error";
-            }
-            oTagihan.push(el)
-        })
+        tagihan.data.forEach((el) => {
+          if (el.status === "paid") {
+            el.status = "Sudah dibayar";
+            el.tipeStatus = "Success";
+          } else {
+            el.status = "Belum dibayar";
+            el.tipeStatus = "Error";
+          }
+          oTagihan.push(el);
+        });
 
         this.getView().setModel(new JSONModel({ tagihan: oTagihan }), "tagihan");
-
-        const tileTagihanAir = this.getView().byId("tileTagihanAir");
-        const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
-
-        tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
-        tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
 
         // Vizframe chart for Penggunaan Air
         const vizAir = this.getView().byId("vizPenggunaanAir");
@@ -120,81 +114,106 @@ sap.ui.define(
         });
 
         const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
-        const PenggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
-
         const penggunaanAirModel = new JSONModel(penggunaanAir);
         const penggunaanListrikModel = new JSONModel(PenggunaanListrik);
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
 
+<<<<<<< HEAD
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         vizAir.setModel(penggunaanListrikModel, "penggunaanListrik");
         oComboBoxTenant.fireSelectionChange();
+=======
+        const tileTagihanAir = this.getView().byId("tileTagihanAir");
+        const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
+
+        tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
+        tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
+
+        oVizFrame.setModel(penggunaanAirModel, "penggunaanAir");
+        oComboBoxTenant.fireSelectionChange();
+      },
+
+      _onPindaiMeteranClick: function () {
+        this.getRouter().navTo("utility");
+>>>>>>> b37b6c99fdcb99f66cb8a748ac55115ef2b513a3
       },
 
       _onTagihanAirClick: function (oEvent) {
         const oView = this.getView();
         const oTagihanAirModel = [
-          {nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023"},
-          {nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023"},
-          {nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023"},
-          {nama: "Tenant D", noTagihan: "90046018", dueDate: "09 Feb, 2023"},
-          {nama: "Tenant E", noTagihan: "90046019", dueDate: "09 Feb, 2023"}
+          { nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023" },
+          { nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023" },
+          { nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023" },
+          { nama: "Tenant D", noTagihan: "90046018", dueDate: "09 Feb, 2023" },
+          { nama: "Tenant E", noTagihan: "90046019", dueDate: "09 Feb, 2023" },
         ];
 
         if (!this.tagihanAirDialog) {
           this.tagihanAirDialog = Fragment.load({
-              id: oView.getId(),
-              name: "lrlpapp.view.fragments.TagihanAirDialog",
-              controller: this,
+            id: oView.getId(),
+            name: "lrlpapp.view.fragments.TagihanAirDialog",
+            controller: this,
           }).then(function (oDialog) {
             oDialog.setModel(oView.getModel());
-            oDialog.setModel(new JSONModel({ 
-              tagihanAir: oTagihanAirModel
-            }), "tagihanAir");
+            oDialog.setModel(
+              new JSONModel({
+                tagihanAir: oTagihanAirModel,
+              }),
+              "tagihanAir"
+            );
             return oDialog;
-          })
+          });
         }
 
-        this.tagihanAirDialog.then(function(oDialog) {
+        this.tagihanAirDialog.then(function (oDialog) {
           oDialog.setModel(oView.getModel());
-            oDialog.setModel(new JSONModel({ 
-              tagihanAir: oTagihanAirModel
-            }), "tagihanAir");
-            
-            oDialog.open();
-        })
+          oDialog.setModel(
+            new JSONModel({
+              tagihanAir: oTagihanAirModel,
+            }),
+            "tagihanAir"
+          );
+
+          oDialog.open();
+        });
       },
 
       _onTagihanSewaClick: function (oEvent) {
         const oView = this.getView();
         const oTagihanSewaModel = [
-          {nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023"},
-          {nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023"},
-          {nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023"}
+          { nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023" },
+          { nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023" },
+          { nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023" },
         ];
 
         if (!this.tagihanSewaDialog) {
           this.tagihanSewaDialog = Fragment.load({
-              id: oView.getId(),
-              name: "lrlpapp.view.fragments.TagihanSewaDialog",
-              controller: this,
+            id: oView.getId(),
+            name: "lrlpapp.view.fragments.TagihanSewaDialog",
+            controller: this,
           }).then(function (oDialog) {
             oDialog.setModel(oView.getModel());
-            oDialog.setModel(new JSONModel({ 
-              tagihanAir: oTagihanSewaModel
-            }), "tagihanAir");
+            oDialog.setModel(
+              new JSONModel({
+                tagihanAir: oTagihanSewaModel,
+              }),
+              "tagihanAir"
+            );
             return oDialog;
-          })
+          });
         }
 
-        this.tagihanSewaDialog.then(function(oDialog) {
+        this.tagihanSewaDialog.then(function (oDialog) {
           oDialog.setModel(oView.getModel());
-            oDialog.setModel(new JSONModel({ 
-              tagihanAir: oTagihanSewaModel
-            }), "tagihanAir");
-            
-            oDialog.open();
-        })
+          oDialog.setModel(
+            new JSONModel({
+              tagihanAir: oTagihanSewaModel,
+            }),
+            "tagihanAir"
+          );
+
+          oDialog.open();
+        });
       },
 
       onTagihanTenantSelected: function (oEvent) {
@@ -236,7 +255,7 @@ sap.ui.define(
         if (statuSelected === "paid") {
           oFilter1 = new Filter("status", FilterOperator.EQ, "Sudah dibayar");
         } else if (statuSelected === "unpaid") {
-          oFilter1 = new Filter("status", FilterOperator.EQ, "Belum dibayar")
+          oFilter = new Filter("status", FilterOperator.EQ, "Belum dibayar");
         } else {
           oFilter1 = [];
         }
@@ -270,21 +289,21 @@ sap.ui.define(
           oVizFrame.setVizProperties({
             title: { visible: true, text: `${tenantSelected}` },
           });
-          
+
           oComboBoxMonth.destroyItems();
-          itemsForTenant.forEach(el => {
+          itemsForTenant.forEach((el) => {
             oComboBoxMonth.addItem(new Item(el));
-          })
-          oComboBoxMonth.setSelectedKey("3bulan")
+          });
+          oComboBoxMonth.setSelectedKey("3bulan");
           oDataset.removeDimension(oDimension);
 
           const oNewDimension = new DimensionDefinition({
-            name: "Category", value: "{penggunaanAir>month}"
+            name: "Category",
+            value: "{penggunaanAir>month}",
           });
 
           oDataset.addDimension(oNewDimension);
           oDataset.getBinding("data").filter(oFilterTenant);
-
         } else {
           oVizFrame.setVizType("column");
           oVizFrame.setVizProperties({
@@ -292,15 +311,16 @@ sap.ui.define(
           });
 
           oComboBoxMonth.destroyItems();
-          itemsForAllTenants.forEach(el => {
+          itemsForAllTenants.forEach((el) => {
             oComboBoxMonth.addItem(new Item(el));
-          })
-          oComboBoxMonth.setSelectedKey("2")
+          });
+          oComboBoxMonth.setSelectedKey("2");
           oDataset.removeDimension(oDimension);
 
           oDataset.removeDimension(oDimension);
           const oNewDimension = new DimensionDefinition({
-            name: "Category", value: "{penggunaanAir>tenant}"
+            name: "Category",
+            value: "{penggunaanAir>tenant}",
           });
           oDataset.addDimension(oNewDimension);
           oDataset.getBinding("data").filter(oFilterMonth);
@@ -308,12 +328,12 @@ sap.ui.define(
       },
 
       // Dialogs Close
-      onTagihanAirDialogClose: function() {
-        this.byId("tagihanAirDialog").close()
+      onTagihanAirDialogClose: function () {
+        this.byId("tagihanAirDialog").close();
       },
-      onTagihanSewaDialogClose: function() {
-        this.byId("tagihanSewaDialog").close()
-      }
+      onTagihanSewaDialogClose: function () {
+        this.byId("tagihanSewaDialog").close();
+      },
     });
   }
 );
