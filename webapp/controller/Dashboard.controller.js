@@ -126,7 +126,7 @@ sap.ui.define(
         const penggunaanListrikModel = new JSONModel(PenggunaanListrik);
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
 
-        vizListrik.setVisible(false);
+        // vizListrik.setVisible(false);
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         vizAir.setModel(penggunaanListrikModel, "penggunaanListrik");
         // oComboBoxTenant.fireSelectionChange();
