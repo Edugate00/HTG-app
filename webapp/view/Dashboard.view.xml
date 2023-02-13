@@ -9,7 +9,6 @@
 	xmlns:viz.data="sap.viz.ui5.data">
 	<Page showHeader="false">
 		<VBox class="header-container">
-			<!-- <FormattedText class="pageTitle" htmlText="Dashboard" /> -->
 		</VBox>
 		<VBox class="main-container">
 			<HBox class="tiles">
