@@ -60,12 +60,14 @@ sap.ui.define(
           oTagihan.push(el);
         });
 
-        this.getView().setModel(new JSONModel({ tagihan: oTagihan }), "tagihan");
+        this.getView().setModel(
+          new JSONModel({ tagihan: oTagihan }),
+          "tagihan"
+        );
 
         // Vizframe chart for Penggunaan Air
         const vizAir = this.getView().byId("vizPenggunaanAir");
-        const vizListrik = this.byId("vizPenggunaanListrik")
-        
+        const vizListrik = this.byId("vizPenggunaanListrik");
 
         vizAir.setVizProperties({
           plotArea: {
@@ -113,17 +115,35 @@ sap.ui.define(
           },
         });
 
-        const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
-        const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanAir").getData();
+        const penggunaanAir = this.getOwnerComponent()
+          .getModel("penggunaanAir")
+          .getData();
+        const penggunaanListrik = this.getOwnerComponent()
+          .getModel("penggunaanAir")
+          .getData();
         const penggunaanAirModel = new JSONModel(penggunaanAir);
         const penggunaanListrikModel = new JSONModel(penggunaanListrik);
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
 
         const tileTagihanAir = this.getView().byId("tileTagihanAir");
         const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
+        const tilePindaiMeteran = this.getView().byId("tilePindaiMeteran");
 
-        tileTagihanAir.attachBrowserEvent("click", this._onTagihanAirClick, this);
-        tileTagihanSewa.attachBrowserEvent("click", this._onTagihanSewaClick, this);
+        tileTagihanAir.attachBrowserEvent(
+          "click",
+          this._onTagihanAirClick,
+          this
+        );
+        tileTagihanSewa.attachBrowserEvent(
+          "click",
+          this._onTagihanSewaClick,
+          this
+        );
+        tilePindaiMeteran.attachBrowserEvent(
+          "click",
+          this._onPindaiMeteranClick,
+          this
+        );
 
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         vizListrik.setModel(penggunaanListrikModel, "penggunaanListrik");
@@ -224,18 +244,18 @@ sap.ui.define(
         if (tenantSelected !== "*") {
           oFilter1 = new Filter("tenant", FilterOperator.EQ, tenantSelected);
         } else {
-          oFilter1 = []
+          oFilter1 = [];
         }
 
         if (statuSelected === "paid") {
           oFilter2 = new Filter("status", FilterOperator.EQ, "Sudah dibayar");
         } else if (statuSelected === "unpaid") {
-          oFilter2 = new Filter("status", FilterOperator.EQ, "Belum dibayar")
+          oFilter2 = new Filter("status", FilterOperator.EQ, "Belum dibayar");
         } else {
           oFilter2 = [];
         }
 
-        oFilters = new Filter({filters: [oFilter1, oFilter2], and: true})
+        oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
         tagihanList.getBinding("items").filter(oFilters);
       },
 
@@ -259,10 +279,10 @@ sap.ui.define(
         if (tenantSelected !== "*") {
           oFilter2 = new Filter("tenant", FilterOperator.EQ, tenantSelected);
         } else {
-          oFilter2 = []
+          oFilter2 = [];
         }
 
-        oFilters = new Filter({filters: [oFilter1, oFilter2], and: true})
+        oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
         tagihanList.getBinding("items").filter(oFilters);
       },
 
