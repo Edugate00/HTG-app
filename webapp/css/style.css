@@ -299,6 +299,12 @@ body {
 }
 
 @media (width <=768px) {
+    .header-container {
+        color: #ffffff;
+        padding: 128px 40px 40px 40px;
+        background-color: var(--primary-color-40);
+    }
+
     .main-container {
         padding: 0 24px;
     }
@@ -313,6 +319,12 @@ body {
 }
 
 @media (width <=576px) {
+    .header-container {
+        color: #ffffff;
+        padding: 128px 24px 24px 24px;
+        background-color: var(--primary-color-40);
+    }
+
     .navDesktop {
         display: none;
     }
