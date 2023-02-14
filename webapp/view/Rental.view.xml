@@ -1,8 +1,48 @@
 <mvc:View
 	controllerName="lrlpapp.controller.Rental"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
 	displayBlock="true"
-	xmlns="sap.m"
->
-	<Text text="Rental"/>
+	xmlns="sap.m">
+	<Page showHeader="false">
+		<VBox class="header-container" />
+		<VBox class="main-container">
+			<HBox class="tiles">
+				<VBox
+					class="tile"
+					id="tileContainer">
+					<FlexBox class="tile-header">
+						<VBox class="tile-icon sapUiSmallMarginEnd">
+							<core:Icon
+								src="sap-icon://sap-box"
+								class="size1"
+								color="#ffffff" />
+						</VBox>
+						<Text class="tile-title" text="Container" />
+					</FlexBox>
+					<VBox class="tile-info">
+						<Text class="dynamic-number" text="0" />
+						<Text text="Meteran perlu dipindai" />
+					</VBox>
+				</VBox>
+				<VBox
+					class="tile"
+					id="tileTenant">
+					<FlexBox class="tile-header">
+						<VBox class="tile-icon sapUiSmallMarginEnd">
+							<core:Icon
+								src="sap-icon://person-placeholder"
+								class="size1"
+								color="#ffffff" />
+						</VBox>
+						<Text class="tile-title" text="Tenant" />
+					</FlexBox>
+					<VBox class="tile-info">
+						<Text class="dynamic-number" text="0" />
+						<Text text="Meteran perlu dipindai" />
+					</VBox>
+				</VBox>
+			</HBox>
+		</VBox>
+	</Page>
 </mvc:View>
