@@ -337,6 +337,21 @@ body {
         cursor: pointer;
     }
 
+    .navMobile-link-active {
+        background-color: var(--secondary-color-40);
+        animation: navMobileBg 0.2s;
+    }
+
+    @keyframes navMobileBg {
+        from {
+            border-radius: 50%;
+        }
+
+        to {
+            border-radius: 0;
+        }
+    }
+
     .sizeNavIcon {
         font-size: 1.25rem;
     }
