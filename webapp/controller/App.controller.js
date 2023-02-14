@@ -9,19 +9,30 @@ sap.ui.define(["lrlpapp/controller/BaseController"], function (BaseController) {
       const navMobileUtility = this.byId("navMobileUtility");
       const navMobileRental = this.byId("navMobileRental");
 
+      navMobileDashboard.addStyleClass("navMobile-link-active")
+
       // Dashboard
       navMobileDashboard.attachBrowserEvent("click", () => {
         this.getRouter().navTo("dashboard")
+        navMobileDashboard.addStyleClass("navMobile-link-active")
+        navMobileUtility.removeStyleClass("navMobile-link-active")
+        navMobileRental.removeStyleClass("navMobile-link-active")
       }, this);
 
       // Utility
       navMobileUtility.attachBrowserEvent("click", () => {
         this.getRouter().navTo("utility")
+        navMobileDashboard.removeStyleClass("navMobile-link-active")
+        navMobileUtility.addStyleClass("navMobile-link-active")
+        navMobileRental.removeStyleClass("navMobile-link-active")
       }, this);
 
       // Rental
       navMobileRental.attachBrowserEvent("click", () => {
         this.getRouter().navTo("rental")
+        navMobileDashboard.removeStyleClass("navMobile-link-active")
+        navMobileUtility.removeStyleClass("navMobile-link-active")
+        navMobileRental.addStyleClass("navMobile-link-active")
       }, this);
 
     },
