@@ -151,7 +151,7 @@ sap.ui.define(
       },
 
       _onPindaiMeteranClick: function () {
-        this.getRouter().navTo("Meteran");
+        this.getRouter().navTo("meteran");
       },
 
       _onTagihanAirClick: function (oEvent) {
@@ -343,29 +343,36 @@ sap.ui.define(
         }
       },
 
-	  onChartMonthSelected: function (oEvent) {
-      let oFilterTenant, oFilterMonth, filters;
-      const oVizFrame = this.getView().byId("vizPenggunaanAir");
-      const oDataset = oVizFrame.getDataset().getBinding("data");
+      onChartMonthSelected: function (oEvent) {
+        let oFilterTenant, oFilterMonth, filters;
+        const oVizFrame = this.getView().byId("vizPenggunaanAir");
+        const oDataset = oVizFrame.getDataset().getBinding("data");
 
-      const oComboBoxMonth = oEvent.getSource();
-      const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
-      const monthSelected = oComboBoxMonth.getSelectedKey();
-      const tenantSelected = oComboBoxTenant.getSelectedKey();
+        const oComboBoxMonth = oEvent.getSource();
+        const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
+        const monthSelected = oComboBoxMonth.getSelectedKey();
+        const tenantSelected = oComboBoxTenant.getSelectedKey();
 
-      if (tenantSelected !== '*') {
-        oFilterTenant = new Filter("tenant", FilterOperator.EQ, tenantSelected);
-        oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
-      } else {
-        oFilterTenant = [];
-        oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
-      }
+        if (tenantSelected !== "*") {
+          oFilterTenant = new Filter(
+            "tenant",
+            FilterOperator.EQ,
+            tenantSelected
+          );
+          oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
+        } else {
+          oFilterTenant = [];
+          oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
+        }
 
-      filters = new Filter({ filters: [oFilterTenant, oFilterMonth], and: true });
-      
-      oDataset.filter(filters);
-      console.log(monthSelected)
-	  },
+        filters = new Filter({
+          filters: [oFilterTenant, oFilterMonth],
+          and: true,
+        });
+
+        oDataset.filter(filters);
+        console.log(monthSelected);
+      },
 
       // Dialogs Close
       onTagihanAirDialogClose: function () {
