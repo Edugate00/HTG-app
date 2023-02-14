@@ -4,6 +4,26 @@ sap.ui.define(["lrlpapp/controller/BaseController"], function (BaseController) {
   return BaseController.extend("lrlpapp.controller.controller.App", {
     onInit() {
       this._getActiveNav("dashboard");
+
+      const navMobileDashboard = this.byId("navMobileDashboard");
+      const navMobileUtility = this.byId("navMobileUtility");
+      const navMobileRental = this.byId("navMobileRental");
+
+      // Dashboard
+      navMobileDashboard.attachBrowserEvent("click", () => {
+        this.getRouter().navTo("dashboard")
+      }, this);
+
+      // Utility
+      navMobileUtility.attachBrowserEvent("click", () => {
+        this.getRouter().navTo("utility")
+      }, this);
+
+      // Rental
+      navMobileRental.attachBrowserEvent("click", () => {
+        this.getRouter().navTo("rental")
+      }, this);
+
     },
 
     onDashboardPress: function () {
