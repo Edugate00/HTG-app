@@ -128,6 +128,11 @@
           "pattern": "maintenance",
           "name": "maintenance",
           "target": "maintenance"
+        },
+        {
+          "pattern": "Meteran",
+          "name": "Meteran",
+          "target": "Meteran"
         }
       ],
       "targets": {
@@ -149,6 +154,11 @@
         "maintenance": {
           "id": "maintenance",
           "name": "maintenance",
+          "viewLevel": 1
+        },
+        "Meteran": {
+          "id": "Meteran",
+          "name": "Meteran",
           "viewLevel": 1
         }
       }

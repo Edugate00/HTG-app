@@ -151,7 +151,7 @@ sap.ui.define(
       },
 
       _onPindaiMeteranClick: function () {
-        this.getRouter().navTo("utility");
+        this.getRouter().navTo("Meteran");
       },
 
       _onTagihanAirClick: function (oEvent) {
