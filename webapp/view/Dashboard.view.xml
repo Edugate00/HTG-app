@@ -14,129 +14,96 @@
 			<HBox class="tiles">
 				<VBox
 					class="tile"
-					id="tilePindaiMeteran"
-				>
-					<FlexBox
-						justifyContent="Start"
-						alignItems="Center"
-					>
+					id="tilePindaiMeteran">
+					<FlexBox class="tile-header">
 						<VBox class="tile-icon sapUiSmallMarginEnd">
 							<core:Icon
 								src="sap-icon://qr-code"
 								class="size1"
-								color="#ffffff"
-							/>
+								color="#ffffff" />
 						</VBox>
 						<Text
 							class="tile-title"
-							text="Pindai Meteran Air"
-						/>
+							text="Pindai Meteran Air" />
 					</FlexBox>
 					<VBox class="tile-info">
 						<Text
 							class="dynamic-number"
-							text="0"
-						/>
+							text="0" />
 						<Text text="Meteran perlu dipindai" />
 					</VBox>
 				</VBox>
 				<VBox
 					class="tile"
-					id="tileTagihanAir"
-				>
-					<FlexBox
-						justifyContent="Start"
-						alignItems="Center"
-					>
+					id="tileTagihanAir">
+					<FlexBox class="tile-header">
 						<VBox class="tile-icon sapUiSmallMarginEnd">
 							<core:Icon
 								src="sap-icon://blur"
 								class="size1"
-								color="#ffffff"
-							/>
+								color="#ffffff" />
 						</VBox>
 						<Text
 							class="tile-title"
-							text="Tagihan Air"
-						/>
+							text="Tagihan Air" />
 					</FlexBox>
 					<VBox class="tile-info">
 						<Text
 							class="dynamic-number"
-							text="5"
-						/>
+							text="5" />
 						<Text text="Tagihan untuk dicetak" />
 					</VBox>
 				</VBox>
 				<VBox
 					class="tile"
-					id="tileTagihanSewa"
-				>
-					<FlexBox
-						justifyContent="Start"
-						alignItems="Center"
-					>
+					id="tileTagihanSewa">
+					<FlexBox class="tile-header">
 						<VBox class="tile-icon sapUiSmallMarginEnd">
 							<core:Icon
 								src="sap-icon://building"
 								class="size1"
-								color="#ffffff"
-							/>
+								color="#ffffff" />
 						</VBox>
 						<Text
 							class="tile-title"
-							text="Tagihan Sewa"
-						/>
+							text="Tagihan Sewa" />
 					</FlexBox>
 					<VBox class="tile-info">
 						<Text
 							class="dynamic-number"
-							text="3"
-						/>
+							text="3" />
 						<Text text="Tagihan untuk dicetak" />
 					</VBox>
 				</VBox>
 				<VBox
 					class="tile tile-danger"
-					id="tileTagihanTerlambat"
-				>
-					<FlexBox
-						justifyContent="Start"
-						alignItems="Center"
-					>
+					id="tileTagihanTerlambat">
+					<FlexBox class="tile-header">
 						<VBox class="tile-icon sapUiSmallMarginEnd">
 							<core:Icon
 								src="sap-icon://sales-order-item"
 								class="size1"
-								color="#ffffff"
-							/>
+								color="#ffffff" />
 						</VBox>
 						<Text
 							class="tile-title"
-							text="Terlambat Dicetak"
-						/>
+							text="Terlambat Dicetak" />
 					</FlexBox>
 					<VBox class="tile-info">
 						<Text
 							class="dynamic-number"
-							text="0"
-						/>
+							text="0" />
 						<Text text="Tagihan untuk dicetak" />
 					</VBox>
 				</VBox>
 			</HBox>
 			<HBox class="bills-and-utility">
-				<VBox class="card">
+				<VBox class="card-tagihan card">
 					<FlexBox
-						class="card-header"
-						direction="Row"
-						justifyContent="SpaceBetween"
-						alignItems="Center"
-					>
+						class="card-header">
 						<Text
 							class="card-title"
-							text="Tagihan"
-						/>
+							text="Tagihan" />
 						<HBox>
 							<ComboBox
 								id="ComboBoxTagihanTenant"
@@ -144,37 +111,28 @@
 								placeholder="Pilih Tenant"
 								selectionChange="onTagihanTenantSelected"
 								selectedKey="*"
-								class="sapUiTinyMarginEnd sapMCbAutoFocus"
-								items=""
-							>
+								class="sapUiTinyMarginEnd sapMCbAutoFocus">
 								<core:Item
 									key="*"
-									text="Semua Tenant"
-								/>
+									text="Semua Tenant" />
 								<core:Item
 									key="Tenant A"
-									text="Tenant A"
-								/>
+									text="Tenant A" />
 								<core:Item
 									key="Tenant B"
-									text="Tenant B"
-								/>
+									text="Tenant B" />
 								<core:Item
 									key="Tenant C"
-									text="Tenant C"
-								/>
+									text="Tenant C" />
 								<core:Item
 									key="Tenant D"
-									text="Tenant D"
-								/>
+									text="Tenant D" />
 								<core:Item
 									key="Tenant E"
-									text="Tenant E"
-								/>
+									text="Tenant E" />
 								<core:Item
 									key="Tenant F"
-									text="Tenant F"
-								/>
+									text="Tenant F" />
 							</ComboBox>
 							<ComboBox
 								id="ComboBoxTagihanStatus"
@@ -182,50 +140,39 @@
 								placeholder="Select Status"
 								selectionChange="onStatusSelect"
 								selectedKey="*"
-								class="sapMCbAutoFocus"
-								items=""
-							>
+								class="sapMCbAutoFocus">
 								<core:Item
 									key="*"
-									text="Semua"
-								/>
+									text="Semua" />
 								<core:Item
 									key="paid"
-									text="Sudah dibayar"
-								/>
+									text="Sudah dibayar" />
 								<core:Item
 									key="unpaid"
-									text="Belum dibayar"
-								/>
+									text="Belum dibayar" />
 							</ComboBox>
 						</HBox>
 					</FlexBox>
 					<ScrollContainer
 						height="90%"
-						vertical="true"
-					>
+						vertical="true">
 						<List
 							id="tagihanList"
-							items="{tagihan>/tagihan}"
-						>
+							items="{tagihan>/tagihan}">
 							<items>
 								<ObjectListItem
 									type="Active"
-									title="{tagihan>noTagihan} - {tagihan>tenant}"
-								>
+									title="{tagihan>noTagihan} - {tagihan>tenant}">
 									<ObjectAttribute
 										title="Tipe"
-										text="{tagihan>tipe}"
-									/>
+										text="{tagihan>tipe}" />
 									<ObjectAttribute
 										title="Tanggal"
-										text="{tagihan>dueDate}"
-									/>
+										text="{tagihan>dueDate}" />
 									<secondStatus>
 										<ObjectStatus
 											text="{tagihan>status}"
-											state="{tagihan>tipeStatus}"
-										/>
+											state="{tagihan>tipeStatus}" />
 									</secondStatus>
 								</ObjectListItem>
 							</items>
@@ -235,15 +182,10 @@
 				<VBox class="utility-charts">
 					<VBox class="card">
 						<FlexBox
-							class="card-header"
-							direction="Row"
-							justifyContent="SpaceBetween"
-							alignItems="Center"
-						>
+							class="card-header">
 							<Text
 								class="card-title"
-								text="Penggunaan Air"
-							/>
+								text="Penggunaan Air" />
 							<HBox>
 								<ComboBox
 									id="ComboBoxTenant"
@@ -252,36 +194,28 @@
 									selectionChange="onChartTenantSelected"
 									selectedKey="*"
 									class="sapUiTinyMarginEnd sapMCbAutoFocus"
-									items=""
-								>
+									items="">
 									<core:Item
 										key="*"
-										text="Semua Tenant"
-									/>
+										text="Semua Tenant" />
 									<core:Item
 										key="Tenant A"
-										text="Tenant A"
-									/>
+										text="Tenant A" />
 									<core:Item
 										key="Tenant B"
-										text="Tenant B"
-									/>
+										text="Tenant B" />
 									<core:Item
 										key="Tenant C"
-										text="Tenant C"
-									/>
+										text="Tenant C" />
 									<core:Item
 										key="Tenant D"
-										text="Tenant D"
-									/>
+										text="Tenant D" />
 									<core:Item
 										key="Tenant E"
-										text="Tenant E"
-									/>
+										text="Tenant E" />
 									<core:Item
 										key="Tenant F"
-										text="Tenant F"
-									/>
+										text="Tenant F" />
 								</ComboBox>
 								<ComboBox
 									id="ComboBoxMonth"
@@ -290,56 +224,43 @@
 									selectionChange="onChartMonthSelected"
 									selectedKey="*"
 									class="sapUiTinyMarginEnd sapMCbAutoFocus"
-									items=""
-								>
+									items="">
 									<core:Item
 										key="Januari"
-										text="Januari"
-									/>
+										text="Januari" />
 									<core:Item
 										key="Februari"
-										text="Februari"
-									/>
+										text="Februari" />
 									<core:Item
 										key="Maret"
-										text="Maret"
-									/>
+										text="Maret" />
 									<core:Item
 										key="April"
-										text="April"
-									/>
+										text="April" />
 									<core:Item
 										key="Mei"
-										text="Mei"
-									/>
+										text="Mei" />
 									<core:Item
 										key="Juni"
-										text="Juni"
-									/>
+										text="Juni" />
 									<core:Item
 										key="Juli"
-										text="Juli"
-									/>
+										text="Juli" />
 									<core:Item
 										key="Agustus"
-										text="Agustus"
-									/>
+										text="Agustus" />
 									<core:Item
 										key="September"
-										text="September"
-									/>
+										text="September" />
 									<core:Item
 										key="Oktober"
-										text="Oktober"
-									/>
+										text="Oktober" />
 									<core:Item
 										key="November"
-										text="November"
-									/>
+										text="November" />
 									<core:Item
 										key="Desember"
-										text="Desember"
-									/>
+										text="Desember" />
 								</ComboBox>
 							</HBox>
 						</FlexBox>
@@ -350,21 +271,18 @@
 								width="100%"
 								vizType="column"
 								busyIndicatorDelay="500"
-								legendVisible="false"
-							>
+								legendVisible="false">
 								<viz:dataset>
 									<viz.data:FlattenedDataset data="{penggunaanAir>/data}">
 										<viz.data:dimensions>
 											<viz.data:DimensionDefinition
 												name="Category"
-												value="{penggunaanAir>tenant}"
-											/>
+												value="{penggunaanAir>tenant}" />
 										</viz.data:dimensions>
 										<viz.data:measures>
 											<viz.data:MeasureDefinition
 												name="Value"
-												value="{penggunaanAir>value}"
-											/>
+												value="{penggunaanAir>value}" />
 										</viz.data:measures>
 									</viz.data:FlattenedDataset>
 								</viz:dataset>
@@ -373,29 +291,22 @@
 										id="valueAxisFeed"
 										uid="valueAxis"
 										type="Measure"
-										values="Value"
-									/>
+										values="Value" />
 									<viz.feeds:FeedItem
 										id="categoryAxisFeed"
 										uid="categoryAxis"
 										type="Dimension"
-										values="Category"
-									/>
+										values="Category" />
 								</viz:feeds>
 							</viz:VizFrame>
 						</VBox>
 					</VBox>
 					<VBox class="card">
 						<FlexBox
-							class="card-header"
-							direction="Row"
-							justifyContent="SpaceBetween"
-							alignItems="Center"
-						>
+							class="card-header">
 							<Text
 								class="card-title"
-								text="Penggunaan Listrik"
-							/>
+								text="Penggunaan Listrik" />
 							<HBox>
 								<ComboBox
 									id="ComboBoxMonthListrik"
@@ -404,56 +315,43 @@
 									selectionChange="onMonthSelected"
 									selectedKey="*"
 									class="sapUiTinyMarginEnd sapMCbAutoFocus"
-									items=""
-								>
+									items="">
 									<core:Item
 										key="Januari"
-										text="Januari"
-									/>
+										text="Januari" />
 									<core:Item
 										key="Februari"
-										text="Februari"
-									/>
+										text="Februari" />
 									<core:Item
 										key="Maret"
-										text="Maret"
-									/>
+										text="Maret" />
 									<core:Item
 										key="April"
-										text="April"
-									/>
+										text="April" />
 									<core:Item
 										key="Mei"
-										text="Mei"
-									/>
+										text="Mei" />
 									<core:Item
 										key="Juni"
-										text="Juni"
-									/>
+										text="Juni" />
 									<core:Item
 										key="Juli"
-										text="Juli"
-									/>
+										text="Juli" />
 									<core:Item
 										key="Agustus"
-										text="Agustus"
-									/>
+										text="Agustus" />
 									<core:Item
 										key="September"
-										text="September"
-									/>
+										text="September" />
 									<core:Item
 										key="Oktober"
-										text="Oktober"
-									/>
+										text="Oktober" />
 									<core:Item
 										key="November"
-										text="November"
-									/>
+										text="November" />
 									<core:Item
 										key="Desember"
-										text="Desember"
-									/>
+										text="Desember" />
 								</ComboBox>
 							</HBox>
 						</FlexBox>
@@ -464,21 +362,18 @@
 								width="100%"
 								vizType="line"
 								busyIndicatorDelay="500"
-								legendVisible="false"
-							>
+								legendVisible="false">
 								<viz:dataset>
 									<viz.data:FlattenedDataset data="{penggunaanListrik>/data}">
 										<viz.data:dimensions>
 											<viz.data:DimensionDefinition
 												name="Category"
-												value="{penggunaanListrik>tenant}"
-											/>
+												value="{penggunaanListrik>tenant}" />
 										</viz.data:dimensions>
 										<viz.data:measures>
 											<viz.data:MeasureDefinition
 												name="Value"
-												value="{penggunaanListrik>value}"
-											/>
+												value="{penggunaanListrik>value}" />
 										</viz.data:measures>
 									</viz.data:FlattenedDataset>
 								</viz:dataset>
@@ -487,14 +382,12 @@
 										id="listrikValueAxisFeed"
 										uid="valueAxis"
 										type="Measure"
-										values="Value"
-									/>
+										values="Value" />
 									<viz.feeds:FeedItem
 										id="listrikCategoryAxisFeed"
 										uid="categoryAxis"
 										type="Dimension"
-										values="Category"
-									/>
+										values="Category" />
 								</viz:feeds>
 							</viz:VizFrame>
 						</VBox>
