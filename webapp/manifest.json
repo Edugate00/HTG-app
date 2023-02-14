@@ -130,9 +130,9 @@
           "target": "maintenance"
         },
         {
-          "pattern": "Meteran",
-          "name": "Meteran",
-          "target": "Meteran"
+          "pattern": "utility/meteran",
+          "name": "meteran",
+          "target": "meteran"
         }
       ],
       "targets": {
@@ -156,9 +156,10 @@
           "name": "maintenance",
           "viewLevel": 1
         },
-        "Meteran": {
-          "id": "Meteran",
-          "name": "Meteran",
+        "meteran": {
+          "id": "meteran",
+          "path": "lrlpapp.view.utility",
+          "name": "meteran",
           "viewLevel": 1
         }
       }

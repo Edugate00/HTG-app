@@ -22,7 +22,7 @@ sap.ui.define(
 
     let oModel = null;
 
-    return BaseController.extend("lrlpapp.controller.Meteran", {
+    return BaseController.extend("lrlpapp.controller.utility.Meteran", {
       onInit: function () {
         // current kwh
         currentMeasurementPoint = this.getView().byId("CurrentMeasPoint");
