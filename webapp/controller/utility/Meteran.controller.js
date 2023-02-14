@@ -42,6 +42,14 @@ sap.ui.define(
         // Retreive services Model
         oModel = this.getOwnerComponent().getModel();
 
+        // set width card
+        // const cardPindai = this.getView().byId("cardPindai");
+        // const widthWindow = window.screen.width;
+
+        // if (widthWindow > 576) {
+        //   cardPindai.setWidth("30%");
+        // }
+
         console.log(oModel);
 
         const timeInterval = 1000;

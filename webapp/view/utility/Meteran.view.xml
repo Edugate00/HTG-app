@@ -6,7 +6,7 @@
 >
 	<Page showHeader="false">
 		<HBox class="header-container">
-			<Button
+			<!-- <Button
 				text="Back"
 				icon="sap-icon://nav-back"
 				press="onNavBack"
@@ -14,7 +14,7 @@
 			<Title
 				class="sapUiSmallMarginBegin"
 				text="Pindai Meteran"
-			/>
+			/> -->
 		</HBox>
 		<FlexBox
 			class="main-container "
