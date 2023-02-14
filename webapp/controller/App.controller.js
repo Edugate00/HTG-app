@@ -3,13 +3,22 @@ sap.ui.define(["lrlpapp/controller/BaseController"], function (BaseController) {
 
   return BaseController.extend("lrlpapp.controller.controller.App", {
     onInit() {
-      this._getActiveNav("dashboard");
+      const urlHash = window.location.hash.split("/")[1];
 
       const navMobileDashboard = this.byId("navMobileDashboard");
       const navMobileUtility = this.byId("navMobileUtility");
       const navMobileRental = this.byId("navMobileRental");
 
-      navMobileDashboard.addStyleClass("navMobile-link-active")
+      if(urlHash === "utility") {
+        this._getActiveNav("utility");
+        navMobileUtility.addStyleClass("navMobile-link-active")
+      } else if(urlHash === "rental") {
+        this._getActiveNav("rental");
+        navMobileRental.addStyleClass("navMobile-link-active")
+      } else {
+        this._getActiveNav("dashboard");
+        navMobileDashboard.addStyleClass("navMobile-link-active")
+      }
 
       // Dashboard
       navMobileDashboard.attachBrowserEvent("click", () => {
@@ -50,11 +59,6 @@ sap.ui.define(["lrlpapp/controller/BaseController"], function (BaseController) {
     onRentalPress: function () {
       this._getActiveNav("rental");
       this.getRouter().navTo("rental");
-    },
-
-    onMaintenancePress: function () {
-      this._getActiveNav("maintenance");
-      this.getRouter().navTo("maintenance");
     },
 
     _getActiveNav: function (page) {
