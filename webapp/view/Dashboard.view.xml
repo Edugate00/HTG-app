@@ -9,7 +9,7 @@
 	xmlns:viz.data="sap.viz.ui5.data"
 >
 	<Page showHeader="false">
-		<VBox class="header-container"/>
+		<VBox class="header-container" />
 		<VBox class="main-container">
 			<HBox class="tiles">
 				<VBox
@@ -37,7 +37,7 @@
 							class="dynamic-number"
 							text="0"
 						/>
-						<Text text="Meteran perlu dipindai"/>
+						<Text text="Meteran perlu dipindai" />
 					</VBox>
 				</VBox>
 				<VBox
@@ -65,7 +65,7 @@
 							class="dynamic-number"
 							text="5"
 						/>
-						<Text text="Tagihan untuk dicetak"/>
+						<Text text="Tagihan untuk dicetak" />
 					</VBox>
 				</VBox>
 				<VBox
@@ -93,7 +93,7 @@
 							class="dynamic-number"
 							text="3"
 						/>
-						<Text text="Tagihan untuk dicetak"/>
+						<Text text="Tagihan untuk dicetak" />
 					</VBox>
 				</VBox>
 				<VBox
@@ -121,7 +121,7 @@
 							class="dynamic-number"
 							text="0"
 						/>
-						<Text text="Tagihan untuk dicetak"/>
+						<Text text="Tagihan untuk dicetak" />
 					</VBox>
 				</VBox>
 			</HBox>
@@ -249,7 +249,7 @@
 									id="ComboBoxTenant"
 									width="132px"
 									placeholder="Pilih Tenant"
-									selectionChange="onTenantSelected"
+									selectionChange="onChartTenantSelected"
 									selectedKey="*"
 									class="sapUiTinyMarginEnd sapMCbAutoFocus"
 									items=""
@@ -287,7 +287,7 @@
 									id="ComboBoxMonth"
 									width="120px"
 									placeholder="Pilih bulan"
-									selectionChange="onMonthSelected"
+									selectionChange="onChartMonthSelected"
 									selectedKey="*"
 									class="sapUiTinyMarginEnd sapMCbAutoFocus"
 									items=""
