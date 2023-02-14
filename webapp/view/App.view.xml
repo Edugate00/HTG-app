@@ -3,42 +3,31 @@
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:mvc="sap.ui.core.mvc"
 	displayBlock="true"
-	xmlns="sap.m"
->
+	xmlns="sap.m">
 	<HBox class="navbar">
 		<HBox class="navbrand">
 			<Image
 				src="../zlorena_app/assets/LOGO-LORENA-PNG.png"
 				width="40px"
 				height="40px"
-				alt="Logo-lorena"
-			/>
+				alt="Logo-lorena" />
 		</HBox>
 		<HBox class="nav-links">
 			<Link
 				id="dashbaord"
 				class="nav-link"
 				text="Dashboard"
-				press="onDashboardPress"
-			/>
+				press="onDashboardPress" />
 			<Link
 				id="utility"
 				class="nav-link"
 				text="Utility"
-				press="onUtilityPress"
-			/>
+				press="onUtilityPress" />
 			<Link
 				id="rental"
 				class="nav-link"
 				text="Rental"
-				press="onRentalPress"
-			/>
-			<Link
-				id="maintenance"
-				class="nav-link"
-				text="Maintenance"
-				press="onMaintenancePress"
-			/>
+				press="onRentalPress" />
 		</HBox>
 		<HBox>
 			<Avatar
@@ -47,9 +36,8 @@
 				displaySize="Custom"
 				customDisplaySize="2.2rem"
 				imageFitType="Cover"
-				press="onUserImgPress"
-			/>
+				press="onUserImgPress" />
 		</HBox>
 	</HBox>
-	<App id="mainContents"/>
+	<App id="mainContents" />
 </mvc:View>
