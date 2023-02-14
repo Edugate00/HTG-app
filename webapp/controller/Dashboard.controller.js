@@ -271,7 +271,7 @@ sap.ui.define(
         if (statuSelected === "paid") {
           oFilter1 = new Filter("status", FilterOperator.EQ, "Sudah dibayar");
         } else if (statuSelected === "unpaid") {
-          oFilter = new Filter("status", FilterOperator.EQ, "Belum dibayar");
+          oFilter1 = new Filter("status", FilterOperator.EQ, "Belum dibayar");
         } else {
           oFilter1 = [];
         }
