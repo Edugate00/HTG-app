@@ -27,18 +27,18 @@ sap.ui.define(
     ];
 
     const itemsForAllTenants = [
-      { key: "1", text: "Januari" },
-      { key: "2", text: "Februari" },
-      { key: "3", text: "Maret" },
-      { key: "4", text: "April" },
-      { key: "5", text: "Mei" },
-      { key: "6", text: "Juni" },
-      { key: "7", text: "Juli" },
-      { key: "8", text: "Agustus" },
-      { key: "9", text: "September" },
-      { key: "10", text: "Oktober" },
-      { key: "11", text: "November" },
-      { key: "12", text: "Desember" },
+      { key: "Januari", text: "Januari" },
+      { key: "Februari", text: "Februari" },
+      { key: "Maret", text: "Maret" },
+      { key: "April", text: "April" },
+      { key: "Mei", text: "Mei" },
+      { key: "Juni", text: "Juni" },
+      { key: "Juli", text: "Juli" },
+      { key: "Agustus", text: "Agustus" },
+      { key: "September", text: "September" },
+      { key: "Oktober", text: "Oktober" },
+      { key: "November", text: "November" },
+      { key: "Desember", text: "Desember" },
     ];
 
     return BaseController.extend("lrlpapp.controller.Dashboard", {
@@ -286,7 +286,7 @@ sap.ui.define(
         tagihanList.getBinding("items").filter(oFilters);
       },
 
-      onTenantSelected: function (oEvent) {
+      onChartTenantSelected: function (oEvent) {
         let oFilterTenant, oFilterMonth, filters;
 
         const oVizFrame = this.getView().byId("vizPenggunaanAir");
@@ -330,7 +330,7 @@ sap.ui.define(
           itemsForAllTenants.forEach((el) => {
             oComboBoxMonth.addItem(new Item(el));
           });
-          oComboBoxMonth.setSelectedKey("2");
+          oComboBoxMonth.setSelectedKey("Februari");
           oDataset.removeDimension(oDimension);
 
           oDataset.removeDimension(oDimension);
@@ -342,6 +342,30 @@ sap.ui.define(
           oDataset.getBinding("data").filter(oFilterMonth);
         }
       },
+
+	  onChartMonthSelected: function (oEvent) {
+      let oFilterTenant, oFilterMonth, filters;
+      const oVizFrame = this.getView().byId("vizPenggunaanAir");
+      const oDataset = oVizFrame.getDataset().getBinding("data");
+
+      const oComboBoxMonth = oEvent.getSource();
+      const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
+      const monthSelected = oComboBoxMonth.getSelectedKey();
+      const tenantSelected = oComboBoxTenant.getSelectedKey();
+
+      if (tenantSelected !== '*') {
+        oFilterTenant = new Filter("tenant", FilterOperator.EQ, tenantSelected);
+        oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
+      } else {
+        oFilterTenant = [];
+        oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
+      }
+
+      filters = new Filter({ filters: [oFilterTenant, oFilterMonth], and: true });
+      
+      oDataset.filter(filters);
+      console.log(monthSelected)
+	  },
 
       // Dialogs Close
       onTagihanAirDialogClose: function () {

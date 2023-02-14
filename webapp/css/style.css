@@ -43,6 +43,9 @@ body {
 }
 
 .navbar {
+    position: absolute;
+    top: 0 !important;
+
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -51,12 +54,17 @@ body {
     color: #ffffff !important;
     background-color: var(--primary-color-40);
     padding: 12px 24px;
+    z-index: 99;
 }
 
 .navbrand {
     display: flex;
     align-items: center;
     gap: 16px;
+}
+
+.navDesktop {
+    display: block;
 }
 
 .nav-links {
@@ -89,7 +97,7 @@ body {
 
 .header-container {
     color: #ffffff;
-    padding: 48px 96px 96px 96px;
+    padding: 128px 96px 96px 96px;
     background-color: var(--primary-color-40);
 }
 
@@ -226,7 +234,43 @@ body {
     font-size: 10rem;
 }
 
-@media (max-width:599px) {
+@media (width <=992px) {}
+
+@media (width <=768px) {}
+
+@media (width <=576px) {
+    .navDesktop {
+        display: none;
+    }
+
+    .navMobile {
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-color: var(--primary-color-40);
+    }
+
+    .navMobile-link {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 16px 24px;
+    }
+
+    .navMobile-link:hover {
+        cursor: pointer;
+    }
+
+    .sizeNavIcon {
+        font-size: 1.25rem;
+    }
+
+    .navMobile-text {
+        color: #fff !important;
+    }
+
     .size1 {
         font-size: 1rem;
     }
