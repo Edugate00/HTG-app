@@ -1,0 +1,20 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+<Dialog
+        id="tagihanAirReportDialog"
+        title="Perhitungan Tagihan Air"
+        type="Standard"
+        contentHeight="400px">
+        <content>
+            
+        </content>
+        <endButton>
+            <Button
+                text="Close"
+                type="Emphasized"
+                press="onClose" />
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>

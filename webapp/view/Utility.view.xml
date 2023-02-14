@@ -6,7 +6,95 @@
 >
 	<Page showHeader="false">
 		<VBox class="header-container">
-			<Text text="Utility"/>
+
+		</VBox>
+		<VBox class="main-container">
+			<HBox class="tiles">
+				<VBox
+					class="tile"
+					id="tilePemakaianListrik" >
+					<FlexBox class="tile-header">
+						<VBox class="tile-icon sapUiSmallMarginEnd">
+							<core:Icon
+								src="sap-icon://measurement-document"
+								class="size1"
+								color="#ffffff" />
+						</VBox>
+						<Text
+							class="tile-title"
+							text="Pemakaian Listrik" />
+					</FlexBox>
+					<VBox class="tile-info">
+						<!-- <Text
+							class="dynamic-number"
+							text="3" />
+						<Text text="Tagihan untuk dicetak" /> -->
+					</VBox>
+				</VBox>
+				<VBox
+					class="tile"
+					id="tilePindaiMeteran" >
+					<FlexBox class="tile-header">
+						<VBox class="tile-icon sapUiSmallMarginEnd">
+							<core:Icon
+								src="sap-icon://qr-code"
+								class="size1"
+								color="#ffffff" />
+						</VBox>
+						<Text
+							class="tile-title"
+							text="Scanning" />
+					</FlexBox>
+					<VBox class="tile-info">
+						<!-- <Text
+							class="dynamic-number"
+							text="3" />
+						<Text text="Tagihan untuk dicetak" /> -->
+					</VBox>
+				</VBox>
+				<VBox
+					class="tile"
+					id="tileAirBulanan" >
+					<FlexBox class="tile-header">
+						<VBox class="tile-icon sapUiSmallMarginEnd">
+							<core:Icon
+								src="sap-icon://measurement-document"
+								class="size1"
+								color="#ffffff" />
+						</VBox>
+						<Text
+							class="tile-title"
+							text="Meteran Air Bulanan" />
+					</FlexBox>
+					<VBox class="tile-info">
+						<!-- <Text
+							class="dynamic-number"
+							text="3" />
+						<Text text="Tagihan untuk dicetak" /> -->
+					</VBox>
+				</VBox>
+				<VBox
+					class="tile"
+					id="tileTagihanAir">
+					<FlexBox class="tile-header">
+						<VBox class="tile-icon sapUiSmallMarginEnd">
+							<core:Icon
+								src="sap-icon://my-sales-order"
+								class="size1"
+								color="#ffffff" />
+						</VBox>
+						<Text
+							class="tile-title"
+							text="Perhitungan Tagihan Air" />
+					</FlexBox>
+					<VBox class="tile-info">
+						<!-- <Text
+							class="dynamic-number"
+							text="3" />
+						<Text text="Tagihan untuk dicetak" /> -->
+					</VBox>
+				</VBox>
+			</HBox>	
 		</VBox>
 	</Page>
 </mvc:View>
