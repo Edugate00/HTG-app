@@ -8,36 +8,33 @@ sap.ui.define(
     "use strict";
 
     let currentMeasurementPoint = null,
-      currentMeasurementDescription = null,
       currentMeasurementDateTime = null,
-      currentMeasurementReader = null,
       currentMeasurementValue = null;
 
-    let prevMeasurementDoc = null,
-      prevMeasurementPoint = null,
-      prevMeasurementDescription = null,
-      prevMeasurementDateTime = null,
+    let prevMeasurementDateTime = null,
       prevMeasurementValue = null,
-      prevMeasurementReader = null;
+      measurementDescription = null,
+      titleTotalPemakaian = null,
+      totalPemakaian = null;
+
+    let dataMeasPoint = null,
+      dataMeasDoc = null;
 
     let oModel = null;
 
     return BaseController.extend("lrlpapp.controller.utility.Meteran", {
       onInit: function () {
-        // current kwh
+        // current measurement
         currentMeasurementPoint = this.getView().byId("CurrentMeasPoint");
-        // currentMeasurementDescription = this.getView().byId("CurrentMeasDescription");
         currentMeasurementValue = this.getView().byId("CurrentMeasValue");
         currentMeasurementDateTime = this.getView().byId("CurrentMeasDateTime");
-        currentMeasurementReader = this.getView().byId("CurrentMeasReader");
 
-        // prev kwh
-        prevMeasurementDoc = this.getView().byId("PrevMeasDocument");
-        prevMeasurementPoint = this.getView().byId("PrevMeasPoint");
-        // prevMeasurementDescription = this.getView().byId("PrevMeasDescription");
+        // prev measurement
         prevMeasurementValue = this.getView().byId("PrevMeasValue");
         prevMeasurementDateTime = this.getView().byId("PrevMeasDateTime");
-        prevMeasurementReader = this.getView().byId("PrevMeasReader");
+        measurementDescription = this.getView().byId("MeasDescription");
+        totalPemakaian = this.getView().byId("TotalPemakaian");
+        titleTotalPemakaian = this.getView().byId("TitleTotalPemakaian");
 
         // Retreive services Model
         oModel = this.getOwnerComponent().getModel();
@@ -49,8 +46,6 @@ sap.ui.define(
         if (widthWindow > 576) {
           cardPindai.setWidth("30%");
         }
-
-        console.log(oModel);
 
         const timeInterval = 1000;
 
@@ -80,33 +75,54 @@ sap.ui.define(
         // call function odata read
         const fullPoint = scanResult.padStart(12, "0");
         const response = await this.ReadOdataMeasDocument(fullPoint);
-        const data = response.result;
+        dataMeasPoint = response.result;
+        dataMeasDoc = dataMeasPoint.MeasPointToMeasDoc.results;
 
         console.log(response);
-        console.log(data);
 
-        const convert = this.ConvertDateTime(data.Date, data.Time);
-        const fullDate = `${convert.date} / ${convert.time}`;
+        let convert = "-",
+          fullDate = "-",
+          valueUnit = "-";
 
-        const intDocument = parseInt(data.Document);
-        const intPoint = parseInt(data.Point);
-        const valueUnit = `${data.Value} ${data.Unit}`;
+        if (dataMeasDoc.length > 0) {
+          convert = this.ConvertDateTime(
+            dataMeasDoc[0].Date,
+            dataMeasDoc[0].Time
+          );
+          fullDate = `${convert.date} / ${convert.time}`;
+          valueUnit = `${dataMeasDoc[0].Value} ${dataMeasDoc[0].Unit}`;
+        }
 
         // check return value
-        if (data.Document) {
+        if (dataMeasPoint.Point) {
           // call function set text
           this.SetLabelPrevMeasurement(
-            intDocument,
-            intPoint,
-            // data.Description,
+            dataMeasPoint.Description,
             valueUnit,
-            fullDate,
-            data.Reader
+            fullDate
           );
+
+          // enable input value
+          currentMeasurementValue.setEnabled(true);
+
+          // change title text
+          if (dataMeasPoint.Uom == "L") {
+            titleTotalPemakaian.setText("Total Pemakaian Air");
+          } else {
+            titleTotalPemakaian.setText("Total Pemakaian Listrik");
+          }
         } else {
+          // message
           MessageBox.error("Measurement point not found.");
 
-          this.SetLabelPrevMeasurement("-", "-", "-", "-", "-");
+          // call function set text
+          this.SetLabelPrevMeasurement("-", "-", "-");
+
+          // disable input value
+          currentMeasurementValue.setEnabled(false);
+
+          // change title text
+          titleTotalPemakaian.setText("Total Pemakaian");
         }
 
         // hide busy indicator
@@ -118,34 +134,22 @@ sap.ui.define(
         MessageBox.error("Scan failed");
       },
 
-      // onAfterRendering: function () {
-      //   var that = this;
-      //   jQuery("input").on("keydown", function (evt) {
-      //     if (evt.keyCode == 13) {
-      //       evt.preventDefault();
-      //       that.odataReadprevMeasDoc();
-      //     }
-      //   });
-      // },
-
       OnPostMeasurement: async function () {
         console.log("post");
         class InputRequest {
-          constructor(point, value, unit, date, time, reader, text) {
+          constructor(point, value, unit, date, time) {
             this.Point = point;
             this.Value = value;
             this.Unit = unit;
             this.Date = date;
             this.Time = time;
-            this.Reader = reader;
-            this.Text = text;
           }
         }
 
         //  show busy indicator
         BusyIndicator.show();
 
-        const inputPoint = currentMeasurementPoint.getValue();
+        const inputPoint = currentMeasurementPoint.getValue().padStart(12, "0");
         const inputDateTime = currentMeasurementDateTime.getText();
         const splitDateTime = inputDateTime.split("/");
         const convertDate = splitDateTime[0]
@@ -158,16 +162,18 @@ sap.ui.define(
           .join("")
           .replace(/\s/g, ""); // remove spaces;
         const inputValue = currentMeasurementValue.getValue().replace(".", ",");
-        const inputReader = currentMeasurementReader.getText();
+        let inputUnit = dataMeasPoint.Uom;
+
+        if (inputUnit == "L") {
+          inputUnit = "l";
+        }
 
         const request = new InputRequest(
           inputPoint,
           inputValue,
-          "l",
+          inputUnit,
           convertDate,
-          convertTime,
-          inputReader,
-          "from ui5"
+          convertTime
         );
 
         console.log(request);
@@ -188,26 +194,21 @@ sap.ui.define(
           MessageBox.success(
             `${data.Message}, Measurement Document ${parseInt(
               data.Document
-            )} created.`
+            )} created.`,
+            {
+              onClose: function () {
+                window.location.reload();
+              },
+            }
           );
         }
       },
 
-      SetLabelPrevMeasurement: function (
-        document,
-        point,
-        // description,
-        valueUnit,
-        dateTime,
-        reader
-      ) {
+      SetLabelPrevMeasurement: function (description, valueUnit, dateTime) {
         // set text properties
-        prevMeasurementDoc.setText(document);
-        prevMeasurementPoint.setText(point);
-        // prevMeasurementDescription.setText(description);
+        measurementDescription.setText(description);
         prevMeasurementValue.setText(valueUnit);
         prevMeasurementDateTime.setText(dateTime);
-        prevMeasurementReader.setText(reader);
       },
 
       CreateOdataMeasDocument: function (requestData) {
@@ -226,7 +227,10 @@ sap.ui.define(
 
       ReadOdataMeasDocument: function (requestData) {
         return new Promise(function (resolve) {
-          oModel.read(`/measurementDocumentSet(Point='${requestData}')`, {
+          oModel.read(`/measurementPointSet(Point='${requestData}')`, {
+            urlParameters: {
+              $expand: "MeasPointToMeasDoc",
+            },
             success: function (oResponse) {
               console.log("Call answered by server");
               resolve({ result: oResponse });
@@ -290,9 +294,83 @@ sap.ui.define(
         return { date, time };
       },
 
-      onSubmit: function () {
+      onSubmitMeasPoint: async function (oEvent) {
+        // show busy indicator
+        BusyIndicator.show();
+
         const input = this.getView().byId("CurrentMeasPoint");
-        console.log(input.getValue());
+
+        // call function odata read
+        const fullPoint = input.getValue().padStart(12, "0");
+
+        const response = await this.ReadOdataMeasDocument(fullPoint);
+        dataMeasPoint = response.result;
+        dataMeasDoc = dataMeasPoint.MeasPointToMeasDoc.results;
+
+        console.log(response);
+
+        let convert = "-",
+          fullDate = "-",
+          valueUnit = "-";
+
+        if (dataMeasDoc.length > 0) {
+          convert = this.ConvertDateTime(
+            dataMeasDoc[0].Date,
+            dataMeasDoc[0].Time
+          );
+          fullDate = `${convert.date} / ${convert.time}`;
+          valueUnit = `${dataMeasDoc[0].Value} ${dataMeasDoc[0].Unit}`;
+        }
+
+        // check return value
+        if (dataMeasPoint.Point) {
+          // call function set text
+          this.SetLabelPrevMeasurement(
+            dataMeasPoint.Description,
+            valueUnit,
+            fullDate
+          );
+
+          // enable input value
+          currentMeasurementValue.setEnabled(true);
+
+          // change title text
+          if (dataMeasPoint.Uom == "L") {
+            titleTotalPemakaian.setText("Total Pemakaian Air");
+          } else {
+            titleTotalPemakaian.setText("Total Pemakaian Listrik");
+          }
+        } else {
+          // message
+          MessageBox.error("Measurement point not found.");
+
+          // call function set text
+          this.SetLabelPrevMeasurement("-", "-", "-");
+
+          // disable input value
+          currentMeasurementValue.setEnabled(false);
+
+          // change title text
+          titleTotalPemakaian.setText("Total Pemakaian");
+        }
+
+        // hide busy indicator
+        BusyIndicator.hide();
+      },
+
+      onSubmitMeasValue: function () {
+        const currentMeasValue = currentMeasurementValue.getValue();
+        let prevMeasValue = 0;
+
+        if (dataMeasDoc.length > 0) {
+          prevMeasValue = dataMeasDoc[0].Value;
+        }
+
+        const calculation = Number(currentMeasValue - prevMeasValue);
+        const fixCalculation = calculation.toFixed(3);
+        const value = `${fixCalculation} ${dataMeasPoint.Uom}`;
+
+        totalPemakaian.setText(value);
       },
     });
   }
