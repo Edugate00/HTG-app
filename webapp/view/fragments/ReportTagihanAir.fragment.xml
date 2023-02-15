@@ -6,9 +6,10 @@
         id="tagihanAirReportDialog"
         title="Perhitungan Tagihan Air"
         type="Standard"
-        contentHeight="400px">
+        contentHeight="425px" 
+        contentWidth="100%"
+        resizeable="true">
         <content>
-            
         </content>
         <endButton>
             <Button
