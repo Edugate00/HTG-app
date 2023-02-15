@@ -46,7 +46,7 @@
 								id="CurrentMeasPoint"
 								type="Number"
 								placeholder="Input / Scan"
-								submit="onSubmit"
+								submit="onSubmitMeasPoint"
 							/>
 							<ndc:BarcodeScannerButton
 								id="barcodeScannerDialog"
@@ -58,15 +58,21 @@
 					</VBox>
 					<VBox class="sapUiSmallMarginTopBottom">
 						<Title text="Deskripsi"/>
-						<Text text="LRLP-CITIWALK-CONTAINER_1A"/>
+						<Text
+							id="MeasDescription"
+							text="-"
+						/>
 					</VBox>
 					<VBox class="sapUiSmallMarginTopBottom">
 						<Title text="Nilai Pengukuran Sebelumnya"/>
 						<HBox>
-							<Text text="12.701 L"/>
 							<Text
+								id="PrevMeasValue"
+								text="-"
+							/>
+							<Text
+								id="PrevMeasDateTime"
 								class="sapUiSmallMarginBegin"
-								text="13-02-2023 / 15:00:00"
 							/>
 						</HBox>
 					</VBox>
@@ -78,6 +84,7 @@
 									id="CurrentMeasValue"
 									type="Number"
 									enabled="false"
+									submit="onSubmitMeasValue"
 									placeholder="Input Measurement Value"
 								/>
 							</VBox>
@@ -86,8 +93,14 @@
 					</VBox>
 					<VBox class="sapUiSmallMarginTopBottom">
 						<VBox>
-							<Title text="Total Pemakaian (Air/Listrik)"/>
-							<Text text="13.800 L"/>
+							<Title
+								id="TitleTotalPemakaian"
+								text="Total Pemakaian"
+							/>
+							<Text
+								id="TotalPemakaian"
+								text="-"
+							/>
 						</VBox>
 					</VBox>
 					<HBox>
