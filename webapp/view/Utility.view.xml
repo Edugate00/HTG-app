@@ -43,7 +43,7 @@
 						</VBox>
 						<Text
 							class="tile-title"
-							text="Scanning" />
+							text="Pindai Meteran" />
 					</FlexBox>
 					<VBox class="tile-info">
 						<!-- <Text

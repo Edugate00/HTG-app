@@ -41,7 +41,7 @@ sap.ui.define(
       console.log("Pemakaian Listrik")
     },
     _onPindaiMeteran: function (oEvent) {
-      console.log("Pindai Meteran")
+      this.getRouter().navTo("meteran");
     },
     _onAirBulanan: function (oEvent) {
       const oView = this.getView();
