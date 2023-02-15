@@ -1,19 +1,29 @@
 <mvc:View
-	controllerName="lrlpapp.controller.Meteran"
+	controllerName="lrlpapp.controller.utility.Meteran"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:ndc="sap.ndc"
 	xmlns="sap.m"
 >
 	<Page showHeader="false">
-		<VBox class="header-container"/>
+		<HBox class="header-container">
+			<!-- <Button
+				text="Back"
+				icon="sap-icon://nav-back"
+				press="onNavBack"
+			/>
+			<Title
+				class="sapUiSmallMarginBegin"
+				text="Pindai Meteran"
+			/> -->
+		</HBox>
 		<FlexBox
 			class="main-container "
 			height="600px"
 			justifyContent="Center"
 		>
 			<VBox
+				id="cardPindai"
 				class="card"
-				width="30%"
 			>
 				<HBox class="card-header">
 					<Text
@@ -36,6 +46,7 @@
 								id="CurrentMeasPoint"
 								type="Number"
 								placeholder="Input / Scan"
+								submit="onSubmit"
 							/>
 							<ndc:BarcodeScannerButton
 								id="barcodeScannerDialog"

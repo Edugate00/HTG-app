@@ -22,7 +22,7 @@ sap.ui.define(
 
     let oModel = null;
 
-    return BaseController.extend("lrlpapp.controller.Meteran", {
+    return BaseController.extend("lrlpapp.controller.utility.Meteran", {
       onInit: function () {
         // current kwh
         currentMeasurementPoint = this.getView().byId("CurrentMeasPoint");
@@ -41,6 +41,14 @@ sap.ui.define(
 
         // Retreive services Model
         oModel = this.getOwnerComponent().getModel();
+
+        // set width card
+        const cardPindai = this.getView().byId("cardPindai");
+        const widthWindow = window.screen.width;
+
+        if (widthWindow > 576) {
+          cardPindai.setWidth("30%");
+        }
 
         console.log(oModel);
 
@@ -280,6 +288,11 @@ sap.ui.define(
           time = `${hour}:${minute}:${second}`;
 
         return { date, time };
+      },
+
+      onSubmit: function () {
+        const input = this.getView().byId("CurrentMeasPoint");
+        console.log(input.getValue());
       },
     });
   }
