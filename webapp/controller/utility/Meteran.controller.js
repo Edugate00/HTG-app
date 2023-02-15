@@ -113,16 +113,20 @@ sap.ui.define(
           }
         } else {
           // message
-          MessageBox.error("Measurement point not found.");
+          MessageBox.error("Measurement point not found.", {
+            onClose: function () {
+              window.location.reload();
+            },
+          });
 
-          // call function set text
-          this.SetLabelPrevMeasurement("-", "-", "-");
+          // // call function set text
+          // this.SetLabelPrevMeasurement("-", "-", "-");
 
-          // disable input value
-          currentMeasurementValue.setEnabled(false);
+          // // disable input value
+          // currentMeasurementValue.setEnabled(false);
 
-          // change title text
-          titleTotalPemakaian.setText("Total Pemakaian");
+          // // change title text
+          // titleTotalPemakaian.setText("Total Pemakaian");
         }
 
         // hide busy indicator
@@ -131,7 +135,11 @@ sap.ui.define(
 
       onScanError: function (oEvent) {
         // show message
-        MessageBox.error("Scan failed");
+        MessageBox.error("Scan failed", {
+          onClose: function () {
+            window.location.reload();
+          },
+        });
       },
 
       OnPostMeasurement: async function () {
@@ -189,7 +197,11 @@ sap.ui.define(
         BusyIndicator.hide();
 
         if (!data.Document) {
-          MessageBox.error(data.Message);
+          MessageBox.error(data.Message, {
+            onClose: function () {
+              window.location.reload();
+            },
+          });
         } else {
           MessageBox.success(
             `${data.Message}, Measurement Document ${parseInt(
@@ -342,16 +354,20 @@ sap.ui.define(
           }
         } else {
           // message
-          MessageBox.error("Measurement point not found.");
+          MessageBox.error("Measurement point not found.", {
+            onClose: function () {
+              window.location.reload();
+            },
+          });
 
-          // call function set text
-          this.SetLabelPrevMeasurement("-", "-", "-");
+          // // call function set text
+          // this.SetLabelPrevMeasurement("-", "-", "-");
 
-          // disable input value
-          currentMeasurementValue.setEnabled(false);
+          // // disable input value
+          // currentMeasurementValue.setEnabled(false);
 
-          // change title text
-          titleTotalPemakaian.setText("Total Pemakaian");
+          // // change title text
+          // titleTotalPemakaian.setText("Total Pemakaian");
         }
 
         // hide busy indicator
