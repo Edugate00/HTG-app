@@ -53,14 +53,14 @@ sap.ui.define(
 
       if (!this.oFixedDialog) {
 				this.oFixedDialog = new Dialog({
-					title: "Meteran Air Bulanan",
+					title: "Pemakaian Air Bulanan",
 					contentWidth: "100%",
 					contentHeight: "450px",
 					content: oHtml1,
 					endButton: new Button({
 						text: "Close",
 						press: function () {
-              this.oFixedDialog.destroyContent();
+              // this.oFixedDialog.destroyContent();
 							this.oFixedDialog.close();
 						}.bind(this)
 					})
@@ -91,7 +91,7 @@ sap.ui.define(
 					endButton: new Button({
 						text: "Close",
 						press: function () {
-              this.oFixedSizeDialog.destroyContent();
+              // this.oFixedSizeDialog.destroyContent();
 							this.oFixedSizeDialog.close();
 						}.bind(this)
 					})

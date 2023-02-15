@@ -58,13 +58,13 @@
 					<FlexBox class="tile-header">
 						<VBox class="tile-icon sapUiSmallMarginEnd">
 							<core:Icon
-								src="sap-icon://measurement-document"
+								src="sap-icon://activity-2"
 								class="size1"
 								color="#ffffff" />
 						</VBox>
 						<Text
 							class="tile-title"
-							text="Meteran Air Bulanan" />
+							text="Pemakaian Air" />
 					</FlexBox>
 					<VBox class="tile-info">
 						<!-- <Text
