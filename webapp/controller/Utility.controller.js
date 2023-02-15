@@ -46,37 +46,38 @@ sap.ui.define(
     _onAirBulanan: function (oEvent) {
       const oView = this.getView();
       
-        var oHtml = new sap.ui.core.HTML({
+        var oHtml1 = new sap.ui.core.HTML({
                     content: '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB9F7DE0B43CE41C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>'
                     });
 
 
-      if (!this.oFixedSizeDialog) {
-				this.oFixedSizeDialog = new Dialog({
+      if (!this.oFixedDialog) {
+				this.oFixedDialog = new Dialog({
 					title: "Meteran Air Bulanan",
 					contentWidth: "100%",
 					contentHeight: "450px",
-					content: oHtml,
+					content: oHtml1,
 					endButton: new Button({
 						text: "Close",
 						press: function () {
-							this.oFixedSizeDialog.close();
+              this.oFixedDialog.destroyContent();
+							this.oFixedDialog.close();
 						}.bind(this)
 					})
 				});
 
 				//to get access to the controller's model
-				this.getView().addDependent(this.oFixedSizeDialog);
+				this.getView().addDependent(this.oFixedDialog);
 			}
 
-			this.oFixedSizeDialog.open();
+			this.oFixedDialog.open();
     },
 
     _onTagihanAirClick: function (oEvent) {
       console.log("Perhitungan Tagihan Air")
       const oView = this.getView();
       
-        var oHtml = new sap.ui.core.HTML({
+        var oHtml2 = new sap.ui.core.HTML({
                     content: '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>'
                     });
 
@@ -86,10 +87,11 @@ sap.ui.define(
 					title: "Perhitungan Tagihan Air",
 					contentWidth: "100%",
 					contentHeight: "450px",
-					content: oHtml,
+					content: oHtml2,
 					endButton: new Button({
 						text: "Close",
 						press: function () {
+              this.oFixedSizeDialog.destroyContent();
 							this.oFixedSizeDialog.close();
 						}.bind(this)
 					})
