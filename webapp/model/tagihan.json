@@ -2,35 +2,35 @@
     "data" : [
         {
             "noTagihan": "9001",
-            "tenant": "Tenant A",
+            "tenant": "Karimata",
             "tipe": "Tagihan Air",
             "dueDate": "09 Feb, 2023",
             "status": "paid"
         },
         {
             "noTagihan": "9002",
-            "tenant": "Tenant B",
+            "tenant": "Butterfield",
             "tipe": "Tagihan Air",
             "dueDate": "09 Feb, 2023",
             "status": "paid"
         },
         {
             "noTagihan": "9003",
-            "tenant": "Tenant C",
+            "tenant": "Woori",
             "tipe": "Tagihan Air",
             "dueDate": "09 Feb, 2023",
             "status": "unpaid"
         },
         {
             "noTagihan": "9004",
-            "tenant": "Tenant D",
+            "tenant": "Sharinc",
             "tipe": "Tagihan Sewa",
             "dueDate": "09 Feb, 2023",
             "status": "unpaid"
         },
         {
             "noTagihan": "9005",
-            "tenant": "Tenant E",
+            "tenant": "Karimata",
             "tipe": "Tagihan Sewa",
             "tipe": "Tagihan Air",
             "dueDate": "09 Feb, 2023",
@@ -45,28 +45,28 @@
         },
         {
             "noTagihan": "9007",
-            "tenant": "Tenant A",
+            "tenant": "Karimata",
             "tipe": "Tagihan Pengelolaan",
             "dueDate": "09 Feb, 2023",
             "status": "unpaid"
         },
         {
             "noTagihan": "9008",
-            "tenant": "Tenant B",
+            "tenant": "Butterfield",
             "tipe": "Tagihan Sewa",
             "dueDate": "09 Feb, 2023",
             "status": "paid"
         },
         {
             "noTagihan": "9009",
-            "tenant": "Tenant C",
+            "tenant": "Woori",
             "tipe": "Tagihan Air",
             "dueDate": "09 Feb, 2023",
             "status": "unpaid"
         },
         {
             "noTagihan": "9010",
-            "tenant": "Tenant D",
+            "tenant": "Sharinc",
             "tipe": "Tagihan Pengelolaan",
             "dueDate": "09 Feb, 2023",
             "status": "paid"

@@ -116,23 +116,17 @@
 									key="*"
 									text="Semua Tenant" />
 								<core:Item
-									key="Tenant A"
-									text="Tenant A" />
+									key="Karimata"
+									text="Karimata" />
 								<core:Item
-									key="Tenant B"
-									text="Tenant B" />
+									key="Butterfield"
+									text="Butterfield" />
 								<core:Item
-									key="Tenant C"
-									text="Tenant C" />
+									key="Woori"
+									text="Woori" />
 								<core:Item
-									key="Tenant D"
-									text="Tenant D" />
-								<core:Item
-									key="Tenant E"
-									text="Tenant E" />
-								<core:Item
-									key="Tenant F"
-									text="Tenant F" />
+									key="Sharinc"
+									text="Sharinc" />
 							</ComboBox>
 							<ComboBox
 								id="ComboBoxTagihanStatus"
@@ -193,8 +187,7 @@
 									placeholder="Pilih Tenant"
 									selectionChange="onChartTenantSelected"
 									selectedKey="*"
-									class="sapUiTinyMarginEnd sapMCbAutoFocus"
-									items="">
+									class="sapUiTinyMarginEnd sapMCbAutoFocus">
 									<core:Item
 										key="*"
 										text="Semua Tenant" />
@@ -217,8 +210,7 @@
 									placeholder="Pilih bulan"
 									selectionChange="onChartMonthSelected"
 									selectedKey="*"
-									class="sapUiTinyMarginEnd sapMCbAutoFocus"
-									items="">
+									class="sapUiTinyMarginEnd sapMCbAutoFocus">
 									<core:Item
 										key="Januari"
 										text="Januari" />
@@ -308,8 +300,7 @@
 									placeholder="Pilih bulan"
 									selectionChange="onListrikChartTimestamp"
 									selectedKey="6months"
-									class="sapUiTinyMarginEnd sapMCbAutoFocus"
-									items="">
+									class="sapUiTinyMarginEnd sapMCbAutoFocus">
 									<core:Item
 										key="6months"
 										text="6 Months" />
