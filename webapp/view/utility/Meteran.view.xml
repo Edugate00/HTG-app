@@ -21,7 +21,10 @@
 			height="600px"
 			justifyContent="Center"
 		>
-			<VBox class="card">
+			<VBox
+				id="cardPindai"
+				class="card"
+			>
 				<HBox class="card-header">
 					<Text
 						class="card-title"
@@ -43,6 +46,7 @@
 								id="CurrentMeasPoint"
 								type="Number"
 								placeholder="Input / Scan"
+								submit="onSubmit"
 							/>
 							<ndc:BarcodeScannerButton
 								id="barcodeScannerDialog"

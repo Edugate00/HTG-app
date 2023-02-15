@@ -43,12 +43,12 @@ sap.ui.define(
         oModel = this.getOwnerComponent().getModel();
 
         // set width card
-        // const cardPindai = this.getView().byId("cardPindai");
-        // const widthWindow = window.screen.width;
+        const cardPindai = this.getView().byId("cardPindai");
+        const widthWindow = window.screen.width;
 
-        // if (widthWindow > 576) {
-        //   cardPindai.setWidth("30%");
-        // }
+        if (widthWindow > 576) {
+          cardPindai.setWidth("30%");
+        }
 
         console.log(oModel);
 
@@ -288,6 +288,11 @@ sap.ui.define(
           time = `${hour}:${minute}:${second}`;
 
         return { date, time };
+      },
+
+      onSubmit: function () {
+        const input = this.getView().byId("CurrentMeasPoint");
+        console.log(input.getValue());
       },
     });
   }
