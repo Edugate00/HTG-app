@@ -165,9 +165,6 @@ sap.ui.define(
           oPenggunaanListrik.push(el);
         })
 
-        console.log(penggunaanListrik)
-        console.log(oPenggunaanListrik)
-
         const penggunaanAirModel = new JSONModel(penggunaanAir);
         const penggunaanListrikModel = new JSONModel({data: oPenggunaanListrik});
 
