@@ -1,7 +1,11 @@
 sap.ui.define(
   ["lrlpapp/controller/BaseController",
+  "sap/ui/model/json/JSONModel",
 "sap/ui/core/Fragment",
-], function (BaseController, Fragment) {
+"sap/m/Dialog",
+"sap/m/Button",
+"sap/ui/core/HTML"
+], function (BaseController, JSONModel, Fragment, Dialog, Button, HTML) {
   "use strict";
 
   return BaseController.extend("lrlpapp.controller.Utility", 
@@ -41,38 +45,42 @@ sap.ui.define(
     },
     _onAirBulanan: function (oEvent) {
       console.log("Meteran Air Bulanan")
-      window.location.href = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB85EF75B7A3841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X";
+      window.location.href = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB85EF75B7A3841C&sap-client=116&sap-language=EN&sap-accessibility=X";
     },
     _onTagihanAirClick: function (oEvent) {
       console.log("Perhitungan Tagihan Air")
-      // window.location.href = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X";
       const oView = this.getView();
+      
+        var oHtml = new sap.ui.core.HTML({
+                    content: '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB85EF75B7A3841C&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="425px"></iframe>'
+                    });
 
-      const oTagihanAirModel = [];
 
-      if (!this.tagihanAirDialog) {
-        this.tagihanAirDialog = Fragment.load({
-          id: oView.getId(),
-          name: "lrlpapp.view.fragments.ReportTagihanAir",
-          controller: this,
-        }).then(function (oDialog) {
-          oDialog.setModel(oView.getModel());
-          
-          return oDialog;
-        });
-      }
+      if (!this.oFixedSizeDialog) {
+				this.oFixedSizeDialog = new Dialog({
+					title: "Perhitungan Tagihan Air",
+					contentWidth: "100%",
+					contentHeight: "425px",
+					content: oHtml,
+					endButton: new Button({
+						text: "Close",
+						press: function () {
+							this.oFixedSizeDialog.close();
+						}.bind(this)
+					})
+				});
 
-      this.tagihanAirDialog.then(function (oDialog) {
-        oDialog.setModel(oView.getModel());
-        
+				//to get access to the controller's model
+				this.getView().addDependent(this.oFixedSizeDialog);
+			}
 
-        oDialog.open();
-      });
+			this.oFixedSizeDialog.open();
 
     },
 
     // Dialogs Close
     onClose: function () {
+      // oDialog.destroyContent(oHtml);
       this.byId("tagihanAirReportDialog").close();
     },
   });
