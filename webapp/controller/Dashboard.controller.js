@@ -115,39 +115,78 @@ sap.ui.define(
           },
         });
 
-        const penggunaanAir = this.getOwnerComponent()
-          .getModel("penggunaanAir")
-          .getData();
-        const penggunaanListrik = this.getOwnerComponent()
-          .getModel("penggunaanAir")
-          .getData();
+        const penggunaanAir = this.getOwnerComponent() .getModel("penggunaanAir").getData();
+        const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
+        const oPenggunaanListrik = [];
+
+        penggunaanListrik.data.forEach(el => {
+          let month = el.date.split(".")[1];
+          let year = el.date.split(".")[0];
+          switch (month) {
+            case "01":
+              el.month = `Jan ${year}`
+              break;
+            case "02":
+              el.month = `Feb ${year}`
+              break;
+            case "03":
+              el.month = `Mar ${year}`
+              break;
+            case "04":
+              el.month = `Apr ${year}`
+              break;
+            case "05":
+              el.month = `Mei ${year}`
+              break;
+            case "06":
+              el.month = `Jun ${year}`
+              break;
+            case "07":
+              el.month = `Jul ${year}`
+              break;
+            case "08":
+              el.month = `Agu ${year}`
+              break;
+            case "09":
+              el.month = `Sep ${year}`
+              break;
+            case "10":
+              el.month = `Okt ${year}`
+              break;
+            case "11":
+              el.month = `Nov ${year}`
+              break;
+            case "12":
+              el.month = `Des ${year}`
+              break;
+          }
+
+		  el.timeStamp = new Date(el.date).getTime();
+          oPenggunaanListrik.push(el);
+        })
+
+        console.log(penggunaanListrik)
+        console.log(oPenggunaanListrik)
+
         const penggunaanAirModel = new JSONModel(penggunaanAir);
-        const penggunaanListrikModel = new JSONModel(penggunaanListrik);
+        const penggunaanListrikModel = new JSONModel({data: oPenggunaanListrik});
+
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
+        const oComboBoxListrikTimestamp = this.getView().byId("ListrikTimestampFilter");
 
         const tileTagihanAir = this.getView().byId("tileTagihanAir");
         const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
         const tilePindaiMeteran = this.getView().byId("tilePindaiMeteran");
 
-        tileTagihanAir.attachBrowserEvent(
-          "click",
-          this._onTagihanAirClick,
-          this
-        );
-        tileTagihanSewa.attachBrowserEvent(
-          "click",
-          this._onTagihanSewaClick,
-          this
-        );
-        tilePindaiMeteran.attachBrowserEvent(
-          "click",
-          this._onPindaiMeteranClick,
-          this
-        );
+        tileTagihanAir.attachBrowserEvent( "click", this._onTagihanAirClick, this );
+        tileTagihanSewa.attachBrowserEvent( "click", this._onTagihanSewaClick, this );
+        tilePindaiMeteran.attachBrowserEvent( "click", this._onPindaiMeteranClick, this );
 
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         vizListrik.setModel(penggunaanListrikModel, "penggunaanListrik");
+		
         oComboBoxTenant.fireSelectionChange();
+        oComboBoxListrikTimestamp.fireSelectionChange();
       },
 
       _onPindaiMeteranClick: function () {
@@ -343,6 +382,55 @@ sap.ui.define(
         }
       },
 
+<<<<<<< HEAD
+	  onChartMonthSelected: function (oEvent) {
+		let oFilterTenant, oFilterMonth, filters;
+		const oVizFrame = this.getView().byId("vizPenggunaanAir");
+		const oDataset = oVizFrame.getDataset().getBinding("data");
+
+		const oComboBoxMonth = oEvent.getSource();
+		const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
+		const monthSelected = oComboBoxMonth.getSelectedKey();
+		const tenantSelected = oComboBoxTenant.getSelectedKey();
+
+		if (tenantSelected !== '*') {
+			oFilterTenant = new Filter("tenant", FilterOperator.EQ, tenantSelected);
+			oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
+		} else {
+			oFilterTenant = [];
+			oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
+		}
+
+		filters = new Filter({ filters: [oFilterTenant, oFilterMonth], and: true });
+		
+		oDataset.filter(filters);
+		console.log(monthSelected)
+	  },
+
+	  onListrikChartTimestamp: function (oEvent) {
+		let toDateTimestamp, oFilter;
+		const oComboBoxTimestamp = oEvent.getSource();
+		const timeStampSelected = oComboBoxTimestamp.getSelectedKey();
+
+		const oVizFrame = this.getView().byId("vizPenggunaanListrik");
+		const oDataset = oVizFrame.getDataset().getBinding("data");
+
+		const currentDate = new Date();
+
+		if (timeStampSelected === "6months") {
+			toDateTimestamp = new Date(currentDate.getFullYear(), currentDate.getMonth() - 6, currentDate.getDate()).getTime()
+			oFilter = new Filter("timeStamp", FilterOperator.BT, toDateTimestamp, currentDate.getTime());
+		} else if (timeStampSelected === "1year"){
+			toDateTimestamp = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate()).getTime()
+			oFilter = new Filter("timeStamp", FilterOperator.BT, toDateTimestamp, currentDate.getTime());
+		} else {
+			toDateTimestamp = new Date(currentDate.getFullYear() - 9999, currentDate.getMonth(), currentDate.getDate()).getTime()
+			oFilter = new Filter("timeStamp", FilterOperator.BT, toDateTimestamp, currentDate.getTime());
+		}
+
+		oDataset.filter(oFilter);
+	  },
+=======
       onChartMonthSelected: function (oEvent) {
         let oFilterTenant, oFilterMonth, filters;
         const oVizFrame = this.getView().byId("vizPenggunaanAir");
@@ -373,11 +461,13 @@ sap.ui.define(
         oDataset.filter(filters);
         console.log(monthSelected);
       },
+>>>>>>> main
 
       // Dialogs Close
       onTagihanAirDialogClose: function () {
         this.byId("tagihanAirDialog").close();
       },
+
       onTagihanSewaDialogClose: function () {
         this.byId("tagihanSewaDialog").close();
       },

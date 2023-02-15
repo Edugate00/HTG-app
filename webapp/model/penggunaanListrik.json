@@ -1,184 +1,108 @@
 {
     "data": [
         {
-            "tenant": "Tenant A",
-            "value": "116",
-            "month": "January"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "142",
-            "month": "February"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "170",
-            "month": "March"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "106",
-            "month": "April"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "194",
-            "month": "May"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "114",
-            "month": "June"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "186",
-            "month": "July"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "112",
-            "month": "August"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "106",
-            "month": "September"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "160",
-            "month": "October"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "102",
-            "month": "November"
-        },
-        {
-            "tenant": "Tenant A",
-            "value": "126",
-            "month": "December"
-        },
-        {
-            "tenant": "Tenant B",
-            "value": "145",
-            "month": "January"
-        },
-        {
-            "tenant": "Tenant B",
-            "value": "131",
-            "month": "February"
-        },
-        {
-            "tenant": "Tenant B",
-            "value": "166",
-            "month": "March"
-        },
-        {
-            "tenant": "Tenant B",
-            "value": "116",
-            "month": "April"
-        },
-        {
-            "tenant": "Tenant B",
-            "value": "191",
-            "month": "May"
-        },
-        {
-            "tenant": "Tenant B",
-            "value": "102",
-            "month": "June"
-        },
-        {
-            "tenant": "Tenant B",
             "value": "167",
-            "month": "July"
+            "date": "2021.01.22"
         },
         {
-            "tenant": "Tenant B",
             "value": "118",
-            "month": "August"
+            "date": "2021.02.22"
         },
         {
-            "tenant": "Tenant B",
+            "value": "166",
+            "date": "2021.03.22"
+        },
+        {
+            "value": "116",
+            "date": "2021.04.22"
+        },
+        {
+            "value": "191",
+            "date": "2021.05.22"
+        },
+        {
+            "value": "102",
+            "date": "2021.06.22"
+        },
+        {
+            "value": "167",
+            "date": "2021.07.22"
+        },
+        {
+            "value": "118",
+            "date": "2021.08.22"
+        },
+        {
             "value": "111",
-            "month": "September"
+            "date": "2021.09.22"
         },
         {
-            "tenant": "Tenant B",
             "value": "142",
-            "month": "October"
+            "date": "2021.10.22"
         },
         {
-            "tenant": "Tenant B",
             "value": "182",
-            "month": "November"
+            "date": "2021.11.22"
         },
         {
-            "tenant": "Tenant B",
             "value": "169",
-            "month": "December"
+            "date": "2021.12.22"
         },
         {
-            "tenant": "Tenant C",
+            "value": "116",
+            "date": "2022.01.22"
+        },
+        {
+            "value": "142",
+            "date": "2022.02.22"
+        },
+        {
+            "value": "170",
+            "date": "2022.03.22"
+        },
+        {
+            "value": "106",
+            "date": "2022.04.22"
+        },
+        {
+            "value": "194",
+            "date": "2022.05.22"
+        },
+        {
             "value": "114",
-            "month": "January"
+            "date": "2022.06.22"
         },
         {
-            "tenant": "Tenant C",
-            "value": "179",
-            "month": "February"
+            "value": "186",
+            "date": "2022.07.22"
         },
         {
-            "tenant": "Tenant C",
-            "value": "99",
-            "month": "March"
+            "value": "112",
+            "date": "2022.08.22"
         },
         {
-            "tenant": "Tenant C",
-            "value": "128",
-            "month": "April"
+            "value": "106",
+            "date": "2022.09.22"
         },
         {
-            "tenant": "Tenant C",
-            "value": "96",
-            "month": "May"
+            "value": "160",
+            "date": "2022.10.22"
         },
         {
-            "tenant": "Tenant C",
-            "value": "157",
-            "month": "June"
+            "value": "102",
+            "date": "2022.11.22"
         },
         {
-            "tenant": "Tenant C",
-            "value": "114",
-            "month": "July"
+            "value": "126",
+            "date": "2022.12.22"
         },
         {
-            "tenant": "Tenant C",
-            "value": "114",
-            "month": "August"
+            "value": "145",
+            "date": "2023.01.22"
         },
         {
-            "tenant": "Tenant C",
-            "value": "165",
-            "month": "September"
-        },
-        {
-            "tenant": "Tenant C",
-            "value": "122",
-            "month": "October"
-        },
-        {
-            "tenant": "Tenant C",
-            "value": "117",
-            "month": "November"
-        },
-        {
-            "tenant": "Tenant C",
-            "value": "172",
-            "month": "December"
+            "value": "131",
+            "date": "2023.02.22"
         }
     ]
 }
