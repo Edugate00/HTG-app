@@ -309,49 +309,22 @@
 								text="Penggunaan Listrik" />
 							<HBox>
 								<ComboBox
-									id="ComboBoxMonthListrik"
+									id="ListrikTimestampFilter"
 									width="120px"
 									placeholder="Pilih bulan"
-									selectionChange="onMonthSelected"
-									selectedKey="*"
+									selectionChange="onListrikChartTimestamp"
+									selectedKey="6months"
 									class="sapUiTinyMarginEnd sapMCbAutoFocus"
 									items="">
 									<core:Item
-										key="Januari"
-										text="Januari" />
+										key="6months"
+										text="6 Months" />
 									<core:Item
-										key="Februari"
-										text="Februari" />
+										key="1year"
+										text="1 Year" />
 									<core:Item
-										key="Maret"
-										text="Maret" />
-									<core:Item
-										key="April"
-										text="April" />
-									<core:Item
-										key="Mei"
-										text="Mei" />
-									<core:Item
-										key="Juni"
-										text="Juni" />
-									<core:Item
-										key="Juli"
-										text="Juli" />
-									<core:Item
-										key="Agustus"
-										text="Agustus" />
-									<core:Item
-										key="September"
-										text="September" />
-									<core:Item
-										key="Oktober"
-										text="Oktober" />
-									<core:Item
-										key="November"
-										text="November" />
-									<core:Item
-										key="Desember"
-										text="Desember" />
+										key="*"
+										text="Semua" />
 								</ComboBox>
 							</HBox>
 						</FlexBox>
@@ -368,7 +341,7 @@
 										<viz.data:dimensions>
 											<viz.data:DimensionDefinition
 												name="Category"
-												value="{penggunaanListrik>tenant}" />
+												value="{penggunaanListrik>month}" />
 										</viz.data:dimensions>
 										<viz.data:measures>
 											<viz.data:MeasureDefinition
