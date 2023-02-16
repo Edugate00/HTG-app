@@ -3,10 +3,10 @@ sap.ui.define(
   function (BaseController, Fragment) {
     "use strict";
 
-return BaseController.extend("lrlpapp.controller.App", {
-    onInit() {
-      const urlHash = window.location.hash.split("/")[1];
-      
+    return BaseController.extend("lrlpapp.controller.App", {
+      onInit() {
+        const urlHash = window.location.hash.split("/")[1];
+
         const navMobileDashboard = this.byId("navMobileDashboard");
         const navMobileUtility = this.byId("navMobileUtility");
         const navMobileRental = this.byId("navMobileRental");
@@ -104,10 +104,6 @@ return BaseController.extend("lrlpapp.controller.App", {
             rentalLink.removeStyleClass("nav-link-active");
             break;
         }
-      },
-
-      OnPressLogOut: function (oEvent) {
-        alert("on log out");
       },
 
       OnSetting: function () {
