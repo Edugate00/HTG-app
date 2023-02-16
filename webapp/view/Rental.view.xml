@@ -6,43 +6,193 @@
 	xmlns="sap.m">
 	<Page showHeader="false">
 		<VBox class="header-container" />
-		<VBox class="main-container">
-			<HBox class="tiles">
-				<VBox
-					class="tile"
-					id="tileContainer">
-					<FlexBox class="tile-header">
-						<VBox class="tile-icon sapUiSmallMarginEnd">
-							<core:Icon
-								src="sap-icon://sap-box"
-								class="size1"
-								color="#ffffff" />
-						</VBox>
-						<Text class="tile-title" text="Container" />
-					</FlexBox>
-					<VBox class="tile-info">
-						<Text class="dynamic-number" text="0" />
-						<Text text="Meteran perlu dipindai" />
-					</VBox>
-				</VBox>
-				<VBox
-					class="tile"
-					id="tileTenant">
-					<FlexBox class="tile-header">
-						<VBox class="tile-icon sapUiSmallMarginEnd">
-							<core:Icon
-								src="sap-icon://person-placeholder"
-								class="size1"
-								color="#ffffff" />
-						</VBox>
-						<Text class="tile-title" text="Tenant" />
-					</FlexBox>
-					<VBox class="tile-info">
-						<Text class="dynamic-number" text="0" />
-						<Text text="Meteran perlu dipindai" />
-					</VBox>
-				</VBox>
-			</HBox>
+		<VBox class="main-container" height="600px">
+			<VBox class="card-rental card">
+				<SplitApp
+					id="rentalBills"
+					initialDetail="detailEmpty"
+					initialMaster="master">
+					<masterPages>
+						<Page
+							showHeader="true"
+							title="Tagihan"
+							class="sapUiResponsivePadding--header sapUiResponsivePadding--subHeader">
+							<List id="tagihanRentalList">
+								<items>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+									<ObjectListItem
+										type="Active"
+										title="9001 - Karimata">
+										<ObjectAttribute
+											title="Tipe"
+											text="Tagihan Sewa" />
+										<ObjectAttribute
+											title="Tanggal"
+											text="16 Feb 2023" />
+										<secondStatus>
+											<ObjectStatus
+												text="Sudah dibayar"
+												state="Success" />
+										</secondStatus>
+									</ObjectListItem>
+								</items>
+							</List>
+						</Page>
+					</masterPages>
+					<detailPages>
+
+					</detailPages>
+				</SplitApp>
+			</VBox>
 		</VBox>
 	</Page>
 </mvc:View>
