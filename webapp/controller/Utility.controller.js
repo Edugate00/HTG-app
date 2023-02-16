@@ -8,6 +8,8 @@ sap.ui.define(
 ], function (BaseController, JSONModel, Fragment, Dialog, Button, HTML) {
   "use strict";
 
+  const widthWindow = window.screen.width;
+
   return BaseController.extend("lrlpapp.controller.Utility", 
   {
     onInit: function () {
@@ -50,12 +52,18 @@ sap.ui.define(
                     content: '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB9F7DE0B43CE41C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>'
                     });
 
+      let width = null;
+      if(widthWindow < 1400 ){
+          width = "35%";
+        }else {
+          width = "50%";
+        }
 
       if (!this.oFixedDialog) {
 				this.oFixedDialog = new Dialog({
 					title: "Pemakaian Air Bulanan",
-					contentWidth: "100%",
-					contentHeight: "450px",
+					contentWidth: width,
+					contentHeight: "400px",
 					content: oHtml1,
 					endButton: new Button({
 						text: "Close",
@@ -81,12 +89,20 @@ sap.ui.define(
                     content: '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>'
                     });
 
+        let width = null;
+        console.log(widthWindow)
+        if(widthWindow < 1400 ){
+          width = "70%";
+        }else {
+          width = "100%";
+        }
 
       if (!this.oFixedSizeDialog) {
+        
 				this.oFixedSizeDialog = new Dialog({
 					title: "Perhitungan Tagihan Air",
-					contentWidth: "100%",
-					contentHeight: "450px",
+					contentWidth: width,
+					contentHeight: "400px",
 					content: oHtml2,
 					endButton: new Button({
 						text: "Close",
