@@ -133,6 +133,11 @@
           "pattern": "utility/meteran",
           "name": "meteran",
           "target": "meteran"
+        },
+        {
+          "pattern": "settings",
+          "name": "settings",
+          "target": "settings"
         }
       ],
       "targets": {
@@ -160,6 +165,11 @@
           "id": "meteran",
           "path": "lrlpapp.view.utility",
           "name": "meteran",
+          "viewLevel": 1
+        },
+        "settings": {
+          "id": "settings",
+          "name": "settings",
           "viewLevel": 1
         }
       }

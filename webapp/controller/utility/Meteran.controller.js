@@ -204,9 +204,7 @@ sap.ui.define(
             });
           } else {
             MessageBox.success(
-              `${data.Message}, Dokumen pengukuran ${parseInt(
-                data.Document
-              )} terbuat.`,
+              `Dokumen pengukuran ${parseInt(data.Document)} terbuat.`,
               {
                 onClose: function () {
                   window.location.reload();

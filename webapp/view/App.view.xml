@@ -1,16 +1,19 @@
-<mvc:View xmlns:core="sap.ui.core"
+<mvc:View
+	xmlns:core="sap.ui.core"
 	controllerName="lrlpapp.controller.App"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:mvc="sap.ui.core.mvc"
 	displayBlock="true"
-	xmlns="sap.m">
+	xmlns="sap.m"
+>
 	<HBox class="navbar">
 		<HBox class="navbrand">
 			<Image
 				src="../zlorena_app/assets/LOGO-LORENA-PNG.png"
 				width="40px"
 				height="40px"
-				alt="Logo-lorena" />
+				alt="Logo-lorena"
+			/>
 		</HBox>
 		<HBox class="navDesktop">
 			<HBox class="nav-links">
@@ -18,51 +21,81 @@
 					id="dashbaord"
 					class="nav-link"
 					text="Dashboard"
-					press="onDashboardPress" />
+					press="onDashboardPress"
+				/>
 				<Link
 					id="utility"
 					class="nav-link"
 					text="Utility"
-					press="onUtilityPress" />
+					press="onUtilityPress"
+				/>
 				<Link
 					id="rental"
 					class="nav-link"
 					text="Rental"
-					press="onRentalPress" />
+					press="onRentalPress"
+				/>
 			</HBox>
 		</HBox>
-		<HBox>
+		<HBox
+			alignItems="Center"
+			height="auto"
+			width="auto"
+		>
 			<Avatar
-				id="userImg"
-				ariaHasPopup="Dialog"
+				id="setting"
+				src="sap-icon://action-settings"
 				displaySize="Custom"
 				customDisplaySize="2.2rem"
-				imageFitType="Cover"
-				press="onUserImgPress" />
+				backgroundColor="TileIcon"
+				press="OnSetting"
+			/>
+		
 		</HBox>
 	</HBox>
-	<App id="mainContents" />
+	<App id="mainContents"/>
 	<HBox class="navMobile">
-		<VBox id="navMobileDashboard" class="navMobile-link">
+		<VBox
+			id="navMobileDashboard"
+			class="navMobile-link"
+		>
 			<core:Icon
 				src="sap-icon://home"
 				class="sizeNavIcon"
-				color="#ffffff" />
-			<Text class="navMobile-text" text="Dashboard" />
+				color="#ffffff"
+			/>
+			<Text
+				class="navMobile-text"
+				text="Dashboard"
+			/>
 		</VBox>
-		<VBox id="navMobileUtility" class="navMobile-link">
+		<VBox
+			id="navMobileUtility"
+			class="navMobile-link"
+		>
 			<core:Icon
 				src="sap-icon://blur"
 				class="sizeNavIcon"
-				color="#ffffff" />
-			<Text class="navMobile-text" text="Utility" />
+				color="#ffffff"
+			/>
+			<Text
+				class="navMobile-text"
+				text="Utility"
+			/>
 		</VBox>
-		<VBox id="navMobileRental" class="navMobile-link">
+		<VBox
+			id="navMobileRental"
+			class="navMobile-link"
+		>
 			<core:Icon
 				src="sap-icon://building"
 				class="sizeNavIcon"
-				color="#ffffff" />
-			<Text class="navMobile-text" text="Rental" />
+				color="#ffffff"
+			/>
+			<Text
+				class="navMobile-text"
+				text="Rental"
+			/>
 		</VBox>
 	</HBox>
 </mvc:View>
