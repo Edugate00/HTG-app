@@ -4,7 +4,7 @@
 	xmlns:ndc="sap.ndc"
 	xmlns="sap.m"
 >
-	<Page showHeader="false">
+	<!-- <Page showHeader="false"> -->
 		<HBox class="header-container">
 			<!-- <Button
 				text="Back"
@@ -17,8 +17,8 @@
 			/> -->
 		</HBox>
 		<FlexBox
-			class="main-container "
-			height="600px"
+			class="main-container container-meteran"
+			 height="500px" 
 			justifyContent="Center"
 		>
 			<VBox
@@ -32,14 +32,14 @@
 					/>
 				</HBox>
 				<VBox class="sapUiMediumMarginBeginEnd">
-					<VBox class="sapUiSmallMarginTopBottom">
+					<VBox class="sapUiTinyMarginTopBottom">
 						<Title text="Tanggal dan Jam"/>
 						<Text
 							id="CurrentMeasDateTime"
 							text="-"
 						/>
 					</VBox>
-					<VBox class="sapUiSmallMarginTopBottom">
+					<VBox class="sapUiTinyMarginTopBottom">
 						<Title text="Kode Pengukuran"/>
 						<FlexBox direction="Row">
 							<Input
@@ -56,14 +56,14 @@
 							/>
 						</FlexBox>
 					</VBox>
-					<VBox class="sapUiSmallMarginTopBottom">
+					<VBox class="sapUiTinyMarginTopBottom">
 						<Title text="Deskripsi"/>
 						<Text
 							id="MeasDescription"
 							text="-"
 						/>
 					</VBox>
-					<VBox class="sapUiSmallMarginTopBottom">
+					<VBox class="sapUiTinyMarginTopBottom">
 						<Title text="Nilai Pengukuran Sebelumnya"/>
 						<HBox>
 							<Text
@@ -76,7 +76,7 @@
 							/>
 						</HBox>
 					</VBox>
-					<VBox class="sapUiSmallMarginTopBottom">
+					<VBox class="sapUiTinyMarginTopBottom">
 						<FlexBox direction="Row">
 							<VBox>
 								<Title text="Nilai Pengukuran Saat ini"/>
@@ -88,10 +88,9 @@
 									placeholder="Input Measurement Value"
 								/>
 							</VBox>
-							<VBox class="sapUiSmallMarginBegin"/>
 						</FlexBox>
 					</VBox>
-					<VBox class="sapUiSmallMarginTopBottom">
+					<VBox class="sapUiTinyMarginTopBottom">
 						<VBox>
 							<Title
 								id="TitleTotalPemakaian"
@@ -103,8 +102,9 @@
 							/>
 						</VBox>
 					</VBox>
-					<HBox>
+					<HBox width="100%">
 						<Button
+							width="100%"
 							text="Simpan Pengukuran"
 							type="Emphasized"
 							press="OnPostMeasurement"
@@ -113,5 +113,5 @@
 				</VBox>
 			</VBox>
 		</FlexBox>
-	</Page>
+	<!-- </Page> -->
 </mvc:View>
