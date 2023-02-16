@@ -341,8 +341,8 @@ body {
         width: 100%;
         display: flex;
         align-items: center;
-        gap: 4px;
-        padding: 16px 24px;
+        /* gap: 2px; */
+        padding: 16px 24px 12px 24px;
     }
 
     .navMobile-link:hover {
@@ -365,10 +365,11 @@ body {
     }
 
     .sizeNavIcon {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
     }
 
     .navMobile-text {
+        font-size: 0.8rem !important;
         color: #fff !important;
     }
 
