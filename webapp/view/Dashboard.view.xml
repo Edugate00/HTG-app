@@ -253,7 +253,7 @@
 						<VBox>
 							<viz:VizFrame
 								id="vizPenggunaanAir"
-								height="220px"
+								height="210px"
 								width="100%"
 								vizType="column"
 								busyIndicatorDelay="500"
@@ -316,7 +316,7 @@
 						<VBox height="100%">
 							<viz:VizFrame
 								id="vizPenggunaanListrik"
-								height="220px"
+								height="210px"
 								width="100%"
 								vizType="line"
 								busyIndicatorDelay="500"
