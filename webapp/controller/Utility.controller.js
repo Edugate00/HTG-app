@@ -91,10 +91,11 @@ sap.ui.define(
 
         let width = null;
         console.log(widthWindow)
-        if(widthWindow < 1400 ){
-          width = "70%";
-        }else {
+
+        if (widthWindow < 576 || widthWindow > 1400) {
           width = "100%";
+        }else {
+          width = "70%";
         }
 
       if (!this.oFixedSizeDialog) {
