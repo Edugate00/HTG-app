@@ -54,7 +54,7 @@ body {
     color: #ffffff !important;
     background-color: var(--primary-color-40);
     padding: 12px 24px;
-    z-index: 99;
+    z-index: 1;
 }
 
 .navbrand {
