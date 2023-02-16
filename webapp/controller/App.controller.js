@@ -1,7 +1,7 @@
 sap.ui.define(["lrlpapp/controller/BaseController"], function (BaseController) {
   "use strict";
 
-  return BaseController.extend("lrlpapp.controller.controller.App", {
+  return BaseController.extend("lrlpapp.controller.App", {
     onInit() {
       const urlHash = window.location.hash.split("/")[1];
 
