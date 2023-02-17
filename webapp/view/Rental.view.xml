@@ -7,7 +7,8 @@
     <SplitApp
         id="rentalBills"
         initialDetail="detailEmpty"
-        initialMaster="master">
+        initialMaster="master"
+        mode="ShowHideMode">
         <masterPages>
             <Page
                 showHeader="true"
@@ -49,9 +50,16 @@
         <detailPages>
             <Page
                 id="detail"
+                backgroundDesign="List"
                 title="Detail Tagihan"
                 class="sapUiResponsivePadding--header">
-                <Text text="wadwada"></Text>
+                <FlexBox
+                    justifyContent="Center"
+                    alignItems="Center"
+                    width="100%"
+                    height="100%">
+                    <Text text="wadwada"></Text>
+                </FlexBox>
             </Page>
             <Page
                 id="detailEmpty"
