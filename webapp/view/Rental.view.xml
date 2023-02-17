@@ -2,26 +2,28 @@
 	controllerName="lrlpapp.controller.Rental"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
-	displayBlock="true"
-	xmlns="sap.m">
-	<Page showHeader="false">
-		<VBox class="header-container" />
-		<VBox class="main-container" height="600px">
-			<VBox class="card-rental card">
-				<SplitApp
-					id="rentalBills"
-					initialDetail="detailEmpty"
-					initialMaster="master">
-					<masterPages>
-						<Page
-							showHeader="true"
-							title="Tagihan"
-							class="sapUiResponsivePadding--header sapUiResponsivePadding--subHeader">
-							<List id="tagihanRentalList">
-								<items>
-									<ObjectListItem
+	xmlns="sap.m"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<SplitApp
+		id="rentalBills"
+		initialDetail="detailEmpty"
+		initialMaster="master">
+		<masterPages>
+			<Page
+				showHeader="true"
+				title="Tagihan"
+				class="sapUiResponsivePadding--header sapUiResponsivePadding--subHeader">
+				<List id="tagihanRentalList">
+					<items>
+						<StandardListItem
+							title="wdawdawda"
+							description="awdwada"
+							type="Active"
+							custom:to="detail" />
+						<!-- <ObjectListItem
 										type="Active"
-										title="9001 - Karimata">
+										title="9001 - Karimata"
+										custom:to="detail">
 										<ObjectAttribute
 											title="Tipe"
 											text="Tagihan Sewa" />
@@ -36,7 +38,8 @@
 									</ObjectListItem>
 									<ObjectListItem
 										type="Active"
-										title="9001 - Karimata">
+										title="9001 - Karimata"
+										custom:to="detail">
 										<ObjectAttribute
 											title="Tipe"
 											text="Tagihan Sewa" />
@@ -51,7 +54,8 @@
 									</ObjectListItem>
 									<ObjectListItem
 										type="Active"
-										title="9001 - Karimata">
+										title="9001 - Karimata"
+										custom:to="detail">
 										<ObjectAttribute
 											title="Tipe"
 											text="Tagihan Sewa" />
@@ -63,136 +67,30 @@
 												text="Sudah dibayar"
 												state="Success" />
 										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-								</items>
-							</List>
-						</Page>
-					</masterPages>
-					<detailPages>
-
-					</detailPages>
-				</SplitApp>
-			</VBox>
-		</VBox>
-	</Page>
+									</ObjectListItem> -->
+					</items>
+				</List>
+			</Page>
+		</masterPages>
+		<detailPages>
+			<Page id="detail" showNavButton="true" title="Detail Tagihan">
+				<Text text="wadwada"></Text>
+			</Page>
+			<Page
+				id="detailEmpty"
+				title="Detail Tagihan"
+				class="sapUiContentPadding sapUiResponsivePadding--header">
+				<VBox
+					width="100%"
+					height="100%">
+					<IllustratedMessage
+						class="sapUiLargeMarginTop"
+						description=""
+						title="No Task Selected"
+						illustrationType="sapIllus-NoTasks"
+						visible="true" />
+				</VBox>
+			</Page>
+		</detailPages>
+	</SplitApp>
 </mvc:View>
