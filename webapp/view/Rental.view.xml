@@ -1,96 +1,76 @@
 <mvc:View
-	controllerName="lrlpapp.controller.Rental"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	xmlns="sap.m"
-	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-	<SplitApp
-		id="rentalBills"
-		initialDetail="detailEmpty"
-		initialMaster="master">
-		<masterPages>
-			<Page
-				showHeader="true"
-				title="Tagihan"
-				class="sapUiResponsivePadding--header sapUiResponsivePadding--subHeader">
-				<List id="tagihanRentalList">
-					<items>
-						<StandardListItem
-							title="wdawdawda"
-							description="awdwada"
-							type="Active"
-							custom:to="detail" />
-						<!-- <ObjectListItem
-										type="Active"
-										title="9001 - Karimata"
-										custom:to="detail">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata"
-										custom:to="detail">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem>
-									<ObjectListItem
-										type="Active"
-										title="9001 - Karimata"
-										custom:to="detail">
-										<ObjectAttribute
-											title="Tipe"
-											text="Tagihan Sewa" />
-										<ObjectAttribute
-											title="Tanggal"
-											text="16 Feb 2023" />
-										<secondStatus>
-											<ObjectStatus
-												text="Sudah dibayar"
-												state="Success" />
-										</secondStatus>
-									</ObjectListItem> -->
-					</items>
-				</List>
-			</Page>
-		</masterPages>
-		<detailPages>
-			<Page id="detail" showNavButton="true" title="Detail Tagihan">
-				<Text text="wadwada"></Text>
-			</Page>
-			<Page
-				id="detailEmpty"
-				title="Detail Tagihan"
-				class="sapUiContentPadding sapUiResponsivePadding--header">
-				<VBox
-					width="100%"
-					height="100%">
-					<IllustratedMessage
-						class="sapUiLargeMarginTop"
-						description=""
-						title="No Task Selected"
-						illustrationType="sapIllus-NoTasks"
-						visible="true" />
-				</VBox>
-			</Page>
-		</detailPages>
-	</SplitApp>
+    controllerName="lrlpapp.controller.Rental"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <SplitApp
+        id="rentalBills"
+        initialDetail="detailEmpty"
+        initialMaster="master">
+        <masterPages>
+            <Page
+                showHeader="true"
+                backgroundDesign="List"
+                title="Tagihan"
+                class="sapUiResponsivePadding--header">
+                <List
+                    id="tagihanRentalList"
+                    itemPress=".onTagihanRentalSelect">
+                    <items>
+                        <StandardListItem
+                            title="Karimata"
+                            description="Tagihan Sewa - 09 Feb, 2023"
+                            type="Active"
+                            highlight="Success"
+                            custom:to="detail" />
+                        <StandardListItem
+                            title="Butterfield"
+                            description="Tagihan Sewa - 09 Jan, 2023"
+                            type="Active"
+                            highlight="Error"
+                            custom:to="detail" />
+                        <StandardListItem
+                            title="Woori"
+                            description="Tagihan Sewa - 09 Des, 2022"
+                            type="Active"
+                            highlight="Success"
+                            custom:to="detail" />
+                        <StandardListItem
+                            title="Sharinc"
+                            description="Tagihan Sewa - 09 Nov, 2022"
+                            type="Active"
+                            highlight="Success"
+                            custom:to="detail" />
+                    </items>
+                </List>
+            </Page>
+        </masterPages>
+        <detailPages>
+            <Page
+                id="detail"
+                title="Detail Tagihan"
+                class="sapUiResponsivePadding--header">
+                <Text text="wadwada"></Text>
+            </Page>
+            <Page
+                id="detailEmpty"
+                backgroundDesign="List"
+                title="Detail Tagihan"
+                class="sapUiResponsivePadding--header">
+                <FlexBox
+                    justifyContent="Center"
+                    alignItems="Center"
+                    width="100%"
+                    height="100%">
+                    <IllustratedMessage
+                        class="sapUiLargeMarginTop"
+                        description="Detail tagihan akan muncul disini setelah dipilih"
+                        title="Tidak ada tagihan yang dipilih"
+                        illustrationType="sapIllus-PageNotFound"
+                        visible="true" />
+                </FlexBox>
+            </Page>
+        </detailPages>
+    </SplitApp>
 </mvc:View>
