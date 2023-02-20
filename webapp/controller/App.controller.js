@@ -8,7 +8,7 @@ sap.ui.define(["lrlpapp/controller/BaseController"], function (BaseController) {
       const navMobileDashboard = this.byId("navMobileDashboard");
       const navMobileUtility = this.byId("navMobileUtility");
       const navMobileRental = this.byId("navMobileRental");
-
+      
       if(urlHash === "utility") {
         this._getActiveNav("utility");
         navMobileUtility.addStyleClass("navMobile-link-active")
