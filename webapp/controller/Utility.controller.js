@@ -63,7 +63,7 @@ sap.ui.define(
 				this.oFixedDialog = new Dialog({
 					title: "Pemakaian Air Bulanan",
 					contentWidth: width,
-					contentHeight: "400px",
+					contentHeight: "450px",
 					content: oHtml1,
 					endButton: new Button({
 						text: "Close",
