@@ -135,6 +135,11 @@
           "target": "meteran"
         },
         {
+          "pattern": "utility/reportair",
+          "name": "reportair",
+          "target": "reportair"
+        },
+        {
           "pattern": "settings",
           "name": "settings",
           "target": "settings"
@@ -165,6 +170,12 @@
           "id": "meteran",
           "path": "lrlpapp.view.utility",
           "name": "meteran",
+          "viewLevel": 1
+        },
+        "reportair": {
+          "id": "reportair",
+          "path": "lrlpapp.view.utility",
+          "name": "reportair",
           "viewLevel": 1
         },
         "settings": {

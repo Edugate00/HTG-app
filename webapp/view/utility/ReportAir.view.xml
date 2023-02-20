@@ -1,0 +1,142 @@
+<mvc:View
+	controllerName="lrlpapp.controller.utility.ReportAir"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+    <SplitApp
+		id="reportAir"
+		initialDetail="detailEmpty"
+		initialMaster="master">
+		<masterPages>
+			<Page
+				id="measdoc"
+				title="Mesurement Documents"
+				backgroundDesign="List"
+				class="sapUiResponsivePadding--subHeader">
+				<headerContent>
+					<Button icon="sap-icon://filter" tooltip="Filter" press="openFilterDialog" />
+				</headerContent>
+                <List
+					id="measdocList"
+					busyIndicatorDelay="500"
+					enableBusyIndicator="true"
+					noDataText="No Data Available"
+					selectionChange=".onListItemPress"
+					items="{
+						path: 'MeasDoc',
+						sorter: {
+							path: 'Document',
+							group: true
+						}
+					}"
+					mode="SingleSelectMaster">
+					<items>
+						<StandardListItem
+							title="{MeasDoc>Document}"
+							description=""
+							type="Active"
+							custom:to="detail" />
+					</items>
+				</List>
+                
+				
+			</Page>
+		</masterPages>
+		<detailPages>
+			<Page
+				id="detail"
+				title="Pemakaian Air Bulanan"
+				backgroundDesign="Solid"
+				showHeader="true"
+				showFooter="true" 
+				class="sapUiResponsivePadding--header">
+					<ObjectHeader
+					title="{selectedActivity>/Description}"
+					backgroundDesign="Solid"
+					responsive="false"
+					fullScreenOptimized="true">
+
+					<attributes>
+						
+					</attributes>
+					<statuses>
+						
+					</statuses>
+				</ObjectHeader>
+				<VBox>
+					<!-- <IconTabBar>
+						<items>
+							<IconTabFilter
+								key="activity"
+								text="Activity History">
+								<l:VerticalLayout
+									class="sapUiContentPadding"
+									width="100%">
+									<VBox class="cardContainer">
+										<List
+											busyIndicatorDelay="500"
+											enableBusyIndicator="true"
+											noDataText="No History Available"
+											items="{historyClockIn>/history}"
+											
+											>
+											<items>
+												<ObjectListItem
+													title="{selectedActivity>/Description}">
+													<ObjectAttribute
+														title="Start Time"
+														text="{historyClockIn>StartDate} / {historyClockIn>StartTime}" />
+													<ObjectAttribute
+														title="Finish Time"
+														text="{historyClockIn>FinishDate} / {historyClockIn>FinishTime}" />
+													<firstStatus>
+														<ObjectStatus
+															text="{historyClockIn>Reason}"
+															state="Information" /> 
+													</firstStatus>
+													<secondStatus>
+														<ObjectStatus
+															text="{historyClockIn>ConfirmHour}" />
+													</secondStatus>
+												</ObjectListItem>
+											</items>
+										</List>
+									</VBox>
+								</l:VerticalLayout>
+							</IconTabFilter>
+						</items>
+					</IconTabBar> -->
+				</VBox>
+				<footer>
+					<OverflowToolbar>
+						<!-- <Button text="Confirm Activity" type="Default" press="goToConfirmActivity"/> -->
+						<ToolbarSpacer/>
+						<Button id="start" text="Start Activity" type="Emphasized" press="onClockIn" />
+					</OverflowToolbar>
+				</footer>
+			</Page>
+			
+			<Page
+				id="detailEmpty"
+				backgroundDesign="Solid"
+				showHeader="true"
+				title="Detail Measurement Document"
+				class="sapUiContentPadding sapUiResponsivePadding--header">
+				<VBox
+					width="100%"
+					height="100%">
+					<IllustratedMessage
+						class="sapUiLargeMarginTop"
+						description=""
+						title="No Data"
+						illustrationType="sapIllus-NoTasks"
+						visible="true" />
+				</VBox>
+			</Page>
+		</detailPages>
+	</SplitApp>
+</mvc:View>

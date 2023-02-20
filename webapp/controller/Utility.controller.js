@@ -30,7 +30,7 @@ sap.ui.define(
         );
         tileAirBulanan.attachBrowserEvent(
           "click",
-          this._onAirBulanan,
+          this._onReportAir,
           this
         );
         tileTagihanAir.attachBrowserEvent(
@@ -44,6 +44,9 @@ sap.ui.define(
     },
     _onPindaiMeteran: function (oEvent) {
       this.getRouter().navTo("meteran");
+    },
+    _onReportAir: function (oEvent) {
+      this.getRouter().navTo("reportair");
     },
     _onAirBulanan: function (oEvent) {
       const oView = this.getView();
