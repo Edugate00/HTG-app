@@ -103,7 +103,7 @@ sap.ui.define(
 				this.oFixedSizeDialog = new Dialog({
 					title: "Perhitungan Tagihan Air",
 					contentWidth: width,
-					contentHeight: "400px",
+					contentHeight: "450px",
 					content: oHtml2,
 					endButton: new Button({
 						text: "Close",
