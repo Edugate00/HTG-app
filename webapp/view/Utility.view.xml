@@ -40,7 +40,7 @@
 								src="sap-icon://qr-code"
 								class="size1"
 								color="#ffffff" />
-						</VBox>
+						</VBox> 
 						<Text
 							class="tile-title"
 							text="Pindai Meteran" />
