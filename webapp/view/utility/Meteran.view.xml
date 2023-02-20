@@ -4,114 +4,102 @@
 	xmlns:ndc="sap.ndc"
 	xmlns="sap.m"
 >
-	<!-- <Page showHeader="false"> -->
-		<HBox class="header-container">
-			<!-- <Button
-				text="Back"
-				icon="sap-icon://nav-back"
-				press="onNavBack"
-			/>
-			<Title
-				class="sapUiSmallMarginBegin"
-				text="Pindai Meteran"
-			/> -->
-		</HBox>
-		<FlexBox
-			class="main-container container-meteran"
-			 height="500px" 
-			justifyContent="Center"
+	<HBox class="header-container"/>
+	<FlexBox
+		class="main-container"
+		height="590px"
+		justifyContent="Center"
+	>
+		<VBox
+			id="cardPindai"
+			class="card"
 		>
-			<VBox
-				id="cardPindai"
-				class="card"
-			>
-				<HBox class="card-header">
+			<HBox class="card-header">
+				<Text
+					class="card-title"
+					text="Pengukuran Nilai"
+				/>
+			</HBox>
+			<VBox class="sapUiMediumMarginBeginEnd">
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Tanggal dan Jam"/>
 					<Text
-						class="card-title"
-						text="Pengukuran Nilai"
+						id="CurrentMeasDateTime"
+						text="-"
 					/>
-				</HBox>
-				<VBox class="sapUiMediumMarginBeginEnd">
-					<VBox class="sapUiTinyMarginTopBottom">
-						<Title text="Tanggal dan Jam"/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Kode Pengukuran"/>
+					<FlexBox direction="Row">
+						<Input
+							id="CurrentMeasPoint"
+							type="Number"
+							placeholder="Input / Scan"
+							submit="onSubmitMeasPoint"
+						/>
+						<ndc:BarcodeScannerButton
+							id="barcodeScannerDialog"
+							class="sapUiSmallMarginBeginEnd"
+							scanSuccess="onScanSuccess"
+							scanFail="onScanError"
+						/>
+					</FlexBox>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Deskripsi"/>
+					<Text
+						id="MeasDescription"
+						text="-"
+					/>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<Title text="Nilai Pengukuran Sebelumnya"/>
+					<HBox>
 						<Text
-							id="CurrentMeasDateTime"
+							id="PrevMeasValue"
 							text="-"
 						/>
-					</VBox>
-					<VBox class="sapUiTinyMarginTopBottom">
-						<Title text="Kode Pengukuran"/>
-						<FlexBox direction="Row">
-							<Input
-								id="CurrentMeasPoint"
-								type="Number"
-								placeholder="Input / Scan"
-								submit="onSubmitMeasPoint"
-							/>
-							<ndc:BarcodeScannerButton
-								id="barcodeScannerDialog"
-								class="sapUiSmallMarginBeginEnd"
-								scanSuccess="onScanSuccess"
-								scanFail="onScanError"
-							/>
-						</FlexBox>
-					</VBox>
-					<VBox class="sapUiTinyMarginTopBottom">
-						<Title text="Deskripsi"/>
 						<Text
-							id="MeasDescription"
-							text="-"
-						/>
-					</VBox>
-					<VBox class="sapUiTinyMarginTopBottom">
-						<Title text="Nilai Pengukuran Sebelumnya"/>
-						<HBox>
-							<Text
-								id="PrevMeasValue"
-								text="-"
-							/>
-							<Text
-								id="PrevMeasDateTime"
-								class="sapUiSmallMarginBegin"
-							/>
-						</HBox>
-					</VBox>
-					<VBox class="sapUiTinyMarginTopBottom">
-						<FlexBox direction="Row">
-							<VBox>
-								<Title text="Nilai Pengukuran Saat ini"/>
-								<Input
-									id="CurrentMeasValue"
-									type="Number"
-									enabled="false"
-									submit="onSubmitMeasValue"
-									placeholder="Input Measurement Value"
-								/>
-							</VBox>
-						</FlexBox>
-					</VBox>
-					<VBox class="sapUiTinyMarginTopBottom">
-						<VBox>
-							<Title
-								id="TitleTotalPemakaian"
-								text="Total Pemakaian"
-							/>
-							<Text
-								id="TotalPemakaian"
-								text="-"
-							/>
-						</VBox>
-					</VBox>
-					<HBox width="100%">
-						<Button
-							width="100%"
-							text="Simpan Pengukuran"
-							type="Emphasized"
-							press="OnPostMeasurement"
+							id="PrevMeasDateTime"
+							class="sapUiSmallMarginBegin"
 						/>
 					</HBox>
 				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<FlexBox direction="Row">
+						<VBox>
+							<Title text="Nilai Pengukuran Saat ini"/>
+							<Input
+								id="CurrentMeasValue"
+								type="Number"
+								enabled="false"
+								submit="onSubmitMeasValue"
+								placeholder="Input Measurement Value"
+							/>
+						</VBox>
+					</FlexBox>
+				</VBox>
+				<VBox class="sapUiSmallMarginTopBottom">
+					<VBox>
+						<Title
+							id="TitleTotalPemakaian"
+							text="Total Pemakaian"
+						/>
+						<Text
+							id="TotalPemakaian"
+							text="-"
+						/>
+					</VBox>
+				</VBox>
+				<HBox width="100%">
+					<Button
+						width="100%"
+						text="Simpan Pengukuran"
+						type="Emphasized"
+						press="OnPostMeasurement"
+					/>
+				</HBox>
 			</VBox>
-		</FlexBox>
-	<!-- </Page> -->
+		</VBox>
+	</FlexBox>
 </mvc:View>

@@ -1,48 +1,84 @@
 <mvc:View
-	controllerName="lrlpapp.controller.Rental"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	displayBlock="true"
-	xmlns="sap.m">
-	<Page showHeader="false">
-		<VBox class="header-container" />
-		<VBox class="main-container">
-			<HBox class="tiles">
-				<VBox
-					class="tile"
-					id="tileContainer">
-					<FlexBox class="tile-header">
-						<VBox class="tile-icon sapUiSmallMarginEnd">
-							<core:Icon
-								src="sap-icon://sap-box"
-								class="size1"
-								color="#ffffff" />
-						</VBox>
-						<Text class="tile-title" text="Container" />
-					</FlexBox>
-					<VBox class="tile-info">
-						<Text class="dynamic-number" text="0" />
-						<Text text="Meteran perlu dipindai" />
-					</VBox>
-				</VBox>
-				<VBox
-					class="tile"
-					id="tileTenant">
-					<FlexBox class="tile-header">
-						<VBox class="tile-icon sapUiSmallMarginEnd">
-							<core:Icon
-								src="sap-icon://person-placeholder"
-								class="size1"
-								color="#ffffff" />
-						</VBox>
-						<Text class="tile-title" text="Tenant" />
-					</FlexBox>
-					<VBox class="tile-info">
-						<Text class="dynamic-number" text="0" />
-						<Text text="Meteran perlu dipindai" />
-					</VBox>
-				</VBox>
-			</HBox>
-		</VBox>
-	</Page>
+    controllerName="lrlpapp.controller.Rental"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <SplitApp
+        id="rentalBills"
+        initialDetail="detailEmpty"
+        initialMaster="master"
+        mode="ShowHideMode">
+        <masterPages>
+            <Page
+                showHeader="true"
+                backgroundDesign="List"
+                title="Tagihan"
+                class="sapUiResponsivePadding--header">
+                <List
+                    id="tagihanRentalList"
+                    itemPress=".onTagihanRentalSelect">
+                    <items>
+                        <StandardListItem
+                            title="Karimata"
+                            description="Tagihan Sewa - 09 Feb, 2023"
+                            type="Active"
+                            highlight="Success"
+                            custom:to="detail" />
+                        <StandardListItem
+                            title="Butterfield"
+                            description="Tagihan Sewa - 09 Jan, 2023"
+                            type="Active"
+                            highlight="Error"
+                            custom:to="detail" />
+                        <StandardListItem
+                            title="Woori"
+                            description="Tagihan Sewa - 09 Des, 2022"
+                            type="Active"
+                            highlight="Success"
+                            custom:to="detail" />
+                        <StandardListItem
+                            title="Sharinc"
+                            description="Tagihan Sewa - 09 Nov, 2022"
+                            type="Active"
+                            highlight="Success"
+                            custom:to="detail" />
+                    </items>
+                </List>
+            </Page>
+        </masterPages>
+        <detailPages>
+            <Page
+                id="detail"
+                backgroundDesign="List"
+                title="Detail Tagihan"
+                class="sapUiResponsivePadding--header">
+                <FlexBox
+                    justifyContent="Center"
+                    alignItems="Center"
+                    width="100%"
+                    height="100%">
+                    <Text text="wadwada"></Text>
+                </FlexBox>
+            </Page>
+            <Page
+                id="detailEmpty"
+                backgroundDesign="List"
+                title="Detail Tagihan"
+                class="sapUiResponsivePadding--header">
+                <FlexBox
+                    justifyContent="Center"
+                    alignItems="Center"
+                    width="100%"
+                    height="100%">
+                    <IllustratedMessage
+                        class="sapUiLargeMarginTop"
+                        description="Detail tagihan akan muncul disini setelah dipilih"
+                        title="Tidak ada tagihan yang dipilih"
+                        illustrationType="sapIllus-PageNotFound"
+                        visible="true" />
+                </FlexBox>
+            </Page>
+        </detailPages>
+    </SplitApp>
 </mvc:View>

@@ -188,6 +188,7 @@ sap.ui.define(
 
       _onPindaiMeteranClick: function () {
         this.getRouter().navTo("meteran");
+        window.location.reload();
       },
 
       _onTagihanAirClick: function (oEvent) {

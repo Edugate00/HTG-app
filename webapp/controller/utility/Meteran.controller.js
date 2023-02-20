@@ -170,50 +170,54 @@ sap.ui.define(
           .join("")
           .replace(/\s/g, ""); // remove spaces;
         const inputValue = currentMeasurementValue.getValue().replace(".", ",");
-        let inputUnit = dataMeasPoint.Uom;
 
-        if (inputUnit == "L") {
-          inputUnit = "l";
-        }
+        // cek input
+        if (inputPoint && inputValue) {
+          let inputUnit = dataMeasPoint.Uom;
 
-        const request = new InputRequest(
-          inputPoint,
-          inputValue,
-          inputUnit,
-          convertDate,
-          convertTime
-        );
+          if (inputUnit == "L") {
+            inputUnit = "l";
+          }
 
-        console.log(request);
+          const request = new InputRequest(
+            inputPoint,
+            inputValue,
+            inputUnit,
+            convertDate,
+            convertTime
+          );
 
-        // call odata request
-        const response = await this.CreateOdataMeasDocument(request);
-        const data = response.result;
+          console.log(request);
 
-        console.log(response);
-        console.log(data);
+          // call odata request
+          const response = await this.CreateOdataMeasDocument(request);
+          const data = response.result;
 
-        // hide busy indicator
-        BusyIndicator.hide();
+          console.log(response);
+          console.log(data);
 
-        if (!data.Document) {
-          MessageBox.error(data.Message, {
-            onClose: function () {
-              window.location.reload();
-            },
-          });
-        } else {
-          MessageBox.success(
-            `${data.Message}, Measurement Document ${parseInt(
-              data.Document
-            )} created.`,
-            {
+          if (!data.Document) {
+            MessageBox.error(data.Message, {
               onClose: function () {
                 window.location.reload();
               },
-            }
-          );
+            });
+          } else {
+            MessageBox.success(
+              `Dokumen pengukuran ${parseInt(data.Document)} terbuat.`,
+              {
+                onClose: function () {
+                  window.location.reload();
+                },
+              }
+            );
+          }
+        } else {
+          MessageBox.error("Input tidak boleh kosong.");
         }
+
+        // hide busy indicator
+        BusyIndicator.hide();
       },
 
       SetLabelPrevMeasurement: function (description, valueUnit, dateTime) {

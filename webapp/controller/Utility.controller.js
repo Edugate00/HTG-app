@@ -49,7 +49,7 @@ sap.ui.define(
       const oView = this.getView();
       
         var oHtml1 = new sap.ui.core.HTML({
-                    content: '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB9F7DE0B43CE41C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>'
+                    content: '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB85EF75B7A3841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>'
                     });
 
       let width = null;
@@ -91,10 +91,11 @@ sap.ui.define(
 
         let width = null;
         console.log(widthWindow)
-        if(widthWindow < 1400 ){
-          width = "70%";
-        }else {
+
+        if (widthWindow < 576 || widthWindow > 1400) {
           width = "100%";
+        }else {
+          width = "70%";
         }
 
       if (!this.oFixedSizeDialog) {

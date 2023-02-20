@@ -1,9 +1,11 @@
-<mvc:View xmlns:core="sap.ui.core"
+<mvc:View
+	xmlns:core="sap.ui.core"
 	controllerName="lrlpapp.controller.App"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:mvc="sap.ui.core.mvc"
 	displayBlock="true"
 	xmlns="sap.m">
+  
 	<HBox class="navbar">
 		<HBox class="navbrand">
 			<Image
@@ -29,40 +31,44 @@
 					class="nav-link"
 					text="Rental"
 					press="onRentalPress" />
+
 			</HBox>
 		</HBox>
-		<HBox>
-			<Avatar
-				id="userImg"
-				ariaHasPopup="Dialog"
-				displaySize="Custom"
-				customDisplaySize="2.2rem"
-				imageFitType="Cover"
-				press="onUserImgPress" />
+		<App id="mainContents" />
+		<HBox class="navMobile">
+			<VBox
+				id="navMobileDashboard"
+				class="navMobile-link">
+				<core:Icon
+					src="sap-icon://home"
+					class="sizeNavIcon"
+					color="#ffffff" />
+				<Text
+					class="navMobile-text"
+					text="Dashboard" />
+			</VBox>
+			<VBox
+				id="navMobileUtility"
+				class="navMobile-link">
+				<core:Icon
+					src="sap-icon://blur"
+					class="sizeNavIcon"
+					color="#ffffff" />
+				<Text
+					class="navMobile-text"
+					text="Utility" />
+			</VBox>
+			<VBox
+				id="navMobileRental"
+				class="navMobile-link">
+				<core:Icon
+					src="sap-icon://building"
+					class="sizeNavIcon"
+					color="#ffffff" />
+				<Text
+					class="navMobile-text"
+					text="Rental" />
+			</VBox>
 		</HBox>
-	</HBox>
-	<App id="mainContents" />
-	<HBox class="navMobile">
-		<VBox id="navMobileDashboard" class="navMobile-link">
-			<core:Icon
-				src="sap-icon://home"
-				class="sizeNavIcon"
-				color="#ffffff" />
-			<Text class="navMobile-text" text="Dashboard" />
-		</VBox>
-		<VBox id="navMobileUtility" class="navMobile-link">
-			<core:Icon
-				src="sap-icon://blur"
-				class="sizeNavIcon"
-				color="#ffffff" />
-			<Text class="navMobile-text" text="Utility" />
-		</VBox>
-		<VBox id="navMobileRental" class="navMobile-link">
-			<core:Icon
-				src="sap-icon://building"
-				class="sizeNavIcon"
-				color="#ffffff" />
-			<Text class="navMobile-text" text="Rental" />
-		</VBox>
-	</HBox>
+	</VBox>
 </mvc:View>
