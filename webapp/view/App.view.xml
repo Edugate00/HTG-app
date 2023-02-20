@@ -22,7 +22,7 @@
 				<Link
 					id="utility"
 					class="nav-link"
-					text="Utility"
+					text="Utilities"
 					press="onUtilityPress" />
 				<Link
 					id="rental"
