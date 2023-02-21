@@ -23,25 +23,21 @@
                             title="Karimata"
                             description="Tagihan Sewa - 09 Feb, 2023"
                             type="Active"
-                            highlight="Success"
                             custom:to="detail" />
                         <StandardListItem
                             title="Butterfield"
                             description="Tagihan Sewa - 09 Jan, 2023"
                             type="Active"
-                            highlight="Error"
                             custom:to="detail" />
                         <StandardListItem
                             title="Woori"
                             description="Tagihan Sewa - 09 Des, 2022"
                             type="Active"
-                            highlight="Success"
                             custom:to="detail" />
                         <StandardListItem
                             title="Sharinc"
                             description="Tagihan Sewa - 09 Nov, 2022"
                             type="Active"
-                            highlight="Success"
                             custom:to="detail" />
                     </items>
                 </List>
