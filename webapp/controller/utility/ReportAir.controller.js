@@ -1,9 +1,13 @@
 sap.ui.define([
 	"lrlpapp/controller/BaseController",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
 ], function(
 	BaseController,
-    JSONModel
+    JSONModel,
+    Filter,
+    FilterOperator
 ) {
 	"use strict";
 
@@ -37,6 +41,8 @@ sap.ui.define([
         FinalDataMeasDoc.forEach((el) => {
           el.Point = el.Point.slice(6);
           el.Document = el.Document.slice(14);
+          el.Date = this.getFormattedDate(el.Date);
+          el.Time = this.getFormattedTime(el.Time);
         });
 
         console.log(FinalDataMeasDoc);
@@ -65,7 +71,46 @@ sap.ui.define([
               oView.addDependent(oDialog);
           }
           oDialog.open();
-      },
+        },
+
+        onTenantFilter: function(oEvent) {
+          let oFilter1, oFilter2, oFilters;
+          const oComboBoxTenant = oEvent.getSource();
+          const tenantSelected = oComboBoxTenant.getSelectedKey();
+          const measDocList = this.byId("measdocList");
+          // console.log(tenantSelected)
+          // console.log(oComboBoxTenant)
+          console.log(measDocList)
+
+          if (tenantSelected !== "*") {
+            oFilter1 = new Filter("Text", FilterOperator.Contains, tenantSelected);
+          } else {
+            oFilter1 = [];
+          }
+          console.log(oFilter1)
+          oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
+          measDocList.getBinding("items").filter(oFilter1);
+          console.log(measDocList.getBinding("items"));
+        },
+
+        onMonthFilter: function(oEvent) {
+          let oFilter1, oFilter2, oFilters;
+          const oComboBoxMonth = oEvent.getSource();
+          const monthSelected = oComboBoxMonth.getSelectedKey();
+          const measDocList = this.byId("measdocList");
+          // console.log(tenantSelected)
+          // console.log(oComboBoxTenant)
+          console.log(measDocList)
+
+          if (monthSelected !== "*") {
+            oFilter1 = new Filter("Tanggal", FilterOperator.Contains, monthSelected);
+          } else {
+            oFilter1 = [];
+          }
+          oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
+          measDocList.getBinding("items").filter(oFilter1);
+        },
+
 
         ReadOdataMeasDocument: function () {
             return new Promise(function (resolve) {

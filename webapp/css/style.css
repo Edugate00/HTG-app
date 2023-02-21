@@ -232,6 +232,11 @@ body {
     height: 100%;
 }
 
+.card-reportair {
+    width: 35% !important;
+    height: 700px !important;
+}
+
 /* Start SIZE for ICON */
 .size1 {
     font-size: 1.5rem;
@@ -303,6 +308,10 @@ body {
         flex-direction: row;
         height: max-content !important;
     }
+
+    .card-reportair {
+        width: 80% !important;
+    }
 }
 
 @media (width <=768px) {
@@ -322,6 +331,10 @@ body {
 
     .utility-charts {
         flex-direction: column;
+    }
+
+    .card-reportair {
+        width: 90% !important;
     }
 }
 
@@ -413,6 +426,11 @@ body {
 
     .size5 {
         font-size: 5rem;
+    }
+
+    .card-reportair {
+        width: 100% !important;
+        height: 600px !important;
     }
 }
 
