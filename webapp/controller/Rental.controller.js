@@ -19,7 +19,6 @@ sap.ui.define([
 
 		onTagihanRentalSelect: async function (oEvent) {
 			const sToPageId = oEvent.getParameter("listItem").getCustomData()[0].getValue();
-			console.log(sToPageId);
             this.getSplitAppObj().toDetail(this.createId(sToPageId));
 		},
 
