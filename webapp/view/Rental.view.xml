@@ -10,6 +10,7 @@
         initialMaster="master">
         <masterPages>
             <Page
+                id="master"
                 showHeader="true"
                 backgroundDesign="List"
                 title="Tagihan"
@@ -50,6 +51,8 @@
             <Page
                 id="detail"
                 backgroundDesign="List"
+                showNavButton="{device>/system/phone}"
+                navButtonPress="onNavBackToMaster"
                 title="Detail Tagihan"
                 class="sapUiResponsivePadding--header">
                 <FlexBox
