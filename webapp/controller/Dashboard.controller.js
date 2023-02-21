@@ -277,7 +277,7 @@ sap.ui.define(
         const statuSelected = oComboBoxStatus.getSelectedKey();
 
         const tagihanList = this.byId("tagihanList");
-
+        console.log(tagihanList)
         if (tenantSelected !== "*") {
           oFilter1 = new Filter("tenant", FilterOperator.EQ, tenantSelected);
         } else {
