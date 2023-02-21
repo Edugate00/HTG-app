@@ -22,6 +22,10 @@ sap.ui.define([
             this.getSplitAppObj().toDetail(this.createId(sToPageId));
 		},
 
+        onNavBackToMaster: function () {
+            this.getSplitAppObj().toMaster(this.createId("master"));
+        },
+
 		onOrientationChange: function (mParams) {
 			const sMsg = "Orientation now is " + (mParams.landscape ? "Landscape" : "Potrait");
             MessageToast.show(sMsg, { duration: 5000 });
@@ -30,7 +34,7 @@ sap.ui.define([
 		getSplitAppObj: function () {
 				const result = this.byId("rentalBills");
 				if (!result) {
-							MessageToast.show("SplitApp object can't be found!", { duration: 3000 });
+					MessageToast.show("SplitApp object can't be found!", { duration: 3000 });
 				}
 				return result;
 		}
