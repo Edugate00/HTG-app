@@ -49,11 +49,11 @@
 								width="132px"
 								placeholder="Select Status"
 								selectionChange="onMonthFilter"
-								selectedKey="*"
+								selectedKey="02"
 								class="sapMCbAutoFocus">
 								<core:Item
 									key="*"
-									text="Semua" />
+									text="Pilih bulan" />
 								<core:Item
 									key="01"
 									text="Januari" />
