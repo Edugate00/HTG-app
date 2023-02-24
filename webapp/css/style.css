@@ -218,6 +218,10 @@ body {
     border-bottom: 1px solid var(--neutral-color-20);
 }
 
+.card-content {
+    padding: 16px;
+}
+
 .card-title {
     font-size: 20px;
     font-weight: bold;
