@@ -265,6 +265,7 @@ body {
 @media (width <=992px) {
     .main-container {
         padding: 0 40px;
+        padding-bottom: 40px;
     }
 
     .bills-and-utility {
@@ -276,7 +277,6 @@ body {
 
         width: 100%;
         height: max-content;
-        padding-bottom: 24px;
     }
 
     .card-tagihan {
@@ -327,6 +327,7 @@ body {
 
     .main-container {
         padding: 0 24px;
+        padding-bottom: 24px;
     }
 
     .card-title {
