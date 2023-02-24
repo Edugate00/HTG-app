@@ -277,6 +277,7 @@ body {
 
         width: 100%;
         height: max-content;
+        padding-bottom: 48px;
     }
 
     .card-tagihan {
@@ -359,6 +360,7 @@ body {
         position: absolute;
         bottom: 0;
         width: 100%;
+        height: max-content;
         background-color: var(--primary-color-40);
         /* z-index: 99; */
     }
