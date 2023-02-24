@@ -1,14 +1,37 @@
 <mvc:View
-	controllerName="lrlpapp.controller.Settings"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	displayBlock="true"
-	xmlns="sap.m"
->
-	<Page showHeader="false">
-		<VBox class="header-container"/>
-		<VBox class="main-container">
-			<Text text="Setting"/>
-		</VBox>
-	</Page>
+    controllerName="lrlpapp.controller.Settings"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:uxap="sap.uxap"
+    xmlns="sap.m">
+    <Page showHeader="false">
+        <VBox class="header-container" />
+        <VBox class="main-container">
+            <VBox class="card">
+                <uxap:ObjectPageLayout id="settings">
+                    <uxap:headerTitle>
+                        <uxap:ObjectPageHeader
+                            id="_IDGenObjectPageHeader1"
+                            objectTitle="T01"
+                            objectSubtitle="Performance Monitoring System TRN"
+                        >
+                            <uxap:actions>
+                                <uxap:ObjectPageHeaderActionButton
+                                    id="Edit"
+                                    text="Save"
+                                    hideText="false"
+                                    type="Emphasized"
+                                />
+                                <uxap:ObjectPageHeaderActionButton
+                                    id="cancel"
+                                    text="Cancel"
+                                    hideText="false"
+                                />
+                            </uxap:actions>
+                        </uxap:ObjectPageHeader>
+                    </uxap:headerTitle>
+                </uxap:ObjectPageLayout>
+            </VBox>
+        </VBox>
+    </Page>
 </mvc:View>

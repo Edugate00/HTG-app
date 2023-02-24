@@ -351,11 +351,11 @@ body {
 
     .navMobile {
         display: flex;
-        position: absolute;
+        position: fixed;
         bottom: 0;
         width: 100%;
         background-color: var(--primary-color-40);
-        z-index: 99;
+        /* z-index: 99; */
     }
 
     .navMobile-link {
