@@ -7,18 +7,28 @@
         type="Standard"
         contentHeight="400px">
         <content>
-            <List items="{tagihanAir>/tagihanAir}">
+            <List
+                id="listTagihanSewa"
+                items="{tagihanAir>/tagihanAir}"
+                mode="MultiSelect"
+                includeItemInSelection="true">
                 <StandardListItem
                     type="Active"
                     title="{tagihanAir>noTagihan} - {tagihanAir>nama}"
                     description="{tagihanAir>dueDate}" />
             </List>
         </content>
-        <endButton>
+        <beginButton>
             <Button
                 text="Close"
-                type="Emphasized"
+                type="Default"
                 press="onTagihanSewaDialogClose" />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Release"
+                type="Emphasized"
+                press="onTagihanSewaDialogRelease" />
         </endButton>
     </Dialog>
 </c:FragmentDefinition>
