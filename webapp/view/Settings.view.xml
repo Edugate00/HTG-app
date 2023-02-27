@@ -10,25 +10,37 @@
             <VBox class="card">
                 <uxap:ObjectPageLayout id="settings">
                     <uxap:headerTitle>
-                        <uxap:ObjectPageHeader
-                            id="_IDGenObjectPageHeader1"
-                            objectTitle="T01"
-                            objectSubtitle="Performance Monitoring System TRN"
-                        >
+                        <uxap:ObjectPageDynamicHeaderTitle>
+                            <uxap:expandedHeading>
+                                <Title text="Object Page Header with Header Container"
+                                    wrapping="true" />
+                            </uxap:expandedHeading>
+
+                            <uxap:snappedHeading>
+                                <HBox>
+                                    <VBox>
+                                        <Avatar
+                                            src=""
+                                            class="sapUiSmallMarginEnd" />
+                                    </VBox>
+
+                                    <VBox>
+                                        <Title text="Object Page Header with Header Container"
+                                            wrapping="true" />
+                                        <Label text="Example of an ObjectPage with header facet" />
+                                    </VBox>
+                                </HBox>
+                            </uxap:snappedHeading>
+                            <uxap:expandedContent>
+                                <Label text="Example of an ObjectPage with header facet" />
+                            </uxap:expandedContent>
+                            <uxap:snappedTitleOnMobile>
+                                <Title text="Object Page Header with Header Container" />
+                            </uxap:snappedTitleOnMobile>
                             <uxap:actions>
-                                <uxap:ObjectPageHeaderActionButton
-                                    id="Edit"
-                                    text="Save"
-                                    hideText="false"
-                                    type="Emphasized"
-                                />
-                                <uxap:ObjectPageHeaderActionButton
-                                    id="cancel"
-                                    text="Cancel"
-                                    hideText="false"
-                                />
+                                <Button text="Edit" type="Emphasized" />
                             </uxap:actions>
-                        </uxap:ObjectPageHeader>
+                        </uxap:ObjectPageDynamicHeaderTitle>
                     </uxap:headerTitle>
                 </uxap:ObjectPageLayout>
             </VBox>
