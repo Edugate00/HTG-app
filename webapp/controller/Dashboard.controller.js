@@ -428,6 +428,17 @@ sap.ui.define(
 		oDataset.filter(oFilter);
 	  },
 
+      onTagihanSewaDialogRelease: function () {
+        let selectedList = [];
+
+        const listTagihanSewa = this.getView().byId("listTagihanSewa").getSelectedItems();
+        listTagihanSewa.forEach(el => {
+            selectedList.push(el.getBindingContext("tagihanAir").getObject());
+        })
+
+        console.log(selectedList);
+      },
+
       // Dialogs Close
       onTagihanAirDialogClose: function () {
         this.byId("tagihanAirDialog").close();
