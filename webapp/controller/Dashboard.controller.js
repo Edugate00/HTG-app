@@ -350,6 +350,33 @@ sap.ui.define(
         tagihanList.getBinding("items").filter(oFilters);
       },
 
+      onSelectListTagihan: function (oEvent) {
+        const oContext = oEvent.getSource().getBindingContext("tagihan").getPath().slice(9);
+        const listTagihan = this.getView().byId("tagihanList").getBinding("items").oList;
+        const selectedList = listTagihan[oContext]
+        
+        const oView = this.getView();
+        const oModel = { detailTagihan : [ {...selectedList} ]}
+
+        if (!this.dialogName) {
+            this.dialogName = Fragment.load({
+                id: oView.getId(),
+                name: `lrlpapp.view.fragments.DetailListTagihan`,
+                controller: this,
+            }).then(function (oDialog) {
+                oDialog.setModel(oView.getModel());
+                oDialog.setModel(new JSONModel(oModel), "tagihan");
+                return oDialog;
+            });
+        }
+
+        this.dialogName.then(function (oDialog) {
+            oDialog.setModel(oView.getModel());
+            oDialog.setModel(new JSONModel(oModel), "tagihan");
+            oDialog.open();
+        });
+      },
+
       onChartTenantSelected: function (oEvent) {
         let oFilterTenant, oFilterMonth, filters;
 
@@ -474,6 +501,10 @@ sap.ui.define(
       onTagihanSewaDialogClose: function () {
         this.byId("tagihanSewaDialog").close();
       },
+
+      onDetailTagihanClose: function () {
+        this.byId("detailListTagihan").close()
+      }
     });
   }
 );

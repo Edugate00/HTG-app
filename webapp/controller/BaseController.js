@@ -112,8 +112,10 @@ sap.ui.define(
         },
 
         openFragment: function (dialogName, fragmentName, model, modelAlias) {
-            if (!dialogName) {
-                dialogName = Fragment.load({
+            const oView = this.getView();
+
+            if (!this.dialogName) {
+                this.dialogName = Fragment.load({
                     id: oView.getId(),
                     name: `lrlpapp.view.fragments.${fragmentName}`,
                     controller: this,
@@ -122,9 +124,9 @@ sap.ui.define(
                     oDialog.setModel(new JSONModel(model), modelAlias);
                     return oDialog;
                 });
-                }
+            }
 
-                dialogName.then(function (oDialog) {
+            this.dialogName.then(function (oDialog) {
                 oDialog.setModel(oView.getModel());
                 oDialog.setModel(new JSONModel(model), modelAlias);
                 oDialog.open();

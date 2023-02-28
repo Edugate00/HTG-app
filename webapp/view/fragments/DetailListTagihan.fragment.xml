@@ -1,0 +1,32 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <Dialog
+        id="detailListTagihan"
+        title="Detail Tagihan"
+        type="Standard">
+        <content>
+            <FlexBox
+                direction="Column"
+                items="{tagihan>/detailTagihan}">
+                <VBox class="card-content">
+                    <HBox width="100%">
+                        <Text text="{tagihan>BillingNumber}" />
+                    </HBox>
+                </VBox>
+            </FlexBox>
+        </content>
+        <beginButton>
+            <Button
+                text="Cancel"
+                type="Default"
+                press="onDetailTagihanClose" />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Print"
+                type="Emphasized"
+                press="onPrintDetailTagihan" />
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>

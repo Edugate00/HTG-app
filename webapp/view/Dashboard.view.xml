@@ -156,6 +156,7 @@
                             <items>
                                 <ObjectListItem
                                     type="Active"
+                                    press="onSelectListTagihan"
                                     title="{tagihan>BillingNumber} - {tagihan>CustomerDesc}">
                                     <ObjectAttribute
                                         title="Tipe"
