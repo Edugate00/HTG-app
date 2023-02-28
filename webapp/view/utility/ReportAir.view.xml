@@ -24,7 +24,7 @@
                         <HBox>
                             <ComboBox
                                 id="ComboBoxFilterTenant"
-                                width="132px"
+                                width="150px"
                                 placeholder="Pilih Tenant"
                                 selectionChange="onTenantFilter"
                                 selectedKey="*"
@@ -37,7 +37,7 @@
                             </ComboBox>
                             <ComboBox
                                 id="ComboBoxFilterMonth"
-                                width="132px"
+                                width="150px"
                                 selectionChange="onMonthFilter"
                                 selectedKey="*"
                                 class="sapMCbAutoFocus">

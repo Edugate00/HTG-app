@@ -104,7 +104,7 @@
 					<HBox>
 						<ComboBox
 							id="ComboBoxTagihanTenant"
-							width="132px"
+							width="175px"
 							placeholder="Pilih Tenant"
 							selectionChange="onTagihanTenantSelected"
 							selectedKey="*"
@@ -115,7 +115,7 @@
 						</ComboBox>
 						<ComboBox
 							id="ComboBoxTagihanStatus"
-							width="132px"
+							width="150px"
 							placeholder="Select Status"
 							selectionChange="onStatusSelect"
 							selectedKey="*"
