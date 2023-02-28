@@ -108,22 +108,10 @@
 							placeholder="Pilih Tenant"
 							selectionChange="onTagihanTenantSelected"
 							selectedKey="*"
-							class="sapUiTinyMarginEnd sapMCbAutoFocus">
-							<core:Item
-								key="*"
-								text="Semua Tenant" />
-							<core:Item
-								key="Karimata"
-								text="Karimata" />
-							<core:Item
-								key="Butterfield"
-								text="Butterfield" />
-							<core:Item
-								key="Woori"
-								text="Woori" />
-							<core:Item
-								key="Sharinc"
-								text="Sharinc" />
+							class="sapUiTinyMarginEnd sapMCbAutoFocus"
+							items="{Tenant>/tenantList}" >
+                                <core:Item key="{Tenant>id}"
+									text="{Tenant>name}" />
 						</ComboBox>
 						<ComboBox
 							id="ComboBoxTagihanStatus"
@@ -149,21 +137,21 @@
 					vertical="true">
 					<List
 						id="tagihanList"
-						items="{tagihan>/tagihan}">
+						items="{utilities>/utilityList}">
 						<items>
 							<ObjectListItem
 								type="Active"
-								title="{tagihan>noTagihan} - {tagihan>tenant}">
+								title="{utilities>BillingNumber} - {utilities>CustomerDesc}">
 								<ObjectAttribute
 									title="Tipe"
-									text="{tagihan>tipe}" />
+									text="{utilities>BillingTypeDesc}" />
 								<ObjectAttribute
 									title="Tanggal"
-									text="{tagihan>dueDate}" />
+									text="{utilities>BillingDate}" />
 								<secondStatus>
 									<ObjectStatus
-										text="{tagihan>status}"
-										state="{tagihan>tipeStatus}" />
+										text="{utilities>Status}"
+										state="{utilities>TipeStatus}" />
 								</secondStatus>
 							</ObjectListItem>
 						</items>

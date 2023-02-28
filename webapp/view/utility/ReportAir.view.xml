@@ -38,19 +38,48 @@
                             <ComboBox
                                 id="ComboBoxFilterMonth"
                                 width="132px"
-                                placeholder="Select Status"
                                 selectionChange="onMonthFilter"
-                                selectedKey="02"
+                                selectedKey="*"
                                 class="sapMCbAutoFocus">
                                 <core:Item
                                     key="*"
-                                    text="Pilih bulan" />
+                                    text="Semua Periode" />
                                 <core:Item
-                                    key="01"
+                                    key="Januari"
                                     text="Januari" />
                                 <core:Item
-                                    key="02"
+                                    key="Februari"
                                     text="Februari" />
+                                <core:Item
+                                    key="Maret"
+                                    text="Maret" />
+                                <core:Item
+                                    key="April"
+                                    text="April" />
+                                <core:Item
+                                    key="Mei"
+                                    text="Mei" />
+                                <core:Item
+                                    key="Juni"
+                                    text="Juni" />
+                                <core:Item
+                                    key="Juli"
+                                    text="Juli" />
+                                <core:Item
+                                    key="Agustus"
+                                    text="Agustus" />
+                                <core:Item
+                                    key="September"
+                                    text="September" />
+                                <core:Item
+                                    key="Oktober"
+                                    text="Oktober" />
+                                <core:Item
+                                    key="November"
+                                    text="November" />
+                                <core:Item
+                                    key="Desember"
+                                    text="Desember" />
                             </ComboBox>
                         </HBox>
                     </FlexBox>
