@@ -9,13 +9,13 @@
         <content>
             <List
                 id="listTagihanSewa"
-                items="{tagihanAir>/tagihanAir}"
+                items="{tagihanSewa>/tagihanSewa}"
                 mode="MultiSelect"
                 includeItemInSelection="true">
                 <StandardListItem
                     type="Active"
-                    title="{tagihanAir>noTagihan} - {tagihanAir>nama}"
-                    description="{tagihanAir>dueDate}" />
+                    title="{tagihanSewa>BillingNumber} - {tagihanSewa>CustomerDesc}"
+                    description="{tagihanSewa>BillingDate}" />
             </List>
         </content>
         <beginButton>
