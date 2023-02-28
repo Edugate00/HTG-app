@@ -3,8 +3,14 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
     "sap/ui/core/UIComponent",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment",
   ],
-  function (Controller, History, UIComponent) {
+  function (Controller,
+	History,
+	UIComponent,
+	JSONModel,
+	Fragment) {
     "use strict";
 
     let oModel = null;
@@ -67,42 +73,62 @@ sap.ui.define(
       },
 
       readOdataService: function (path, url) {
-        oModel = this.getOwnerComponent().getModel();
-        return new Promise(function (resolve, reject) {
-            oModel.read("/billingHeaderSet", {
-                urlParameters: {
-                    $expand: "BillingHeadToItem",
-                },
-                success: function (oData) {
-                    resolve(oData)
-                },
-                error: function (oResult) {
-                    reject(oResult)
-                }
-            });
-        })
+            oModel = this.getOwnerComponent().getModel();
+            return new Promise(function (resolve, reject) {
+                oModel.read("/billingHeaderSet", {
+                    urlParameters: {
+                        $expand: "BillingHeadToItem",
+                    },
+                    success: function (oData) {
+                        resolve(oData)
+                    },
+                    error: function (oResult) {
+                        reject(oResult)
+                    }
+                });
+            })
       },
 
       createOdataService: function (path, entry) {
         oModel = this.getOwnerComponent().getModel();
-        return new Promise(function (resolve, reject) {
-            oModel.create(path, entry, {
-                success: function (oData) {
-                    resolve(oData);
-                },
-                error: function (oResult) {
-                    reject(oResult);
-                }
+            return new Promise(function (resolve, reject) {
+                oModel.create(path, entry, {
+                    success: function (oData) {
+                        resolve(oData);
+                    },
+                    error: function (oResult) {
+                        reject(oResult);
+                    }
+                })
             })
-        })
       },
       
-      flattenedArr: function (arr) {
-          let flat = [];
-          for (let i = 0; i < arr.length; i++) {
-            flat = flat.concat(arr[i]);
-          }
-          return flat;
+        flattenedArr: function (arr) {
+            let flat = [];
+            for (let i = 0; i < arr.length; i++) {
+                flat = flat.concat(arr[i]);
+            }
+            return flat;
+        },
+
+        openFragment: function (dialogName, fragmentName, model, modelAlias) {
+            if (!dialogName) {
+                dialogName = Fragment.load({
+                    id: oView.getId(),
+                    name: `lrlpapp.view.fragments.${fragmentName}`,
+                    controller: this,
+                }).then(function (oDialog) {
+                    oDialog.setModel(oView.getModel());
+                    oDialog.setModel(new JSONModel(model), modelAlias);
+                    return oDialog;
+                });
+                }
+
+                dialogName.then(function (oDialog) {
+                oDialog.setModel(oView.getModel());
+                oDialog.setModel(new JSONModel(model), modelAlias);
+                oDialog.open();
+            });
         }
     });
   }
