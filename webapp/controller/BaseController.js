@@ -6,6 +6,8 @@ sap.ui.define(
   ],
   function (Controller, History, UIComponent) {
     "use strict";
+
+    let oModel = null;
     return Controller.extend("lrlpapp.controller.BaseController", {
       getRouter: function () {
         return UIComponent.getRouterFor(this);
@@ -38,18 +40,18 @@ sap.ui.define(
       getFormattedDate: function (originalDate) {
         let year, month, day;
         const months = [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Des",
+          "Januari",
+          "Februari",
+          "Maret",
+          "April",
+          "Mei",
+          "Juni",
+          "Juli",
+          "Agustus",
+          "September",
+          "Oktober",
+          "November",
+          "Desember",
         ];
 
         if (Number(originalDate.substring(4, 6)) <= 9) {
@@ -63,6 +65,45 @@ sap.ui.define(
 
         return `${day} ${month}, ${year}`;
       },
+
+      readOdataService: function (path, url) {
+        oModel = this.getOwnerComponent().getModel();
+        return new Promise(function (resolve, reject) {
+            oModel.read("/billingHeaderSet", {
+                urlParameters: {
+                    $expand: "BillingHeadToItem",
+                },
+                success: function (oData) {
+                    resolve(oData)
+                },
+                error: function (oResult) {
+                    reject(oResult)
+                }
+            });
+        })
+      },
+
+      createOdataService: function (path, entry) {
+        oModel = this.getOwnerComponent().getModel();
+        return new Promise(function (resolve, reject) {
+            oModel.create(path, entry, {
+                success: function (oData) {
+                    resolve(oData);
+                },
+                error: function (oResult) {
+                    reject(oResult);
+                }
+            })
+        })
+      },
+      
+      flattenedArr: function (arr) {
+          let flat = [];
+          for (let i = 0; i < arr.length; i++) {
+            flat = flat.concat(arr[i]);
+          }
+          return flat;
+        }
     });
   }
 );
