@@ -95,6 +95,81 @@
 					</VBox>
 				</VBox>
 			</HBox>	
+			<VBox class="card-tagihan card">
+				<FlexBox
+					class="card-header">
+					<Text
+						class="card-title"
+						text="Tagihan" />
+					<HBox>
+						<ComboBox
+							id="ComboBoxTagihanTenant"
+							width="132px"
+							placeholder="Pilih Tenant"
+							selectionChange="onTagihanTenantSelected"
+							selectedKey="*"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus">
+							<core:Item
+								key="*"
+								text="Semua Tenant" />
+							<core:Item
+								key="Karimata"
+								text="Karimata" />
+							<core:Item
+								key="Butterfield"
+								text="Butterfield" />
+							<core:Item
+								key="Woori"
+								text="Woori" />
+							<core:Item
+								key="Sharinc"
+								text="Sharinc" />
+						</ComboBox>
+						<ComboBox
+							id="ComboBoxTagihanStatus"
+							width="132px"
+							placeholder="Select Status"
+							selectionChange="onStatusSelect"
+							selectedKey="*"
+							class="sapMCbAutoFocus">
+							<core:Item
+								key="*"
+								text="Semua" />
+							<core:Item
+								key="paid"
+								text="Sudah dibayar" />
+							<core:Item
+								key="unpaid"
+								text="Belum dibayar" />
+						</ComboBox>
+					</HBox>
+				</FlexBox>
+				<ScrollContainer
+					height="90%"
+					vertical="true">
+					<List
+						id="tagihanList"
+						items="{tagihan>/tagihan}">
+						<items>
+							<ObjectListItem
+								type="Active"
+								title="{tagihan>noTagihan} - {tagihan>tenant}">
+								<ObjectAttribute
+									title="Tipe"
+									text="{tagihan>tipe}" />
+								<ObjectAttribute
+									title="Tanggal"
+									text="{tagihan>dueDate}" />
+								<secondStatus>
+									<ObjectStatus
+										text="{tagihan>status}"
+										state="{tagihan>tipeStatus}" />
+								</secondStatus>
+							</ObjectListItem>
+						</items>
+					</List>
+				</ScrollContainer>
+			</VBox>
 		</VBox>
 	</Page>
 </mvc:View>

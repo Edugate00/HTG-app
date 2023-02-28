@@ -12,7 +12,6 @@ sap.ui.define([
 	"use strict";
 
     let dataMeasPoint = null;
-    let measDocEntity = {};
     let oModel = null;
 
 	return BaseController.extend("lrlpapp.controller.utility.ReportAir", 
@@ -44,13 +43,29 @@ sap.ui.define([
           el.Date = this.getFormattedDate(el.Date);
           el.Time = this.getFormattedTime(el.Time);
         });
-
+        
         console.log(FinalDataMeasDoc);
 
         this.getView().setModel(
           new JSONModel({ measPointList: FinalDataMeasDoc }),
           "MeasPoint"
         );
+
+        const tenant = FinalDataMeasDoc.map(el => el.Text);
+        console.log(tenant);
+        const listTenant = tenant.filter((el, index) => tenant.indexOf(el) === index);
+        const fixTenant = listTenant.map((text, index) => ({
+          name: text,
+          id: text
+        }));
+
+        console.log(fixTenant);
+        
+        this.getView().setModel(
+          new JSONModel({ tenantList: fixTenant }),
+          "Tenant"
+        );
+
 
         },
 
@@ -81,9 +96,10 @@ sap.ui.define([
           // console.log(tenantSelected)
           // console.log(oComboBoxTenant)
           console.log(measDocList)
+          console.log(tenantSelected)
 
           if (tenantSelected !== "*") {
-            oFilter1 = new Filter("Text", FilterOperator.Contains, tenantSelected);
+            oFilter1 = new Filter("Text", FilterOperator.EQ, tenantSelected);
           } else {
             oFilter1 = [];
           }
