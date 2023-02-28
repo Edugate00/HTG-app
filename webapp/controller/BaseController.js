@@ -63,6 +63,35 @@ sap.ui.define(
 
         return `${day} ${month}, ${year}`;
       },
+
+      readOdataService: function (path, url) {
+        return new Promise(function (resolve, reject) {
+            oData.read(path, {
+                urlParameters: {
+                    $expand: url,
+                },
+                success: function (oData) {
+                    resolve(oData)
+                },
+                error: function (oResult) {
+                    reject(oResult)
+                }
+            });
+        })
+      },
+
+      createOdataService: function (path, entry) {
+        return new Promise(function (resolve, reject) {
+            oData.create(path, entry {
+                success: function (oData) {
+                    resolve(oData);
+                },
+                error: function (oResult) {
+                    reject(oResult);
+                }
+            });
+        })
+      }
     });
   }
 );
