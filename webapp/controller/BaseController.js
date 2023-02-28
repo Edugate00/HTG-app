@@ -111,6 +111,13 @@ sap.ui.define(
             return flat;
         },
 
+        isDueDate: function (timeStamp) {
+            const now = Date.now();
+            const tenDaysFromNow = now + (10 * 24 * 60 * 60 * 1000);
+
+            return timeStamp >= now && timeStamp < tenDaysFromNow;
+        },
+
         openFragment: function (dialogName, fragmentName, model, modelAlias) {
             const oView = this.getView();
 

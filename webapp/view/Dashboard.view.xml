@@ -71,7 +71,7 @@
                     <VBox class="tile-info">
                         <Text
                             class="dynamic-number"
-                            text="3" />
+                            text="{/counterNotifTagihanSewa}" />
                         <Text text="Tagihan untuk dicetak" />
                     </VBox>
                 </VBox>

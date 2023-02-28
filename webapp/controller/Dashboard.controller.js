@@ -58,6 +58,13 @@ sap.ui.define(
         const oBillingItem = this.flattenedArr(billingHeadToItem)
 
         oBilling.results.forEach(el => {
+            let year = el.BillingDate.substr(0, 4);
+            let month = el.BillingDate.substr(4, 2) - 1;
+            let day = el.BillingDate.substr(6, 2);
+            
+            el.Timestamp = new Date(year, month, day).getTime();
+            el.BillingDate = this.getFormattedDate(el.BillingDate)
+
             if (el.PaymentStatus === "X"){
                 el["Status"] = "Sudah dibayar"
                 el["TipeStatus"] = "Success"
@@ -65,8 +72,6 @@ sap.ui.define(
                 el["Status"] = "Belum dibayar"
                 el["TipeStatus"] = "Error"
             }
-
-            el.BillingDate = this.getFormattedDate(el.BillingDate)
 
             if (el.ReleasedStatus === "X") {
                 oTagihan.push(el);
@@ -79,19 +84,34 @@ sap.ui.define(
             }
         })
 
-        // Storing data to Session Storage based on billing type
-        // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
-        sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
-        sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
+        const isDueDate = []
+        BILLING_FV.forEach(el => {
+            if (el.ReleasedStatus !== "X") {
+                if (this.isDueDate(el.Timestamp)) {
+                    isDueDate.push(el)
+                }
+            }
+        })
 
-        console.log(oBilling);
-        // console.log(oBillingItem);
-        console.log("OTAGIHAN", oTagihan);
+        const counterNotifTagihanSewa = new JSONModel({
+            counterNotifTagihanSewa : String(isDueDate.length)
+        })
+        this.getView().setModel(counterNotifTagihanSewa);
 
         this.getView().setModel(
           new JSONModel({ tagihan: oTagihan }),
           "tagihan"
         );
+
+        // Storing data to Session Storage based on billing type
+        // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
+        sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
+        sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
+        sessionStorage.setItem("NOTIF_TAGIHAN_SEWA", JSON.stringify(isDueDate))
+
+        // console.log(BILLING_FV);
+        // console.log(oBillingItem);
+        // console.log("OTAGIHAN", oTagihan);
 
         // Vizframe chart for Penggunaan Air
         const vizAir = this.getView().byId("vizPenggunaanAir");
@@ -261,11 +281,17 @@ sap.ui.define(
 
       _onTagihanSewaClick: function (oEvent) {
         const oView = this.getView();
-        const oTagihanSewaModel = [
-          { nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023" },
-          { nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023" },
-          { nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023" },
-        ];
+        const tagihanSewa = JSON.parse(sessionStorage.getItem("NOTIF_TAGIHAN_SEWA"));
+        
+
+        const oModel = { tagihanSewa : tagihanSewa }
+        console.log(oModel);
+
+        // const oTagihanSewaModel = [
+        //   { nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023" },
+        //   { nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023" },
+        //   { nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023" },
+        // ];
 
         if (!this.tagihanSewaDialog) {
           this.tagihanSewaDialog = Fragment.load({
@@ -274,24 +300,14 @@ sap.ui.define(
             controller: this,
           }).then(function (oDialog) {
             oDialog.setModel(oView.getModel());
-            oDialog.setModel(
-              new JSONModel({
-                tagihanAir: oTagihanSewaModel,
-              }),
-              "tagihanAir"
-            );
+            oDialog.setModel( new JSONModel(oModel), "tagihanSewa" );
             return oDialog;
           });
         }
 
         this.tagihanSewaDialog.then(function (oDialog) {
           oDialog.setModel(oView.getModel());
-          oDialog.setModel(
-            new JSONModel({
-              tagihanAir: oTagihanSewaModel,
-            }),
-            "tagihanAir"
-          );
+          oDialog.setModel( new JSONModel(oModel), "tagihanSewa" );
 
           oDialog.open();
         });
@@ -487,7 +503,7 @@ sap.ui.define(
 
         const listTagihanSewa = this.getView().byId("listTagihanSewa").getSelectedItems();
         listTagihanSewa.forEach(el => {
-            selectedList.push(el.getBindingContext("tagihanAir").getObject());
+            selectedList.push(el.getBindingContext("tagihanSewa").getObject());
         })
 
         console.log(selectedList);
