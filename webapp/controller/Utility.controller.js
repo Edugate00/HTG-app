@@ -6,14 +6,73 @@ sap.ui.define(
     "sap/m/Dialog",
     "sap/m/Button",
     "sap/ui/core/HTML",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
   ],
-  function (BaseController, JSONModel, Fragment, Dialog, Button, HTML) {
+  function (BaseController, JSONModel, Fragment, Dialog, Button, HTML, Filter, FilterOperator) {
     "use strict";
 
     const widthWindow = window.screen.width;
 
-    return BaseController.extend("lrlpapp.controller.Utility", {
-      onInit: function () {
+    return BaseController.extend("lrlpapp.controller.Utility", 
+    {
+      onInit: async function () {
+
+        //Read oData for setting tagihan utilities List
+        let billingHeadToItem;
+        let oTagihan = [];
+        let BILLING_FV = [];
+        let BILLING_ZUTL = [];
+
+        const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeaderToItem");
+        billingHeadToItem = oBilling.results.map(el => el.BillingHeadToItem.results);
+
+        oBilling.results.forEach(el => {
+            if (el.PaymentStatus === "X"){
+                el["Status"] = "Sudah dibayar"
+                el["TipeStatus"] = "Success"
+            } else {
+                el["Status"] = "Belum dibayar"
+                el["TipeStatus"] = "Error"
+            }
+
+            el.BillingDate = this.getFormattedDate(el.BillingDate)
+
+            if (el.ReleasedStatus === "X") {
+                oTagihan.push(el);
+            }
+
+            if (el.BillingType === "FV"){
+                BILLING_FV.push(el);
+            } else {
+                BILLING_ZUTL.push(el);
+            }
+        });
+
+        this.getView().setModel(
+          new JSONModel({ utilityList: BILLING_ZUTL }),
+          "utilities"
+        );
+
+        //Create tenant List
+        const tenant = BILLING_ZUTL.map(el => el.CustomerDesc);
+          
+          const listTenant = tenant.filter((el, index) => tenant.indexOf(el) === index);
+          const fixTenant = listTenant.map((CustomerDesc) => ({
+            name: CustomerDesc,
+            id: CustomerDesc
+          }));
+
+          let defaultItem = {name: 'Semua Tenant', id: '*'};
+          fixTenant.push(defaultItem);
+          
+          this.getView().setModel(
+            new JSONModel({ tenantList: fixTenant }),
+            "Tenant"
+          );
+
+
+        //Tiles Event
         const tilePemakaianListrik = this.getView().byId(
           "tilePemakaianListrik"
         );
@@ -47,42 +106,7 @@ sap.ui.define(
       _onReportAir: function (oEvent) {
         this.getRouter().navTo("reportair");
       },
-      _onAirBulanan: function (oEvent) {
-        const oView = this.getView();
-
-        var oHtml1 = new sap.ui.core.HTML({
-          content:
-            '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB85EF75B7A3841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>',
-        });
-
-        let width = null;
-        if (widthWindow < 1400) {
-          width = "35%";
-        } else {
-          width = "50%";
-        }
-
-        if (!this.oFixedDialog) {
-          this.oFixedDialog = new Dialog({
-            title: "Pemakaian Air Bulanan",
-            contentWidth: width,
-            contentHeight: "450px",
-            content: oHtml1,
-            endButton: new Button({
-              text: "Close",
-              press: function () {
-                // this.oFixedDialog.destroyContent();
-                this.oFixedDialog.close();
-              }.bind(this),
-            }),
-          });
-
-          //to get access to the controller's model
-          this.getView().addDependent(this.oFixedDialog);
-        }
-
-        this.oFixedDialog.open();
-      },
+      
 
       _onTagihanAirClick: function (oEvent) {
         console.log("Perhitungan Tagihan Air");
@@ -122,6 +146,59 @@ sap.ui.define(
         }
 
         this.oFixedSizeDialog.open();
+      },
+
+      onTagihanTenantSelected: function (oEvent) {
+        let oFilter1, oFilter2, oFilters;
+        const oComboBoxTenant = oEvent.getSource();
+        const oComboBoxStatus = this.getView().byId("ComboBoxTagihanStatus");
+        const tenantSelected = oComboBoxTenant.getSelectedKey();
+        const statuSelected = oComboBoxStatus.getSelectedKey();
+
+        const tagihanList = this.byId("tagihanList");
+        if (tenantSelected !== "*") {
+          oFilter1 = new Filter("CustomerDesc", FilterOperator.EQ, tenantSelected);
+        } else {
+          oFilter1 = [];
+        }
+
+        if (statuSelected === "paid") {
+          oFilter2 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
+        } else if (statuSelected === "unpaid") {
+          oFilter2 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
+        } else {
+          oFilter2 = [];
+        }
+
+        oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
+        tagihanList.getBinding("items").filter(oFilters);
+      },
+
+      onStatusSelect: function (oEvent) {
+        let oFilter1, oFilter2, oFilters;
+        const oComboBoxStatus = oEvent.getSource();
+        const oComboBoxTenant = this.getView().byId("ComboBoxTagihanTenant");
+        const statuSelected = oComboBoxStatus.getSelectedKey();
+        const tenantSelected = oComboBoxTenant.getSelectedKey();
+
+        const tagihanList = this.byId("tagihanList");
+
+        if (statuSelected === "paid") {
+          oFilter1 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
+        } else if (statuSelected === "unpaid") {
+          oFilter1 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
+        } else {
+          oFilter1 = [];
+        }
+
+        if (tenantSelected !== "*") {
+          oFilter2 = new Filter("CustomerDesc", FilterOperator.Contains, tenantSelected);
+        } else {
+          oFilter2 = [];
+        }
+
+        oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
+        tagihanList.getBinding("items").filter(oFilters);
       },
 
       // Dialogs Close
