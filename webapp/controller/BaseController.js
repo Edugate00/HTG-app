@@ -82,14 +82,14 @@ sap.ui.define(
 
       createOdataService: function (path, entry) {
         return new Promise(function (resolve, reject) {
-            oData.create(path, entry {
+            oData.create(path, entry, {
                 success: function (oData) {
                     resolve(oData);
                 },
                 error: function (oResult) {
                     reject(oResult);
                 }
-            });
+            })
         })
       }
     });
