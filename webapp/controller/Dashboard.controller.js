@@ -41,24 +41,52 @@ sap.ui.define(
       { key: "Desember", text: "Desember" },
     ];
 
+    let oModel;
+
     return BaseController.extend("lrlpapp.controller.Dashboard", {
-      onInit: function () {
-        const oTitle = new JSONModel({
-          pageTitle: "<h2 style='color: #fff'>Dashboard</h2>",
-        });
-        this.getView().setModel(oTitle);
-        const oTagihan = [];
-        const tagihan = this.getOwnerComponent().getModel("tagihan").getData();
-        tagihan.data.forEach((el) => {
-          if (el.status === "paid") {
-            el.status = "Sudah dibayar";
-            el.tipeStatus = "Success";
-          } else {
-            el.status = "Belum dibayar";
-            el.tipeStatus = "Error";
-          }
-          oTagihan.push(el);
-        });
+      onInit: async function () {
+
+        sessionStorage.setItem("wkwkw", "WODKAODKWA")
+        let billingHeadToItem;
+        let oTagihan = [];
+        let BILLING_FV = [];
+        let BILLING_ZUTL = [];
+
+        const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeaderToItem");
+        billingHeadToItem = oBilling.results.map(el => el.BillingHeadToItem.results)
+
+        const oBillingItem = this.flattenedArr(billingHeadToItem)
+
+        oBilling.results.forEach(el => {
+            if (el.PaymentStatus === "X"){
+                el["Status"] = "Sudah dibayar"
+                el["TipeStatus"] = "Success"
+            } else {
+                el["Status"] = "Belum dibayar"
+                el["TipeStatus"] = "Error"
+            }
+
+            el.BillingDate = this.getFormattedDate(el.BillingDate)
+
+            if (el.ReleasedStatus === "X") {
+                oTagihan.push(el);
+            }
+
+            if (el.BillingType === "FV"){
+                BILLING_FV.push(el);
+            } else {
+                BILLING_ZUTL.push(el);
+            }
+        })
+
+        // Storing data to Session Storage based on billing type
+        // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
+        sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
+        sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
+
+        console.log(oBilling);
+        // console.log(oBillingItem);
+        console.log("OTAGIHAN", oTagihan);
 
         this.getView().setModel(
           new JSONModel({ tagihan: oTagihan }),
@@ -277,17 +305,16 @@ sap.ui.define(
         const statuSelected = oComboBoxStatus.getSelectedKey();
 
         const tagihanList = this.byId("tagihanList");
-        console.log(tagihanList)
         if (tenantSelected !== "*") {
-          oFilter1 = new Filter("tenant", FilterOperator.EQ, tenantSelected);
+          oFilter1 = new Filter("CustomerDesc", FilterOperator.Contains, tenantSelected);
         } else {
           oFilter1 = [];
         }
 
         if (statuSelected === "paid") {
-          oFilter2 = new Filter("status", FilterOperator.EQ, "Sudah dibayar");
+          oFilter2 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
         } else if (statuSelected === "unpaid") {
-          oFilter2 = new Filter("status", FilterOperator.EQ, "Belum dibayar");
+          oFilter2 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
         } else {
           oFilter2 = [];
         }
@@ -306,15 +333,15 @@ sap.ui.define(
         const tagihanList = this.byId("tagihanList");
 
         if (statuSelected === "paid") {
-          oFilter1 = new Filter("status", FilterOperator.EQ, "Sudah dibayar");
+          oFilter1 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
         } else if (statuSelected === "unpaid") {
-          oFilter1 = new Filter("status", FilterOperator.EQ, "Belum dibayar");
+          oFilter1 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
         } else {
           oFilter1 = [];
         }
 
         if (tenantSelected !== "*") {
-          oFilter2 = new Filter("tenant", FilterOperator.EQ, tenantSelected);
+          oFilter2 = new Filter("CustomerDesc", FilterOperator.Contains, tenantSelected);
         } else {
           oFilter2 = [];
         }
