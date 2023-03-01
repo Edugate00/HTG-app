@@ -13,10 +13,11 @@ sap.ui.define(
     "use strict";
 
     const widthWindow = window.screen.width;
+    const oBilling = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
 
     return BaseController.extend("lrlpapp.controller.Utility", 
     {
-      onInit: async function () {
+      onInit: function () {
 
         //Read oData for setting tagihan utilities List
         let billingHeadToItem;
@@ -24,33 +25,11 @@ sap.ui.define(
         let BILLING_FV = [];
         let BILLING_ZUTL = [];
 
-        const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeaderToItem");
-        billingHeadToItem = oBilling.results.map(el => el.BillingHeadToItem.results);
+        console.log(oBilling);
 
-        oBilling.results.forEach(el => {
-            if (el.PaymentStatus === "X"){
-                el["Status"] = "Sudah dibayar"
-                el["TipeStatus"] = "Success"
-            } else {
-                el["Status"] = "Belum dibayar"
-                el["TipeStatus"] = "Error"
-            }
-
-            el.BillingDate = this.getFormattedDate(el.BillingDate)
-
-            if (el.ReleasedStatus === "X") {
-                oTagihan.push(el);
-            }
-
-            if (el.BillingType === "FV"){
-                BILLING_FV.push(el);
-            } else {
-                BILLING_ZUTL.push(el);
-            }
-        });
-        console.log(BILLING_ZUTL)
+        
         this.getView().setModel(
-          new JSONModel({ utilityList: BILLING_ZUTL }),
+          new JSONModel({ utilityList: oBilling }),
           "utilities"
         );
 
