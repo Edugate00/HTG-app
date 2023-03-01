@@ -46,7 +46,7 @@ sap.ui.define(
     return BaseController.extend("lrlpapp.controller.Dashboard", {
       onInit: async function () {
 
-        sessionStorage.setItem("wkwkw", "WODKAODKWA")
+        // sessionStorage.setItem("wkwkw", "WODKAODKWA")
         let billingHeadToItem;
         let oTagihan = [];
         let BILLING_FV = [];
@@ -115,7 +115,7 @@ sap.ui.define(
         );
 
         // Storing data to Session Storage based on billing type
-        // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
+        sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
         sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
         sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
         sessionStorage.setItem("NOTIF_TAGIHAN_SEWA", JSON.stringify(isDueDate.sort((a, b) => a.Timestamp - b.Timestamp)))
