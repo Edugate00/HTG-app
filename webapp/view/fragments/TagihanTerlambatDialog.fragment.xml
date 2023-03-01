@@ -1,0 +1,34 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <Dialog
+        id="tagihanTerlambatDialog"
+        title="Tagihan Sewa untuk dicetak"
+        type="Standard"
+        contentHeight="400px">
+        <content>
+            <List
+                id="listTagihanTerlambat"
+                items="{tagihanTerlambat>/tagihanTerlambat}"
+                mode="MultiSelect"
+                includeItemInSelection="true">
+                <StandardListItem
+                    type="Active"
+                    title="{tagihanTerlambat>BillingNumber} - {tagihanTerlambat>CustomerDesc}"
+                    description="{tagihanTerlambat>BillingDate}" />
+            </List>
+        </content>
+        <beginButton>
+            <Button
+                text="Close"
+                type="Default"
+                press="onTagihanTerlambatDialogClose" />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Release"
+                type="Emphasized"
+                press="onTagihanTerlambatDialogRelease" />
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>

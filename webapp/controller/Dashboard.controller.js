@@ -93,10 +93,21 @@ sap.ui.define(
             }
         })
 
-        const counterNotifTagihanSewa = new JSONModel({
-            counterNotifTagihanSewa : String(isDueDate.length)
+        const hasPassed = []
+        BILLING_FV.forEach(el => {
+            if (el.ReleasedStatus !== "X") {
+                if (this.hasPassed(el.Timestamp)) {
+                    hasPassed.push(el)
+                }
+            }
         })
-        this.getView().setModel(counterNotifTagihanSewa);
+        console.log("passed", hasPassed);
+
+        const notifCounter = new JSONModel({ notif : [
+            {tagihanSewa      : String(isDueDate.length)},
+            {tagihanTerlambat : String(hasPassed.length)}
+        ]})
+        this.getView().setModel(notifCounter, "notif");
 
         this.getView().setModel(
           new JSONModel({ tagihan: oTagihan }),
@@ -107,7 +118,8 @@ sap.ui.define(
         // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
         sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
         sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
-        sessionStorage.setItem("NOTIF_TAGIHAN_SEWA", JSON.stringify(isDueDate))
+        sessionStorage.setItem("NOTIF_TAGIHAN_SEWA", JSON.stringify(isDueDate.sort((a, b) => a.Timestamp - b.Timestamp)))
+        sessionStorage.setItem("NOTIF_TAGIHAN_TERLAMBAT", JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp)))
 
         // console.log(BILLING_FV);
         // console.log(oBillingItem);
@@ -219,13 +231,15 @@ sap.ui.define(
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
         const oComboBoxListrikTimestamp = this.getView().byId("ListrikTimestampFilter");
 
+        const tilePindaiMeteran = this.getView().byId("tilePindaiMeteran");
         const tileTagihanAir = this.getView().byId("tileTagihanAir");
         const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
-        const tilePindaiMeteran = this.getView().byId("tilePindaiMeteran");
+        const tileTagihanTerlambat = this.getView().byId("tileTagihanTerlambat");
 
+        tilePindaiMeteran.attachBrowserEvent( "click", this._onPindaiMeteranClick, this );
         tileTagihanAir.attachBrowserEvent( "click", this._onTagihanAirClick, this );
         tileTagihanSewa.attachBrowserEvent( "click", this._onTagihanSewaClick, this );
-        tilePindaiMeteran.attachBrowserEvent( "click", this._onPindaiMeteranClick, this );
+        tileTagihanTerlambat.attachBrowserEvent( "click", this._onTagihanTerlambatClick, this );
 
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         vizListrik.setModel(penggunaanListrikModel, "penggunaanListrik");
@@ -285,13 +299,6 @@ sap.ui.define(
         
 
         const oModel = { tagihanSewa : tagihanSewa }
-        console.log(oModel);
-
-        // const oTagihanSewaModel = [
-        //   { nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023" },
-        // ];
 
         if (!this.tagihanSewaDialog) {
           this.tagihanSewaDialog = Fragment.load({
@@ -308,6 +315,33 @@ sap.ui.define(
         this.tagihanSewaDialog.then(function (oDialog) {
           oDialog.setModel(oView.getModel());
           oDialog.setModel( new JSONModel(oModel), "tagihanSewa" );
+
+          oDialog.open();
+        });
+      },
+
+      _onTagihanTerlambatClick: function (oEvent) {
+        const oView = this.getView();
+        const tagihanTerlambat = JSON.parse(sessionStorage.getItem("NOTIF_TAGIHAN_TERLAMBAT"));
+        
+
+        const oModel = { tagihanTerlambat : tagihanTerlambat }
+
+        if (!this.tagihanTerlambatDialog) {
+          this.tagihanTerlambatDialog = Fragment.load({
+            id: oView.getId(),
+            name: "lrlpapp.view.fragments.TagihanTerlambatDialog",
+            controller: this,
+          }).then(function (oDialog) {
+            oDialog.setModel(oView.getModel());
+            oDialog.setModel( new JSONModel(oModel), "tagihanTerlambat" );
+            return oDialog;
+          });
+        }
+
+        this.tagihanTerlambatDialog.then(function (oDialog) {
+          oDialog.setModel(oView.getModel());
+          oDialog.setModel( new JSONModel(oModel), "tagihanTerlambat" );
 
           oDialog.open();
         });
@@ -516,6 +550,10 @@ sap.ui.define(
 
       onTagihanSewaDialogClose: function () {
         this.byId("tagihanSewaDialog").close();
+      },
+
+      onTagihanTerlambatDialogClose: function () {
+        this.byId("tagihanTerlambatDialog").close();
       },
 
       onDetailTagihanClose: function () {
