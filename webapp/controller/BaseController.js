@@ -117,6 +117,11 @@ sap.ui.define(
 
             return timeStamp >= now && timeStamp < tenDaysFromNow;
         },
+        
+        hasPassed: function (timeStamp) {
+            const now = Date.now();
+            return timeStamp < now;
+        },
 
         openFragment: function (dialogName, fragmentName, model, modelAlias) {
             const oView = this.getView();
