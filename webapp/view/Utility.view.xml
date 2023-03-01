@@ -119,7 +119,7 @@
 							placeholder="Select Status"
 							selectionChange="onStatusSelect"
 							selectedKey="*"
-							class="sapMCbAutoFocus">
+							class="sapUiTinyMarginEnd sapMCbAutoFocus">
 							<core:Item
 								key="*"
 								text="Semua" />
@@ -129,6 +129,52 @@
 							<core:Item
 								key="unpaid"
 								text="Belum dibayar" />
+						</ComboBox>
+						<ComboBox
+							id="ComboBoxFilterMonth"
+							width="150px"
+							selectionChange="onMonthSelect"
+							selectedKey="*"
+							class="sapUiTinyMarginEnd sapMCbAutoFocus">
+							<core:Item
+								key="*"
+								text="Semua Periode" />
+							<core:Item
+								key="Januari"
+								text="Januari" />
+							<core:Item
+								key="Februari"
+								text="Februari" />
+							<core:Item
+								key="Maret"
+								text="Maret" />
+							<core:Item
+								key="April"
+								text="April" />
+							<core:Item
+								key="Mei"
+								text="Mei" />
+							<core:Item
+								key="Juni"
+								text="Juni" />
+							<core:Item
+								key="Juli"
+								text="Juli" />
+							<core:Item
+								key="Agustus"
+								text="Agustus" />
+							<core:Item
+								key="September"
+								text="September" />
+							<core:Item
+								key="Oktober"
+								text="Oktober" />
+							<core:Item
+								key="November"
+								text="November" />
+							<core:Item
+								key="Desember"
+								text="Desember" />
 						</ComboBox>
 					</HBox>
 				</FlexBox>

@@ -48,7 +48,7 @@ sap.ui.define(
                 BILLING_ZUTL.push(el);
             }
         });
-
+        console.log(BILLING_ZUTL)
         this.getView().setModel(
           new JSONModel({ utilityList: BILLING_ZUTL }),
           "utilities"
@@ -149,11 +149,13 @@ sap.ui.define(
       },
 
       onTagihanTenantSelected: function (oEvent) {
-        let oFilter1, oFilter2, oFilters;
+        let oFilter1, oFilter2, oFilter3, oFilters;
         const oComboBoxTenant = oEvent.getSource();
         const oComboBoxStatus = this.getView().byId("ComboBoxTagihanStatus");
+        const oComboBoxMonth = this.getView().byId("ComboBoxFilterMonth");
         const tenantSelected = oComboBoxTenant.getSelectedKey();
         const statuSelected = oComboBoxStatus.getSelectedKey();
+        const monthSelected = oComboBoxMonth.getSelectedKey();
 
         const tagihanList = this.byId("tagihanList");
         if (tenantSelected !== "*") {
@@ -170,16 +172,24 @@ sap.ui.define(
           oFilter2 = [];
         }
 
-        oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
+        if (monthSelected !== "*") {
+          oFilter3 = new Filter("BillingDate", FilterOperator.Contains, monthSelected);
+        } else {
+          oFilter3 = [];
+        }
+
+        oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
         tagihanList.getBinding("items").filter(oFilters);
       },
 
       onStatusSelect: function (oEvent) {
-        let oFilter1, oFilter2, oFilters;
+        let oFilter1, oFilter2, oFilter3, oFilters;
         const oComboBoxStatus = oEvent.getSource();
         const oComboBoxTenant = this.getView().byId("ComboBoxTagihanTenant");
+        const oComboBoxMonth = this.getView().byId("ComboBoxFilterMonth");
         const statuSelected = oComboBoxStatus.getSelectedKey();
         const tenantSelected = oComboBoxTenant.getSelectedKey();
+        const monthSelected = oComboBoxMonth.getSelectedKey();
 
         const tagihanList = this.byId("tagihanList");
 
@@ -192,12 +202,54 @@ sap.ui.define(
         }
 
         if (tenantSelected !== "*") {
-          oFilter2 = new Filter("CustomerDesc", FilterOperator.Contains, tenantSelected);
+          oFilter2 = new Filter("CustomerDesc", FilterOperator.EQ, tenantSelected);
         } else {
           oFilter2 = [];
         }
 
-        oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
+        if (monthSelected !== "*") {
+          oFilter3 = new Filter("BillingDate", FilterOperator.Contains, monthSelected);
+        } else {
+          oFilter3 = [];
+        }
+        
+
+        oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
+        tagihanList.getBinding("items").filter(oFilters);
+      },
+
+      onMonthSelect: function(oEvent) {
+        let oFilter1, oFilter2, oFilter3, oFilters;
+        const oComboBoxMonth = oEvent.getSource();
+        const oComboBoxTenant = this.getView().byId("ComboBoxTagihanTenant");
+        const oComboBoxStatus = this.getView().byId("ComboBoxTagihanStatus");
+        const monthSelected = oComboBoxMonth.getSelectedKey();
+        const tenantSelected = oComboBoxTenant.getSelectedKey();
+        const statusSelected = oComboBoxStatus.getSelectedKey();
+        const tagihanList = this.byId("tagihanList");
+
+        if (monthSelected !== "*") {
+          oFilter1 = new Filter("BillingDate", FilterOperator.Contains, monthSelected);
+        } else {
+          oFilter1 = [];
+        }
+
+        if (tenantSelected !== "*") {
+          oFilter2 = new Filter("CustomerDesc", FilterOperator.EQ, tenantSelected);
+        } else {
+          oFilter2 = [];
+        }
+
+        if (statusSelected === "paid") {
+          oFilter3 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
+        } else if (statusSelected === "unpaid") {
+          oFilter3 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
+        } else {
+          oFilter3 = [];
+        }
+        console.log(oFilter3)
+        console.log(monthSelected)
+        oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
         tagihanList.getBinding("items").filter(oFilters);
       },
 
