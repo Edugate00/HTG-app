@@ -106,7 +106,7 @@ sap.ui.define(
           currentMeasurementValue.setEnabled(true);
 
           // change title text
-          if (dataMeasPoint.Uom == "L") {
+          if (dataMeasPoint.Uom == "m3") {
             titleTotalPemakaian.setText("Total Pemakaian Air");
           } else {
             titleTotalPemakaian.setText("Total Pemakaian Listrik");
