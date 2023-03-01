@@ -43,65 +43,79 @@ sap.ui.define(
 
     let oModel;
 
+    let BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
+    let BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
+
     return BaseController.extend("lrlpapp.controller.Dashboard", {
       onInit: async function () {
 
         // sessionStorage.setItem("wkwkw", "WODKAODKWA")
         let billingHeadToItem;
         let oTagihan = [];
-        let BILLING_FV = [];
-        let BILLING_ZUTL = [];
-
-        const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeaderToItem");
-        billingHeadToItem = oBilling.results.map(el => el.BillingHeadToItem.results)
-
-        const oBillingItem = this.flattenedArr(billingHeadToItem)
-
-        oBilling.results.forEach(el => {
-            let year = el.BillingDate.substr(0, 4);
-            let month = el.BillingDate.substr(4, 2) - 1;
-            let day = el.BillingDate.substr(6, 2);
-            
-            el.Timestamp = new Date(year, month, day).getTime();
-            el.BillingDate = this.getFormattedDate(el.BillingDate)
-
-            if (el.PaymentStatus === "X"){
-                el["Status"] = "Sudah dibayar"
-                el["TipeStatus"] = "Success"
-            } else {
-                el["Status"] = "Belum dibayar"
-                el["TipeStatus"] = "Error"
-            }
-
-            if (el.ReleasedStatus === "X") {
-                oTagihan.push(el);
-            }
-
-            if (el.BillingType === "FV"){
-                BILLING_FV.push(el);
-            } else {
-                BILLING_ZUTL.push(el);
-            }
-        })
-
         const isDueDate = []
+        const hasPassed = []
+
+        if (!BILLING_FV && !BILLING_ZUTL) {
+            BILLING_FV = []
+            BILLING_ZUTL = []
+
+            const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeaderToItem");
+
+            oBilling.results.forEach(el => {
+                let year = el.BillingDate.substr(0, 4);
+                let month = el.BillingDate.substr(4, 2) - 1;
+                let day = el.BillingDate.substr(6, 2);
+                
+                el.Timestamp = new Date(year, month, day).getTime();
+                el.BillingDate = this.getFormattedDate(el.BillingDate)
+
+                if (el.PaymentStatus === "X"){
+                    el["Status"] = "Sudah dibayar"
+                    el["TipeStatus"] = "Success"
+                } else {
+                    el["Status"] = "Belum dibayar"
+                    el["TipeStatus"] = "Error"
+                }
+
+                if (el.ReleasedStatus === "X") {
+                    oTagihan.push(el);
+                }
+
+                if (el.BillingType === "FV"){
+                    BILLING_FV.push(el);
+                } else {
+                    BILLING_ZUTL.push(el);
+                }
+            })
+
+            // Storing data to Session Storage based on billing type
+            // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
+            sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
+            sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
+        } 
+
         BILLING_FV.forEach(el => {
             if (el.ReleasedStatus !== "X") {
                 if (this.isDueDate(el.Timestamp)) {
                     isDueDate.push(el)
                 }
+            } else {
+                oTagihan.push(el);
             }
         })
-
-        const hasPassed = []
+            
         BILLING_FV.forEach(el => {
             if (el.ReleasedStatus !== "X") {
                 if (this.hasPassed(el.Timestamp)) {
                     hasPassed.push(el)
                 }
+            } else {
+                oTagihan.push(el);
             }
         })
-        console.log("passed", hasPassed);
+
+        sessionStorage.setItem("NOTIF_TAGIHAN_SEWA", JSON.stringify(isDueDate.sort((a, b) => a.Timestamp - b.Timestamp)))
+        sessionStorage.setItem("NOTIF_TAGIHAN_TERLAMBAT", JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp)))
 
         const notifCounter = new JSONModel({ notif : [
             {tagihanSewa      : String(isDueDate.length)},
@@ -110,16 +124,11 @@ sap.ui.define(
         this.getView().setModel(notifCounter, "notif");
 
         this.getView().setModel(
-          new JSONModel({ tagihan: oTagihan }),
-          "tagihan"
+            new JSONModel({ tagihan: oTagihan }),
+            "tagihan"
         );
 
-        // Storing data to Session Storage based on billing type
-        // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
-        sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
-        sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
-        sessionStorage.setItem("NOTIF_TAGIHAN_SEWA", JSON.stringify(isDueDate.sort((a, b) => a.Timestamp - b.Timestamp)))
-        sessionStorage.setItem("NOTIF_TAGIHAN_TERLAMBAT", JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp)))
+        
 
         // console.log(BILLING_FV);
         // console.log(oBillingItem);
