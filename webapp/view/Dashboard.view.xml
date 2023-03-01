@@ -69,9 +69,11 @@
                             text="Tagihan Sewa" />
                     </FlexBox>
                     <VBox class="tile-info">
-                        <Text
-                            class="dynamic-number"
-                            text="{/counterNotifTagihanSewa}" />
+                        <FlexBox alignItems="Center" items="{notif>/notif}">
+                            <Text
+                                class="dynamic-number"
+                                text="{notif>tagihanSewa}" />
+                        </FlexBox>
                         <Text text="Tagihan untuk dicetak" />
                     </VBox>
                 </VBox>
@@ -90,9 +92,11 @@
                             text="Terlambat Dicetak" />
                     </FlexBox>
                     <VBox class="tile-info">
-                        <Text
-                            class="dynamic-number"
-                            text="0" />
+                        <FlexBox alignItems="Center" items="{notif>/notif}">
+                            <Text
+                                class="dynamic-number"
+                                text="{notif>tagihanTerlambat}" />
+                        </FlexBox>
                         <Text text="Tagihan untuk dicetak" />
                     </VBox>
                 </VBox>
