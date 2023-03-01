@@ -20,21 +20,15 @@ sap.ui.define(
       onInit: function () {
 
         //Read oData for setting tagihan utilities List
-        let billingHeadToItem;
-        let oTagihan = [];
-        let BILLING_FV = [];
-        let BILLING_ZUTL = [];
 
         console.log(oBilling);
-
-        
         this.getView().setModel(
           new JSONModel({ utilityList: oBilling }),
           "utilities"
         );
 
         //Create tenant List
-        const tenant = BILLING_ZUTL.map(el => el.CustomerDesc);
+        const tenant = oBilling.map(el => el.CustomerDesc);
           
           const listTenant = tenant.filter((el, index) => tenant.indexOf(el) === index);
           const fixTenant = listTenant.map((CustomerDesc) => ({
@@ -49,7 +43,6 @@ sap.ui.define(
             new JSONModel({ tenantList: fixTenant }),
             "Tenant"
           );
-
 
         //Tiles Event
         const tilePemakaianListrik = this.getView().byId(
