@@ -53,21 +53,22 @@ sap.ui.define(
         // sessionStorage.setItem("wkwkw", "WODKAODKWA")
         let billingHeadToItem;
         let oTagihan = [];
-        const isDueDate = []
-        const hasPassed = []
+        const isDueDate = [];
+        const hasPassed = [];
+        const needToScan = [];
+        const scanned = [];
+        const tagihanAir = [];
+        let tagihanAirToCreate;
 
         if (!MEASPOINT) {
             MEASPOINT = []
 
             const oMeasPoint = await this.readOdataService("/measurementPointSet", "MeasPointToMeasDoc");
+            oMeasPoint.results.forEach(el => {
+                MEASPOINT.push(el);
+            })
 
-            console.log(oMeasPoint);
-            // oMeasPoint.results.forEach(el => {
-                
-            // })
-
-            // Storing data to Session Storage based on billing type
-            // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
+            // Storing data to Session Storage
             sessionStorage.setItem("MEASPOINT", JSON.stringify(MEASPOINT))
         }
 
@@ -76,7 +77,6 @@ sap.ui.define(
             BILLING_ZUTL = []
 
             const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeadToItem");
-
             oBilling.results.forEach(el => {
                 let year = el.BillingDate.substr(0, 4);
                 let month = el.BillingDate.substr(4, 2) - 1;
@@ -108,7 +108,52 @@ sap.ui.define(
             // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
             sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
             sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
-        } 
+        }
+
+        MEASPOINT.forEach(el => {
+            const getMonth = new Date().getMonth() + 1;
+            const stringMonth = getMonth  <= 9 ? `0${getMonth}` : `${getMonth}`;
+            const lastMeasDoc = el.MeasPointToMeasDoc.results[0]
+
+            if (el.MeasPointToMeasDoc.results.length !== 0){
+                if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
+                    needToScan.push(el);
+                } else {
+                    scanned.push(el);
+                }
+            }
+        })
+
+        if (needToScan.length !== 0) {
+            const months = [
+                "Januari",
+                "Februari",
+                "Maret",
+                "April",
+                "Mei",
+                "Juni",
+                "Juli",
+                "Agustus",
+                "September",
+                "Oktober",
+                "November",
+                "Desember"
+            ]
+
+            const getMonth = new Date().getMonth();
+
+            scanned.forEach((el_1, i) => {
+                BILLING_ZUTL.forEach((el_2, j) => {
+                    const billingDate = el_2.BillingDate.split(" ")[1].replace(",", "")
+                    const customer = el_2.Customer.substr(6, 4)
+                    if (billingDate === months[getMonth] && customer === scanned[i].Text.substr(0, 4)) {
+                        tagihanAir.push(el_2)
+                    } 
+                })
+            })
+        }
+
+        tagihanAirToCreate = scanned.length - tagihanAir.length;
 
         BILLING_FV.forEach(el => {
             if (el.ReleasedStatus !== "X") {
@@ -133,7 +178,10 @@ sap.ui.define(
         sessionStorage.setItem("NOTIF_TAGIHAN_SEWA", JSON.stringify(isDueDate.sort((a, b) => a.Timestamp - b.Timestamp)))
         sessionStorage.setItem("NOTIF_TAGIHAN_TERLAMBAT", JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp)))
 
+        // this code below is for the Dynamic Number of Tiles in Dashboard
         const notifCounter = new JSONModel({ notif : [
+            {pindaiMeteran    : `${needToScan.length}`},
+            {tagihanAir       : String(tagihanAirToCreate)},
             {tagihanSewa      : String(isDueDate.length)},
             {tagihanTerlambat : String(hasPassed.length)}
         ]})
@@ -143,12 +191,6 @@ sap.ui.define(
             new JSONModel({ tagihan: oTagihan }),
             "tagihan"
         );
-
-        
-
-        // console.log(BILLING_FV);
-        // console.log(oBillingItem);
-        // console.log("OTAGIHAN", oTagihan);
 
         // Vizframe chart for Penggunaan Air
         const vizAir = this.getView().byId("vizPenggunaanAir");
