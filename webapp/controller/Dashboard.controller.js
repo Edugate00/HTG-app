@@ -45,6 +45,7 @@ sap.ui.define(
 
     let BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
     let BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
+    let MEASPOINT = JSON.parse(sessionStorage.getItem("MEASPOINT"));
 
     return BaseController.extend("lrlpapp.controller.Dashboard", {
       onInit: async function () {
@@ -55,11 +56,26 @@ sap.ui.define(
         const isDueDate = []
         const hasPassed = []
 
+        if (!MEASPOINT) {
+            MEASPOINT = []
+
+            const oMeasPoint = await this.readOdataService("/measurementPointSet", "MeasPointToMeasDoc");
+
+            console.log(oMeasPoint);
+            // oMeasPoint.results.forEach(el => {
+                
+            // })
+
+            // Storing data to Session Storage based on billing type
+            // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
+            sessionStorage.setItem("MEASPOINT", JSON.stringify(MEASPOINT))
+        }
+
         if (!BILLING_FV && !BILLING_ZUTL) {
             BILLING_FV = []
             BILLING_ZUTL = []
 
-            const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeaderToItem");
+            const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeadToItem");
 
             oBilling.results.forEach(el => {
                 let year = el.BillingDate.substr(0, 4);
@@ -416,6 +432,8 @@ sap.ui.define(
         
         const oView = this.getView();
         const oModel = { detailTagihan : [ {...selectedList} ]}
+
+        console.log(oModel);
 
         if (!this.dialogName) {
             this.dialogName = Fragment.load({
