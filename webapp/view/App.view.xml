@@ -9,7 +9,7 @@
         <HBox class="navbar">
             <HBox class="navbrand">
                 <Image
-                    src="../zlorena_app/assets/LOGO-LORENA-PNG.png"
+                    src="../zlorena_app/assets/LOGO-LORENA-PROPERTI.png"
                     width="40px"
                     height="40px"
                     alt="Logo-lorena" />

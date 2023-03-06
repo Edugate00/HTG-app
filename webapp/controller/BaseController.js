@@ -75,9 +75,9 @@ sap.ui.define(
       readOdataService: function (path, url) {
             oModel = this.getOwnerComponent().getModel();
             return new Promise(function (resolve, reject) {
-                oModel.read("/billingHeaderSet", {
+                oModel.read(path, {
                     urlParameters: {
-                        $expand: "BillingHeadToItem",
+                        $expand: url,
                     },
                     success: function (oData) {
                         resolve(oData)
