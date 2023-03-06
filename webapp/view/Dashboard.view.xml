@@ -27,9 +27,11 @@
                             text="Pindai Meteran Air" />
                     </FlexBox>
                     <VBox class="tile-info">
-                        <Text
-                            class="dynamic-number"
-                            text="0" />
+                        <FlexBox alignItems="Center" items="{notif>/notif}">
+                            <Text
+                                class="dynamic-number"
+                                text="{notif>pindaiMeteran}" />
+                        </FlexBox>
                         <Text text="Meteran perlu dipindai" />
                     </VBox>
                 </VBox>
@@ -48,10 +50,12 @@
                             text="Tagihan Air" />
                     </FlexBox>
                     <VBox class="tile-info">
-                        <Text
-                            class="dynamic-number"
-                            text="5" />
-                        <Text text="Tagihan untuk dicetak" />
+                        <FlexBox alignItems="Center" items="{notif>/notif}">
+                            <Text
+                                class="dynamic-number"
+                                text="{notif>tagihanAir}" />
+                        </FlexBox>
+                        <Text text="Tagihan untuk dibuat" />
                     </VBox>
                 </VBox>
                 <VBox
@@ -74,7 +78,7 @@
                                 class="dynamic-number"
                                 text="{notif>tagihanSewa}" />
                         </FlexBox>
-                        <Text text="Tagihan untuk dicetak" />
+                        <Text text="Tagihan untuk dibuat" />
                     </VBox>
                 </VBox>
                 <VBox
