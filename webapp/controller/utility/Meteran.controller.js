@@ -90,7 +90,9 @@ sap.ui.define(
             dataMeasDoc[0].Time
           );
           fullDate = `${convert.date} / ${convert.time}`;
-          valueUnit = `${dataMeasDoc[0].Value} ${dataMeasDoc[0].Unit}`;
+          valueUnit = `${
+            dataMeasDoc[0].Value
+          } ${dataMeasDoc[0].Unit.toLowerCase()}`;
         }
 
         // check return value
@@ -106,7 +108,7 @@ sap.ui.define(
           currentMeasurementValue.setEnabled(true);
 
           // change title text
-          if (dataMeasPoint.Uom == "m3") {
+          if (dataMeasPoint.Uom.toLowerCase() == "m3") {
             titleTotalPemakaian.setText("Total Pemakaian Air");
           } else {
             titleTotalPemakaian.setText("Total Pemakaian Listrik");
@@ -173,11 +175,7 @@ sap.ui.define(
 
         // cek input
         if (inputPoint && inputValue) {
-          let inputUnit = dataMeasPoint.Uom;
-
-          if (inputUnit == "L") {
-            inputUnit = "l";
-          }
+          const inputUnit = dataMeasPoint.Uom.toLowerCase();
 
           const request = new InputRequest(
             inputPoint,
@@ -335,7 +333,9 @@ sap.ui.define(
             dataMeasDoc[0].Time
           );
           fullDate = `${convert.date} / ${convert.time}`;
-          valueUnit = `${dataMeasDoc[0].Value} ${dataMeasDoc[0].Unit}`;
+          valueUnit = `${
+            dataMeasDoc[0].Value
+          } ${dataMeasDoc[0].Unit.toLowerCase()}`;
         }
 
         // check return value
@@ -351,7 +351,7 @@ sap.ui.define(
           currentMeasurementValue.setEnabled(true);
 
           // change title text
-          if (dataMeasPoint.Uom == "L") {
+          if ((dataMeasPoint.Uom = "M3")) {
             titleTotalPemakaian.setText("Total Pemakaian Air");
           } else {
             titleTotalPemakaian.setText("Total Pemakaian Listrik");
