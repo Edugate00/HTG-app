@@ -154,13 +154,8 @@ sap.ui.define(
                 })
             })
         }
-
-        console.log(tagihanAir)
-
+        
         tagihanAirToCreate = scanned.length - tagihanAir.length;
-        console.log(scanned.length)
-        console.log(tagihanAir.length)
-        console.log(tagihanAirToCreate)
 
         BILLING_FV.forEach(el => {
             if (el.ReleasedStatus !== "X") {
