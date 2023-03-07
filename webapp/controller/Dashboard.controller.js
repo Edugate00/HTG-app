@@ -41,7 +41,7 @@ sap.ui.define(
       { key: "Desember", text: "Desember" },
     ];
 
-    let oModel;
+    const oPenggunaanAir = { data: [] };
 
     let BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
     let BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
@@ -124,6 +124,16 @@ sap.ui.define(
             } else {
                 needToScan.push(el);
             }
+
+            if (el.Category === "M" && el.Uom === "M3") {
+                el.MeasPointToMeasDoc.results.forEach(element => {
+                    oPenggunaanAir.data.push({
+                        "tenant": `${el.Text.split(" - ")[1]} ${el.Description.split(" ")[0]}`,
+                        "value": String(Number(element.Value)),
+                        "month": this.getFormattedDate(element.Date).replace(",", "").split(" ")[1]
+                    })
+                })
+            }
         })
 
         if (needToScan.length !== 0) {
@@ -155,12 +165,7 @@ sap.ui.define(
             })
         }
 
-        console.log(tagihanAir)
-
         tagihanAirToCreate = scanned.length - tagihanAir.length;
-        console.log(scanned.length)
-        console.log(tagihanAir.length)
-        console.log(tagihanAirToCreate)
 
         BILLING_FV.forEach(el => {
             if (el.ReleasedStatus !== "X") {
@@ -249,7 +254,8 @@ sap.ui.define(
           },
         });
 
-        const penggunaanAir = this.getOwnerComponent() .getModel("penggunaanAir").getData();
+        // const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
+        const penggunaanAir = oPenggunaanAir;
         const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
         const oPenggunaanListrik = [];
 
@@ -317,6 +323,15 @@ sap.ui.define(
 
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         vizListrik.setModel(penggunaanListrikModel, "penggunaanListrik");
+
+        oComboBoxTenant.destroyItems();
+        oComboBoxTenant.addItem(new Item({key: "*", text: "Semua Tenant"}))
+        penggunaanAir.data.forEach(el => {
+            oComboBoxTenant.addItem(new Item(
+                { key: el.tenant, text: el.tenant }
+            ));
+        })
+        oComboBoxTenant.setSelectedKey("*")
 		
         oComboBoxTenant.fireSelectionChange();
         oComboBoxListrikTimestamp.fireSelectionChange();
@@ -330,43 +345,6 @@ sap.ui.define(
       _onTagihanAirClick: function (oEvent) {
         this.getRouter().navTo('utility');
         window.location.reload()
-        // const oView = this.getView();
-        // const oTagihanAirModel = [
-        //   { nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant D", noTagihan: "90046018", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant E", noTagihan: "90046019", dueDate: "09 Feb, 2023" },
-        // ];
-
-        // if (!this.tagihanAirDialog) {
-        //   this.tagihanAirDialog = Fragment.load({
-        //     id: oView.getId(),
-        //     name: "lrlpapp.view.fragments.TagihanAirDialog",
-        //     controller: this,
-        //   }).then(function (oDialog) {
-        //     oDialog.setModel(oView.getModel());
-        //     oDialog.setModel(
-        //       new JSONModel({
-        //         tagihanAir: oTagihanAirModel,
-        //       }),
-        //       "tagihanAir"
-        //     );
-        //     return oDialog;
-        //   });
-        // }
-
-        // this.tagihanAirDialog.then(function (oDialog) {
-        //   oDialog.setModel(oView.getModel());
-        //   oDialog.setModel(
-        //     new JSONModel({
-        //       tagihanAir: oTagihanAirModel,
-        //     }),
-        //     "tagihanAir"
-        //   );
-
-        //   oDialog.open();
-        // });
       },
 
       _onTagihanSewaClick: function (oEvent) {
@@ -518,6 +496,8 @@ sap.ui.define(
       onChartTenantSelected: function (oEvent) {
         let oFilterTenant, oFilterMonth, filters;
 
+        const currentMonth = this.getMonth(new Date().getMonth());
+
         const oVizFrame = this.getView().byId("vizPenggunaanAir");
         const oDataset = oVizFrame.getDataset();
         const oDimension = oDataset.getDimensions()[0];
@@ -526,8 +506,8 @@ sap.ui.define(
         const oComboBoxMonth = this.getView().byId("ComboBoxMonth");
         const tenantSelected = oComboBoxTenant.getSelectedKey();
 
-        oFilterTenant = new Filter("tenant", FilterOperator.EQ, tenantSelected);
-        oFilterMonth = new Filter("month", FilterOperator.EQ, "Februari");
+        oFilterTenant = new Filter("tenant", FilterOperator.Contains, tenantSelected);
+        oFilterMonth = new Filter("month", FilterOperator.EQ, currentMonth);
 
         if (tenantSelected !== "*") {
           oVizFrame.setVizType("line");
@@ -552,14 +532,14 @@ sap.ui.define(
         } else {
           oVizFrame.setVizType("column");
           oVizFrame.setVizProperties({
-            title: { visible: true, text: "Semua Tenant bulan Februari" },
+            title: { visible: true, text: `Semua Tenant bulan ${currentMonth}` },
           });
 
           oComboBoxMonth.destroyItems();
           itemsForAllTenants.forEach((el) => {
             oComboBoxMonth.addItem(new Item(el));
           });
-          oComboBoxMonth.setSelectedKey("Februari");
+          oComboBoxMonth.setSelectedKey(currentMonth);
           oDataset.removeDimension(oDimension);
 
           oDataset.removeDimension(oDimension);
@@ -574,6 +554,7 @@ sap.ui.define(
 
 	  onChartMonthSelected: function (oEvent) {
 		let oFilterTenant, oFilterMonth, filters;
+
 		const oVizFrame = this.getView().byId("vizPenggunaanAir");
 		const oDataset = oVizFrame.getDataset().getBinding("data");
 
@@ -593,7 +574,10 @@ sap.ui.define(
 		filters = new Filter({ filters: [oFilterTenant, oFilterMonth], and: true });
 		
 		oDataset.filter(filters);
-		console.log(monthSelected)
+
+        oVizFrame.setVizProperties({
+            title: { visible: true, text: `Semua Tenant bulan ${monthSelected}` },
+        });
 	  },
 
 	  onListrikChartTimestamp: function (oEvent) {
