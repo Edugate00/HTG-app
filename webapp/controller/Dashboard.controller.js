@@ -182,7 +182,7 @@ sap.ui.define(
         const notifCounter = new JSONModel({ notif : [
             {pindaiMeteran    : `${needToScan.length}`},
             {tagihanAir       : String(tagihanAirToCreate)},
-            {tagihanSewa      : String(isDueDate.length)},
+            {tagihanSewa      : String(isDueDate.length + hasPassed.length)},
             {tagihanTerlambat : String(hasPassed.length)}
         ]})
         this.getView().setModel(notifCounter, "notif");
@@ -321,51 +321,63 @@ sap.ui.define(
       },
 
       _onTagihanAirClick: function (oEvent) {
-        const oView = this.getView();
-        const oTagihanAirModel = [
-          { nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023" },
-          { nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023" },
-          { nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023" },
-          { nama: "Tenant D", noTagihan: "90046018", dueDate: "09 Feb, 2023" },
-          { nama: "Tenant E", noTagihan: "90046019", dueDate: "09 Feb, 2023" },
-        ];
+        this.getRouter().navTo('utility');
+        window.location.reload()
+        // const oView = this.getView();
+        // const oTagihanAirModel = [
+        //   { nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023" },
+        //   { nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023" },
+        //   { nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023" },
+        //   { nama: "Tenant D", noTagihan: "90046018", dueDate: "09 Feb, 2023" },
+        //   { nama: "Tenant E", noTagihan: "90046019", dueDate: "09 Feb, 2023" },
+        // ];
 
-        if (!this.tagihanAirDialog) {
-          this.tagihanAirDialog = Fragment.load({
-            id: oView.getId(),
-            name: "lrlpapp.view.fragments.TagihanAirDialog",
-            controller: this,
-          }).then(function (oDialog) {
-            oDialog.setModel(oView.getModel());
-            oDialog.setModel(
-              new JSONModel({
-                tagihanAir: oTagihanAirModel,
-              }),
-              "tagihanAir"
-            );
-            return oDialog;
-          });
-        }
+        // if (!this.tagihanAirDialog) {
+        //   this.tagihanAirDialog = Fragment.load({
+        //     id: oView.getId(),
+        //     name: "lrlpapp.view.fragments.TagihanAirDialog",
+        //     controller: this,
+        //   }).then(function (oDialog) {
+        //     oDialog.setModel(oView.getModel());
+        //     oDialog.setModel(
+        //       new JSONModel({
+        //         tagihanAir: oTagihanAirModel,
+        //       }),
+        //       "tagihanAir"
+        //     );
+        //     return oDialog;
+        //   });
+        // }
 
-        this.tagihanAirDialog.then(function (oDialog) {
-          oDialog.setModel(oView.getModel());
-          oDialog.setModel(
-            new JSONModel({
-              tagihanAir: oTagihanAirModel,
-            }),
-            "tagihanAir"
-          );
+        // this.tagihanAirDialog.then(function (oDialog) {
+        //   oDialog.setModel(oView.getModel());
+        //   oDialog.setModel(
+        //     new JSONModel({
+        //       tagihanAir: oTagihanAirModel,
+        //     }),
+        //     "tagihanAir"
+        //   );
 
-          oDialog.open();
-        });
+        //   oDialog.open();
+        // });
       },
 
       _onTagihanSewaClick: function (oEvent) {
         const oView = this.getView();
         const tagihanSewa = JSON.parse(sessionStorage.getItem("NOTIF_TAGIHAN_SEWA"));
-        
+        const tagihanTerlambat = JSON.parse(sessionStorage.getItem("NOTIF_TAGIHAN_TERLAMBAT"));
 
-        const oModel = { tagihanSewa : tagihanSewa }
+        tagihanSewa.forEach(el => {
+            el.Info = ""
+            el.InfoState = "Success"
+        })
+        tagihanTerlambat.forEach(el => {
+            el.Info = "Belum dirilis/cetak"
+            el.InfoState = "Error"
+        })
+
+        const oTagihanSewa = tagihanSewa.concat(tagihanTerlambat);
+        const oModel = { tagihanSewa : oTagihanSewa }
 
         if (!this.tagihanSewaDialog) {
           this.tagihanSewaDialog = Fragment.load({
