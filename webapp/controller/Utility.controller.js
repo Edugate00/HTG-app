@@ -20,10 +20,19 @@ sap.ui.define(
       onInit: function () {
 
         //Read oData for setting tagihan utilities List
+        let oTagihanUtility = [];
 
         console.log(oBilling);
+
+        oBilling.forEach(el => {
+          if(el.ReleasedStatus === "X"){
+            oTagihanUtility.push(el);
+          }
+        })
+        console.log(oTagihanUtility)
+
         this.getView().setModel(
-          new JSONModel({ utilityList: oBilling }),
+          new JSONModel({ utilityList: oTagihanUtility }),
           "utilities"
         );
 
