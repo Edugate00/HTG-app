@@ -41,7 +41,7 @@ sap.ui.define(
       { key: "Desember", text: "Desember" },
     ];
 
-    let oModel;
+    const oPenggunaanAir = { data: [] };
 
     let BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
     let BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
@@ -124,7 +124,19 @@ sap.ui.define(
             } else {
                 needToScan.push(el);
             }
+
+            if (el.Category === "M" && el.Uom === "M3") {
+                el.MeasPointToMeasDoc.results.forEach(element => {
+                    oPenggunaanAir.data.push({
+                        "tenant": `${el.Text.split(" - ")[1]} ${el.Description.split(" ")[0]}`,
+                        "value": String(Number(element.Value)),
+                        "month": this.getFormattedDate(element.Date).replace(",", "").split(" ")[1]
+                    })
+                })
+            }
         })
+
+        console.log(oPenggunaanAir);
 
         if (needToScan.length !== 0) {
             const months = [
@@ -154,7 +166,7 @@ sap.ui.define(
                 })
             })
         }
-        
+
         tagihanAirToCreate = scanned.length - tagihanAir.length;
 
         BILLING_FV.forEach(el => {
@@ -244,9 +256,11 @@ sap.ui.define(
           },
         });
 
-        const penggunaanAir = this.getOwnerComponent() .getModel("penggunaanAir").getData();
+        // const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
+        const penggunaanAir = oPenggunaanAir;
         const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
         const oPenggunaanListrik = [];
+        console.log(penggunaanAir)
 
         penggunaanListrik.data.forEach(el => {
           let month = el.date.split(".")[1];
@@ -521,7 +535,7 @@ sap.ui.define(
         const oComboBoxMonth = this.getView().byId("ComboBoxMonth");
         const tenantSelected = oComboBoxTenant.getSelectedKey();
 
-        oFilterTenant = new Filter("tenant", FilterOperator.EQ, tenantSelected);
+        oFilterTenant = new Filter("tenant", FilterOperator.Contains, tenantSelected);
         oFilterMonth = new Filter("month", FilterOperator.EQ, "Februari");
 
         if (tenantSelected !== "*") {
@@ -588,7 +602,6 @@ sap.ui.define(
 		filters = new Filter({ filters: [oFilterTenant, oFilterMonth], and: true });
 		
 		oDataset.filter(filters);
-		console.log(monthSelected)
 	  },
 
 	  onListrikChartTimestamp: function (oEvent) {
