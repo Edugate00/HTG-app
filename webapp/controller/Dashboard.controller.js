@@ -136,8 +136,6 @@ sap.ui.define(
             }
         })
 
-        console.log(oPenggunaanAir);
-
         if (needToScan.length !== 0) {
             const months = [
                 "Januari",
@@ -260,7 +258,6 @@ sap.ui.define(
         const penggunaanAir = oPenggunaanAir;
         const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
         const oPenggunaanListrik = [];
-        console.log(penggunaanAir)
 
         penggunaanListrik.data.forEach(el => {
           let month = el.date.split(".")[1];
@@ -326,6 +323,15 @@ sap.ui.define(
 
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         vizListrik.setModel(penggunaanListrikModel, "penggunaanListrik");
+
+        oComboBoxTenant.destroyItems();
+        oComboBoxTenant.addItem(new Item({key: "*", text: "Semua Tenant"}))
+        penggunaanAir.data.forEach(el => {
+            oComboBoxTenant.addItem(new Item(
+                { key: el.tenant, text: el.tenant }
+            ));
+        })
+        oComboBoxTenant.setSelectedKey("*")
 		
         oComboBoxTenant.fireSelectionChange();
         oComboBoxListrikTimestamp.fireSelectionChange();
@@ -339,43 +345,6 @@ sap.ui.define(
       _onTagihanAirClick: function (oEvent) {
         this.getRouter().navTo('utility');
         window.location.reload()
-        // const oView = this.getView();
-        // const oTagihanAirModel = [
-        //   { nama: "Tenant A", noTagihan: "90046015", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant B", noTagihan: "90046016", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant C", noTagihan: "90046017", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant D", noTagihan: "90046018", dueDate: "09 Feb, 2023" },
-        //   { nama: "Tenant E", noTagihan: "90046019", dueDate: "09 Feb, 2023" },
-        // ];
-
-        // if (!this.tagihanAirDialog) {
-        //   this.tagihanAirDialog = Fragment.load({
-        //     id: oView.getId(),
-        //     name: "lrlpapp.view.fragments.TagihanAirDialog",
-        //     controller: this,
-        //   }).then(function (oDialog) {
-        //     oDialog.setModel(oView.getModel());
-        //     oDialog.setModel(
-        //       new JSONModel({
-        //         tagihanAir: oTagihanAirModel,
-        //       }),
-        //       "tagihanAir"
-        //     );
-        //     return oDialog;
-        //   });
-        // }
-
-        // this.tagihanAirDialog.then(function (oDialog) {
-        //   oDialog.setModel(oView.getModel());
-        //   oDialog.setModel(
-        //     new JSONModel({
-        //       tagihanAir: oTagihanAirModel,
-        //     }),
-        //     "tagihanAir"
-        //   );
-
-        //   oDialog.open();
-        // });
       },
 
       _onTagihanSewaClick: function (oEvent) {
@@ -527,6 +496,8 @@ sap.ui.define(
       onChartTenantSelected: function (oEvent) {
         let oFilterTenant, oFilterMonth, filters;
 
+        const currentMonth = this.getMonth(new Date().getMonth());
+
         const oVizFrame = this.getView().byId("vizPenggunaanAir");
         const oDataset = oVizFrame.getDataset();
         const oDimension = oDataset.getDimensions()[0];
@@ -536,7 +507,7 @@ sap.ui.define(
         const tenantSelected = oComboBoxTenant.getSelectedKey();
 
         oFilterTenant = new Filter("tenant", FilterOperator.Contains, tenantSelected);
-        oFilterMonth = new Filter("month", FilterOperator.EQ, "Februari");
+        oFilterMonth = new Filter("month", FilterOperator.EQ, currentMonth);
 
         if (tenantSelected !== "*") {
           oVizFrame.setVizType("line");
@@ -568,7 +539,7 @@ sap.ui.define(
           itemsForAllTenants.forEach((el) => {
             oComboBoxMonth.addItem(new Item(el));
           });
-          oComboBoxMonth.setSelectedKey("Februari");
+          oComboBoxMonth.setSelectedKey(currentMonth);
           oDataset.removeDimension(oDimension);
 
           oDataset.removeDimension(oDimension);
