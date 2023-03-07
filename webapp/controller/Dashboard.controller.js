@@ -532,7 +532,7 @@ sap.ui.define(
         } else {
           oVizFrame.setVizType("column");
           oVizFrame.setVizProperties({
-            title: { visible: true, text: "Semua Tenant bulan Februari" },
+            title: { visible: true, text: `Semua Tenant bulan ${currentMonth}` },
           });
 
           oComboBoxMonth.destroyItems();
@@ -554,6 +554,7 @@ sap.ui.define(
 
 	  onChartMonthSelected: function (oEvent) {
 		let oFilterTenant, oFilterMonth, filters;
+
 		const oVizFrame = this.getView().byId("vizPenggunaanAir");
 		const oDataset = oVizFrame.getDataset().getBinding("data");
 
@@ -573,6 +574,10 @@ sap.ui.define(
 		filters = new Filter({ filters: [oFilterTenant, oFilterMonth], and: true });
 		
 		oDataset.filter(filters);
+
+        oVizFrame.setVizProperties({
+            title: { visible: true, text: `Semua Tenant bulan ${monthSelected}` },
+        });
 	  },
 
 	  onListrikChartTimestamp: function (oEvent) {
