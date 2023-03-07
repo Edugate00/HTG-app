@@ -72,6 +72,25 @@ sap.ui.define(
         return `${day} ${month}, ${year}`;
       },
 
+      getMonth: function (month) {
+        const months = [
+          "Januari",
+          "Februari",
+          "Maret",
+          "April",
+          "Mei",
+          "Juni",
+          "Juli",
+          "Agustus",
+          "September",
+          "Oktober",
+          "November",
+          "Desember",
+        ];
+
+        return months[month];
+      },
+
       readOdataService: function (path, url) {
             oModel = this.getOwnerComponent().getModel();
             return new Promise(function (resolve, reject) {
