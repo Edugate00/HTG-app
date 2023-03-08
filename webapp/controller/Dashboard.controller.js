@@ -255,9 +255,21 @@ sap.ui.define(
         });
 
         // const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
-        const penggunaanAir = oPenggunaanAir;
+        const penggunaanAir = { data: 
+            oPenggunaanAir.data.sort((a, b) => {
+                const months = this.getMonth(null);
+                // Sort by month
+                const monthComparison = months.indexOf(a.month) - months.indexOf(b.month)
+                if (monthComparison !== 0) {
+                    return monthComparison;
+                }
+            })
+        }
+
         const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
         const oPenggunaanListrik = [];
+
+        console.log(penggunaanAir)
 
         penggunaanListrik.data.forEach(el => {
           let month = el.date.split(".")[1];
@@ -326,9 +338,11 @@ sap.ui.define(
 
         oComboBoxTenant.destroyItems();
         oComboBoxTenant.addItem(new Item({key: "*", text: "Semua Tenant"}))
-        penggunaanAir.data.forEach(el => {
+
+        const uniqueTenants = [...new Set(penggunaanAir.data.map(item => item.tenant))];
+        uniqueTenants.forEach(el => {
             oComboBoxTenant.addItem(new Item(
-                { key: el.tenant, text: el.tenant }
+                { key: el, text: el }
             ));
         })
         oComboBoxTenant.setSelectedKey("*")
