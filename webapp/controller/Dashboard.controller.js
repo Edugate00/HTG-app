@@ -42,6 +42,7 @@ sap.ui.define(
     ];
 
     const oPenggunaanAir = { data: [] };
+    const oPenggunaanListrik = { data: [] };
 
     let BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
     let BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
@@ -125,12 +126,22 @@ sap.ui.define(
                 needToScan.push(el);
             }
 
-            if (el.Category === "M" && el.Uom === "M3") {
+            if (el.Position === "CONTAINER") {
                 el.MeasPointToMeasDoc.results.forEach(element => {
                     oPenggunaanAir.data.push({
                         "tenant": `${el.Text.split(" - ")[1]} ${el.Description.split(" ")[0]}`,
                         "value": String(Number(element.Value)),
                         "month": this.getFormattedDate(element.Date).replace(",", "").split(" ")[1]
+                    })
+                })
+            } else if (el.Position === "METERAN_LISTRIK") {
+                el.MeasPointToMeasDoc.results.forEach(element => {
+                    let year = element.Date.substr(0, 4);
+                    let month = element.Date.substr(4, 2);
+                    let day = element.Date.substr(6, 2);
+                    oPenggunaanListrik.data.push({
+                        "value": String(Number(element.Value)),
+                        "date": `${year}.${month}.${day}`
                     })
                 })
             }
@@ -266,10 +277,12 @@ sap.ui.define(
             })
         }
 
-        const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
-        const oPenggunaanListrik = [];
+        // const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
+        const dataFinalPenggunaanListrik = [];
+        const penggunaanListrik = oPenggunaanListrik;
 
         console.log(penggunaanAir)
+        console.log(penggunaanListrik)
 
         penggunaanListrik.data.forEach(el => {
           let month = el.date.split(".")[1];
@@ -314,11 +327,11 @@ sap.ui.define(
           }
 
 		  el.timeStamp = new Date(el.date).getTime();
-          oPenggunaanListrik.push(el);
+          dataFinalPenggunaanListrik.push(el);
         })
 
         const penggunaanAirModel = new JSONModel(penggunaanAir);
-        const penggunaanListrikModel = new JSONModel({data: oPenggunaanListrik});
+        const penggunaanListrikModel = new JSONModel({data: dataFinalPenggunaanListrik});
 
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
         const oComboBoxListrikTimestamp = this.getView().byId("ListrikTimestampFilter");
