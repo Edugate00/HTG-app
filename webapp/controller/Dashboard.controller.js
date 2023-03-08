@@ -96,11 +96,9 @@ sap.ui.define(
                     el["TipeStatus"] = "Error"
                 }
 
-                if (el.ReleasedStatus === "X") {
+                if (el.ReleasedStatus === "X" && el.PrintedStatus === "X") {
                     oTagihan.push(el);
-                }
-
-                if (el.ReleasedStatus === "X" && el.PrintedStatus !== "X") {
+                } else if (el.ReleasedStatus === "X" && el.PrintedStatus !== "X") {
                     needToPrint.push(el);
                 }
 
@@ -339,7 +337,8 @@ sap.ui.define(
         })
 
         const penggunaanAirModel = new JSONModel(penggunaanAir);
-        const penggunaanListrikModel = new JSONModel({data: dataFinalPenggunaanListrik});
+        const penggunaanListrikModel = new JSONModel({data: dataFinalPenggunaanListrik.sort((a, b) => a.timeStamp - b.timeStamp)});
+        console.log(penggunaanListrikModel)
 
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
         const oComboBoxListrikTimestamp = this.getView().byId("ListrikTimestampFilter");
@@ -392,7 +391,7 @@ sap.ui.define(
             el.InfoState = "Success"
         })
         tagihanTerlambat.forEach(el => {
-            el.Info = "Belum dirilis/cetak"
+            el.Info = "Belum dirilis"
             el.InfoState = "Error"
         })
 
