@@ -47,6 +47,7 @@ sap.ui.define(
     let BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
     let BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
     let MEASPOINT = JSON.parse(sessionStorage.getItem("MEASPOINT"));
+    let needToPrint = JSON.parse(sessionStorage.getItem("TO_PRINT"))
 
     return BaseController.extend("lrlpapp.controller.Dashboard", {
       onInit: async function () {
@@ -76,6 +77,7 @@ sap.ui.define(
         if (!BILLING_FV && !BILLING_ZUTL) {
             BILLING_FV = []
             BILLING_ZUTL = []
+            needToPrint = []
 
             const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeadToItem");
             oBilling.results.forEach(el => {
@@ -98,6 +100,10 @@ sap.ui.define(
                     oTagihan.push(el);
                 }
 
+                if (el.ReleasedStatus === "X" && el.PrintedStatus !== "X") {
+                    needToPrint.push(el);
+                }
+
                 if (el.BillingType === "FV"){
                     BILLING_FV.push(el);
                 } else {
@@ -109,6 +115,8 @@ sap.ui.define(
             // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
             sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
             sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
+            sessionStorage.setItem("TO_PRINT", JSON.stringify(needToPrint))
+            console.log(needToPrint)
         }
 
         MEASPOINT.forEach(el => {
@@ -206,7 +214,7 @@ sap.ui.define(
             {pindaiMeteran    : `${needToScan.length}`},
             {tagihanAir       : String(tagihanAirToCreate)},
             {tagihanSewa      : String(isDueDate.length + hasPassed.length)},
-            {tagihanTerlambat : String(hasPassed.length)}
+            {belumCetak       : String(needToPrint.length)}
         ]})
         this.getView().setModel(notifCounter, "notif");
 
@@ -339,12 +347,12 @@ sap.ui.define(
         const tilePindaiMeteran = this.getView().byId("tilePindaiMeteran");
         const tileTagihanAir = this.getView().byId("tileTagihanAir");
         const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
-        const tileTagihanTerlambat = this.getView().byId("tileTagihanTerlambat");
+        const tileBelumCetak = this.getView().byId("tileBelumCetak");
 
         tilePindaiMeteran.attachBrowserEvent( "click", this._onPindaiMeteranClick, this );
         tileTagihanAir.attachBrowserEvent( "click", this._onTagihanAirClick, this );
         tileTagihanSewa.attachBrowserEvent( "click", this._onTagihanSewaClick, this );
-        tileTagihanTerlambat.attachBrowserEvent( "click", this._onTagihanTerlambatClick, this );
+        tileBelumCetak.attachBrowserEvent( "click", this._onBelumCetak, this );
 
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         vizListrik.setModel(penggunaanListrikModel, "penggunaanListrik");
@@ -411,28 +419,28 @@ sap.ui.define(
         });
       },
 
-      _onTagihanTerlambatClick: function (oEvent) {
+      _onBelumCetak: function (oEvent) {
         const oView = this.getView();
-        const tagihanTerlambat = JSON.parse(sessionStorage.getItem("NOTIF_TAGIHAN_TERLAMBAT"));
+        const belumCetak = JSON.parse(sessionStorage.getItem("TO_PRINT"));
         
 
-        const oModel = { tagihanTerlambat : tagihanTerlambat }
+        const oModel = { belumCetak : belumCetak }
 
-        if (!this.tagihanTerlambatDialog) {
-          this.tagihanTerlambatDialog = Fragment.load({
+        if (!this.belumCetakDialog) {
+          this.belumCetakDialog = Fragment.load({
             id: oView.getId(),
-            name: "lrlpapp.view.fragments.TagihanTerlambatDialog",
+            name: "lrlpapp.view.fragments.BelumCetakDialog",
             controller: this,
           }).then(function (oDialog) {
             oDialog.setModel(oView.getModel());
-            oDialog.setModel( new JSONModel(oModel), "tagihanTerlambat" );
+            oDialog.setModel( new JSONModel(oModel), "belumCetak" );
             return oDialog;
           });
         }
 
-        this.tagihanTerlambatDialog.then(function (oDialog) {
+        this.belumCetakDialog.then(function (oDialog) {
           oDialog.setModel(oView.getModel());
-          oDialog.setModel( new JSONModel(oModel), "tagihanTerlambat" );
+          oDialog.setModel( new JSONModel(oModel), "belumCetak" );
 
           oDialog.open();
         });
@@ -642,6 +650,17 @@ sap.ui.define(
         console.log(selectedList);
       },
 
+      onBelumCetakDialogCetak: function () {
+        let selectedList = [];
+
+        const listTagihanSewa = this.getView().byId("listBelumCetak").getSelectedItems();
+        listTagihanSewa.forEach(el => {
+            selectedList.push(el.getBindingContext("belumCetak").getObject());
+        })
+
+        console.log(selectedList);
+      },
+
       // Dialogs Close
       onTagihanAirDialogClose: function () {
         this.byId("tagihanAirDialog").close();
@@ -651,8 +670,8 @@ sap.ui.define(
         this.byId("tagihanSewaDialog").close();
       },
 
-      onTagihanTerlambatDialogClose: function () {
-        this.byId("tagihanTerlambatDialog").close();
+      onBelumCetakDialogClose: function () {
+        this.byId("belumCetakDialog").close();
       },
 
       onDetailTagihanClose: function () {

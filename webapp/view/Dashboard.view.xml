@@ -83,7 +83,7 @@
                 </VBox>
                 <VBox
                     class="tile tile-danger"
-                    id="tileTagihanTerlambat">
+                    id="tileBelumCetak">
                     <FlexBox class="tile-header">
                         <VBox class="tile-icon sapUiSmallMarginEnd">
                             <core:Icon
@@ -93,13 +93,13 @@
                         </VBox>
                         <Text
                             class="tile-title"
-                            text="Terlambat Dicetak" />
+                            text="Belum Dicetak" />
                     </FlexBox>
                     <VBox class="tile-info">
                         <FlexBox alignItems="Center" items="{notif>/notif}">
                             <Text
                                 class="dynamic-number"
-                                text="{notif>tagihanTerlambat}" />
+                                text="{notif>belumCetak}" />
                         </FlexBox>
                         <Text text="Tagihan untuk dicetak" />
                     </VBox>

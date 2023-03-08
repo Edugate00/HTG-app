@@ -2,33 +2,33 @@
     xmlns="sap.m"
     xmlns:c="sap.ui.core">
     <Dialog
-        id="tagihanTerlambatDialog"
-        title="Tagihan Terlambat untuk dicetak"
+        id="belumCetakDialog"
+        title="Tagihan belum dicetak"
         type="Standard"
         contentHeight="400px">
         <content>
             <List
-                id="listTagihanTerlambat"
-                items="{tagihanTerlambat>/tagihanTerlambat}"
+                id="listBelumCetak"
+                items="{belumCetak>/belumCetak}"
                 mode="MultiSelect"
                 includeItemInSelection="true">
                 <StandardListItem
                     type="Active"
-                    title="{tagihanTerlambat>BillingNumber} - {tagihanTerlambat>CustomerDesc}"
-                    description="{tagihanTerlambat>BillingDate}" />
+                    title="{belumCetak>BillingNumber} - {belumCetak>CustomerDesc}"
+                    description="{belumCetak>BillingDate}" />
             </List>
         </content>
         <beginButton>
             <Button
                 text="Close"
                 type="Default"
-                press="onTagihanTerlambatDialogClose" />
+                press="onBelumCetakDialogClose" />
         </beginButton>
         <endButton>
             <Button
-                text="Release"
+                text="Cetak"
                 type="Emphasized"
-                press="onTagihanTerlambatDialogRelease" />
+                press="onBelumCetakDialogCetak" />
         </endButton>
     </Dialog>
 </c:FragmentDefinition>
