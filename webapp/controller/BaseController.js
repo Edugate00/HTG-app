@@ -88,6 +88,7 @@ sap.ui.define(
           "Desember",
         ];
 
+        if (!month) return months;
         return months[month];
       },
 

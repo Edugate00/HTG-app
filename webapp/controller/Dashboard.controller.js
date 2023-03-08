@@ -42,10 +42,12 @@ sap.ui.define(
     ];
 
     const oPenggunaanAir = { data: [] };
+    const oPenggunaanListrik = { data: [] };
 
     let BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
     let BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
     let MEASPOINT = JSON.parse(sessionStorage.getItem("MEASPOINT"));
+    let needToPrint = JSON.parse(sessionStorage.getItem("TO_PRINT"))
 
     return BaseController.extend("lrlpapp.controller.Dashboard", {
       onInit: async function () {
@@ -75,6 +77,7 @@ sap.ui.define(
         if (!BILLING_FV && !BILLING_ZUTL) {
             BILLING_FV = []
             BILLING_ZUTL = []
+            needToPrint = []
 
             const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeadToItem");
             oBilling.results.forEach(el => {
@@ -93,8 +96,10 @@ sap.ui.define(
                     el["TipeStatus"] = "Error"
                 }
 
-                if (el.ReleasedStatus === "X") {
+                if (el.ReleasedStatus === "X" && el.PrintedStatus === "X") {
                     oTagihan.push(el);
+                } else if (el.ReleasedStatus === "X" && el.PrintedStatus !== "X") {
+                    needToPrint.push(el);
                 }
 
                 if (el.BillingType === "FV"){
@@ -108,6 +113,8 @@ sap.ui.define(
             // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
             sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV))
             sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL))
+            sessionStorage.setItem("TO_PRINT", JSON.stringify(needToPrint))
+            console.log(needToPrint)
         }
 
         MEASPOINT.forEach(el => {
@@ -125,12 +132,22 @@ sap.ui.define(
                 needToScan.push(el);
             }
 
-            if (el.Category === "M" && el.Uom === "M3") {
+            if (el.Position === "CONTAINER") {
                 el.MeasPointToMeasDoc.results.forEach(element => {
                     oPenggunaanAir.data.push({
                         "tenant": `${el.Text.split(" - ")[1]} ${el.Description.split(" ")[0]}`,
                         "value": String(Number(element.Value)),
                         "month": this.getFormattedDate(element.Date).replace(",", "").split(" ")[1]
+                    })
+                })
+            } else if (el.Position === "METERAN_LISTRIK") {
+                el.MeasPointToMeasDoc.results.forEach(element => {
+                    let year = element.Date.substr(0, 4);
+                    let month = element.Date.substr(4, 2);
+                    let day = element.Date.substr(6, 2);
+                    oPenggunaanListrik.data.push({
+                        "value": String(Number(element.Value)),
+                        "date": `${year}.${month}.${day}`
                     })
                 })
             }
@@ -195,7 +212,7 @@ sap.ui.define(
             {pindaiMeteran    : `${needToScan.length}`},
             {tagihanAir       : String(tagihanAirToCreate)},
             {tagihanSewa      : String(isDueDate.length + hasPassed.length)},
-            {tagihanTerlambat : String(hasPassed.length)}
+            {belumCetak       : String(needToPrint.length)}
         ]})
         this.getView().setModel(notifCounter, "notif");
 
@@ -255,9 +272,23 @@ sap.ui.define(
         });
 
         // const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
-        const penggunaanAir = oPenggunaanAir;
-        const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
-        const oPenggunaanListrik = [];
+        const penggunaanAir = { data: 
+            oPenggunaanAir.data.sort((a, b) => {
+                const months = this.getMonth(null);
+                // Sort by month
+                const monthComparison = months.indexOf(a.month) - months.indexOf(b.month)
+                if (monthComparison !== 0) {
+                    return monthComparison;
+                }
+            })
+        }
+
+        // const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
+        const dataFinalPenggunaanListrik = [];
+        const penggunaanListrik = oPenggunaanListrik;
+
+        console.log(penggunaanAir)
+        console.log(penggunaanListrik)
 
         penggunaanListrik.data.forEach(el => {
           let month = el.date.split(".")[1];
@@ -302,11 +333,12 @@ sap.ui.define(
           }
 
 		  el.timeStamp = new Date(el.date).getTime();
-          oPenggunaanListrik.push(el);
+          dataFinalPenggunaanListrik.push(el);
         })
 
         const penggunaanAirModel = new JSONModel(penggunaanAir);
-        const penggunaanListrikModel = new JSONModel({data: oPenggunaanListrik});
+        const penggunaanListrikModel = new JSONModel({data: dataFinalPenggunaanListrik.sort((a, b) => a.timeStamp - b.timeStamp)});
+        console.log(penggunaanListrikModel)
 
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
         const oComboBoxListrikTimestamp = this.getView().byId("ListrikTimestampFilter");
@@ -314,21 +346,23 @@ sap.ui.define(
         const tilePindaiMeteran = this.getView().byId("tilePindaiMeteran");
         const tileTagihanAir = this.getView().byId("tileTagihanAir");
         const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
-        const tileTagihanTerlambat = this.getView().byId("tileTagihanTerlambat");
+        const tileBelumCetak = this.getView().byId("tileBelumCetak");
 
         tilePindaiMeteran.attachBrowserEvent( "click", this._onPindaiMeteranClick, this );
         tileTagihanAir.attachBrowserEvent( "click", this._onTagihanAirClick, this );
         tileTagihanSewa.attachBrowserEvent( "click", this._onTagihanSewaClick, this );
-        tileTagihanTerlambat.attachBrowserEvent( "click", this._onTagihanTerlambatClick, this );
+        tileBelumCetak.attachBrowserEvent( "click", this._onBelumCetak, this );
 
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
         vizListrik.setModel(penggunaanListrikModel, "penggunaanListrik");
 
         oComboBoxTenant.destroyItems();
         oComboBoxTenant.addItem(new Item({key: "*", text: "Semua Tenant"}))
-        penggunaanAir.data.forEach(el => {
+
+        const uniqueTenants = [...new Set(penggunaanAir.data.map(item => item.tenant))];
+        uniqueTenants.forEach(el => {
             oComboBoxTenant.addItem(new Item(
-                { key: el.tenant, text: el.tenant }
+                { key: el, text: el }
             ));
         })
         oComboBoxTenant.setSelectedKey("*")
@@ -357,7 +391,7 @@ sap.ui.define(
             el.InfoState = "Success"
         })
         tagihanTerlambat.forEach(el => {
-            el.Info = "Belum dirilis/cetak"
+            el.Info = "Belum dirilis"
             el.InfoState = "Error"
         })
 
@@ -384,28 +418,28 @@ sap.ui.define(
         });
       },
 
-      _onTagihanTerlambatClick: function (oEvent) {
+      _onBelumCetak: function (oEvent) {
         const oView = this.getView();
-        const tagihanTerlambat = JSON.parse(sessionStorage.getItem("NOTIF_TAGIHAN_TERLAMBAT"));
+        const belumCetak = JSON.parse(sessionStorage.getItem("TO_PRINT"));
         
 
-        const oModel = { tagihanTerlambat : tagihanTerlambat }
+        const oModel = { belumCetak : belumCetak }
 
-        if (!this.tagihanTerlambatDialog) {
-          this.tagihanTerlambatDialog = Fragment.load({
+        if (!this.belumCetakDialog) {
+          this.belumCetakDialog = Fragment.load({
             id: oView.getId(),
-            name: "lrlpapp.view.fragments.TagihanTerlambatDialog",
+            name: "lrlpapp.view.fragments.BelumCetakDialog",
             controller: this,
           }).then(function (oDialog) {
             oDialog.setModel(oView.getModel());
-            oDialog.setModel( new JSONModel(oModel), "tagihanTerlambat" );
+            oDialog.setModel( new JSONModel(oModel), "belumCetak" );
             return oDialog;
           });
         }
 
-        this.tagihanTerlambatDialog.then(function (oDialog) {
+        this.belumCetakDialog.then(function (oDialog) {
           oDialog.setModel(oView.getModel());
-          oDialog.setModel( new JSONModel(oModel), "tagihanTerlambat" );
+          oDialog.setModel( new JSONModel(oModel), "belumCetak" );
 
           oDialog.open();
         });
@@ -615,6 +649,17 @@ sap.ui.define(
         console.log(selectedList);
       },
 
+      onBelumCetakDialogCetak: function () {
+        let selectedList = [];
+
+        const listTagihanSewa = this.getView().byId("listBelumCetak").getSelectedItems();
+        listTagihanSewa.forEach(el => {
+            selectedList.push(el.getBindingContext("belumCetak").getObject());
+        })
+
+        console.log(selectedList);
+      },
+
       // Dialogs Close
       onTagihanAirDialogClose: function () {
         this.byId("tagihanAirDialog").close();
@@ -624,8 +669,8 @@ sap.ui.define(
         this.byId("tagihanSewaDialog").close();
       },
 
-      onTagihanTerlambatDialogClose: function () {
-        this.byId("tagihanTerlambatDialog").close();
+      onBelumCetakDialogClose: function () {
+        this.byId("belumCetakDialog").close();
       },
 
       onDetailTagihanClose: function () {
