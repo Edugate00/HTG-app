@@ -5,12 +5,14 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment",
+    "sap/ui/core/BusyIndicator"
   ],
   function (Controller,
 	History,
 	UIComponent,
 	JSONModel,
-	Fragment) {
+	Fragment,
+    BusyIndicator) {
     "use strict";
 
     let oModel = null;
@@ -93,6 +95,8 @@ sap.ui.define(
       },
 
       readOdataService: function (path, url) {
+            // BusyIndicator.setText("...Tunggu bos");
+            BusyIndicator.show();
             oModel = this.getOwnerComponent().getModel();
             return new Promise(function (resolve, reject) {
                 oModel.read(path, {
@@ -101,6 +105,7 @@ sap.ui.define(
                     },
                     success: function (oData) {
                         resolve(oData)
+                        BusyIndicator.hide()
                     },
                     error: function (oResult) {
                         reject(oResult)
