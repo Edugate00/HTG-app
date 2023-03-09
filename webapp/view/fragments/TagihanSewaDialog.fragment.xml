@@ -22,13 +22,13 @@
         </content>
         <beginButton>
             <Button
-                text="Close"
+                text="Tutup"
                 type="Default"
                 press="onTagihanSewaDialogClose" />
         </beginButton>
         <endButton>
             <Button
-                text="Release"
+                text="Rilis Tagihan"
                 type="Emphasized"
                 press="onTagihanSewaDialogRelease" />
         </endButton>
