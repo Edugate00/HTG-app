@@ -126,10 +126,14 @@ sap.ui.define(
 
             if (el.Position === "CONTAINER") {
                 el.MeasPointToMeasDoc.results.forEach(element => {
+                    let year = element.Date.substr(0, 4);
+                    let month = element.Date.substr(4, 2);
+                    let day = element.Date.substr(6, 2);
                     oPenggunaanAir.data.push({
                         "tenant": `${el.Text.split(" - ")[1]} ${el.Description.split(" ")[0]}`,
                         "value": String(Number(element.Value)),
-                        "month": this.getFormattedDate(element.Date).replace(",", "").split(" ")[1]
+                        "period": this.getFormattedDate(element.Date).replace(",", "").split(" ")[1],
+                        "date": `${year}.${month}.${day}`
                     })
                 })
             } else if (el.Position === "METERAN_LISTRIK") {
@@ -264,72 +268,74 @@ sap.ui.define(
         });
 
         // const penggunaanAir = this.getOwnerComponent().getModel("penggunaanAir").getData();
-        const penggunaanAir = { data: 
-            oPenggunaanAir.data.sort((a, b) => {
-                const months = this.getMonth(null);
-                // Sort by month
-                const monthComparison = months.indexOf(a.month) - months.indexOf(b.month)
-                if (monthComparison !== 0) {
-                    return monthComparison;
-                }
-            })
-        }
+        const penggunaanAir = this.formattedChartDateAndTimestamp(oPenggunaanAir.data);
+        // const penggunaanAir = { data: 
+        //     oPenggunaanAir.data.sort((a, b) => {
+        //         const months = this.getMonth(null);
+        //         // Sort by month
+        //         const monthComparison = months.indexOf(a.month) - months.indexOf(b.month)
+        //         if (monthComparison !== 0) {
+        //             return monthComparison;
+        //         }
+        //     })
+        // }
 
         // const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
         const dataFinalPenggunaanListrik = [];
-        const penggunaanListrik = oPenggunaanListrik;
+        // const penggunaanListrik = oPenggunaanListrik;
+        const penggunaanListrik = this.formattedChartDateAndTimestamp(oPenggunaanListrik.data);
 
         console.log(penggunaanAir)
         console.log(penggunaanListrik)
 
-        penggunaanListrik.data.forEach(el => {
-          let month = el.date.split(".")[1];
-          let year = el.date.split(".")[0];
-          switch (month) {
-            case "01":
-              el.month = `Jan ${year}`
-              break;
-            case "02":
-              el.month = `Feb ${year}`
-              break;
-            case "03":
-              el.month = `Mar ${year}`
-              break;
-            case "04":
-              el.month = `Apr ${year}`
-              break;
-            case "05":
-              el.month = `Mei ${year}`
-              break;
-            case "06":
-              el.month = `Jun ${year}`
-              break;
-            case "07":
-              el.month = `Jul ${year}`
-              break;
-            case "08":
-              el.month = `Agu ${year}`
-              break;
-            case "09":
-              el.month = `Sep ${year}`
-              break;
-            case "10":
-              el.month = `Okt ${year}`
-              break;
-            case "11":
-              el.month = `Nov ${year}`
-              break;
-            case "12":
-              el.month = `Des ${year}`
-              break;
-          }
+        // penggunaanListrik.data.forEach(el => {
+        //   let month = el.date.split(".")[1];
+        //   let year = el.date.split(".")[0];
+        //   switch (month) {
+        //     case "01":
+        //       el.month = `Jan ${year}`
+        //       break;
+        //     case "02":
+        //       el.month = `Feb ${year}`
+        //       break;
+        //     case "03":
+        //       el.month = `Mar ${year}`
+        //       break;
+        //     case "04":
+        //       el.month = `Apr ${year}`
+        //       break;
+        //     case "05":
+        //       el.month = `Mei ${year}`
+        //       break;
+        //     case "06":
+        //       el.month = `Jun ${year}`
+        //       break;
+        //     case "07":
+        //       el.month = `Jul ${year}`
+        //       break;
+        //     case "08":
+        //       el.month = `Agu ${year}`
+        //       break;
+        //     case "09":
+        //       el.month = `Sep ${year}`
+        //       break;
+        //     case "10":
+        //       el.month = `Okt ${year}`
+        //       break;
+        //     case "11":
+        //       el.month = `Nov ${year}`
+        //       break;
+        //     case "12":
+        //       el.month = `Des ${year}`
+        //       break;
+        //   }
 
-		  el.timeStamp = new Date(el.date).getTime();
-          dataFinalPenggunaanListrik.push(el);
-        })
+		//   el.timeStamp = new Date(el.date).getTime();
+        //   dataFinalPenggunaanListrik.push(el);
+        // })
 
-        const penggunaanAirModel = new JSONModel(penggunaanAir);
-        const penggunaanListrikModel = new JSONModel({data: dataFinalPenggunaanListrik.sort((a, b) => a.timeStamp - b.timeStamp)});
+        const penggunaanAirModel = new JSONModel({data: penggunaanAir.sort((a, b) => a.timeStamp - b.timeStamp)});
+        const penggunaanListrikModel = new JSONModel({data: penggunaanListrik.sort((a, b) => a.timeStamp - b.timeStamp)});
         console.log(penggunaanListrikModel)
 
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
@@ -351,7 +357,7 @@ sap.ui.define(
         oComboBoxTenant.destroyItems();
         oComboBoxTenant.addItem(new Item({key: "*", text: "Semua Tenant"}))
 
-        const uniqueTenants = [...new Set(penggunaanAir.data.map(item => item.tenant))];
+        const uniqueTenants = [...new Set(penggunaanAir.map(item => item.tenant))];
         uniqueTenants.forEach(el => {
             oComboBoxTenant.addItem(new Item(
                 { key: el, text: el }
@@ -533,7 +539,7 @@ sap.ui.define(
         const tenantSelected = oComboBoxTenant.getSelectedKey();
 
         oFilterTenant = new Filter("tenant", FilterOperator.Contains, tenantSelected);
-        oFilterMonth = new Filter("month", FilterOperator.EQ, currentMonth);
+        oFilterMonth = new Filter("period", FilterOperator.EQ, currentMonth);
 
         if (tenantSelected !== "*") {
           oVizFrame.setVizType("line");
@@ -579,7 +585,8 @@ sap.ui.define(
       },
 
 	  onChartMonthSelected: function (oEvent) {
-		let oFilterTenant, oFilterMonth, filters;
+		let oFilterTenant, oFilterMonth, filters, toDateTimestamp;
+        const currentDate = new Date();
 
 		const oVizFrame = this.getView().byId("vizPenggunaanAir");
 		const oDataset = oVizFrame.getDataset().getBinding("data");
@@ -591,19 +598,32 @@ sap.ui.define(
 
 		if (tenantSelected !== '*') {
 			oFilterTenant = new Filter("tenant", FilterOperator.EQ, tenantSelected);
-			oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
+			// oFilterMonth = new Filter("period", FilterOperator.EQ, monthSelected);
+            if (monthSelected === "6months"){
+                toDateTimestamp = new Date(currentDate.getFullYear(), currentDate.getMonth() - 3, currentDate.getDate()).getTime()
+                oFilterMonth = new Filter("timeStamp", FilterOperator.BT, toDateTimestamp, currentDate.getTime());
+            } else if (monthSelected === "6months") {
+                toDateTimestamp = new Date(currentDate.getFullYear(), currentDate.getMonth() - 6, currentDate.getDate()).getTime()
+                oFilterMonth = new Filter("timeStamp", FilterOperator.BT, toDateTimestamp, currentDate.getTime());
+            } else if (monthSelected === "1year"){
+                toDateTimestamp = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate()).getTime()
+                oFilterMonth = new Filter("timeStamp", FilterOperator.BT, toDateTimestamp, currentDate.getTime());
+            } else {
+                toDateTimestamp = new Date(currentDate.getFullYear() - 9999, currentDate.getMonth(), currentDate.getDate()).getTime()
+                oFilterMonth = new Filter("timeStamp", FilterOperator.BT, toDateTimestamp, currentDate.getTime());
+            }
 		} else {
 			oFilterTenant = [];
-			oFilterMonth = new Filter("month", FilterOperator.EQ, monthSelected);
+			oFilterMonth = new Filter("period", FilterOperator.EQ, monthSelected);
+
+            oVizFrame.setVizProperties({
+                title: { visible: true, text: `Semua Tenant bulan ${monthSelected}` },
+            });
 		}
 
 		filters = new Filter({ filters: [oFilterTenant, oFilterMonth], and: true });
 		
 		oDataset.filter(filters);
-
-        oVizFrame.setVizProperties({
-            title: { visible: true, text: `Semua Tenant bulan ${monthSelected}` },
-        });
 	  },
 
 	  onListrikChartTimestamp: function (oEvent) {
@@ -667,6 +687,58 @@ sap.ui.define(
 
       onDetailTagihanClose: function () {
         this.byId("detailListTagihan").close()
+      },
+
+      formattedChartDateAndTimestamp: function (data) {
+        const result = []
+
+        data.forEach(el => {
+          let month = el.date.split(".")[1];
+          let year = el.date.split(".")[0];
+          switch (month) {
+            case "01":
+              el.month = `Jan ${year}`
+              break;
+            case "02":
+              el.month = `Feb ${year}`
+              break;
+            case "03":
+              el.month = `Mar ${year}`
+              break;
+            case "04":
+              el.month = `Apr ${year}`
+              break;
+            case "05":
+              el.month = `Mei ${year}`
+              break;
+            case "06":
+              el.month = `Jun ${year}`
+              break;
+            case "07":
+              el.month = `Jul ${year}`
+              break;
+            case "08":
+              el.month = `Agu ${year}`
+              break;
+            case "09":
+              el.month = `Sep ${year}`
+              break;
+            case "10":
+              el.month = `Okt ${year}`
+              break;
+            case "11":
+              el.month = `Nov ${year}`
+              break;
+            case "12":
+              el.month = `Des ${year}`
+              break;
+          }
+
+		  el.timeStamp = new Date(el.date).getTime();
+          result.push(el);
+        })
+
+        return result
       }
     });
   }
