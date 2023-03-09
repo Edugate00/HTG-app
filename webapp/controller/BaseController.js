@@ -109,20 +109,24 @@ sap.ui.define(
                     },
                     error: function (oResult) {
                         reject(oResult)
+                        BusyIndicator.hide()
                     }
                 });
             })
       },
 
       createOdataService: function (path, entry) {
+        BusyIndicator.show();
         oModel = this.getOwnerComponent().getModel();
             return new Promise(function (resolve, reject) {
                 oModel.create(path, entry, {
                     success: function (oData) {
                         resolve(oData);
+                        BusyIndicator.hide()
                     },
                     error: function (oResult) {
                         reject(oResult);
+                        BusyIndicator.hide()
                     }
                 })
             })

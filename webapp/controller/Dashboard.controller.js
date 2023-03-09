@@ -7,15 +7,18 @@ sap.ui.define(
     "sap/viz/ui5/data/DimensionDefinition",
     "sap/ui/core/Item",
     "sap/ui/core/Fragment",
+    "sap/m/MessageBox",
+	"sap/ui/commons/MessageBox"
   ],
   function (
     BaseController,
-    JSONModel,
-    Filter,
-    FilterOperator,
-    DimensionDefinition,
-    Item,
-    Fragment
+	JSONModel,
+	Filter,
+	FilterOperator,
+	DimensionDefinition,
+	Item,
+	Fragment,
+	MessageBox
   ) {
     "use strict";
 
@@ -65,20 +68,6 @@ sap.ui.define(
         let BILLING_ZUTL = [];
         let needToPrint = [];
 
-        // const request = {
-        //   IT_VBRK: [
-        //     {
-        //       Vbeln: "90045602",
-        //     },
-        //   ],
-        // };
-        // const ReleaseBilling = await this.createOdataService(
-        //   "/releaseBillingSet",
-        //   request
-        // );
-
-        // console.log(ReleaseBilling);
-
         const oMeasPoint = await this.readOdataService(
           "/measurementPointSet",
           "MeasPointToMeasDoc"
@@ -126,7 +115,6 @@ sap.ui.define(
         sessionStorage.setItem("BILLING_FV", JSON.stringify(BILLING_FV));
         sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL));
         sessionStorage.setItem("TO_PRINT", JSON.stringify(needToPrint));
-        console.log(needToPrint);
 
         MEASPOINT.forEach((el) => {
           const getMonth = new Date().getMonth() + 1;
@@ -308,72 +296,15 @@ sap.ui.define(
         const penggunaanAir = this.formattedChartDateAndTimestamp(
           oPenggunaanAir.data
         );
-        // const penggunaanAir = { data:
-        //     oPenggunaanAir.data.sort((a, b) => {
-        //         const months = this.getMonth(null);
-        //         // Sort by month
-        //         const monthComparison = months.indexOf(a.month) - months.indexOf(b.month)
-        //         if (monthComparison !== 0) {
-        //             return monthComparison;
-        //         }
-        //     })
-        // }
 
         // const penggunaanListrik = this.getOwnerComponent().getModel("penggunaanListrik").getData();
         const dataFinalPenggunaanListrik = [];
-        // const penggunaanListrik = oPenggunaanListrik;
         const penggunaanListrik = this.formattedChartDateAndTimestamp(
           oPenggunaanListrik.data
         );
 
-        console.log(penggunaanAir);
-        console.log(penggunaanListrik);
-
-        // penggunaanListrik.data.forEach(el => {
-        //   let month = el.date.split(".")[1];
-        //   let year = el.date.split(".")[0];
-        //   switch (month) {
-        //     case "01":
-        //       el.month = `Jan ${year}`
-        //       break;
-        //     case "02":
-        //       el.month = `Feb ${year}`
-        //       break;
-        //     case "03":
-        //       el.month = `Mar ${year}`
-        //       break;
-        //     case "04":
-        //       el.month = `Apr ${year}`
-        //       break;
-        //     case "05":
-        //       el.month = `Mei ${year}`
-        //       break;
-        //     case "06":
-        //       el.month = `Jun ${year}`
-        //       break;
-        //     case "07":
-        //       el.month = `Jul ${year}`
-        //       break;
-        //     case "08":
-        //       el.month = `Agu ${year}`
-        //       break;
-        //     case "09":
-        //       el.month = `Sep ${year}`
-        //       break;
-        //     case "10":
-        //       el.month = `Okt ${year}`
-        //       break;
-        //     case "11":
-        //       el.month = `Nov ${year}`
-        //       break;
-        //     case "12":
-        //       el.month = `Des ${year}`
-        //       break;
-        //   }
-
-        //   el.timeStamp = new Date(el.date).getTime();
-        //   dataFinalPenggunaanListrik.push(el);
-        // })
+        // console.log(penggunaanAir);
+        // console.log(penggunaanListrik);
 
         const penggunaanAirModel = new JSONModel({
           data: penggunaanAir.sort((a, b) => a.timeStamp - b.timeStamp),
@@ -381,7 +312,6 @@ sap.ui.define(
         const penggunaanListrikModel = new JSONModel({
           data: penggunaanListrik.sort((a, b) => a.timeStamp - b.timeStamp),
         });
-        console.log(penggunaanListrikModel);
 
         const oComboBoxTenant = this.getView().byId("ComboBoxTenant");
         const oComboBoxListrikTimestamp = this.getView().byId(
@@ -580,7 +510,6 @@ sap.ui.define(
         const oView = this.getView();
         const oModel = { detailTagihan: [{ ...selectedList }] };
 
-        console.log(oModel);
 
         if (!this.dialogName) {
           this.dialogName = Fragment.load({
@@ -806,17 +735,42 @@ sap.ui.define(
         oDataset.filter(oFilter);
       },
 
-      onTagihanSewaDialogRelease: function () {
+      onTagihanSewaDialogRelease: async function () {
         let selectedList = [];
 
-        const listTagihanSewa = this.getView()
-          .byId("listTagihanSewa")
-          .getSelectedItems();
+        const listTagihanSewa = this.getView().byId("listTagihanSewa").getSelectedItems();
         listTagihanSewa.forEach((el) => {
           selectedList.push(el.getBindingContext("tagihanSewa").getObject());
         });
 
-        console.log(selectedList);
+        const request = {IT_VBRK : []};
+        listTagihanSewa.forEach(el => {
+            request.IT_VBRK.push({Vbeln: el.BillingNumber})
+        })
+
+        const releaseBilling = await this.createOdataService("/releaseBillingSet", request);
+
+        if (releaseBilling.return === "Sukses") {
+            MessageBox.success("Tagihan sewa berhasil dirilis!", {
+                icon: MessageBox.Icon.SUCCESS,
+                title: "Rilis Tagihan",
+                actions: [MessageBox.Action.OK],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: function (oAction) { 
+                    window.location.reload();
+                 }
+            })
+        } else {
+            MessageBox.success("Tagihan sewa berhasil dirilis!", {
+                icon: MessageBox.Icon.ERROR,
+                title: "Rilis Tagihan",
+                actions: [MessageBox.Action.OK],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: function (oAction) { 
+                    window.location.reload();
+                 }
+            })
+        }
       },
 
       onBelumCetakDialogCetak: function () {
@@ -828,8 +782,6 @@ sap.ui.define(
         listTagihanSewa.forEach((el) => {
           selectedList.push(el.getBindingContext("belumCetak").getObject());
         });
-
-        console.log(selectedList);
       },
 
       // Dialogs Close
