@@ -744,31 +744,40 @@ sap.ui.define(
         });
 
         const request = {IT_VBRK : []};
-        listTagihanSewa.forEach(el => {
+        selectedList.forEach(el => {
             request.IT_VBRK.push({Vbeln: el.BillingNumber})
         })
-
-        const releaseBilling = await this.createOdataService("/releaseBillingSet", request);
-
-        if (releaseBilling.return === "Sukses") {
-            MessageBox.success("Tagihan sewa berhasil dirilis!", {
-                icon: MessageBox.Icon.SUCCESS,
-                title: "Rilis Tagihan",
-                actions: [MessageBox.Action.OK],
-                emphasizedAction: MessageBox.Action.OK,
-                onClose: function (oAction) { 
-                    window.location.reload();
-                 }
-            })
+        
+        if (request.length !== 0) {
+            const releaseBilling = await this.createOdataService("/releaseBillingSet", request);
+    
+            if (releaseBilling.return === "Sukses") {
+                MessageBox.success("Tagihan sewa berhasil dirilis!", {
+                    icon: MessageBox.Icon.SUCCESS,
+                    title: "Rilis Tagihan",
+                    actions: [MessageBox.Action.OK],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (oAction) { 
+                        window.location.reload();
+                     }
+                })
+            } else {
+                MessageBox.success("Tagihan sewa berhasil dirilis!", {
+                    icon: MessageBox.Icon.ERROR,
+                    title: "Rilis Tagihan",
+                    actions: [MessageBox.Action.OK],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (oAction) { 
+                        window.location.reload();
+                     }
+                })
+            }
         } else {
-            MessageBox.success("Tagihan sewa berhasil dirilis!", {
-                icon: MessageBox.Icon.ERROR,
+            MessageBox.success("Tidak ada Tagihan yang dirilis!", {
+                icon: MessageBox.Icon.INFORMATION,
                 title: "Rilis Tagihan",
                 actions: [MessageBox.Action.OK],
-                emphasizedAction: MessageBox.Action.OK,
-                onClose: function (oAction) { 
-                    window.location.reload();
-                 }
+                emphasizedAction: MessageBox.Action.OK
             })
         }
       },
