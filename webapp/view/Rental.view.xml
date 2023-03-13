@@ -2,6 +2,7 @@
     controllerName="lrlpapp.controller.Rental"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
     xmlns="sap.m"
     xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
     <SplitApp
@@ -13,32 +14,25 @@
                 id="master"
                 showHeader="true"
                 backgroundDesign="List"
-                title="Tagihan"
+                title="Tenant"
                 class="sapUiResponsivePadding--header">
                 <List
                     id="tagihanRentalList"
                     itemPress=".onTagihanRentalSelect">
                     <items>
-                        <StandardListItem
-                            title="Karimata"
-                            description="Tagihan Sewa - 09 Feb, 2023"
+                        <ObjectListItem
                             type="Active"
-                            custom:to="detail" />
-                        <StandardListItem
-                            title="Butterfield"
-                            description="Tagihan Sewa - 09 Jan, 2023"
-                            type="Active"
-                            custom:to="detail" />
-                        <StandardListItem
-                            title="Woori"
-                            description="Tagihan Sewa - 09 Des, 2022"
-                            type="Active"
-                            custom:to="detail" />
-                        <StandardListItem
-                            title="Sharinc"
-                            description="Tagihan Sewa - 09 Nov, 2022"
-                            type="Active"
-                            custom:to="detail" />
+                            custom:to="detail"
+                            title="Karimata">
+                            <ObjectAttribute
+                                text="Container X" />
+                            <ObjectAttribute
+                                title="Nomor Kontrak"
+                                text="40000070" />
+                            <ObjectAttribute
+                                title="Masa Kontrak"
+                                text="03 Mar, 2023 - 03 Mar, 2025" />
+                        </ObjectListItem>
                     </items>
                 </List>
             </Page>
@@ -51,13 +45,107 @@
                 navButtonPress="onNavBackToMaster"
                 title="Detail Tagihan"
                 class="sapUiResponsivePadding--header">
-                <FlexBox
-                    justifyContent="Center"
-                    alignItems="Center"
-                    width="100%"
-                    height="100%">
-                    <Text text="wadwada"></Text>
-                </FlexBox>
+                <ObjectHeader
+                    title="Karimata"
+                    backgroundDesign="Solid"
+                    responsive="false"
+                    fullScreenOptimized="true">
+                    <attributes>
+                        <ObjectAttribute text="Container X" />
+                        <ObjectAttribute title="Masa Kontrak" text="03 Mar, 2023 - 03 Mar, 2025" />
+                        <ObjectAttribute title="Nilai Sewa per bulan" text="Rp 30.000.000,-" />
+                        <ObjectAttribute title="Biaya Pemeliharaan per bulan" text="Rp 1.250.000,-" />
+                        <ObjectAttribute title="Ditagih setiap" text="4 bulan" />
+                    </attributes>
+                    <statuses>
+                        <ObjectStatus
+                            text="Rima"
+                            state="None" />
+                        <ObjectStatus
+                            text="0822 8888 0808"
+                            state="None" />
+                        <ObjectStatus
+                            text="Jl. Lebak bulus 06"
+                            state="None" />
+                        <ObjectStatus
+                            text="Tidak Potong PPh 4 / 2"
+                            state="None" />
+                    </statuses>
+                </ObjectHeader>
+                <VBox>
+                    <IconTabBar>
+                        <items>
+                            <IconTabFilter
+                                key="sewa"
+                                text="Tagihan Sewa">
+                                <l:VerticalLayout
+                                    class="sapUiContentPadding"
+                                    width="100%">
+                                    <VBox class="cardContainer">
+                                        <List
+                                            busyIndicatorDelay="500"
+                                            enableBusyIndicator="true"
+                                            noDataText="Tidak ada tagihan"
+                                            items="">
+                                            <items>
+                                                <ObjectListItem
+                                                    title="90064639"
+                                                    press="."
+                                                    type="Active">
+                                                    <ObjectAttribute
+                                                        title="Periode Tagihan"
+                                                        text="03 Jan, 2023 - 03 Apr, 2023" />
+                                                    <ObjectAttribute
+                                                        title="Nilai Tagihan"
+                                                        text="Rp 149.000.000,-" />
+                                                    <secondStatus>
+                                                        <ObjectStatus
+                                                            text="Belum Dibayar"
+                                                            state="Error" />
+                                                    </secondStatus>
+                                                </ObjectListItem>
+                                            </items>
+                                        </List>
+                                    </VBox>
+                                </l:VerticalLayout>
+                            </IconTabFilter>
+                            <IconTabFilter
+                                key="pengelolaan"
+                                text="Tagihan Pengelolaan">
+                                <l:VerticalLayout
+                                    class="sapUiContentPadding"
+                                    width="100%">
+                                    <VBox class="cardContainer">
+                                        <List
+                                            busyIndicatorDelay="500"
+                                            enableBusyIndicator="true"
+                                            noDataText="Tidak ada tagihan"
+                                            items="">
+                                            <items>
+                                                <ObjectListItem
+                                                    title="90064639"
+                                                    press="."
+                                                    type="Active">
+                                                    <ObjectAttribute
+                                                        title="Periode Tagihan"
+                                                        text="03 Jan, 2023 - 03 Apr, 2023" />
+                                                    <ObjectAttribute
+                                                        title="Nilai Tagihan"
+                                                        text="Rp 149.000.000,-" />
+                                                    <secondStatus>
+                                                        <ObjectStatus
+                                                            text="Belum Dibayar"
+                                                            state="Error" />
+                                                    </secondStatus>
+                                                </ObjectListItem>
+                                            </items>
+                                        </List>
+                                    </VBox>
+                                </l:VerticalLayout>
+                            </IconTabFilter>
+                        </items>
+                    </IconTabBar>
+                </VBox>
             </Page>
             <Page
                 id="detailEmpty"
