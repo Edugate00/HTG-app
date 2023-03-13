@@ -4,29 +4,109 @@
     <Dialog
         id="detailListTagihan"
         title="Detail Tagihan"
+        contentWidth="480px"
         type="Standard">
         <content>
             <FlexBox
                 direction="Column"
                 items="{tagihan>/detailTagihan}">
                 <VBox class="card-content">
-                    <HBox width="100%">
-                        <Text text="{tagihan>BillingNumber}" />
-                    </HBox>
+                    <FlexBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+                        <VBox width="100%">
+                            <FormattedText
+                                htmlText="Nomor"
+                                class="small-label" />
+                            <FormattedText
+                                htmlText="{tagihan>BillingNumber}"
+                                class="sub-heading" />
+                        </VBox>
+                        <VBox width="100%">
+                            <FormattedText
+                                htmlText="Jenis Tagihan"
+                                class="small-label" />
+                            <FormattedText
+                                htmlText="{tagihan>BillingTypeDesc}"
+                                class="sub-heading" />
+                        </VBox>
+                    </FlexBox>
+                    <FlexBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+                        <VBox width="100%">
+                            <FormattedText
+                                htmlText="Tanggal"
+                                class="small-label" />
+                            <FormattedText
+                                htmlText="{tagihan>BillingDate}"
+                                class="sub-heading" />
+                        </VBox>
+                        <VBox width="100%">
+                            <FormattedText
+                                htmlText="Tenggat Waktu"
+                                class="small-label" />
+                            <FormattedText
+                                htmlText="{tagihan>BillingDate}"
+                                class="sub-heading" />
+                        </VBox>
+                    </FlexBox>
+                    <FlexBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+                        <VBox width="100%">
+                            <FormattedText
+                                htmlText="Nilai Tagihan"
+                                class="small-label" />
+                            <FormattedText
+                                htmlText="Rp {tagihan>NetValue}"
+                                class="sub-heading" />
+                        </VBox>
+                        <VBox width="100%">
+                            <FormattedText
+                                htmlText="Tenant"
+                                class="small-label" />
+                            <FormattedText
+                                htmlText="{tagihan>CustomerDesc}"
+                                class="sub-heading" />
+                        </VBox>
+                    </FlexBox>
+                    <FlexBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+                        <VBox width="100%">
+                            <FormattedText
+                                htmlText="Status Pembayaran"
+                                class="small-label" />
+                            <FormattedText
+                                htmlText="{tagihan>Status}"
+                                class="sub-heading" />
+                        </VBox>
+                        <VBox width="100%">
+                            <FormattedText
+                                htmlText="Tanggal Pembayaran"
+                                class="small-label" />
+                            <FormattedText
+                                htmlText="{tagihan>PaymentDate}"
+                                class="sub-heading" />
+                        </VBox>
+                    </FlexBox>
+                    <FlexBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+                        <VBox width="100%">
+                            <FormattedText
+                                htmlText="Periode"
+                                class="small-label" />
+                            <FormattedText
+                                htmlText="{tagihan>PriceListDesc}"
+                                class="sub-heading" />
+                        </VBox>
+                    </FlexBox>
                 </VBox>
             </FlexBox>
         </content>
         <beginButton>
             <Button
-                text="Cancel"
+                text="Cetak Tagihan"
                 type="Default"
                 press="onDetailTagihanClose" />
         </beginButton>
         <endButton>
             <Button
-                text="Print"
+                text="Tutup"
                 type="Emphasized"
-                press="onPrintDetailTagihan" />
+                press="onDetailTagihanClose" />
         </endButton>
     </Dialog>
 </c:FragmentDefinition>

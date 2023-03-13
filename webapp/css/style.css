@@ -38,6 +38,38 @@
     box-sizing: border-box;
 }
 
+.heading-01 {
+    font-size: 40px;
+    font-weight: bolder;
+}
+
+.heading-02 {
+    font-size: 33px;
+    font-weight: bolder;
+}
+
+.heading-03 {
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+.heading-04 {
+    font-size: 23px;
+    font-weight: bolder;
+}
+
+.sub-heading {
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.small-label {
+    font-size: 10px !important;
+    font-weight: bold !important;
+    color: var(--neutral-color-30);
+    margin-bottom: 4px;
+}
+
 body {
     font-size: 18px !important;
 }

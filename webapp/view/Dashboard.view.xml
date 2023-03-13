@@ -111,7 +111,7 @@
                         class="card-header">
                         <Text
                             class="card-title"
-                            text="Tagihan" />
+                            text="Tagihan Tercetak" />
                         <HBox>
                             <ComboBox
                                 id="ComboBoxTagihanTenant"
@@ -167,7 +167,7 @@
                                     press="onSelectListTagihan"
                                     title="{tagihan>BillingNumber} - {tagihan>CustomerDesc}">
                                     <ObjectAttribute
-                                        title="Tipe"
+                                        title="Jenis Tagihan"
                                         text="{tagihan>BillingTypeDesc}" />
                                     <ObjectAttribute
                                         title="Tanggal"

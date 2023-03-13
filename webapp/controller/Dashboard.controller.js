@@ -87,6 +87,7 @@ sap.ui.define(
 
           el.Timestamp = new Date(year, month, day).getTime();
           el.BillingDate = this.getFormattedDate(el.BillingDate);
+          el.Due
 
           if (el.PaymentStatus === "X") {
             el["Status"] = "Sudah dibayar";
@@ -103,6 +104,7 @@ sap.ui.define(
           }
 
           if (el.BillingType === "FV") {
+            el.PriceListDesc = "-"
             BILLING_FV.push(el);
           } else {
             BILLING_ZUTL.push(el);
@@ -202,9 +204,7 @@ sap.ui.define(
             if (this.isDueDate(el.Timestamp)) {
               isDueDate.push(el);
             }
-          } else {
-            oTagihan.push(el);
-          }
+          } 
         });
 
         BILLING_FV.forEach((el) => {
@@ -212,9 +212,7 @@ sap.ui.define(
             if (this.hasPassed(el.Timestamp)) {
               hasPassed.push(el);
             }
-          } else {
-            oTagihan.push(el);
-          }
+          } 
         });
 
         sessionStorage.setItem(
@@ -237,10 +235,16 @@ sap.ui.define(
         });
         this.getView().setModel(notifCounter, "notif");
 
+        // oTagihan.forEach(el => {
+        //     el.BillingHeadToItem.for
+        // })
+
         this.getView().setModel(
           new JSONModel({ tagihan: oTagihan }),
           "tagihan"
         );
+
+        console.log(oTagihan)
 
         // Vizframe chart for Penggunaan Air
         const vizAir = this.getView().byId("vizPenggunaanAir");
