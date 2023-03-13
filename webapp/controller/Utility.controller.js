@@ -95,7 +95,7 @@ sap.ui.define(
 
         var oHtml2 = new sap.ui.core.HTML({
           content:
-            '<iframe src="https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>',
+            '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>',
         });
 
         let width = null;
