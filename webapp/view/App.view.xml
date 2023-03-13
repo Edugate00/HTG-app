@@ -47,9 +47,22 @@
 
             </HBox>
         </HBox>
-        <App id="mainContents" height="100%">
-            <Button class="refresh-btn" text="Refresh" />
-        </App>
+        <App id="mainContents" height="100%" />
+        <!-- <Button class="refresh-btn" icon="sap-icon://refresh" /> -->
+        <HBox
+            class="refresh-btn"
+            alignItems="Center"
+            height="auto"
+            width="auto">
+            <Avatar
+                id="refresh"
+                src="sap-icon://refresh"
+                displaySize="Custom"
+                customDisplaySize="3rem"
+                backgroundColor="Accent8"
+                press="OnRefresh" />
+
+        </HBox>
         <HBox class="navMobile">
             <VBox
                 id="navMobileDashboard"

@@ -42,6 +42,13 @@ body {
     font-size: 18px !important;
 }
 
+.refresh-btn {
+    position: absolute;
+    bottom: 24px;
+    right: 40px;
+    z-index: 99;
+}
+
 .navbar {
     position: relative;
     top: 0 !important;
@@ -345,6 +352,13 @@ body {
 }
 
 @media (width <=576px) {
+    .refresh-btn {
+        position: absolute;
+        bottom: 88px;
+        right: 24px;
+        z-index: 99;
+    }
+
     .header-container {
         color: #ffffff;
         padding: 48px 40px 40px 40px;

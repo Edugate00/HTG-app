@@ -53,7 +53,7 @@ sap.ui.define(
     // let needToPrint = JSON.parse(sessionStorage.getItem("TO_PRINT"))
 
     return BaseController.extend("lrlpapp.controller.Dashboard", {
-      onInit: async function () {
+      onAfterRendering: async function() {
         let billingHeadToItem;
         let oTagihan = [];
         const isDueDate = [];
@@ -357,6 +357,10 @@ sap.ui.define(
         oComboBoxTenant.fireSelectionChange();
         oComboBoxListrikTimestamp.fireSelectionChange();
       },
+
+    //   onInit: async function () {
+        
+    //   },
 
       _onPindaiMeteranClick: function () {
         this.getRouter().navTo("meteran");
