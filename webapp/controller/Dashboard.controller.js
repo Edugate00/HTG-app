@@ -80,14 +80,17 @@ sap.ui.define(
           "/billingHeaderSet",
           "BillingHeadToItem"
         );
+
+        console.log(oBilling)
         oBilling.results.forEach((el) => {
           let year = el.BillingDate.substr(0, 4);
           let month = el.BillingDate.substr(4, 2) - 1;
           let day = el.BillingDate.substr(6, 2);
 
           el.Timestamp = new Date(year, month, day).getTime();
+          el.DueDate = this.getFormattedDate(this.getDueDate(el.BillingDate, 7))
           el.BillingDate = this.getFormattedDate(el.BillingDate);
-          el.Due
+          el.MaterialDesc = el.BillingHeadToItem.results[0].Description
 
           if (el.PaymentStatus === "X") {
             el["Status"] = "Sudah dibayar";
