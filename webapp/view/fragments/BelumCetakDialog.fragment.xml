@@ -15,7 +15,9 @@
                 <StandardListItem
                     type="Active"
                     title="{belumCetak>BillingNumber} - {belumCetak>CustomerDesc}"
-                    description="{belumCetak>BillingDate}" />
+                    description="{belumCetak>MaterialDesc}"
+                    info="{belumCetak>BillingDate}"
+                    infoState="Default" />
             </List>
         </content>
         <beginButton>
