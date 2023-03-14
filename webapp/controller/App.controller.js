@@ -109,6 +109,10 @@ sap.ui.define(
       OnSetting: function () {
         this.getRouter().navTo("settings");
       },
+
+      OnRefresh: function () {
+        window.location.reload();
+      }
     });
   }
 );

@@ -61,7 +61,6 @@
                 customDisplaySize="3rem"
                 backgroundColor="Accent8"
                 press="OnRefresh" />
-
         </HBox>
         <HBox class="navMobile">
             <VBox
