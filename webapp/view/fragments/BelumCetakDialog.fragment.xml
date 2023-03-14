@@ -10,7 +10,7 @@
             <List
                 id="listBelumCetak"
                 items="{belumCetak>/belumCetak}"
-                mode="MultiSelect"
+                mode="SingleSelectLeft"
                 includeItemInSelection="true">
                 <StandardListItem
                     type="Active"
