@@ -25,7 +25,7 @@
                                 htmlText="Jenis Tagihan"
                                 class="small-label" />
                             <FormattedText
-                                htmlText="{tagihan>BillingTypeDesc}"
+                                htmlText="{tagihan>MaterialDesc}"
                                 class="sub-heading" />
                         </VBox>
                     </FlexBox>
@@ -43,7 +43,7 @@
                                 htmlText="Tenggat Waktu"
                                 class="small-label" />
                             <FormattedText
-                                htmlText="{tagihan>BillingDate}"
+                                htmlText="{tagihan>DueDate}"
                                 class="sub-heading" />
                         </VBox>
                     </FlexBox>

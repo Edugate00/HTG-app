@@ -168,7 +168,7 @@
                                     title="{tagihan>BillingNumber} - {tagihan>CustomerDesc}">
                                     <ObjectAttribute
                                         title="Jenis Tagihan"
-                                        text="{tagihan>BillingTypeDesc}" />
+                                        text="{tagihan>MaterialDesc}" />
                                     <ObjectAttribute
                                         title="Tanggal"
                                         text="{tagihan>BillingDate}" />
