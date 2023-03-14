@@ -98,13 +98,13 @@
         </content>
         <beginButton>
             <Button
-                text="Cetak Tagihan"
+                text="Tutup"
                 type="Default"
                 press="onDetailTagihanClose" />
         </beginButton>
         <endButton>
             <Button
-                text="Tutup"
+                text="Cetak Tagihan"
                 type="Emphasized"
                 press="onDetailTagihanClose" />
         </endButton>
