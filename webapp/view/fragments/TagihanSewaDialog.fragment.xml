@@ -15,9 +15,9 @@
                 <StandardListItem
                     type="Active"
                     title="{tagihanSewa>BillingNumber} - {tagihanSewa>CustomerDesc}"
-                    description="{tagihanSewa>BillingDate}"
-                    info="{tagihanSewa>Info}"
-                    infoState="{tagihanSewa>InfoState}" />
+                    description="{tagihanSewa>MaterialDesc}"
+                    info="{tagihanSewa>BillingDate}"
+                    infoState="Default" />
             </List>
         </content>
         <beginButton>

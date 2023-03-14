@@ -152,6 +152,20 @@ sap.ui.define(
             return timeStamp < now;
         },
 
+        getDueDate: function (dateString, days) {
+            // Parse the input date string into a Date object
+            const date = new Date(dateString.substr(0, 4), parseInt(dateString.substr(4, 2)) - 1, dateString.substr(6, 2));
+
+            // Add the specified number of days to the date
+            date.setDate(date.getDate() + days);
+
+            // Format the new date as a string in the format YYYYMMDD
+            const year = date.getFullYear().toString();
+            const month = (date.getMonth() + 1).toString().padStart(2, "0");
+            const day = date.getDate().toString().padStart(2, "0");
+            return year + month + day;
+        },
+
         openFragment: function (dialogName, fragmentName, model, modelAlias) {
             const oView = this.getView();
 
