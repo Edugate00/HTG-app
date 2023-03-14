@@ -11,6 +11,14 @@
                 direction="Column"
                 items="{tagihan>/detailTagihan}">
                 <VBox class="card-content">
+                    <VBox width="100%">
+                        <FormattedText
+                            htmlText="Tenant"
+                            class="small-label" />
+                        <FormattedText
+                            htmlText="{tagihan>CustomerDesc}"
+                            class="sub-heading" />
+                    </VBox>
                     <FlexBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
                         <VBox width="100%">
                             <FormattedText
@@ -56,16 +64,7 @@
                                 htmlText="Rp {tagihan>NetValue}"
                                 class="sub-heading" />
                         </VBox>
-                        <VBox width="100%">
-                            <FormattedText
-                                htmlText="Tenant"
-                                class="small-label" />
-                            <FormattedText
-                                htmlText="{tagihan>CustomerDesc}"
-                                class="sub-heading" />
-                        </VBox>
-                    </FlexBox>
-                    <FlexBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+
                         <VBox width="100%">
                             <FormattedText
                                 htmlText="Status Pembayaran"
@@ -74,6 +73,8 @@
                                 htmlText="{tagihan>Status}"
                                 class="sub-heading" />
                         </VBox>
+                    </FlexBox>
+                    <FlexBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
                         <VBox width="100%">
                             <FormattedText
                                 htmlText="Tanggal Pembayaran"
@@ -82,8 +83,6 @@
                                 htmlText="{tagihan>PaymentDate}"
                                 class="sub-heading" />
                         </VBox>
-                    </FlexBox>
-                    <FlexBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
                         <VBox width="100%">
                             <FormattedText
                                 htmlText="Periode"
