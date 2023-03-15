@@ -1,209 +1,207 @@
 <mvc:View
-	controllerName="lrlpapp.controller.Utility"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	xmlns="sap.m"
->
-	<Page showHeader="false">
-		<VBox class="header-container">
-
-		</VBox>
-		<VBox class="main-container">
-			<HBox class="tiles">
-				<VBox
-					class="tile"
-					id="tilePemakaianListrik" >
-					<FlexBox class="tile-header">
-						<VBox class="tile-icon sapUiSmallMarginEnd">
-							<core:Icon
-								src="sap-icon://measurement-document"
-								class="size1"
-								color="#ffffff" />
-						</VBox>
-						<Text
-							class="tile-title"
-							text="Pemakaian Listrik" />
-					</FlexBox>
-					<VBox class="tile-info">
-						<!-- <Text
+    controllerName="lrlpapp.controller.Utility"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Page showHeader="false">
+        <VBox class="header-container" />
+        <VBox class="main-container">
+            <HBox class="tiles">
+                <VBox
+                    class="tile"
+                    id="tilePemakaianListrik">
+                    <FlexBox class="tile-header">
+                        <VBox class="tile-icon sapUiSmallMarginEnd">
+                            <core:Icon
+                                src="sap-icon://measurement-document"
+                                class="size1"
+                                color="#ffffff" />
+                        </VBox>
+                        <Text
+                            class="tile-title"
+                            text="Pemakaian Listrik" />
+                    </FlexBox>
+                    <VBox class="tile-info">
+                        <!-- <Text
 							class="dynamic-number"
 							text="3" />
 						<Text text="Tagihan untuk dicetak" /> -->
-					</VBox>
-				</VBox>
-				<VBox
-					class="tile"
-					id="tilePindaiMeteran" >
-					<FlexBox class="tile-header">
-						<VBox class="tile-icon sapUiSmallMarginEnd">
-							<core:Icon
-								src="sap-icon://qr-code"
-								class="size1"
-								color="#ffffff" />
-						</VBox> 
-						<Text
-							class="tile-title"
-							text="Pindai Meteran" />
-					</FlexBox>
-					<VBox class="tile-info">
-						<!-- <Text
+                    </VBox>
+                </VBox>
+                <VBox
+                    class="tile"
+                    id="tilePindaiMeteran">
+                    <FlexBox class="tile-header">
+                        <VBox class="tile-icon sapUiSmallMarginEnd">
+                            <core:Icon
+                                src="sap-icon://qr-code"
+                                class="size1"
+                                color="#ffffff" />
+                        </VBox>
+                        <Text
+                            class="tile-title"
+                            text="Pindai Meteran" />
+                    </FlexBox>
+                    <VBox class="tile-info">
+                        <!-- <Text
 							class="dynamic-number"
 							text="3" />
 						<Text text="Tagihan untuk dicetak" /> -->
-					</VBox>
-				</VBox>
-				<VBox
-					class="tile"
-					id="tileAirBulanan" >
-					<FlexBox class="tile-header">
-						<VBox class="tile-icon sapUiSmallMarginEnd">
-							<core:Icon
-								src="sap-icon://activity-2"
-								class="size1"
-								color="#ffffff" />
-						</VBox>
-						<Text
-							class="tile-title"
-							text="Pemakaian Air" />
-					</FlexBox>
-					<VBox class="tile-info">
-						<!-- <Text
+                    </VBox>
+                </VBox>
+                <VBox
+                    class="tile"
+                    id="tileAirBulanan">
+                    <FlexBox class="tile-header">
+                        <VBox class="tile-icon sapUiSmallMarginEnd">
+                            <core:Icon
+                                src="sap-icon://activity-2"
+                                class="size1"
+                                color="#ffffff" />
+                        </VBox>
+                        <Text
+                            class="tile-title"
+                            text="Pemakaian Air" />
+                    </FlexBox>
+                    <VBox class="tile-info">
+                        <!-- <Text
 							class="dynamic-number"
 							text="3" />
 						<Text text="Tagihan untuk dicetak" /> -->
-					</VBox>
-				</VBox>
-				<VBox
-					class="tile"
-					id="tileTagihanAir">
-					<FlexBox class="tile-header">
-						<VBox class="tile-icon sapUiSmallMarginEnd">
-							<core:Icon
-								src="sap-icon://my-sales-order"
-								class="size1"
-								color="#ffffff" />
-						</VBox>
-						<Text
-							class="tile-title"
-							text="Perhitungan Tagihan Air" />
-					</FlexBox>
-					<VBox class="tile-info">
-						<!-- <Text
+                    </VBox>
+                </VBox>
+                <VBox
+                    class="tile"
+                    id="tileTagihanAir">
+                    <FlexBox class="tile-header">
+                        <VBox class="tile-icon sapUiSmallMarginEnd">
+                            <core:Icon
+                                src="sap-icon://my-sales-order"
+                                class="size1"
+                                color="#ffffff" />
+                        </VBox>
+                        <Text
+                            class="tile-title"
+                            text="Perhitungan Tagihan Air" />
+                    </FlexBox>
+                    <VBox class="tile-info">
+                        <!-- <Text
 							class="dynamic-number"
 							text="3" />
 						<Text text="Tagihan untuk dicetak" /> -->
-					</VBox>
-				</VBox>
-			</HBox>	
-			<VBox class="card-tagihan card">
-				<FlexBox
-					class="card-header">
-					<Text
-						class="card-title"
-						text="Tagihan" />
-					<HBox>
-						<ComboBox
-							id="ComboBoxTagihanTenant"
-							width="175px"
-							placeholder="Pilih Tenant"
-							selectionChange="onTagihanTenantSelected"
-							selectedKey="*"
-							class="sapUiTinyMarginEnd sapMCbAutoFocus"
-							items="{Tenant>/tenantList}" >
-                                <core:Item key="{Tenant>id}"
-									text="{Tenant>name}" />
-						</ComboBox>
-						<ComboBox
-							id="ComboBoxTagihanStatus"
-							width="150px"
-							placeholder="Select Status"
-							selectionChange="onStatusSelect"
-							selectedKey="*"
-							class="sapUiTinyMarginEnd sapMCbAutoFocus">
-							<core:Item
-								key="*"
-								text="Semua" />
-							<core:Item
-								key="paid"
-								text="Sudah dibayar" />
-							<core:Item
-								key="unpaid"
-								text="Belum dibayar" />
-						</ComboBox>
-						<ComboBox
-							id="ComboBoxFilterMonth"
-							width="150px"
-							selectionChange="onMonthSelect"
-							selectedKey="*"
-							class="sapUiTinyMarginEnd sapMCbAutoFocus">
-							<core:Item
-								key="*"
-								text="Semua Periode" />
-							<core:Item
-								key="Januari"
-								text="Januari" />
-							<core:Item
-								key="Februari"
-								text="Februari" />
-							<core:Item
-								key="Maret"
-								text="Maret" />
-							<core:Item
-								key="April"
-								text="April" />
-							<core:Item
-								key="Mei"
-								text="Mei" />
-							<core:Item
-								key="Juni"
-								text="Juni" />
-							<core:Item
-								key="Juli"
-								text="Juli" />
-							<core:Item
-								key="Agustus"
-								text="Agustus" />
-							<core:Item
-								key="September"
-								text="September" />
-							<core:Item
-								key="Oktober"
-								text="Oktober" />
-							<core:Item
-								key="November"
-								text="November" />
-							<core:Item
-								key="Desember"
-								text="Desember" />
-						</ComboBox>
-					</HBox>
-				</FlexBox>
-				<ScrollContainer
-					height="90%"
-					vertical="true">
-					<List
-						id="tagihanList"
-						items="{utilities>/utilityList}">
-						<items>
-							<ObjectListItem
-								type="Active"
-								title="{utilities>BillingNumber} - {utilities>CustomerDesc}">
-								<ObjectAttribute
-									title="Tipe"
-									text="{utilities>BillingTypeDesc}" />
-								<ObjectAttribute
-									title="Tanggal"
-									text="{utilities>BillingDate}" />
-								<secondStatus>
-									<ObjectStatus
-										text="{utilities>Status}"
-										state="{utilities>TipeStatus}" />
-								</secondStatus>
-							</ObjectListItem>
-						</items>
-					</List>
-				</ScrollContainer>
-			</VBox>
-		</VBox>
-	</Page>
+                    </VBox>
+                </VBox>
+            </HBox>
+            <VBox class="card-tagihan card" height="600px">
+                <FlexBox
+                    class="card-header">
+                    <Text
+                        class="card-title"
+                        text="Tagihan" />
+                    <HBox>
+                        <ComboBox
+                            id="ComboBoxTagihanTenant"
+                            width="175px"
+                            placeholder="Pilih Tenant"
+                            selectionChange="onTagihanTenantSelected"
+                            selectedKey="*"
+                            class="sapUiTinyMarginEnd sapMCbAutoFocus"
+                            items="{Tenant>/tenantList}">
+                            <core:Item key="{Tenant>id}"
+                                text="{Tenant>name}" />
+                        </ComboBox>
+                        <ComboBox
+                            id="ComboBoxTagihanStatus"
+                            width="150px"
+                            placeholder="Select Status"
+                            selectionChange="onStatusSelect"
+                            selectedKey="*"
+                            class="sapUiTinyMarginEnd sapMCbAutoFocus">
+                            <core:Item
+                                key="*"
+                                text="Semua" />
+                            <core:Item
+                                key="paid"
+                                text="Sudah dibayar" />
+                            <core:Item
+                                key="unpaid"
+                                text="Belum dibayar" />
+                        </ComboBox>
+                        <ComboBox
+                            id="ComboBoxFilterMonth"
+                            width="150px"
+                            selectionChange="onMonthSelect"
+                            selectedKey="*"
+                            class="sapUiTinyMarginEnd sapMCbAutoFocus">
+                            <core:Item
+                                key="*"
+                                text="Semua Periode" />
+                            <core:Item
+                                key="Januari"
+                                text="Januari" />
+                            <core:Item
+                                key="Februari"
+                                text="Februari" />
+                            <core:Item
+                                key="Maret"
+                                text="Maret" />
+                            <core:Item
+                                key="April"
+                                text="April" />
+                            <core:Item
+                                key="Mei"
+                                text="Mei" />
+                            <core:Item
+                                key="Juni"
+                                text="Juni" />
+                            <core:Item
+                                key="Juli"
+                                text="Juli" />
+                            <core:Item
+                                key="Agustus"
+                                text="Agustus" />
+                            <core:Item
+                                key="September"
+                                text="September" />
+                            <core:Item
+                                key="Oktober"
+                                text="Oktober" />
+                            <core:Item
+                                key="November"
+                                text="November" />
+                            <core:Item
+                                key="Desember"
+                                text="Desember" />
+                        </ComboBox>
+                    </HBox>
+                </FlexBox>
+                <ScrollContainer
+                    height="90%"
+                    vertical="true">
+                    <List
+                        id="tagihanList"
+                        items="{utilities>/utilityList}">
+                        <items>
+                            <ObjectListItem
+                                type="Active"
+                                number="{utilities>NetValue}"
+                                title="{utilities>BillingNumber} - {utilities>CustomerDesc}">
+                                <ObjectAttribute
+                                    title="Tipe"
+                                    text="{utilities>MaterialDesc}" />
+                                <ObjectAttribute
+                                    title="Tanggal"
+                                    text="{utilities>BillingDate}" />
+                                <secondStatus>
+                                    <ObjectStatus
+                                        text="{utilities>Status}"
+                                        state="{utilities>TipeStatus}" />
+                                </secondStatus>
+                            </ObjectListItem>
+                        </items>
+                    </List>
+                </ScrollContainer>
+            </VBox>
+        </VBox>
+    </Page>
 </mvc:View>
