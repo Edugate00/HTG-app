@@ -8,7 +8,9 @@ sap.ui.define(
     "sap/ui/core/Item",
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
-	"sap/ui/commons/MessageBox"
+	"sap/ui/core/HTML",
+	"sap/m/Dialog",
+	"sap/m/Button"
   ],
   function (
     BaseController,
@@ -18,7 +20,10 @@ sap.ui.define(
 	DimensionDefinition,
 	Item,
 	Fragment,
-	MessageBox
+	MessageBox,
+	HTML,
+	Dialog,
+	Button
   ) {
     "use strict";
 
@@ -818,8 +823,37 @@ sap.ui.define(
       onDetailTagihanCetak: function () {
         const detailTagihanTercetak = this.getView().byId("detailListTagihan").getModel('tagihan');
         const oData = detailTagihanTercetak.oData.detailTagihan[0]
-        // const selectedTagihan = listTagihanTercetak;
 
+        const oHTML = new HTML({
+            content: '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="500px"></iframe>',
+        })
+
+        let widthContent = null;
+        let widthWindow = window.screen.width;
+
+        if (widthWindow < 576 || widthWindow > 1400) {
+            widthContent = "100%";
+        } else {
+            widthContent = "70%";
+        };
+
+        if (!this.oZInvoiceDialog) {
+            this.oZInvoiceDialog = new Dialog({
+                title: "Cetak tagihan",
+                contentWidth: widthContent,
+                contentHeight: "500px",
+                content: oHTML,
+                endButton: new Button({
+                    text: "Tutup",
+                    press: function () {
+                        this.oZInvoiceDialog.close();
+                    }.bind(this),
+                })
+            })
+
+            this.getView().addDependent(this.oZInvoiceDialog);
+        }
+        this.oZInvoiceDialog.open();
         console.log(oData);
       },
 
