@@ -185,6 +185,7 @@
                             <ObjectListItem
                                 type="Active"
                                 number="{utilities>NetValue}"
+                                numberUnit="IDR"
                                 title="{utilities>BillingNumber} - {utilities>CustomerDesc}">
                                 <ObjectAttribute
                                     title="Tipe"

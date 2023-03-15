@@ -92,6 +92,10 @@ sap.ui.define(
           el.BillingDate = this.getFormattedDate(el.BillingDate);
           el.MaterialDesc = el.BillingHeadToItem.results[0].Description
 
+          if (el.NetValue !== "") {
+              el.NetValue = Number(el.NetValue).toLocaleString("IDR-id");
+          }
+
           if (el.PaymentStatus !== "") {
             el.PaymentDate = this.getFormattedDate(el.PaymentDate);
           } else {
