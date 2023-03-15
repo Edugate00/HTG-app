@@ -164,6 +164,8 @@
                             <items>
                                 <ObjectListItem
                                     type="Active"
+                                    number="{tagihan>NetValue}"
+                                    numberUnit="IDR"
                                     press="onSelectListTagihan"
                                     title="{tagihan>BillingNumber} - {tagihan>CustomerDesc}">
                                     <ObjectAttribute
