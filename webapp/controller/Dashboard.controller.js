@@ -815,6 +815,14 @@ sap.ui.define(
         });
       },
 
+      onDetailTagihanCetak: function () {
+        const detailTagihanTercetak = this.getView().byId("detailListTagihan").getModel('tagihan');
+        const oData = detailTagihanTercetak.oData.detailTagihan[0]
+        // const selectedTagihan = listTagihanTercetak;
+
+        console.log(oData);
+      },
+
       // Dialogs Close
       onTagihanAirDialogClose: function () {
         this.byId("tagihanAirDialog").close();
