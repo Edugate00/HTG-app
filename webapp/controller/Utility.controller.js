@@ -14,11 +14,11 @@ sap.ui.define(
 
     const widthWindow = window.screen.width;
     const oBilling = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
+    const fromDashboard = sessionStorage.getItem("TAGIHAN_AIR_FROM_DASHBOARD");
 
     return BaseController.extend("lrlpapp.controller.Utility", 
     {
-      onInit: function () {
-
+      onAfterRendering: function () {
         //Read oData for setting tagihan utilities List
         let oTagihanUtility = [];
 
@@ -77,7 +77,15 @@ sap.ui.define(
           this._onTagihanAirClick,
           this
         );
+
+        if (fromDashboard) {
+            this._onTagihanAirClick();
+            setTimeout(() => {
+                sessionStorage.removeItem("TAGIHAN_AIR_FROM_DASHBOARD")
+            }, 5000)
+        }
       },
+
       _onPemakaianListrik: function (oEvent) {
         console.log("Pemakaian Listrik");
       },

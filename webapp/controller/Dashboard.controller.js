@@ -382,6 +382,7 @@ sap.ui.define(
 
       _onTagihanAirClick: function (oEvent) {
         this.getRouter().navTo("utility");
+        sessionStorage.setItem("TAGIHAN_AIR_FROM_DASHBOARD", true);
         window.location.reload();
       },
 
