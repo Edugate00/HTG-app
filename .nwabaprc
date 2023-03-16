@@ -6,7 +6,7 @@
   "conn_user": "abap1",
   "conn_password": "Halobca321",
   "abap_package": "Z001",
-  "abap_transport": "DEVK911944",
+  "abap_transport": "DEVK911952",
   "abap_bsp": "ZLRLP_APP",
   "abap_bsp_text": "Lorena Latersia Application"
 }
