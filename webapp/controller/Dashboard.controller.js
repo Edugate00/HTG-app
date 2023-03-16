@@ -812,12 +812,16 @@ sap.ui.define(
       onBelumCetakDialogCetak: function () {
         let selectedList = [];
 
-        const listTagihanSewa = this.getView()
-          .byId("listBelumCetak")
-          .getSelectedItems();
+        const listTagihanSewa = this.getView().byId("listBelumCetak").getSelectedItems();
         listTagihanSewa.forEach((el) => {
           selectedList.push(el.getBindingContext("belumCetak").getObject());
         });
+
+        // Set sessionStorage for ZInvoice Flavor
+        sessionStorage.setItem("BILL_NUMBER", selectedList[0].BillingNumber);
+
+        this.cetakTagihan();
+        // console.log(selectedList)
       },
 
       onDetailTagihanCetak: function () {
@@ -827,37 +831,8 @@ sap.ui.define(
         // Set sessionStorage for ZInvoice Flavor
         sessionStorage.setItem("BILL_NUMBER", oData.BillingNumber);
 
-        const oHTML = new HTML({
-            content: '<iframe src="https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X" width="100%" height="500px"></iframe>',
-        })
-
-        let widthContent = null;
-        let widthWindow = window.screen.width;
-
-        if (widthWindow < 576 || widthWindow > 1400) {
-            widthContent = "100%";
-        } else {
-            widthContent = "70%";
-        };
-
-        if (!this.oZInvoiceDialog) {
-            this.oZInvoiceDialog = new Dialog({
-                title: "Cetak tagihan",
-                contentWidth: widthContent,
-                contentHeight: "500px",
-                content: oHTML,
-                endButton: new Button({
-                    text: "Tutup",
-                    press: function () {
-                        this.oZInvoiceDialog.close();
-                    }.bind(this),
-                })
-            })
-
-            this.getView().addDependent(this.oZInvoiceDialog);
-        }
-        this.oZInvoiceDialog.open();
-        console.log(oData);
+        this.cetakTagihan();
+        // console.log(oData);
       },
 
       // Dialogs Close
@@ -928,6 +903,39 @@ sap.ui.define(
 
         return result;
       },
+
+      cetakTagihan: function () {
+        const oHTML = new HTML({
+            content: '<iframe src="https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X" width="100%" height="500px"></iframe>',
+        })
+
+        let widthContent = null;
+        let widthWindow = window.screen.width;
+
+        if (widthWindow < 576 || widthWindow > 1400) {
+            widthContent = "100%";
+        } else {
+            widthContent = "70%";
+        };
+
+        if (!this.oZInvoiceDialog) {
+            this.oZInvoiceDialog = new Dialog({
+                title: "Cetak tagihan",
+                contentWidth: widthContent,
+                contentHeight: "500px",
+                content: oHTML,
+                endButton: new Button({
+                    text: "Tutup",
+                    press: function () {
+                        this.oZInvoiceDialog.close();
+                    }.bind(this),
+                })
+            })
+
+            this.getView().addDependent(this.oZInvoiceDialog);
+        }
+        this.oZInvoiceDialog.open();
+      }
     });
   }
 );
