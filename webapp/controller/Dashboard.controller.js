@@ -73,18 +73,12 @@ sap.ui.define(
         let BILLING_ZUTL = [];
         let needToPrint = [];
 
-        const oMeasPoint = await this.readOdataService(
-          "/measurementPointSet",
-          "MeasPointToMeasDoc"
-        );
+        const oMeasPoint = await this.readOdataService("/measurementPointSet", "MeasPointToMeasDoc" );
         oMeasPoint.results.forEach((el) => {
           MEASPOINT.push(el);
         });
 
-        const oBilling = await this.readOdataService(
-          "/billingHeaderSet",
-          "BillingHeadToItem"
-        );
+        const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeadToItem" );
 
         console.log(oBilling)
         oBilling.results.forEach((el) => {
@@ -789,7 +783,7 @@ sap.ui.define(
                      }
                 })
             } else {
-                MessageBox.success("Tagihan sewa berhasil dirilis!", {
+                MessageBox.error("Tagihan sewa gagal dirilis!", {
                     icon: MessageBox.Icon.ERROR,
                     title: "Rilis Tagihan",
                     actions: [MessageBox.Action.OK],

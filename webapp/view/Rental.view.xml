@@ -56,20 +56,21 @@
                         <ObjectAttribute title="Nilai Sewa per bulan" text="Rp 30.000.000,-" />
                         <ObjectAttribute title="Biaya Pemeliharaan per bulan" text="Rp 1.250.000,-" />
                         <ObjectAttribute title="Ditagih setiap" text="4 bulan" />
+                        <ObjectAttribute text="Tidak Potong PPh 4 / 2" />
                     </attributes>
                     <statuses>
                         <ObjectStatus
-                            text="Rima"
+                            text="Informasi Kontak:"
                             state="None" />
+                        <ObjectStatus
+                            text="Rima"
+                            state="Information" />
                         <ObjectStatus
                             text="0822 8888 0808"
-                            state="None" />
+                            state="Information" />
                         <ObjectStatus
                             text="Jl. Lebak bulus 06"
-                            state="None" />
-                        <ObjectStatus
-                            text="Tidak Potong PPh 4 / 2"
-                            state="None" />
+                            state="Information" />
                     </statuses>
                 </ObjectHeader>
                 <VBox>
@@ -112,6 +113,40 @@
                             <IconTabFilter
                                 key="pengelolaan"
                                 text="Tagihan Pengelolaan">
+                                <l:VerticalLayout
+                                    class="sapUiContentPadding"
+                                    width="100%">
+                                    <VBox class="cardContainer">
+                                        <List
+                                            busyIndicatorDelay="500"
+                                            enableBusyIndicator="true"
+                                            noDataText="Tidak ada tagihan"
+                                            items="">
+                                            <items>
+                                                <ObjectListItem
+                                                    title="90064639"
+                                                    press="."
+                                                    type="Active">
+                                                    <ObjectAttribute
+                                                        title="Periode Tagihan"
+                                                        text="03 Jan, 2023 - 03 Apr, 2023" />
+                                                    <ObjectAttribute
+                                                        title="Nilai Tagihan"
+                                                        text="Rp 149.000.000,-" />
+                                                    <secondStatus>
+                                                        <ObjectStatus
+                                                            text="Belum Dibayar"
+                                                            state="Error" />
+                                                    </secondStatus>
+                                                </ObjectListItem>
+                                            </items>
+                                        </List>
+                                    </VBox>
+                                </l:VerticalLayout>
+                            </IconTabFilter>
+                            <IconTabFilter
+                                key="air"
+                                text="Tagihan Air">
                                 <l:VerticalLayout
                                     class="sapUiContentPadding"
                                     width="100%">
