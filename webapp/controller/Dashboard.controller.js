@@ -339,21 +339,9 @@ sap.ui.define(
         const tileTagihanSewa = this.getView().byId("tileTagihanSewa");
         const tileBelumCetak = this.getView().byId("tileBelumCetak");
 
-        tilePindaiMeteran.attachBrowserEvent(
-          "click",
-          this._onPindaiMeteranClick,
-          this
-        );
-        tileTagihanAir.attachBrowserEvent(
-          "click",
-          this._onTagihanAirClick,
-          this
-        );
-        tileTagihanSewa.attachBrowserEvent(
-          "click",
-          this._onTagihanSewaClick,
-          this
-        );
+        tilePindaiMeteran.attachBrowserEvent("click" , this._onPindaiMeteranClick, this);
+        tileTagihanAir.attachBrowserEvent("click" ,this._onTagihanAirClick, this);
+        tileTagihanSewa.attachBrowserEvent("click" ,this._onTagihanSewaClick, this);
         tileBelumCetak.attachBrowserEvent("click", this._onBelumCetak, this);
 
         vizAir.setModel(penggunaanAirModel, "penggunaanAir");
@@ -636,7 +624,7 @@ sap.ui.define(
             tenantSelected
           );
           // oFilterMonth = new Filter("period", FilterOperator.EQ, monthSelected);
-          if (monthSelected === "6months") {
+          if (monthSelected === "3months") {
             toDateTimestamp = new Date(
               currentDate.getFullYear(),
               currentDate.getMonth() - 3,
@@ -757,21 +745,23 @@ sap.ui.define(
       },
 
       onTagihanSewaDialogRelease: async function () {
-        let selectedList = [];
+        let items = [];
 
-        const listTagihanSewa = this.getView().byId("listTagihanSewa").getSelectedItems();
-        listTagihanSewa.forEach((el) => {
-          selectedList.push(el.getBindingContext("tagihanSewa").getObject());
+        const oList = this.getView().byId("listTagihanSewa")
+        const oSelectedItems = oList.getSelectedItems();
+
+        oSelectedItems.forEach((el) => {
+            items.push(el.getBindingContext("tagihanSewa").getObject());
         });
 
         const request = {IT_VBRK : []};
-        selectedList.forEach(el => {
+        items.forEach(el => {
             request.IT_VBRK.push({Vbeln: el.BillingNumber})
         })
         
-        if (request.length !== 0) {
+        if (request.IT_VBRK.length !== 0) {
             const releaseBilling = await this.createOdataService("/releaseBillingSet", request);
-    
+            
             if (releaseBilling.return === "Sukses") {
                 MessageBox.success("Tagihan sewa berhasil dirilis!", {
                     icon: MessageBox.Icon.SUCCESS,
@@ -779,7 +769,13 @@ sap.ui.define(
                     actions: [MessageBox.Action.OK],
                     emphasizedAction: MessageBox.Action.OK,
                     onClose: function (oAction) { 
-                        window.location.reload();
+                        oList.setBusy(true)
+                        setTimeout(() => {
+                            oList.setBusy(false)
+                            oSelectedItems.forEach((el) => { oList.removeItem(el) });
+                        }, 3000)
+                        
+                        sessionStorage.setItem("UPDATE_ODATA", true);
                      }
                 })
             } else {
@@ -788,9 +784,6 @@ sap.ui.define(
                     title: "Rilis Tagihan",
                     actions: [MessageBox.Action.OK],
                     emphasizedAction: MessageBox.Action.OK,
-                    onClose: function (oAction) { 
-                        window.location.reload();
-                     }
                 })
             }
         } else {
@@ -836,6 +829,14 @@ sap.ui.define(
 
       onTagihanSewaDialogClose: function () {
         this.byId("tagihanSewaDialog").close();
+      },
+
+      onAfterCloseTagihanSewaDialog: function () {
+        const isUpdate = sessionStorage.getItem("UPDATE_ODATA");
+        if (isUpdate) { 
+            sessionStorage.removeItem("UPDATE_ODATA")
+            window.location.reload()
+        }
       },
 
       onBelumCetakDialogClose: function () {

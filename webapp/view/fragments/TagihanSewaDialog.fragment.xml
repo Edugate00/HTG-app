@@ -5,6 +5,7 @@
         id="tagihanSewaDialog"
         title="Tagihan Sewa untuk dicetak"
         type="Standard"
+        afterClose="onAfterCloseTagihanSewaDialog"
         contentHeight="400px">
         <content>
             <List
