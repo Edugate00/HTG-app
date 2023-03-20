@@ -32,7 +32,9 @@
                                 class="dynamic-number"
                                 text="{notif>pindaiMeteran}" />
                         </FlexBox>
-                        <Text text="Meteran perlu dipindai" />
+                        <HBox items="{notif>/notif}">
+                            <Text text="{notif>pindaiMeteranDesc}" />
+                        </HBox>
                     </VBox>
                 </VBox>
                 <VBox

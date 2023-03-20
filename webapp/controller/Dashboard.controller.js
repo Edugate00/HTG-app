@@ -67,7 +67,8 @@ sap.ui.define(
         const scanned = [];
         const tagihanAir = [];
         let tagihanAirToCreate;
-
+        
+        let needToScanDesc = "";
         let MEASPOINT = [];
         let BILLING_FV = [];
         let BILLING_ZUTL = [];
@@ -138,6 +139,7 @@ sap.ui.define(
           if (el.MeasPointToMeasDoc.results.length !== 0) {
             if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
               needToScan.push(el);
+              needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
             } else {
               scanned.push(el);
             }
@@ -173,6 +175,9 @@ sap.ui.define(
             });
           }
         });
+
+        needToScanDesc = needToScanDesc.slice(0, needToScanDesc.length - 2)
+        // console.log(needToScanDesc);
 
         if (needToScan.length !== 0) {
           const months = [
@@ -236,10 +241,13 @@ sap.ui.define(
           JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp))
         );
 
+        // console.log(needToScan);
+
         // this code below is for the Dynamic Number of Tiles in Dashboard
         const notifCounter = new JSONModel({
           notif: [
             { pindaiMeteran: `${needToScan.length}` },
+            { pindaiMeteranDesc: `${needToScanDesc}` },
             { tagihanAir: String(tagihanAirToCreate) },
             { tagihanSewa: String(isDueDate.length + hasPassed.length) },
             { belumCetak: String(needToPrint.length) },
@@ -256,7 +264,7 @@ sap.ui.define(
           "tagihan"
         );
 
-        console.log(oTagihan)
+        // console.log(oTagihan)
 
         // Vizframe chart for Penggunaan Air
         const vizAir = this.getView().byId("vizPenggunaanAir");
@@ -779,7 +787,7 @@ sap.ui.define(
                      }
                 })
             } else {
-                MessageBox.error("Tagihan sewa gagal dirilis!", {
+                MessageBox.error(releaseBilling.return, {
                     icon: MessageBox.Icon.ERROR,
                     title: "Rilis Tagihan",
                     actions: [MessageBox.Action.OK],
