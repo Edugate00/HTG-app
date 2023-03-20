@@ -74,6 +74,35 @@ sap.ui.define(
         return `${day} ${month}, ${year}`;
       },
 
+      getShortFormattedDate: function (originalDate) {
+        let year, month, day;
+        const months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mei",
+          "Jun",
+          "Jul",
+          "Agu",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Des",
+        ];
+
+        if (Number(originalDate.substring(4, 6)) <= 9) {
+          month = months[originalDate.substring(5, 6) - 1];
+        } else {
+          month = months[originalDate.substring(4, 6) - 1];
+        }
+
+        year = originalDate.substring(0, 4);
+        day = originalDate.substring(6, 8);
+
+        return `${day} ${month}, ${year}`;
+      },
+
       getMonth: function (month) {
         const months = [
           "Januari",

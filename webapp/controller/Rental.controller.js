@@ -7,17 +7,46 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("lrlpapp.controller.Rental", {
-		onInit: async function () {
+		onAfterRendering: async function () {
 			this.getSplitAppObj().setHomeIcon({
 					'phone': 'phone-icon.png',
 					'tablet': 'tablet-icon.png',
 					'icon': 'desktop.ico'
 			})
 
+            let rentalMaster = []
+
+            const oRentalMaster = await this.readOdataService("/rentalMasterSet", "RentalMasterToDetail");
+
+            oRentalMaster.results.forEach(el => {
+                el.KontrakEnd = this.getShortFormattedDate(el.KontrakEnd)
+                el.KontrakStart = this.getShortFormattedDate(el.KontrakStart)
+
+                rentalMaster.push(el)
+            })
+
+            console.log(rentalMaster);
+            this.getView().setModel(new JSONModel({rentalMaster: rentalMaster}), "rentalMaster");
+
 			Device.orientation.attachHandler(this.onOrientationChange, this);
 		},
 
 		onTagihanRentalSelect: async function (oEvent) {
+            const oContext = oEvent.getParameter("listItem").getBindingContext("rentalMaster");
+            const oSelectedData = oContext.getObject();
+            const rentalDetail = oSelectedData.RentalMasterToDetail.results[0]
+
+            const biayaMaintenance = Number(rentalDetail.BiayaPemeliharaanPerBln)
+            const biayaSewa = Number(rentalDetail.NilaiSewaPerBln)
+
+            rentalDetail.BiayaPemeliharaanPerBln = `Rp ${biayaMaintenance.toLocaleString("IDR-id")}`
+            rentalDetail.NilaiSewaPerBln = `Rp ${biayaSewa.toLocaleString("IDR-id")}`
+            rentalDetail.Kontainer = oSelectedData.Kontainer
+            rentalDetail.KontainerDesc = oSelectedData.KontainerDesc
+            rentalDetail.KontrakStart = oSelectedData.KontrakStart
+            rentalDetail.KontrakEnd = oSelectedData.KontrakEnd
+            this.getView().setModel(new JSONModel(rentalDetail), "rentalDetail")
+
 			const sToPageId = oEvent.getParameter("listItem").getCustomData()[0].getValue();
             this.getSplitAppObj().toDetail(this.createId(sToPageId));
 		},
