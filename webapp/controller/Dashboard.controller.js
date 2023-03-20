@@ -835,7 +835,8 @@ sap.ui.define(
         const isUpdate = sessionStorage.getItem("UPDATE_ODATA");
         if (isUpdate) { 
             sessionStorage.removeItem("UPDATE_ODATA")
-            window.location.reload()
+            // window.location.reload()
+            this.onAfterRendering();
         }
       },
 
