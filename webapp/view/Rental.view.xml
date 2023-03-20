@@ -18,20 +18,22 @@
                 class="sapUiResponsivePadding--header">
                 <List
                     id="tagihanRentalList"
-                    itemPress=".onTagihanRentalSelect">
+                    itemPress=".onTagihanRentalSelect"
+                    items="{rentalMaster>/rentalMaster}">
                     <items>
                         <ObjectListItem
                             type="Active"
                             custom:to="detail"
-                            title="Karimata">
+                            title="{rentalMaster>NamaTenant}">
                             <ObjectAttribute
-                                text="Container X" />
+                                title="Kontainer"
+                                text="{rentalMaster>KontainerDesc}" />
                             <ObjectAttribute
-                                title="Nomor Kontrak"
-                                text="40000070" />
+                                title="No. Kontrak"
+                                text="{rentalMaster>NomorKontrak}" />
                             <ObjectAttribute
                                 title="Masa Kontrak"
-                                text="03 Mar, 2023 - 03 Mar, 2025" />
+                                text="{rentalMaster>KontrakStart} - {rentalMaster>KontrakEnd}" />
                         </ObjectListItem>
                     </items>
                 </List>
@@ -46,30 +48,34 @@
                 title="Detail Tagihan"
                 class="sapUiResponsivePadding--header">
                 <ObjectHeader
-                    title="Karimata"
+                    title="{rentalDetail>/NamaTenant}"
                     backgroundDesign="Solid"
                     responsive="false"
                     fullScreenOptimized="true">
                     <attributes>
-                        <ObjectAttribute text="Container X" />
-                        <ObjectAttribute title="Masa Kontrak" text="03 Mar, 2023 - 03 Mar, 2025" />
-                        <ObjectAttribute title="Nilai Sewa per bulan" text="Rp 30.000.000,-" />
-                        <ObjectAttribute title="Biaya Pemeliharaan per bulan" text="Rp 1.250.000,-" />
-                        <ObjectAttribute title="Ditagih setiap" text="4 bulan" />
-                        <ObjectAttribute text="Tidak Potong PPh 4 / 2" />
+                        <ObjectAttribute text="{rentalDetail>/KontainerDesc}" title="Kontainer" />
+                        <ObjectAttribute title="Masa Kontrak"
+                            text="{rentalDetail>/KontrakStart} - {rentalDetail>/KontrakEnd}" />
+                        <ObjectAttribute title="Nilai Sewa per bulan"
+                            text="{rentalDetail>/NilaiSewaPerBln}" />
+                        <ObjectAttribute title="Biaya Pemeliharaan per bulan"
+                            text="{rentalDetail>/BiayaPemeliharaanPerBln}" />
+                        <ObjectAttribute title="Ditagih setiap"
+                            text="{rentalDetail>/TagihanSetiapDesc}" />
+                        <ObjectAttribute text="{rentalDetail>/TipePajakDesc}" />
                     </attributes>
                     <statuses>
                         <ObjectStatus
                             text="Informasi Kontak:"
                             state="None" />
                         <ObjectStatus
-                            text="Rima"
+                            text="{rentalDetail>/PicTenant}"
                             state="Information" />
                         <ObjectStatus
-                            text="0822 8888 0808"
+                            text="{rentalDetail>/NomorKontak}"
                             state="Information" />
                         <ObjectStatus
-                            text="Jl. Lebak bulus 06"
+                            text="{rentalDetail>/Alamat}"
                             state="Information" />
                     </statuses>
                 </ObjectHeader>
