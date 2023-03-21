@@ -3,7 +3,10 @@ sap.ui.define([
 	 "sap/m/MessageToast",
 	 "sap/ui/Device",
 	 "sap/ui/model/json/JSONModel",
-], function (BaseController, MessageToast, Device, JSONModel) {
+], function (BaseController,
+	MessageToast,
+	Device,
+	JSONModel) {
 	"use strict";
 
 	return BaseController.extend("lrlpapp.controller.Rental", {
@@ -19,13 +22,20 @@ sap.ui.define([
             const oRentalMaster = await this.readOdataService("/rentalMasterSet", "RentalMasterToDetail");
 
             oRentalMaster.results.forEach(el => {
+                const rentalDetail = el.RentalMasterToDetail.results[0];
+                const biayaMaintenance = Number(rentalDetail.BiayaPemeliharaanPerBln)
+                const biayaSewa = Number(rentalDetail.NilaiSewaPerBln)
+
+                rentalDetail.BiayaPemeliharaanPerBln = `${biayaMaintenance.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}`
+                rentalDetail.NilaiSewaPerBln = `${biayaSewa.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}`
+
                 el.KontrakEnd = this.getShortFormattedDate(el.KontrakEnd)
                 el.KontrakStart = this.getShortFormattedDate(el.KontrakStart)
 
                 rentalMaster.push(el)
             })
 
-            console.log(rentalMaster);
+            // console.log(rentalMaster);
             this.getView().setModel(new JSONModel({rentalMaster: rentalMaster}), "rentalMaster");
 
 			Device.orientation.attachHandler(this.onOrientationChange, this);
@@ -36,11 +46,6 @@ sap.ui.define([
             const oSelectedData = oContext.getObject();
             const rentalDetail = oSelectedData.RentalMasterToDetail.results[0]
 
-            const biayaMaintenance = Number(rentalDetail.BiayaPemeliharaanPerBln)
-            const biayaSewa = Number(rentalDetail.NilaiSewaPerBln)
-
-            rentalDetail.BiayaPemeliharaanPerBln = `Rp ${biayaMaintenance.toLocaleString("IDR-id")}`
-            rentalDetail.NilaiSewaPerBln = `Rp ${biayaSewa.toLocaleString("IDR-id")}`
             rentalDetail.Kontainer = oSelectedData.Kontainer
             rentalDetail.KontainerDesc = oSelectedData.KontainerDesc
             rentalDetail.KontrakStart = oSelectedData.KontrakStart
