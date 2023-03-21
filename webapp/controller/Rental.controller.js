@@ -42,14 +42,47 @@ sap.ui.define([
 		},
 
 		onTagihanRentalSelect: async function (oEvent) {
+            let tagihanSewa = [];
+            let tagihanPengelolaan = [];
+            let tagihanAir = [];
+
+            const BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
+            const BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
+            
             const oContext = oEvent.getParameter("listItem").getBindingContext("rentalMaster");
             const oSelectedData = oContext.getObject();
             const rentalDetail = oSelectedData.RentalMasterToDetail.results[0]
+            const noKontrak = oSelectedData.NomorKontrak;
+
+            BILLING_FV.forEach(el => {
+                const billItem = el.BillingHeadToItem.results[0];
+                const salesDocument = billItem.SalesDocument;
+                const material = billItem.Material.toLowerCase();
+
+                billItem.NetValue = Number(billItem.NetValue).toLocaleString("id-ID", {style:"currency", currency:"IDR"})
+                billItem.PaymentDate = el.PaymentDate
+                billItem.PaymentStatus = el.Status
+                billItem.StatusType = el.TipeStatus
+
+                if (salesDocument === noKontrak) {
+                    if (material === "maintenance") {
+                        tagihanPengelolaan.push(billItem);
+                    } else {
+                        tagihanSewa.push(billItem);
+                    }
+                }
+            })
+
+            console.log(tagihanSewa)
+            console.log(tagihanPengelolaan)
 
             rentalDetail.Kontainer = oSelectedData.Kontainer
             rentalDetail.KontainerDesc = oSelectedData.KontainerDesc
             rentalDetail.KontrakStart = oSelectedData.KontrakStart
             rentalDetail.KontrakEnd = oSelectedData.KontrakEnd
+
+            this.getView().setModel(new JSONModel({listTagihanSewa: tagihanSewa}), "listTagihanSewa")
+            this.getView().setModel(new JSONModel({listTagihanPengelolaan: tagihanPengelolaan}), "listTagihanPengelolaan")
             this.getView().setModel(new JSONModel(rentalDetail), "rentalDetail")
 
 			const sToPageId = oEvent.getParameter("listItem").getCustomData()[0].getValue();

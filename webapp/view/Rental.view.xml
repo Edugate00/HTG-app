@@ -50,7 +50,7 @@
                 <ObjectHeader
                     title="{rentalDetail>/NamaTenant}"
                     backgroundDesign="Solid"
-                    responsive="false"
+                    responsive="{device>/system/phone}"
                     fullScreenOptimized="true">
                     <attributes>
                         <ObjectAttribute text="{rentalDetail>/KontainerDesc}" title="Kontainer" />
@@ -86,17 +86,18 @@
                                 key="sewa"
                                 text="Tagihan Sewa">
                                 <l:VerticalLayout
-                                    class="sapUiContentPadding"
+                                    class="sapUiContentPadding sapUiLargeMarginBottom"
                                     width="100%">
                                     <VBox class="cardContainer">
                                         <List
+                                            class="sapUiMediumMarginBottom"
                                             busyIndicatorDelay="500"
                                             enableBusyIndicator="true"
                                             noDataText="Tidak ada tagihan"
-                                            items="">
+                                            items="{listTagihanSewa>/listTagihanSewa}">
                                             <items>
                                                 <ObjectListItem
-                                                    title="90064639"
+                                                    title="{listTagihanSewa>BillingNumber}"
                                                     press="."
                                                     type="Active">
                                                     <ObjectAttribute
@@ -104,11 +105,11 @@
                                                         text="03 Jan, 2023 - 03 Apr, 2023" />
                                                     <ObjectAttribute
                                                         title="Nilai Tagihan"
-                                                        text="Rp 149.000.000,-" />
+                                                        text="{listTagihanSewa>NetValue}" />
                                                     <secondStatus>
                                                         <ObjectStatus
-                                                            text="Belum Dibayar"
-                                                            state="Error" />
+                                                            text="{listTagihanSewa>PaymentStatus}"
+                                                            state="{listTagihanSewa>StatusType}" />
                                                     </secondStatus>
                                                 </ObjectListItem>
                                             </items>
@@ -120,14 +121,15 @@
                                 key="pengelolaan"
                                 text="Tagihan Pengelolaan">
                                 <l:VerticalLayout
-                                    class="sapUiContentPadding"
+                                    class="sapUiContentPadding sapUiLargeMarginBottom"
                                     width="100%">
                                     <VBox class="cardContainer">
                                         <List
+                                            class="sapUiMediumMarginBottom"
                                             busyIndicatorDelay="500"
                                             enableBusyIndicator="true"
                                             noDataText="Tidak ada tagihan"
-                                            items="">
+                                            items="{listTagihanPengelolaan>/listTagihanPengelolaan}">
                                             <items>
                                                 <ObjectListItem
                                                     title="90064639"
@@ -138,11 +140,11 @@
                                                         text="03 Jan, 2023 - 03 Apr, 2023" />
                                                     <ObjectAttribute
                                                         title="Nilai Tagihan"
-                                                        text="Rp 149.000.000,-" />
+                                                        text="{listTagihanPengelolaan>NetValue}" />
                                                     <secondStatus>
                                                         <ObjectStatus
-                                                            text="Belum Dibayar"
-                                                            state="Error" />
+                                                            text="{listTagihanPengelolaan>PaymentStatus}"
+                                                            state="{listTagihanPengelolaan>StatusType}" />
                                                     </secondStatus>
                                                 </ObjectListItem>
                                             </items>
@@ -154,10 +156,11 @@
                                 key="air"
                                 text="Tagihan Air">
                                 <l:VerticalLayout
-                                    class="sapUiContentPadding"
+                                    class="sapUiContentPadding sapUiLargeMarginBottom"
                                     width="100%">
                                     <VBox class="cardContainer">
                                         <List
+                                            class="sapUiMediumMarginBottom"
                                             busyIndicatorDelay="500"
                                             enableBusyIndicator="true"
                                             noDataText="Tidak ada tagihan"

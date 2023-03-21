@@ -11,7 +11,7 @@
             <List
                 id="listTagihanSewa"
                 items="{tagihanSewa>/tagihanSewa}"
-                mode="MultiSelect"
+                mode="SingleSelectLeft"
                 includeItemInSelection="true">
                 <StandardListItem
                     type="Active"
