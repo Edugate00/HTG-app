@@ -144,7 +144,7 @@ sap.ui.define(
               scanned.push(el);
             }
           } else {
-            needToScan.push(el);
+            if (el.Text !== "") { needToScan.push(el); }
           }
 
           if (el.Position === "CONTAINER") {
