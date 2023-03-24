@@ -932,6 +932,7 @@ sap.ui.define(
                     text: "Tutup",
                     press: function () {
                         this.oZInvoiceDialog.close();
+                        window.location.reload()
                     }.bind(this),
                 })
             })
