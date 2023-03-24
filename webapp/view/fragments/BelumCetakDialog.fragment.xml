@@ -22,13 +22,13 @@
         </content>
         <beginButton>
             <Button
-                text="Close"
+                text="Tutup"
                 type="Default"
                 press="onBelumCetakDialogClose" />
         </beginButton>
         <endButton>
             <Button
-                text="Cetak"
+                text="Cetak Tagihan"
                 type="Emphasized"
                 press="onBelumCetakDialogCetak" />
         </endButton>
