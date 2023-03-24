@@ -90,6 +90,7 @@
                                     width="100%">
                                     <VBox class="cardContainer">
                                         <List
+                                            id="listTagihanSewa"
                                             class="sapUiMediumMarginBottom"
                                             busyIndicatorDelay="500"
                                             enableBusyIndicator="true"
@@ -98,7 +99,7 @@
                                             <items>
                                                 <ObjectListItem
                                                     title="{listTagihanSewa>BillingNumber}"
-                                                    press="."
+                                                    press=".onSelectListTagihan"
                                                     type="Active">
                                                     <ObjectAttribute
                                                         title="Periode Tagihan"
@@ -125,6 +126,7 @@
                                     width="100%">
                                     <VBox class="cardContainer">
                                         <List
+                                            id="listTagihanPengelolaan"
                                             class="sapUiMediumMarginBottom"
                                             busyIndicatorDelay="500"
                                             enableBusyIndicator="true"
@@ -132,8 +134,8 @@
                                             items="{listTagihanPengelolaan>/listTagihanPengelolaan}">
                                             <items>
                                                 <ObjectListItem
-                                                    title="90064639"
-                                                    press="."
+                                                    title="{listTagihanPengelolaan>BillingNumber}"
+                                                    press=".onSelectListTagihan"
                                                     type="Active">
                                                     <ObjectAttribute
                                                         title="Periode Tagihan"
@@ -160,26 +162,27 @@
                                     width="100%">
                                     <VBox class="cardContainer">
                                         <List
+                                            id="listTagihanAir"
                                             class="sapUiMediumMarginBottom"
                                             busyIndicatorDelay="500"
                                             enableBusyIndicator="true"
                                             noDataText="Tidak ada tagihan"
-                                            items="">
+                                            items="{listTagihanAir>/listTagihanAir}">
                                             <items>
                                                 <ObjectListItem
-                                                    title="90064639"
-                                                    press="."
+                                                    title="{listTagihanAir>BillingNumber}"
+                                                    press=".onSelectListTagihan"
                                                     type="Active">
                                                     <ObjectAttribute
                                                         title="Periode Tagihan"
-                                                        text="03 Jan, 2023 - 03 Apr, 2023" />
+                                                        text="{listTagihanAir>Periode}" />
                                                     <ObjectAttribute
                                                         title="Nilai Tagihan"
-                                                        text="Rp 149.000.000,-" />
+                                                        text="{listTagihanAir>NetValue}" />
                                                     <secondStatus>
                                                         <ObjectStatus
-                                                            text="Belum Dibayar"
-                                                            state="Error" />
+                                                            text="{listTagihanAir>PaymentStatus}"
+                                                            state="{listTagihanAir>StatusType}" />
                                                     </secondStatus>
                                                 </ObjectListItem>
                                             </items>
