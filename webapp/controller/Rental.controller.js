@@ -151,7 +151,7 @@ sap.ui.define([
             if (!this.dialogName) {
             this.dialogName = Fragment.load({
                 id: oView.getId(),
-                name: `lrlpapp.view.fragments.DetailListTagihan`,
+                name: `lrlpapp.view.fragments.DetailListTagihanInRental`,
                 controller: this,
             }).then(function (oDialog) {
                 oDialog.setModel(oView.getModel());
