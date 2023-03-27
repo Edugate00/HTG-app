@@ -117,7 +117,7 @@ sap.ui.define(
           }
 
           if (el.BillingType === "FV") {
-            el.PriceListDesc = "20230423 - 20230823"
+            // el.PriceListDesc = "20230423 - 20230823"
             let from = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[0])
             let to = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[1])
 
