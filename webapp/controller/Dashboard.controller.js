@@ -117,7 +117,16 @@ sap.ui.define(
           }
 
           if (el.BillingType === "FV") {
-            el.PriceListDesc = "-"
+            el.PriceListDesc = "20230423 - 20230823"
+            let from = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[0])
+            let to = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[1])
+
+            if (from.slice(-4) === to.slice(-4)) {
+                from = from.slice(0, 6)
+            }
+
+            el.PriceListDesc = `${from} - ${to}`
+
             BILLING_FV.push(el);
           } else {
             BILLING_ZUTL.push(el);
