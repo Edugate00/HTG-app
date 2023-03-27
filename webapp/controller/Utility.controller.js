@@ -31,10 +31,7 @@ sap.ui.define(
         })
         console.log(oTagihanUtility)
 
-        this.getView().setModel(
-          new JSONModel({ utilityList: oTagihanUtility }),
-          "utilities"
-        );
+        this.getView().setModel(new JSONModel({ utilityList: oTagihanUtility }), "utilities");
 
         //Create tenant List
         const tenant = oBilling.map(el => el.CustomerDesc);
@@ -242,10 +239,42 @@ sap.ui.define(
         tagihanList.getBinding("items").filter(oFilters);
       },
 
+      onSelectListTagihan: function (oEvent) {
+        const oContext = oEvent.getSource().getBindingContext('utilities').getPath().slice(13);
+        const listTagihan = this.getView().byId("tagihanList").getBinding("items").oList;
+        const selectedList = listTagihan[oContext];
+
+        const oView = this.getView();
+        const oModel = { detailTagihan: [{ ...selectedList }] };
+
+        if (!this.dialogName) {
+          this.dialogName = Fragment.load({
+            id: oView.getId(),
+            name: `lrlpapp.view.fragments.DetailListTagihan`,
+            controller: this,
+          }).then(function (oDialog) {
+            oDialog.setModel(oView.getModel());
+            oDialog.setModel(new JSONModel(oModel), "tagihan");
+            return oDialog;
+          });
+        }
+
+        this.dialogName.then(function (oDialog) {
+          oDialog.setModel(oView.getModel());
+          oDialog.setModel(new JSONModel(oModel), "tagihan");
+          oDialog.open();
+        });
+      },
+
       // Dialogs Close
       onClose: function () {
         // oDialog.destroyContent(oHtml);
         this.byId("tagihanAirReportDialog").close();
+      },
+
+      onDetailTagihanClose: function () {
+        // oDialog.destroyContent(oHtml);
+        this.byId("detailListTagihan").close();
       },
     });
   }
