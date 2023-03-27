@@ -186,6 +186,7 @@
                                 type="Active"
                                 number="{utilities>NetValue}"
                                 numberUnit="IDR"
+                                press="onSelectListTagihan"
                                 title="{utilities>BillingNumber} - {utilities>CustomerDesc}">
                                 <ObjectAttribute
                                     title="Tipe"
