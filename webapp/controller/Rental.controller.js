@@ -67,6 +67,7 @@ sap.ui.define([
                 billItem.NetValue = Number(billItem.NetValue).toLocaleString("id-ID", {style:"currency", currency:"IDR"})
                 billItem.PaymentDate = el.PaymentDate
                 billItem.PaymentStatus = el.Status
+                billItem.Periode = el.PriceListDesc
                 billItem.StatusType = el.TipeStatus
 
                 if (salesDocument === noKontrak) {
