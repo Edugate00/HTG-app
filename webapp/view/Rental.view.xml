@@ -103,7 +103,7 @@
                                                     type="Active">
                                                     <ObjectAttribute
                                                         title="Periode Tagihan"
-                                                        text="03 Jan, 2023 - 03 Apr, 2023" />
+                                                        text="{listTagihanSewa>Periode}" />
                                                     <ObjectAttribute
                                                         title="Nilai Tagihan"
                                                         text="{listTagihanSewa>NetValue}" />
@@ -139,7 +139,7 @@
                                                     type="Active">
                                                     <ObjectAttribute
                                                         title="Periode Tagihan"
-                                                        text="03 Jan, 2023 - 03 Apr, 2023" />
+                                                        text="{listTagihanPengelolaan>Periode}" />
                                                     <ObjectAttribute
                                                         title="Nilai Tagihan"
                                                         text="{listTagihanPengelolaan>NetValue}" />
