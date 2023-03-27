@@ -77,6 +77,9 @@
                         <ObjectStatus
                             text="{rentalDetail>/Alamat}"
                             state="Information" />
+                        <ObjectStatus
+                            text="{rentalDetail>/Telepone}"
+                            state="Information" />
                     </statuses>
                 </ObjectHeader>
                 <VBox>

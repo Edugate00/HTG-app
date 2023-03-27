@@ -39,6 +39,8 @@ sap.ui.define([
                 }
             })
 
+            console.log(oRentalMaster);
+
             // console.log(rentalMaster);
             this.getView().setModel(new JSONModel({rentalMaster: rentalMaster}), "rentalMaster");
 
