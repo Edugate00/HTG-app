@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>Lorena Latersia App</title>
+    <link rel="icon" type="image/x-icon" href="@img_logo">
+    <style id="antiClickjack" type="text/css">
+        body {
+            display: none !important;
+        }
+    </style>
+    @Html.Raw(sys_script_generated)
+    <script src="@script_included"></script>
+    @Html.Raw(custom_script)
+    <script>
+        (function () {
+            var needActivation = true;
+            function frameActivate() {
+                var antiClickjack = document.getElementById("antiClickjack");
+                if (antiClickjack) {
+                    antiClickjack.parentNode.removeChild(antiClickjack);
+                }
+            }
+            function registerHandler() {
+                if (window.addEventListener) {
+                    window.addEventListener("message", handleMessage);
+                }
+                else if (window.attachEvent) {
+                    window.attachEvent("onmessage", handleMessage);
+                }
+            }
+            function unregisterHandler() {
+                if (window.removeEventListener) {
+                    window.removeEventListener("message", handleMessage);
+                }
+                else if (window.detachEvent) {
+                    window.detachEvent("onmessage", handleMessage);
+                }
+            }
+            function handleMessage(event) {
+                var origin = window.location.protocol + "//" + window.location.host;
+                if (event.source && (event.source !== window.parent)) {
+                    return;
+                }
+                if (event.origin === origin) {
+                    frameActivate();
+                    unregisterHandler();
+                }
+            }
+            try {
+                if ((top === self) || (top.location.href)) {
+                    needActivation = false;
+                    frameActivate();
+                }
+            }
+            catch (e) {
+            }
+            if (needActivation) {
+                registerHandler();
+                // Portal support: hosting page has same origin but performed domain relaxation
+                window.parent.postMessage("ClickJackProt:", "*");
+                window.parent.postMessage("SAPFramingControl:", "*");
+            }
+        }());
+    </script>
+    <style>
+        :root {
+            --primary-color-10: #e0f1ef;
+            --primary-color-20: #92d0c5;
+            --primary-color-30: #54b597;
+            --primary-color-40: #00925D;
+            --primary-color-50: #004d29;
+            --primary-color-60: #00210b;
+            --secondary-color-10: #f0e9fa;
+            --secondary-color-20: #c7b2ed;
+            --secondary-color-30: #9a83e3;
+            --secondary-color-40: #5d41d4;
+            --secondary-color-50: #2e2576;
+            --secondary-color-60: #0e1234;
+            --accent-color-10: #fff8e5;
+            --accent-color-20: #ffe1a6;
+            --accent-color-30: #ffbf72;
+            --accent-color-40: #FF942E;
+            --accent-color-50: #8a4316;
+            --accent-color-60: #3f1206;
+            --neutral-color-10: #EAEAEA;
+            --neutral-color-20: #ADADAD;
+            --neutral-color-30: #747474;
+            --neutral-color-40: #333333;
+            --neutral-color-50: #1A1A1A;
+            --danger-color-10: #fce7e0;
+            --danger-color-20: #f5a992;
+            --danger-color-30: #ef6454;
+            --danger-color-40: #e80b00;
+            --danger-color-50: #7b0300;
+            --danger-color-60: #350000;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: row-reverse;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .hero-img {
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #LOGIN_PAGE {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #LOGIN_FORM {
+            width: 100%;
+            height: 100%;
+            padding: 96px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 28px;
+        }
+
+        #header {
+            width: 100%;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        #header>img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+        }
+
+        .loginInputBlock {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .field-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-field-container {
+            width: 100%;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 8px;
+            color: var(--neutral-color-50);
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid var(--neutral-color-20);
+            outline: none;
+        }
+
+        .input-field:focus {
+            color: var(--neutral-color-50);
+            background-color: #f8f8f8;
+            border: 1px solid var(--primary-color-40);
+            outline: 3.6px solid #54b59659;
+        }
+
+        .input-field:disabled {
+            color: var(--neutral-color-30);
+            background-color: var(--neutral-color-10);
+            border: 1px solid var(--neutral-color-20);
+            outline: none;
+        }
+
+        .langAndClientBlock {
+            width: 100%;
+            display: flex;
+            gap: 20px;
+        }
+
+        .buttonBlock {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-primary-solid {
+            width: 100%;
+            padding: 8px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            background-color: var(--primary-color-40);
+        }
+
+        .btn-primary-outline {
+            width: 100%;
+            padding: 8px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-color-40);
+            color: var(--primary-color-40);
+            background-color: white;
+        }
+
+        .btn-primary-ghost {
+            width: 100%;
+            padding: 8px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            color: var(--primary-color-40);
+            background-color: white;
+        }
+
+        .btn-primary-solid:hover {
+            background-color: #017c4f;
+            cursor: pointer;
+        }
+
+        .btn-primary-outline:hover,
+        .btn-primary-ghost:hover {
+            background-color: var(--primary-color-10);
+            cursor: pointer;
+        }
+
+        .messageError {
+            padding: 8px;
+            border-radius: 8px;
+            color: var(--danger-color-40);
+            background-color: var(--danger-color-10);
+        }
+
+        @media screen and (max-width: 992px) {
+            #LOGIN_FORM {
+                padding: 56px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            /* .hero-img {
+                display: none;
+            } */
+
+            #LOGIN_PAGE {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #LOGIN_FORM {
+                padding: 56px;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            #LOGIN_FORM {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <img class="hero-img" src="./assets/CITI_WALK.jpeg" alt=""> -->
+    <img class="hero-img" src="@img_bg" alt="">
+    <div id="LOGIN_PAGE" onload="@sys_icf_cookie_check ()">
+        <div id="header">
+            <!-- <img src="./assets/LOGO-LORENA-PROPERTI.png" alt="Logo LRLP"> -->
+            <img src="@img_logo" alt="Logo LRLP">
+        </div>
+        <form id="LOGIN_FORM" name="loginForm" action="@sys_form_action" method="post" autocomplete="off">
+            @Html.Raw(sys_form_hidden_fields)
+            <h1>Welcome Back!</h1>
+
+            <div class="loginInputBlock">
+                <div id="USERNAME_BLOCK" class="field-container"
+                    onclick="fioriLogin.setInputFocus('USERNAME_FIELD-inner')">
+                    <label for="USERNAME_FIELD-inner" id="USERNAME_LABEL" class="input-label"
+                        onclick="fioriLogin.setInputFocus('USERNAME_FIELD-inner')">@label_user</label>
+                    <div id="USERNAME_FIELD" class="input-field-container">
+                        <input id="USERNAME_FIELD-inner" tabindex="1" type="text" class="input-field"
+                            name="@sys_form_param_user" maxlength="@sys_form_user_maxlen" inputmode="verbatim"
+                            autocomplete="off" autocorrect="off" autocapitalize="none" />
+                    </div>
+                </div>
+                <div id="PASSWORD_BLOCK" class="field-container"
+                    onclick="fioriLogin.setInputFocus('PASSWORD_FIELD-inner')">
+                    <label for="PASSWORD_FIELD-inner" id="PASSWORD_LABEL" class="input-label"
+                        onclick="fioriLogin.setInputFocus('PASSWORD_FIELD-inner')">@label_password</label>
+                    <div id="PASSWORD_FIELD" class="input-field-container">
+                        <input id="PASSWORD_FIELD-inner" tabindex="2" type="password" class="input-field"
+                            name="@sys_form_param_password" inputmode="verbatim" />
+                    </div>
+                </div>
+                <div class="langAndClientBlock">
+                    <div id="LANGUAGE_BLOCK" class="field-container" @Html.Raw(sys_form_lang_state)>
+                        <label for="LANGUAGE_LABEL-inner" id="LANGUAGE_LABEL" class="input-label"
+                            onclick="fioriLogin.setInputFocus('CLIENT_FIELD-inner')">@label_language</label>
+                        <div id="PASSWORD_FIELD" class="input-field-container">
+                            <select id="LANGUAGE_SELECT" tabindex="3" class="input-field"></select>
+                        </div>
+                    </div>
+                    <div id="CLIENT_BLOCK" class="field-container" @Html.Raw(sys_form_client_state)
+                        onclick="fioriLogin.setInputFocus('CLIENT_FIELD-inner')">
+                        <label for="CLIENT_LABEL-inner" id="CLIENT_LABEL" class="input-label"
+                            onclick="fioriLogin.setInputFocus('CLIENT_FIELD-inner')">@label_client</label>
+                        <div id="PASSWORD_FIELD" class="input-field-container">
+                            <input id="CLIENT_FIELD-inner" tabindex="4" type="text" value="@sys_form_default_client"
+                                maxlength="3" size="3" class="input-field" name="@sys_form_param_client"
+                                inputmode="verbatim" disabled />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttonBlock">
+                <div class="sapUiSraMessageContainer">
+                    <div id="LOGIN_ERROR_BLOCK" tabindex="5" class="messageError" @Html.Raw(sys_messages_state)>
+                        <label id="LOGIN_LBL_ERROR" class="sapThemeText">@Html.Raw(sys_messages_text)</label>
+                    </div>
+                </div>
+                <button type="submit" id="LOGIN_LINK" tabindex="6" class="btn-primary-solid"
+                    onclick="return fioriLogin.submitLogin('@sys_form_input_processing', '@sys_form_event_login')">
+                    <span class="sapMBtnContent sapMLabelBold sapUiSraDisplayBeforeLogin">@label_button_login</span>
+                </button>
+                <button type="button" id="CHANGE_PASSWORD_LINK" tabindex="7" class="btn-primary-ghost"
+                    onclick="fioriLogin.submitLogin('@sys_form_input_processing', '@sys_form_event_changepwd', true)">
+                    <span class="sapMBtnContent sapMLabelBold">@label_change_password</span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <script>setTimeout(function () { document.body.className = "sapUiBody"; }, 50);</script>
+</body>
+
+</html>
