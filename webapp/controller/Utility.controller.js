@@ -9,46 +9,59 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (BaseController, JSONModel, Fragment, Dialog, Button, HTML, Filter, FilterOperator) {
+  function (
+    BaseController,
+    JSONModel,
+    Fragment,
+    Dialog,
+    Button,
+    HTML,
+    Filter,
+    FilterOperator
+  ) {
     "use strict";
 
     const widthWindow = window.screen.width;
     const oBilling = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
     const fromDashboard = sessionStorage.getItem("TAGIHAN_AIR_FROM_DASHBOARD");
 
-    return BaseController.extend("lrlpapp.controller.Utility", 
-    {
+    return BaseController.extend("lrlpapp.controller.Utility", {
       onAfterRendering: function () {
         //Read oData for setting tagihan utilities List
         let oTagihanUtility = [];
 
         console.log(oBilling);
 
-        oBilling.forEach(el => {
-          if(el.ReleasedStatus === "X"){
+        oBilling.forEach((el) => {
+          if (el.ReleasedStatus === "X") {
             oTagihanUtility.push(el);
           }
-        })
-        console.log(oTagihanUtility)
+        });
+        console.log(oTagihanUtility);
 
-        this.getView().setModel(new JSONModel({ utilityList: oTagihanUtility }), "utilities");
+        this.getView().setModel(
+          new JSONModel({ utilityList: oTagihanUtility }),
+          "utilities"
+        );
 
         //Create tenant List
-        const tenant = oBilling.map(el => el.CustomerDesc);
-          
-          const listTenant = tenant.filter((el, index) => tenant.indexOf(el) === index);
-          const fixTenant = listTenant.map((CustomerDesc) => ({
-            name: CustomerDesc,
-            id: CustomerDesc
-          }));
+        const tenant = oBilling.map((el) => el.CustomerDesc);
 
-          let defaultItem = {name: 'Semua Tenant', id: '*'};
-          fixTenant.push(defaultItem);
-          
-          this.getView().setModel(
-            new JSONModel({ tenantList: fixTenant }),
-            "Tenant"
-          );
+        const listTenant = tenant.filter(
+          (el, index) => tenant.indexOf(el) === index
+        );
+        const fixTenant = listTenant.map((CustomerDesc) => ({
+          name: CustomerDesc,
+          id: CustomerDesc,
+        }));
+
+        let defaultItem = { name: "Semua Tenant", id: "*" };
+        fixTenant.push(defaultItem);
+
+        this.getView().setModel(
+          new JSONModel({ tenantList: fixTenant }),
+          "Tenant"
+        );
 
         //Tiles Event
         const tilePemakaianListrik = this.getView().byId(
@@ -76,10 +89,10 @@ sap.ui.define(
         );
 
         if (fromDashboard) {
-            this._onTagihanAirClick();
-            setTimeout(() => {
-                sessionStorage.removeItem("TAGIHAN_AIR_FROM_DASHBOARD")
-            }, 5000)
+          this._onTagihanAirClick();
+          setTimeout(() => {
+            sessionStorage.removeItem("TAGIHAN_AIR_FROM_DASHBOARD");
+          }, 5000);
         }
       },
 
@@ -92,7 +105,6 @@ sap.ui.define(
       _onReportAir: function (oEvent) {
         this.getRouter().navTo("reportair");
       },
-      
 
       _onTagihanAirClick: function (oEvent) {
         console.log("Perhitungan Tagihan Air");
@@ -100,7 +112,7 @@ sap.ui.define(
 
         var oHtml2 = new sap.ui.core.HTML({
           content:
-            '<iframe src="https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>',
+            '<iframe src="https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X" width="100%" height="450px"></iframe>',
         });
 
         let width = null;
@@ -145,7 +157,11 @@ sap.ui.define(
 
         const tagihanList = this.byId("tagihanList");
         if (tenantSelected !== "*") {
-          oFilter1 = new Filter("CustomerDesc", FilterOperator.EQ, tenantSelected);
+          oFilter1 = new Filter(
+            "CustomerDesc",
+            FilterOperator.EQ,
+            tenantSelected
+          );
         } else {
           oFilter1 = [];
         }
@@ -159,12 +175,19 @@ sap.ui.define(
         }
 
         if (monthSelected !== "*") {
-          oFilter3 = new Filter("BillingDate", FilterOperator.Contains, monthSelected);
+          oFilter3 = new Filter(
+            "BillingDate",
+            FilterOperator.Contains,
+            monthSelected
+          );
         } else {
           oFilter3 = [];
         }
 
-        oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
+        oFilters = new Filter({
+          filters: [oFilter1, oFilter2, oFilter3],
+          and: true,
+        });
         tagihanList.getBinding("items").filter(oFilters);
       },
 
@@ -188,23 +211,33 @@ sap.ui.define(
         }
 
         if (tenantSelected !== "*") {
-          oFilter2 = new Filter("CustomerDesc", FilterOperator.EQ, tenantSelected);
+          oFilter2 = new Filter(
+            "CustomerDesc",
+            FilterOperator.EQ,
+            tenantSelected
+          );
         } else {
           oFilter2 = [];
         }
 
         if (monthSelected !== "*") {
-          oFilter3 = new Filter("BillingDate", FilterOperator.Contains, monthSelected);
+          oFilter3 = new Filter(
+            "BillingDate",
+            FilterOperator.Contains,
+            monthSelected
+          );
         } else {
           oFilter3 = [];
         }
-        
 
-        oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
+        oFilters = new Filter({
+          filters: [oFilter1, oFilter2, oFilter3],
+          and: true,
+        });
         tagihanList.getBinding("items").filter(oFilters);
       },
 
-      onMonthSelect: function(oEvent) {
+      onMonthSelect: function (oEvent) {
         let oFilter1, oFilter2, oFilter3, oFilters;
         const oComboBoxMonth = oEvent.getSource();
         const oComboBoxTenant = this.getView().byId("ComboBoxTagihanTenant");
@@ -215,13 +248,21 @@ sap.ui.define(
         const tagihanList = this.byId("tagihanList");
 
         if (monthSelected !== "*") {
-          oFilter1 = new Filter("BillingDate", FilterOperator.Contains, monthSelected);
+          oFilter1 = new Filter(
+            "BillingDate",
+            FilterOperator.Contains,
+            monthSelected
+          );
         } else {
           oFilter1 = [];
         }
 
         if (tenantSelected !== "*") {
-          oFilter2 = new Filter("CustomerDesc", FilterOperator.EQ, tenantSelected);
+          oFilter2 = new Filter(
+            "CustomerDesc",
+            FilterOperator.EQ,
+            tenantSelected
+          );
         } else {
           oFilter2 = [];
         }
@@ -233,15 +274,24 @@ sap.ui.define(
         } else {
           oFilter3 = [];
         }
-        console.log(oFilter3)
-        console.log(monthSelected)
-        oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
+        console.log(oFilter3);
+        console.log(monthSelected);
+        oFilters = new Filter({
+          filters: [oFilter1, oFilter2, oFilter3],
+          and: true,
+        });
         tagihanList.getBinding("items").filter(oFilters);
       },
 
       onSelectListTagihan: function (oEvent) {
-        const oContext = oEvent.getSource().getBindingContext('utilities').getPath().slice(13);
-        const listTagihan = this.getView().byId("tagihanList").getBinding("items").oList;
+        const oContext = oEvent
+          .getSource()
+          .getBindingContext("utilities")
+          .getPath()
+          .slice(13);
+        const listTagihan = this.getView()
+          .byId("tagihanList")
+          .getBinding("items").oList;
         const selectedList = listTagihan[oContext];
 
         const oView = this.getView();
