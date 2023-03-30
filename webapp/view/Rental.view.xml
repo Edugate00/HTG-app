@@ -78,6 +78,9 @@
                             text="{rentalDetail>/Alamat}"
                             state="Information" />
                         <ObjectStatus
+                            text="{rentalDetail>/District}, {rentalDetail>/City}"
+                            state="Information" />
+                        <ObjectStatus
                             text="{rentalDetail>/Telepone}"
                             state="Information" />
                     </statuses>
