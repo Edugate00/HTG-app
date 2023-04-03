@@ -130,6 +130,11 @@ body {
     border-radius: 8px;
 }
 
+.userName {
+    color: #fff;
+    text-transform: capitalize;
+}
+
 .nav-link-active {
     color: #ffffff !important;
     font-weight: bold;

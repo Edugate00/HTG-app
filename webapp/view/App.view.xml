@@ -37,8 +37,9 @@
                 alignItems="Center"
                 height="auto"
                 width="auto">
+                <Text id="userName" class="sapUiSmallMarginBeginEnd userName" />
                 <Avatar
-                    id="setting"
+                    id="userImg"
                     src="sap-icon://action-settings"
                     displaySize="Custom"
                     customDisplaySize="2.2rem"

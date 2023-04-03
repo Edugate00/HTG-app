@@ -1,10 +1,37 @@
 sap.ui.define(
-  ["lrlpapp/controller/BaseController", "sap/ui/core/Fragment"],
-  function (BaseController, Fragment) {
+  ["lrlpapp/controller/BaseController", "sap/ui/core/Fragment",
+	"sap/ui/model/json/JSONModel"],
+  function (BaseController,
+	Fragment,
+	JSONModel) {
     "use strict";
 
+    
+
     return BaseController.extend("lrlpapp.controller.App", {
-      onInit() {
+      onInit: async function() {
+        const userName = this.getView().byId("userName");
+        const userImg = this.getView().byId("userImg");
+
+        let oModel = this.getOwnerComponent().getModel();
+        const user = await new Promise(function (resolve, reject) {
+                oModel.read("/userSet(User='sy-uname')", {
+                    success: function (oData) {
+                        resolve(oData)
+                    },
+                    error: function (oResult) {
+                        reject(oResult)
+                    }
+                });
+            })
+        
+        userName.setText(user.Name)
+        if (user.Image) {
+            userImg.setSrc(user.Image)
+        } else {
+            userImg.setSrc("sap-icon://person-placeholder")
+        }
+
         const urlHash = window.location.hash.split("/")[1];
 
         const navMobileDashboard = this.byId("navMobileDashboard");
