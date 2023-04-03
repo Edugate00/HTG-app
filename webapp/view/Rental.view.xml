@@ -116,7 +116,7 @@
                                                         text="{listTagihanSewa>NetValue}" />
                                                     <secondStatus>
                                                         <ObjectStatus
-                                                            text="{listTagihanSewa>PaymentStatus}"
+                                                            text="{listTagihanSewa>StatusTagihan}"
                                                             state="{listTagihanSewa>StatusType}" />
                                                     </secondStatus>
                                                 </ObjectListItem>
@@ -152,7 +152,7 @@
                                                         text="{listTagihanPengelolaan>NetValue}" />
                                                     <secondStatus>
                                                         <ObjectStatus
-                                                            text="{listTagihanPengelolaan>PaymentStatus}"
+                                                            text="{listTagihanPengelolaan>StatusTagihan}"
                                                             state="{listTagihanPengelolaan>StatusType}" />
                                                     </secondStatus>
                                                 </ObjectListItem>

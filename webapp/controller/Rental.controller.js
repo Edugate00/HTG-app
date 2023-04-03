@@ -67,10 +67,16 @@ sap.ui.define([
                 const material = billItem.Material.toLowerCase();
 
                 billItem.NetValue = Number(billItem.NetValue).toLocaleString("id-ID", {style:"currency", currency:"IDR"})
-                billItem.PaymentDate = el.PaymentDate
-                billItem.PaymentStatus = el.Status
-                billItem.Periode = el.PriceListDesc
-                billItem.StatusType = el.TipeStatus
+
+                if (el.ReleasedStatus === "") { 
+                    billItem.StatusTagihan = "Belum dirilis"
+                } else {
+                    billItem.StatusTagihan = el.Status
+                    billItem.PaymentDate = el.PaymentDate
+                    billItem.PaymentStatus = el.Status
+                    billItem.Periode = el.PriceListDesc
+                    billItem.StatusType = el.TipeStatus
+                }
 
                 if (salesDocument === noKontrak) {
                     if (material === "maintenance" || material === "pengelolaan") {
