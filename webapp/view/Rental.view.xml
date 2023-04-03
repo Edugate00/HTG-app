@@ -59,7 +59,7 @@
                             text="{rentalDetail>/KontrakStart} - {rentalDetail>/KontrakEnd}" />
                         <ObjectAttribute title="Nilai Sewa per bulan"
                             text="{rentalDetail>/NilaiSewaPerBln}" />
-                        <ObjectAttribute title="Biaya Pemeliharaan per bulan"
+                        <ObjectAttribute title="Biaya Pengelolaan per bulan"
                             text="{rentalDetail>/BiayaPemeliharaanPerBln}" />
                         <ObjectAttribute title="Ditagih setiap"
                             text="{rentalDetail>/TagihanSetiapDesc}" />
