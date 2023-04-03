@@ -38,6 +38,11 @@
 
 body {
     height: 100vh;
+}
+
+.main-container {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row-reverse;
     font-family: Arial, Helvetica, sans-serif;
@@ -183,41 +188,6 @@ body {
     color: var(--danger-color-40);
     background-color: var(--danger-color-10);
 }
-
-@media (max-width: 992px) {
-    #LOGIN_FORM {
-        padding: 56px;
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        flex-direction: column;
-    }
-
-    .hero-img {
-        display: none;
-    }
-
-    #LOGIN_PAGE {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #LOGIN_FORM {
-        padding: 56px;
-    }
-}
-
-@media (max-width: 576px) {
-    #LOGIN_FORM {
-        padding: 24px;
-    }
-}
-
 
 /* ORIGINAL ============================================ */
 input,
@@ -1214,5 +1184,39 @@ button {
 @@-webkit-keyframes sapUiSraFlowerScaleLeaf-5 {
     100% {
         -webkit-transform: scale(1.25) rotate(288deg);
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #LOGIN_FORM {
+        padding: 56px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+
+    .hero-img {
+        display: none;
+    }
+
+    #LOGIN_PAGE {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #LOGIN_FORM {
+        padding: 56px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    #LOGIN_FORM {
+        padding: 24px;
     }
 }
