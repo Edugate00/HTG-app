@@ -24,12 +24,12 @@
                     <Link
                         id="utility"
                         class="nav-link"
-                        text="Utilities"
+                        text="Air/Listrik"
                         press="onUtilityPress" />
                     <Link
                         id="rental"
                         class="nav-link"
-                        text="Rental"
+                        text="Sewa"
                         press="onRentalPress" />
                 </HBox>
             </HBox>
@@ -84,7 +84,7 @@
                     color="#ffffff" />
                 <Text
                     class="navMobile-text"
-                    text="Utility" />
+                    text="Air/Listrik" />
             </VBox>
             <VBox
                 id="navMobileRental"
@@ -95,7 +95,7 @@
                     color="#ffffff" />
                 <Text
                     class="navMobile-text"
-                    text="Rental" />
+                    text="Sewa" />
             </VBox>
         </HBox>
     </VBox>
