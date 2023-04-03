@@ -14,7 +14,7 @@
                 id="master"
                 showHeader="true"
                 backgroundDesign="List"
-                title="Tenant"
+                title="Kontrak Sewa"
                 class="sapUiResponsivePadding--header">
                 <List
                     id="tagihanRentalList"
@@ -45,7 +45,7 @@
                 backgroundDesign="List"
                 showNavButton="{device>/system/phone}"
                 navButtonPress="onNavBackToMaster"
-                title="Detail Tagihan"
+                title="Detail Kontrak Sewa"
                 class="sapUiResponsivePadding--header">
                 <ObjectHeader
                     title="{rentalDetail>/NamaTenant}"
@@ -53,6 +53,7 @@
                     responsive="{device>/system/phone}"
                     fullScreenOptimized="true">
                     <attributes>
+                        <ObjectAttribute text="{rentalDetail>/NomorKontrak}" title="No. Kontrak" />
                         <ObjectAttribute text="{rentalDetail>/KontainerDesc}" title="Kontainer" />
                         <ObjectAttribute title="Masa Kontrak"
                             text="{rentalDetail>/KontrakStart} - {rentalDetail>/KontrakEnd}" />
@@ -203,7 +204,7 @@
             <Page
                 id="detailEmpty"
                 backgroundDesign="List"
-                title="Detail Tagihan"
+                title="Detail Kontrak Sewa"
                 class="sapUiResponsivePadding--header">
                 <FlexBox
                     justifyContent="Center"
@@ -212,8 +213,8 @@
                     height="100%">
                     <IllustratedMessage
                         class="sapUiLargeMarginTop"
-                        description="Detail tagihan akan muncul disini setelah dipilih"
-                        title="Tidak ada tagihan yang dipilih"
+                        description="Detail kontrak sewa akan muncul disini"
+                        title="Silahkan pilih kontrak sewa"
                         illustrationType="sapIllus-PageNotFound"
                         visible="true" />
                 </FlexBox>

@@ -73,7 +73,7 @@ sap.ui.define([
                 billItem.StatusType = el.TipeStatus
 
                 if (salesDocument === noKontrak) {
-                    if (material === "maintenance") {
+                    if (material === "maintenance" || material === "pengelolaan") {
                         tagihanPengelolaan.push(billItem);
                     } else {
                         tagihanSewa.push(billItem);
@@ -103,6 +103,8 @@ sap.ui.define([
             rentalDetail.KontainerDesc = oSelectedData.KontainerDesc
             rentalDetail.KontrakStart = oSelectedData.KontrakStart
             rentalDetail.KontrakEnd = oSelectedData.KontrakEnd
+
+            console.log(rentalDetail);
 
             this.getView().setModel(new JSONModel(rentalDetail), "rentalDetail");
             this.getView().setModel(new JSONModel({listTagihanSewa: tagihanSewa}), "listTagihanSewa");
