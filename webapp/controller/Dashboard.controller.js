@@ -785,7 +785,7 @@ sap.ui.define(
             const releaseBilling = await this.createOdataService("/releaseBillingSet", request);
             
             if (releaseBilling.return === "Sukses") {
-                MessageBox.success("Tagihan sewa berhasil dirilis!", {
+                MessageBox.success("Tagihan berhasil dirilis!", {
                     icon: MessageBox.Icon.SUCCESS,
                     title: "Rilis Tagihan",
                     actions: [MessageBox.Action.OK],
