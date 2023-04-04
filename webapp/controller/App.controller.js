@@ -32,6 +32,8 @@ sap.ui.define(
             userImg.setSrc("sap-icon://person-placeholder")
         }
 
+        console.log(user)
+
         const urlHash = window.location.hash.split("/")[1];
 
         const navMobileDashboard = this.byId("navMobileDashboard");
