@@ -923,8 +923,15 @@ sap.ui.define(
       },
 
       cetakTagihan: function () {
+        let zInvoiceUrl;
+        const portURL = window.location.port
+
+        if (portURL === "8080") { zInvoiceUrl = `<iframe src="${DEV_116}" width="100%" height="500px"></iframe>` }
+        if (portURL === "8090") { zInvoiceUrl = `<iframe src="${QAS_400}" width="100%" height="500px"></iframe>` }
+        if (portURL === "80") { zInvoiceUrl = `<iframe src="${PRD_366}" width="100%" height="500px"></iframe>` }
+
         const oHTML = new HTML({
-            content: `<iframe src="${PRD_366}" width="100%" height="500px"></iframe>`,
+            content: zInvoiceUrl,
         })
 
         let widthContent = null;

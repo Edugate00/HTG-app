@@ -115,10 +115,16 @@ sap.ui.define(
         console.log("Perhitungan Tagihan Air");
         const oView = this.getView();
 
-        var oHtml2 = new sap.ui.core.HTML({
-          content:
-            `<iframe src="${PRD_366}" width="100%" height="450px"></iframe>`,
-        });
+        let zInvoiceUrl;
+        const portURL = window.location.port
+
+        if (portURL === "8080") { zInvoiceUrl = `<iframe src="${DEV_116}" width="100%" height="500px"></iframe>` }
+        if (portURL === "8090") { zInvoiceUrl = `<iframe src="${QAS_400}" width="100%" height="500px"></iframe>` }
+        if (portURL === "80") { zInvoiceUrl = `<iframe src="${PRD_366}" width="100%" height="500px"></iframe>` }
+
+        const oHtml2 = new HTML({
+            content: zInvoiceUrl,
+        })
 
         let width = null;
         console.log(widthWindow);
