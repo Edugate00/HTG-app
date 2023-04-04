@@ -52,7 +52,6 @@ sap.ui.define([
           );
 
           const tenant = FinalDataMeasDoc.map(el => el.Text);
-          console.log(tenant);
           const listTenant = tenant.filter((el, index) => tenant.indexOf(el) === index);
           const fixTenant = listTenant.map((text, index) => ({
             name: text,
@@ -61,20 +60,12 @@ sap.ui.define([
 
           let defaultItem = {name: 'Semua Tenant', id: '*'};
           fixTenant.push(defaultItem);
-
-          console.log(fixTenant);
           
-          this.getView().setModel(
-            new JSONModel({ tenantList: fixTenant }),
-            "Tenant"
-          );
-
+          this.getView().setModel(new JSONModel({ tenantList: fixTenant }), "Tenant");
         },
 
         onListItemPress: async function (oEvent) {
-            const oContext = oEvent
-            .getParameter("listItem")
-            .getBindingContext("MeasDoc");
+            const oContext = oEvent.getParameter("listItem").getBindingContext("MeasDoc");
         },
 
         openFilterDialog: function() {
