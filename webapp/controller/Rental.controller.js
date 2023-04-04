@@ -39,7 +39,7 @@ sap.ui.define([
                 }
             })
 
-            console.log(oRentalMaster);
+            // console.log(oRentalMaster);
 
             // console.log(rentalMaster);
             this.getView().setModel(new JSONModel({rentalMaster: rentalMaster}), "rentalMaster");
@@ -72,11 +72,12 @@ sap.ui.define([
                     billItem.StatusTagihan = "Belum dirilis"
                 } else {
                     billItem.StatusTagihan = el.Status
-                    billItem.PaymentDate = el.PaymentDate
-                    billItem.PaymentStatus = el.Status
-                    billItem.Periode = el.PriceListDesc
                     billItem.StatusType = el.TipeStatus
                 }
+
+                billItem.PaymentDate = el.PaymentDate
+                billItem.PaymentStatus = el.Status
+                billItem.Periode = el.PriceListDesc
 
                 if (salesDocument === noKontrak) {
                     if (material === "maintenance" || material === "pengelolaan") {
@@ -101,16 +102,16 @@ sap.ui.define([
                 }
             })
 
-            // console.log(tagihanSewa)
+            console.log(tagihanSewa)
             // console.log(tagihanPengelolaan)
-            console.log(tagihanAir)
+            // console.log(tagihanAir)
 
             rentalDetail.Kontainer = oSelectedData.Kontainer
             rentalDetail.KontainerDesc = oSelectedData.KontainerDesc
             rentalDetail.KontrakStart = oSelectedData.KontrakStart
             rentalDetail.KontrakEnd = oSelectedData.KontrakEnd
 
-            console.log(rentalDetail);
+            // console.log(rentalDetail);
 
             this.getView().setModel(new JSONModel(rentalDetail), "rentalDetail");
             this.getView().setModel(new JSONModel({listTagihanSewa: tagihanSewa}), "listTagihanSewa");

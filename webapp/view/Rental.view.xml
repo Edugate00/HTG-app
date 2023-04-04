@@ -91,7 +91,7 @@
                         <items>
                             <IconTabFilter
                                 key="sewa"
-                                text="Tagihan Sewa">
+                                text="Skema Sewa">
                                 <l:VerticalLayout
                                     class="sapUiContentPadding sapUiLargeMarginBottom"
                                     width="100%">
@@ -127,7 +127,7 @@
                             </IconTabFilter>
                             <IconTabFilter
                                 key="pengelolaan"
-                                text="Tagihan Pengelolaan">
+                                text="Skema Pengelolaan">
                                 <l:VerticalLayout
                                     class="sapUiContentPadding sapUiLargeMarginBottom"
                                     width="100%">
