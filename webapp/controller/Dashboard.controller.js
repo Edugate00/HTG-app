@@ -27,6 +27,11 @@ sap.ui.define(
   ) {
     "use strict";
 
+    // Link ZInvoice Slipstream
+    const PRD_366 = "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X"
+    const QAS_400 = "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X"
+    const DEV_116 = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X"
+
     const itemsForTenant = [
       { key: "3bulan", text: "3 Bulan" },
       { key: "6bulan", text: "6 Bulan" },
@@ -919,7 +924,7 @@ sap.ui.define(
 
       cetakTagihan: function () {
         const oHTML = new HTML({
-            content: '<iframe src="https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X" width="100%" height="500px"></iframe>',
+            content: `<iframe src="${PRD_366}" width="100%" height="500px"></iframe>`,
         })
 
         let widthContent = null;
