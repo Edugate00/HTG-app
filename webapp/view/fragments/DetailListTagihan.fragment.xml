@@ -103,7 +103,7 @@
         </beginButton>
         <endButton>
             <Button
-                text="Cetak Tagihan"
+                text="Lihat Tagihan"
                 type="Emphasized"
                 press="onDetailTagihanCetak" />
         </endButton>

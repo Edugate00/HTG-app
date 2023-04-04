@@ -35,14 +35,14 @@ sap.ui.define(
         //Read oData for setting tagihan utilities List
         let oTagihanUtility = [];
 
-        console.log(oBilling);
+        // console.log(oBilling);
 
         oBilling.forEach((el) => {
           if (el.ReleasedStatus === "X") {
             oTagihanUtility.push(el);
           }
         });
-        console.log(oTagihanUtility);
+        // console.log(oTagihanUtility);
 
         this.getView().setModel(
           new JSONModel({ utilityList: oTagihanUtility }),
@@ -102,7 +102,7 @@ sap.ui.define(
       },
 
       _onPemakaianListrik: function (oEvent) {
-        console.log("Pemakaian Listrik");
+        // console.log("Pemakaian Listrik");
       },
       _onPindaiMeteran: function (oEvent) {
         this.getRouter().navTo("meteran");
@@ -112,7 +112,7 @@ sap.ui.define(
       },
 
       _onTagihanAirClick: function (oEvent) {
-        console.log("Perhitungan Tagihan Air");
+        // console.log("Perhitungan Tagihan Air");
         const oView = this.getView();
 
         let zInvoiceUrl;
@@ -127,7 +127,7 @@ sap.ui.define(
         })
 
         let width = null;
-        console.log(widthWindow);
+        // console.log(widthWindow);
 
         if (widthWindow < 576 || widthWindow > 1400) {
           width = "100%";
@@ -142,7 +142,7 @@ sap.ui.define(
             contentHeight: "450px",
             content: oHtml2,
             endButton: new Button({
-              text: "Close",
+              text: "Tutup",
               press: function () {
                 // this.oFixedSizeDialog.destroyContent();
                 this.oFixedSizeDialog.close();
@@ -285,8 +285,8 @@ sap.ui.define(
         } else {
           oFilter3 = [];
         }
-        console.log(oFilter3);
-        console.log(monthSelected);
+        // console.log(oFilter3);
+        // console.log(monthSelected);
         oFilters = new Filter({
           filters: [oFilter1, oFilter2, oFilter3],
           and: true,
@@ -337,6 +337,57 @@ sap.ui.define(
         // oDialog.destroyContent(oHtml);
         this.byId("detailListTagihan").close();
       },
+
+      onDetailTagihanCetak: function () {
+        const detailTagihan = this.getView().byId("detailListTagihan").getModel('tagihan');
+        const oData = detailTagihan.oData.detailTagihan[0]
+
+        // Set sessionStorage for ZInvoice Flavor
+        sessionStorage.setItem("BILL_NUMBER", oData.BillingNumber);
+
+        this.cetakTagihan();
+        // console.log(oData);
+      },
+
+      cetakTagihan: function () {
+        let zInvoiceUrl;
+        const portURL = window.location.port
+
+        if (portURL === "8080") { zInvoiceUrl = `<iframe src="${DEV_116}" width="100%" height="500px"></iframe>` }
+        if (portURL === "8090") { zInvoiceUrl = `<iframe src="${QAS_400}" width="100%" height="500px"></iframe>` }
+        if (portURL === "80") { zInvoiceUrl = `<iframe src="${PRD_366}" width="100%" height="500px"></iframe>` }
+
+        const oHTML = new HTML({
+            content: zInvoiceUrl,
+        })
+
+        let widthContent = null;
+        let widthWindow = window.screen.width;
+
+        if (widthWindow < 576 || widthWindow > 1400) {
+            widthContent = "100%";
+        } else {
+            widthContent = "70%";
+        };
+
+        if (!this.oZInvoiceDialog) {
+            this.oZInvoiceDialog = new Dialog({
+                title: "Cetak tagihan",
+                contentWidth: widthContent,
+                contentHeight: "500px",
+                content: oHTML,
+                endButton: new Button({
+                    text: "Tutup",
+                    press: function () {
+                        this.oZInvoiceDialog.close();
+                    }.bind(this),
+                })
+            })
+
+            this.getView().addDependent(this.oZInvoiceDialog);
+        }
+        this.oZInvoiceDialog.open();
+      }
     });
   }
 );

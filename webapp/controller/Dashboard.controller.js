@@ -953,7 +953,8 @@ sap.ui.define(
                     text: "Tutup",
                     press: function () {
                         this.oZInvoiceDialog.close();
-                        window.location.reload()
+                        // if (this.byId("belumCetakDialog")) { this.byId("belumCetakDialog").close() };
+                        // if (this.byId("detailListTagihan")) { this.byId("detailListTagihan").close(); };
                     }.bind(this),
                 })
             })
