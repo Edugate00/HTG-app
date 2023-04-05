@@ -29,21 +29,16 @@ sap.ui.define(
     const ZINVOICE_PRD_366 = "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X"
     const ZINVOICE_QAS_400 = "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X"
     const ZINVOICE_DEV_116 = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X"
+    
+    const widthWindow = window.screen.width;
+    const fromDashboard = sessionStorage.getItem("TAGIHAN_AIR_FROM_DASHBOARD");
+    const oBilling = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
+    const MEASPOINT = JSON.parse(sessionStorage.getItem("MEASPOINT"));
 
     return BaseController.extend("lrlpapp.controller.Utility", {
-      onAfterRendering: async function () {
-        const widthWindow = window.screen.width;
-        const oBilling = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
-        const fromDashboard = sessionStorage.getItem("TAGIHAN_AIR_FROM_DASHBOARD");
-        
+      onAfterRendering: function () {
         const needToScan = [];
         let needToScanDesc = "";
-        let MEASPOINT = [];
-
-        const oMeasPoint = await this.readOdataService("/measurementPointSet", "MeasPointToMeasDoc" );
-        oMeasPoint.results.forEach((el) => {
-          MEASPOINT.push(el);
-        });
         
         MEASPOINT.forEach((el) => {
           const getMonth = new Date().getMonth() + 1;
@@ -106,6 +101,14 @@ sap.ui.define(
           "Tenant"
         );
 
+        
+        if (fromDashboard) {
+          this._onTagihanAirClick();
+          setTimeout(() => {
+            sessionStorage.removeItem("TAGIHAN_AIR_FROM_DASHBOARD");
+          }, 5000);
+        }
+
         //Tiles Event
         const tilePemakaianListrik = this.getView().byId(
           "tilePemakaianListrik"
@@ -130,13 +133,6 @@ sap.ui.define(
           this._onTagihanAirClick,
           this
         );
-
-        if (fromDashboard) {
-          this._onTagihanAirClick();
-          setTimeout(() => {
-            sessionStorage.removeItem("TAGIHAN_AIR_FROM_DASHBOARD");
-          }, 5000);
-        }
       },
 
       _onPemakaianListrik: function (oEvent) {
@@ -149,7 +145,7 @@ sap.ui.define(
         this.getRouter().navTo("reportair");
       },
 
-      _onTagihanAirClick: function (oEvent) {
+      _onTagihanAirClick: function () {
         // console.log("Perhitungan Tagihan Air");
         const oView = this.getView();
 

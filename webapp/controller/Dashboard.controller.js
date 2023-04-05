@@ -229,6 +229,7 @@ sap.ui.define(
         }
 
         tagihanAirToCreate = scanned.length - tagihanAir.length;
+        tagihanAirToCreate = (tagihanAirToCreate <= 0) ? 0 : tagihanAirToCreate;
 
         BILLING_FV.forEach((el) => {
           if (el.ReleasedStatus !== "X") {
