@@ -864,6 +864,12 @@ sap.ui.define(
 
       onBelumCetakDialogClose: function () {
         this.byId("belumCetakDialog").close();
+        const isUpdate = sessionStorage.getItem("UPDATE_ODATA");
+        if (isUpdate) { 
+            sessionStorage.removeItem("UPDATE_ODATA")
+            // window.location.reload()
+            this.onAfterRendering();
+        }
       },
 
       onDetailTagihanClose: function () {
@@ -953,8 +959,27 @@ sap.ui.define(
                     text: "Tutup",
                     press: function () {
                         this.oZInvoiceDialog.close();
-                        // if (this.byId("belumCetakDialog")) { this.byId("belumCetakDialog").close() };
-                        // if (this.byId("detailListTagihan")) { this.byId("detailListTagihan").close(); };
+                        if (this.byId("belumCetakDialog")) {
+                            let items = [];
+                            const oList = this.getView().byId("listBelumCetak")
+                            const oSelectedItems = oList.getSelectedItems();
+                            oSelectedItems.forEach((el) => {
+                                items.push(el.getBindingContext("belumCetak").getObject());
+                            });
+
+                            oList.setBusy(true)
+                            setTimeout(() => {
+                                oList.setBusy(false)
+                                oSelectedItems.forEach((el) => { oList.removeItem(el) });
+                            }, 3000)
+
+                            sessionStorage.setItem("UPDATE_ODATA", true);
+                        };
+
+                        if (this.byId("detailListTagihan")) { 
+                            this.byId("detailListTagihan").close();
+                            this.onAfterRendering();
+                        };
                     }.bind(this),
                 })
             })
