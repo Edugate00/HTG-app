@@ -30,13 +30,46 @@ sap.ui.define(
     const ZINVOICE_QAS_400 = "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X"
     const ZINVOICE_DEV_116 = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X"
 
-
-    const widthWindow = window.screen.width;
-    const oBilling = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
-    const fromDashboard = sessionStorage.getItem("TAGIHAN_AIR_FROM_DASHBOARD");
-
     return BaseController.extend("lrlpapp.controller.Utility", {
-      onAfterRendering: function () {
+      onAfterRendering: async function () {
+        const widthWindow = window.screen.width;
+        const oBilling = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
+        const fromDashboard = sessionStorage.getItem("TAGIHAN_AIR_FROM_DASHBOARD");
+        
+        const needToScan = [];
+        let needToScanDesc = "";
+        let MEASPOINT = [];
+
+        const oMeasPoint = await this.readOdataService("/measurementPointSet", "MeasPointToMeasDoc" );
+        oMeasPoint.results.forEach((el) => {
+          MEASPOINT.push(el);
+        });
+        
+        MEASPOINT.forEach((el) => {
+          const getMonth = new Date().getMonth() + 1;
+          const stringMonth = getMonth <= 9 ? `0${getMonth}` : `${getMonth}`;
+          const lastMeasDoc = el.MeasPointToMeasDoc.results[0];
+
+          if (el.MeasPointToMeasDoc.results.length !== 0) {
+            if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
+              needToScan.push(el);
+              needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
+            } 
+          } else {
+            if (el.Text !== "") { needToScan.push(el); }
+          }
+        })
+        needToScanDesc = needToScanDesc.slice(0, needToScanDesc.length - 2)
+
+        // this code below is for the Dynamic Number of Tiles in Dashboard
+        const notifCounter = new JSONModel({
+          notif: [
+            { pindaiMeteran: `${needToScan.length}` },
+            { pindaiMeteranDesc: `${needToScanDesc}` }
+          ],
+        });
+        this.getView().setModel(notifCounter, "notif");
+        
         //Read oData for setting tagihan utilities List
         let oTagihanUtility = [];
 

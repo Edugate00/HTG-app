@@ -43,10 +43,14 @@
                             text="Pindai Meteran" />
                     </FlexBox>
                     <VBox class="tile-info">
-                        <!-- <Text
-							class="dynamic-number"
-							text="3" />
-						<Text text="Tagihan untuk dicetak" /> -->
+                        <FlexBox alignItems="Center" items="{notif>/notif}">
+                            <Text
+                                class="dynamic-number"
+                                text="{notif>pindaiMeteran}" />
+                        </FlexBox>
+                        <HBox items="{notif>/notif}">
+                            <Text text="{notif>pindaiMeteranDesc}" />
+                        </HBox>
                     </VBox>
                 </VBox>
                 <VBox
