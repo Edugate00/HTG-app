@@ -101,10 +101,8 @@ sap.ui.define([
             oFilter2 = [];
           }
 
-          console.log(oFilter1)
           oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
-          measDocList.getBinding("items").filter(oFilter1);
-          console.log(measDocList.getBinding("items"));
+          measDocList.getBinding("items").filter(oFilters);
         },
 
         onMonthFilter: function(oEvent) {
@@ -128,7 +126,7 @@ sap.ui.define([
           }
 
           oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
-          measDocList.getBinding("items").filter(oFilter1);
+          measDocList.getBinding("items").filter(oFilters);
         },
 
 
