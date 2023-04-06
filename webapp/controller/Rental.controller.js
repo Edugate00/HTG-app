@@ -161,6 +161,7 @@ sap.ui.define([
                 BILLING_FV.forEach(el => {
                     if (el.BillingNumber === oSelectedList.BillingNumber){ 
                         oSelectedListFinal = el;
+                        sessionStorage.setItem("BILL_NUMBER", el.BillingNumber)
                         if (el.ReleasedStatus === "X") { isRilis = true }
                      }
                 })
@@ -168,6 +169,7 @@ sap.ui.define([
                 BILLING_ZUTL.forEach(el => {
                     if (el.BillingNumber === oSelectedList.BillingNumber){ 
                         oSelectedListFinal = el;
+                        sessionStorage.setItem("BILL_NUMBER", el.BillingNumber)
                         if (el.ReleasedStatus === "X") { isRilis = true }
                      }
                 })
