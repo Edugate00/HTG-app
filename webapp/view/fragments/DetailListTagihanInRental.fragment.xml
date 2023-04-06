@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:c="sap.ui.core">
     <Dialog
-        id="detailListTagihan"
+        id="detailListTagihanRental"
         title="Detail Tagihan"
         contentWidth="480px"
         type="Standard">
@@ -95,11 +95,5 @@
                 </VBox>
             </FlexBox>
         </content>
-        <beginButton>
-            <Button
-                text="Tutup"
-                type="Default"
-                press="onDetailTagihanClose" />
-        </beginButton>
     </Dialog>
 </c:FragmentDefinition>

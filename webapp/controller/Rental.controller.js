@@ -4,12 +4,23 @@ sap.ui.define([
 	 "sap/ui/Device",
      "sap/ui/core/Fragment",
 	 "sap/ui/model/json/JSONModel",
+	"sap/m/Button",
+    "sap/ui/core/HTML",
+    "sap/m/Dialog"
 ], function (BaseController,
 	MessageToast,
 	Device,
-    Fragment,
-	JSONModel) {
+	Fragment,
+	JSONModel,
+	Button,
+	HTML,
+	Dialog) {
 	"use strict";
+
+    // Link ZInvoice Slipstream
+    const PRD_366 = "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X"
+    const QAS_400 = "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X"
+    const DEV_116 = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X"
 
 	return BaseController.extend("lrlpapp.controller.Rental", {
 		onAfterRendering: async function () {
@@ -123,7 +134,7 @@ sap.ui.define([
 		},
 
         onSelectListTagihan: function (oEvent) {
-            let oPath, oListTagihan, oSelectedList, oSelectedListFinal, isRent = false;
+            let oPath, oListTagihan, oSelectedList, oSelectedListFinal, isRent = false, isRilis = false;
 
             const BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
             const BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
@@ -142,18 +153,23 @@ sap.ui.define([
             } else if (oAirContext){
                 oPath = oAirContext.getPath().slice(16)
                 oListTagihan = this.getView().byId("listTagihanAir").getBinding("items").oList;
-                console.log(oPath);
             }
 
-            oSelectedList = oListTagihan[oPath]
+            oSelectedList = oListTagihan[oPath];
 
             if (isRent) {
                 BILLING_FV.forEach(el => {
-                    if (el.BillingNumber === oSelectedList.BillingNumber){ oSelectedListFinal = el; }
+                    if (el.BillingNumber === oSelectedList.BillingNumber){ 
+                        oSelectedListFinal = el;
+                        if (el.ReleasedStatus === "X") { isRilis = true }
+                     }
                 })
             } else {
                 BILLING_ZUTL.forEach(el => {
-                    if (el.BillingNumber === oSelectedList.BillingNumber){ oSelectedListFinal = el; }
+                    if (el.BillingNumber === oSelectedList.BillingNumber){ 
+                        oSelectedListFinal = el;
+                        if (el.ReleasedStatus === "X") { isRilis = true }
+                     }
                 })
             }
 
@@ -161,25 +177,134 @@ sap.ui.define([
             const oModel = { detailTagihan: [{ ...oSelectedListFinal }] };
 
             if (!this.dialogName) {
-            this.dialogName = Fragment.load({
-                id: oView.getId(),
-                name: `lrlpapp.view.fragments.DetailListTagihanInRental`,
-                controller: this,
-            }).then(function (oDialog) {
-                oDialog.setModel(oView.getModel());
-                oDialog.setModel(new JSONModel(oModel), "tagihan");
-                return oDialog;
-            });
+                this.dialogName = Fragment.load({
+                    id: oView.getId(),
+                    name: `lrlpapp.view.fragments.DetailListTagihanInRental`,
+                    controller: this,
+                }).then(function (oDialog) {
+                    if (isRilis) {
+                        oDialog.setBeginButton(new Button({ 
+                            text: "Tutup",
+                            press: function () {
+                                oDialog.close()
+                            }
+                        }))
+                        oDialog.setEndButton( new Button({ 
+                            text: "Lihat Tagihan",
+                            type: "Emphasized",
+                            press: function () {
+                                let zInvoiceUrl;
+                                const portURL = window.location.port
+
+                                if (portURL === "8080") { zInvoiceUrl = `<iframe src="${DEV_116}" width="100%" height="500px"></iframe>` }
+                                if (portURL === "8090") { zInvoiceUrl = `<iframe src="${QAS_400}" width="100%" height="500px"></iframe>` }
+                                if (portURL === "80") { zInvoiceUrl = `<iframe src="${PRD_366}" width="100%" height="500px"></iframe>` }
+
+                                const oHTML = new HTML({
+                                    content: zInvoiceUrl,
+                                })
+
+                                let widthContent = null;
+                                let widthWindow = window.screen.width;
+
+                                if (widthWindow < 576 || widthWindow > 1400) {
+                                    widthContent = "100%";
+                                } else {
+                                    widthContent = "70%";
+                                };
+
+                                if (!this.oZInvoiceDialog) {
+                                    this.oZInvoiceDialog = new Dialog({
+                                        title: "Cetak tagihan",
+                                        contentWidth: widthContent,
+                                        contentHeight: "500px",
+                                        content: oHTML,
+                                        endButton: new Button({
+                                            text: "Tutup",
+                                            press: function () {
+                                                this.oZInvoiceDialog.close();
+                                            }.bind(this),
+                                        })
+                                    })
+
+                                    // this.getView().addDependent(this.oZInvoiceDialog);
+                                }
+                                this.oZInvoiceDialog.open();
+                            }
+                        }))
+                    } else {
+                        oDialog.setBeginButton(new Button({ 
+                            text: "Tutup",
+                            press: function () {
+                                oDialog.close()
+                            }
+                        }))
+                    }
+                    oDialog.setModel(oView.getModel());
+                    oDialog.setModel(new JSONModel(oModel), "tagihan");
+                    return oDialog;
+                });
             }
 
+            
             this.dialogName.then(function (oDialog) {
+                if (isRilis) {
+                    oDialog.setBeginButton(new Button({ 
+                        text: "Tutup",
+                        press: function () {
+                            oDialog.close()
+                        }
+                    }))
+                    oDialog.setEndButton( new Button({ 
+                        text: "Lihat Tagihan",
+                        type: "Emphasized",
+                        press: function () {
+                            let zInvoiceUrl;
+                            const portURL = window.location.port
+
+                            if (portURL === "8080") { zInvoiceUrl = `<iframe src="${DEV_116}" width="100%" height="500px"></iframe>` }
+                            if (portURL === "8090") { zInvoiceUrl = `<iframe src="${QAS_400}" width="100%" height="500px"></iframe>` }
+                            if (portURL === "80") { zInvoiceUrl = `<iframe src="${PRD_366}" width="100%" height="500px"></iframe>` }
+
+                            const oHTML = new HTML({
+                                content: zInvoiceUrl,
+                            })
+
+                            let widthContent = null;
+                            let widthWindow = window.screen.width;
+
+                            if (widthWindow < 576 || widthWindow > 1400) {
+                                widthContent = "100%";
+                            } else {
+                                widthContent = "70%";
+                            };
+
+                            if (!this.oZInvoiceDialog) {
+                                this.oZInvoiceDialog = new Dialog({
+                                    title: "Cetak tagihan",
+                                    contentWidth: widthContent,
+                                    contentHeight: "500px",
+                                    content: oHTML,
+                                    endButton: new Button({
+                                        text: "Tutup",
+                                        press: function () {
+                                            this.oZInvoiceDialog.close();
+                                        }.bind(this),
+                                    })
+                                })
+
+                                // this.getView().addDependent(this.oZInvoiceDialog);
+                            }
+                            this.oZInvoiceDialog.open();
+                        }
+                    }))
+                } else {
+                    oDialog.destroyEndButton();
+                }
                 oDialog.setModel(oView.getModel());
                 oDialog.setModel(new JSONModel(oModel), "tagihan");
                 oDialog.open();
             });
-            // console.log(oContext)
-            // const listTagihan = this.getView().byId("tagihanList").getBinding("items").oList;
-            // const selectedList = listTagihan[oContext];
         },
 
         onNavBackToMaster: function () {
@@ -199,8 +324,44 @@ sap.ui.define([
 				return result;
 		},
 
-        onDetailTagihanClose: function () {
-            this.byId("detailListTagihan").close();
+        cetakTagihan: function () {
+            let zInvoiceUrl;
+            const portURL = window.location.port
+
+            if (portURL === "8080") { zInvoiceUrl = `<iframe src="${DEV_116}" width="100%" height="500px"></iframe>` }
+            if (portURL === "8090") { zInvoiceUrl = `<iframe src="${QAS_400}" width="100%" height="500px"></iframe>` }
+            if (portURL === "80") { zInvoiceUrl = `<iframe src="${PRD_366}" width="100%" height="500px"></iframe>` }
+
+            const oHTML = new HTML({
+                content: zInvoiceUrl,
+            })
+
+            let widthContent = null;
+            let widthWindow = window.screen.width;
+
+            if (widthWindow < 576 || widthWindow > 1400) {
+                widthContent = "100%";
+            } else {
+                widthContent = "70%";
+            };
+
+            if (!this.oZInvoiceDialog) {
+                this.oZInvoiceDialog = new Dialog({
+                    title: "Cetak tagihan",
+                    contentWidth: widthContent,
+                    contentHeight: "500px",
+                    content: oHTML,
+                    endButton: new Button({
+                        text: "Tutup",
+                        press: function () {
+                            this.oZInvoiceDialog.close();
+                        }.bind(this),
+                    })
+                })
+
+                // this.getView().addDependent(this.oZInvoiceDialog);
+            }
+            this.oZInvoiceDialog.open();
         }
 	});
 });
