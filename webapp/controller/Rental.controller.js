@@ -6,7 +6,8 @@ sap.ui.define([
 	 "sap/ui/model/json/JSONModel",
 	"sap/m/Button",
     "sap/ui/core/HTML",
-    "sap/m/Dialog"
+    "sap/m/Dialog",
+    "sap/ui/model/Sorter"
 ], function (BaseController,
 	MessageToast,
 	Device,
@@ -14,7 +15,8 @@ sap.ui.define([
 	JSONModel,
 	Button,
 	HTML,
-	Dialog) {
+	Dialog,
+	Sorter) {
 	"use strict";
 
     // Link ZInvoice Slipstream
@@ -113,7 +115,7 @@ sap.ui.define([
                 }
             })
 
-            console.log(tagihanSewa)
+            // console.log(tagihanSewa)
             // console.log(tagihanPengelolaan)
             // console.log(tagihanAir)
 
@@ -326,44 +328,76 @@ sap.ui.define([
 				return result;
 		},
 
-        cetakTagihan: function () {
-            let zInvoiceUrl;
-            const portURL = window.location.port
+        onSewaAscending: function () {
+            const listTagihanSewa = this.byId("listTagihanSewa");
+            const btnAsc = this.byId("btnSewaAsc");
+            const btnDesc = this.byId("btnSewaDesc");
+            let oSorter;
 
-            if (portURL === "8080") { zInvoiceUrl = `<iframe src="${DEV_116}" width="100%" height="500px"></iframe>` }
-            if (portURL === "8090") { zInvoiceUrl = `<iframe src="${QAS_400}" width="100%" height="500px"></iframe>` }
-            if (portURL === "80") { zInvoiceUrl = `<iframe src="${PRD_366}" width="100%" height="500px"></iframe>` }
+            btnAsc.setType("Emphasized")
+            btnDesc.setType("Default")
+            oSorter = new Sorter("BillingNumber", false);
+            listTagihanSewa.getBinding("items").sort(oSorter)
+        },
 
-            const oHTML = new HTML({
-                content: zInvoiceUrl,
-            })
+        onSewaDescending: function () {
+            const listTagihanSewa = this.byId("listTagihanSewa");
+            const btnAsc = this.byId("btnSewaAsc");
+            const btnDesc = this.byId("btnSewaDesc");
+            let oSorter;
 
-            let widthContent = null;
-            let widthWindow = window.screen.width;
+            btnAsc.setType("Default")
+            btnDesc.setType("Emphasized")
+            oSorter = new Sorter("BillingNumber", true);
+            listTagihanSewa.getBinding("items").sort(oSorter)
+        },
 
-            if (widthWindow < 576 || widthWindow > 1400) {
-                widthContent = "100%";
-            } else {
-                widthContent = "70%";
-            };
+        onPengelolaanAscending: function () {
+            const listTagihanPengelolaan = this.byId("listTagihanPengelolaan");
+            const btnAsc = this.byId("btnPengelolaanAsc");
+            const btnDesc = this.byId("btnPengelolaanDesc");
+            let oSorter;
 
-            if (!this.oZInvoiceDialog) {
-                this.oZInvoiceDialog = new Dialog({
-                    title: "Cetak tagihan",
-                    contentWidth: widthContent,
-                    contentHeight: "500px",
-                    content: oHTML,
-                    endButton: new Button({
-                        text: "Tutup",
-                        press: function () {
-                            this.oZInvoiceDialog.close();
-                        }.bind(this),
-                    })
-                })
+            btnAsc.setType("Emphasized")
+            btnDesc.setType("Default")
+            oSorter = new Sorter("BillingNumber", false);
+            listTagihanPengelolaan.getBinding("items").sort(oSorter)
+        },
 
-                // this.getView().addDependent(this.oZInvoiceDialog);
-            }
-            this.oZInvoiceDialog.open();
-        }
+        onPengelolaanDescending: function () {
+            const listTagihanPengelolaan = this.byId("listTagihanPengelolaan");
+            const btnAsc = this.byId("btnPengelolaanAsc");
+            const btnDesc = this.byId("btnPengelolaanDesc");
+            let oSorter;
+
+            btnAsc.setType("Default")
+            btnDesc.setType("Emphasized")
+            oSorter = new Sorter("BillingNumber", true);
+            listTagihanPengelolaan.getBinding("items").sort(oSorter)
+        },
+
+        onAirAscending: function () {
+            const listTagihanAir = this.byId("listTagihanAir");
+            const btnAsc = this.byId("btnAirAsc");
+            const btnDesc = this.byId("btnAirDesc");
+            let oSorter;
+
+            btnAsc.setType("Emphasized")
+            btnDesc.setType("Default")
+            oSorter = new Sorter("BillingNumber", false);
+            listTagihanAir.getBinding("items").sort(oSorter)
+        },
+
+        onAirDescending: function () {
+            const listTagihanAir = this.byId("listTagihanAir");
+            const btnAsc = this.byId("btnAirAsc");
+            const btnDesc = this.byId("btnAirDesc");
+            let oSorter;
+
+            btnAsc.setType("Default")
+            btnDesc.setType("Emphasized")
+            oSorter = new Sorter("BillingNumber", true);
+            listTagihanAir.getBinding("items").sort(oSorter)
+        },
 	});
 });
