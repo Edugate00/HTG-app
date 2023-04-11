@@ -110,11 +110,12 @@
             <HBox class="bills-and-utility">
                 <VBox class="card-tagihan card">
                     <FlexBox
-                        class="card-header">
+                        class="card-header" justifyContent="SpaceBetween">
                         <Text
                             class="card-title"
                             text="Tagihan Tercetak" />
-                        <HBox>
+                        <Button icon="sap-icon://filter" press="openFilterDialog" />
+                        <!-- <HBox>
                             <ComboBox
                                 id="ComboBoxTagihanTenant"
                                 width="132px"
@@ -155,7 +156,7 @@
                                     key="unpaid"
                                     text="Belum dibayar" />
                             </ComboBox>
-                        </HBox>
+                        </HBox> -->
                     </FlexBox>
                     <ScrollContainer
                         height="90%"
