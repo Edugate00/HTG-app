@@ -5,7 +5,7 @@
         id="filterDialog"
         title="Filter"
         type="Standard"
-        contentHeight="400px">
+        contentHeight="440px">
         <content>
             <VBox class="card-content" width="100%" height="100%">
                 <VBox width="100%" class="sapUiSmallMarginBottom">
@@ -25,6 +25,54 @@
                         <RadioButton id="RB2-1" text="Sudah dibayar" />
                         <RadioButton id="RB2-2" text="Belum dibayar" />
                     </RadioButtonGroup>
+                </VBox>
+                <VBox width="100%" class="sapUiSmallMarginBottom">
+                    <Label text="Periode" />
+                    <ComboBox
+                        id="filterPeriod"
+                        width="100%"
+                        selectedKey="*"
+                        class="sapUiTinyMarginEnd sapMCbAutoFocus">
+                        <core:Item
+                            key="*"
+                            text="Semua Periode" />
+                        <core:Item
+                            key="Januari"
+                            text="Januari" />
+                        <core:Item
+                            key="Februari"
+                            text="Februari" />
+                        <core:Item
+                            key="Maret"
+                            text="Maret" />
+                        <core:Item
+                            key="April"
+                            text="April" />
+                        <core:Item
+                            key="Mei"
+                            text="Mei" />
+                        <core:Item
+                            key="Juni"
+                            text="Juni" />
+                        <core:Item
+                            key="Juli"
+                            text="Juli" />
+                        <core:Item
+                            key="Agustus"
+                            text="Agustus" />
+                        <core:Item
+                            key="September"
+                            text="September" />
+                        <core:Item
+                            key="Oktober"
+                            text="Oktober" />
+                        <core:Item
+                            key="November"
+                            text="November" />
+                        <core:Item
+                            key="Desember"
+                            text="Desember" />
+                    </ComboBox>
                 </VBox>
                 <VBox width="100%" class="sapUiSmallMarginBottom">
                     <Label labelFor="rbg3" text="Urutkan" />

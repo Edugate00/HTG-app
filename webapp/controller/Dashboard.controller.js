@@ -840,15 +840,17 @@ sap.ui.define(
       },
 
       onApplyFIlter: function () {
-        let oFilter1, oFilter2, oFilters, oSort;
+        let oFilter1, oFilter2, oFilter3, oFilters, oSort;
 
         const rbg1 = this.getView().byId("rbg1");
         const rbg2 = this.getView().byId("rbg2");
         const rbg3 = this.getView().byId("rbg3");
+        const comboBoxPeriode = this.getView().byId("filterPeriod");
         const tagihanList = this.byId("tagihanList");
 
         const selectedTenant = rbg1.getSelectedButton().getText()
         const selectedStatus = rbg2.getSelectedButton().getText()
+        const selectedPeriod = comboBoxPeriode.getValue();
         const selectedSort = rbg3.getSelectedButton().getText()
 
         if (selectedTenant !== "Semua Tenant") {
@@ -865,7 +867,13 @@ sap.ui.define(
             oFilter2 = [];
         }
 
-        oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
+        if (selectedPeriod !== "Semua Periode") {
+            oFilter3 = new Filter("BillingDate", FilterOperator.Contains, selectedPeriod);
+        } else {
+            oFilter3 = [];
+        }
+
+        oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
 
         if (selectedSort === "Ascending") {
             oSort = new Sorter("BillingNumber", false);

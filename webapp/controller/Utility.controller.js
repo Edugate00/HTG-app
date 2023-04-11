@@ -6,18 +6,20 @@ sap.ui.define(
     "sap/m/Dialog",
     "sap/m/Button",
     "sap/ui/core/HTML",
+    "sap/ui/model/Sorter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
   function (
     BaseController,
-    JSONModel,
-    Fragment,
-    Dialog,
-    Button,
-    HTML,
-    Filter,
-    FilterOperator
+	JSONModel,
+	Fragment,
+	Dialog,
+	Button,
+	HTML,
+	Sorter,
+	Filter,
+	FilterOperator
   ) {
     "use strict";
     
@@ -191,141 +193,72 @@ sap.ui.define(
         this.oFixedSizeDialog.open();
       },
 
-      onTagihanTenantSelected: function (oEvent) {
-        let oFilter1, oFilter2, oFilter3, oFilters;
-        const oComboBoxTenant = oEvent.getSource();
-        const oComboBoxStatus = this.getView().byId("ComboBoxTagihanStatus");
-        const oComboBoxMonth = this.getView().byId("ComboBoxFilterMonth");
-        const tenantSelected = oComboBoxTenant.getSelectedKey();
-        const statuSelected = oComboBoxStatus.getSelectedKey();
-        const monthSelected = oComboBoxMonth.getSelectedKey();
-
-        const tagihanList = this.byId("tagihanList");
-        if (tenantSelected !== "*") {
-          oFilter1 = new Filter(
-            "CustomerDesc",
-            FilterOperator.EQ,
-            tenantSelected
-          );
-        } else {
-          oFilter1 = [];
+      openFilterDialog: function () {
+        const oView = this.getView();
+        if (!this.filterDialog) {
+            this.filterDialog = Fragment.load({
+                id: oView.getId(),
+                name: "lrlpapp.view.fragments.FilterDialog",
+                controller: this,
+            }).then(function (oDialog) {
+                oDialog.setModel(oView.getModel());
+                // oDialog.setModel(new JSONModel(oModel), "filter")
+                return oDialog
+            })
         }
 
-        if (statuSelected === "paid") {
-          oFilter2 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
-        } else if (statuSelected === "unpaid") {
-          oFilter2 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
-        } else {
-          oFilter2 = [];
-        }
-
-        if (monthSelected !== "*") {
-          oFilter3 = new Filter(
-            "BillingDate",
-            FilterOperator.Contains,
-            monthSelected
-          );
-        } else {
-          oFilter3 = [];
-        }
-
-        oFilters = new Filter({
-          filters: [oFilter1, oFilter2, oFilter3],
-          and: true,
-        });
-        tagihanList.getBinding("items").filter(oFilters);
+        this.filterDialog.then(function (oDialog) {
+            oDialog.setModel(oView.getModel());
+            // oDialog.setModel(new JSONModel(oModel), "filter")
+            oDialog.open()
+        })
       },
 
-      onStatusSelect: function (oEvent) {
-        let oFilter1, oFilter2, oFilter3, oFilters;
-        const oComboBoxStatus = oEvent.getSource();
-        const oComboBoxTenant = this.getView().byId("ComboBoxTagihanTenant");
-        const oComboBoxMonth = this.getView().byId("ComboBoxFilterMonth");
-        const statuSelected = oComboBoxStatus.getSelectedKey();
-        const tenantSelected = oComboBoxTenant.getSelectedKey();
-        const monthSelected = oComboBoxMonth.getSelectedKey();
+      onApplyFIlter: function () {
+        let oFilter1, oFilter2, oFilter3, oFilters, oSort;
 
+        const rbg1 = this.getView().byId("rbg1");
+        const rbg2 = this.getView().byId("rbg2");
+        const rbg3 = this.getView().byId("rbg3");
+        const comboBoxPeriode = this.getView().byId("filterPeriod");
         const tagihanList = this.byId("tagihanList");
 
-        if (statuSelected === "paid") {
-          oFilter1 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
-        } else if (statuSelected === "unpaid") {
-          oFilter1 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
+        const selectedTenant = rbg1.getSelectedButton().getText()
+        const selectedStatus = rbg2.getSelectedButton().getText()
+        const selectedPeriod = comboBoxPeriode.getValue();
+        const selectedSort = rbg3.getSelectedButton().getText()
+
+        if (selectedTenant !== "Semua Tenant") {
+            oFilter1 = new Filter("CustomerDesc", FilterOperator.Contains, selectedTenant);
         } else {
-          oFilter1 = [];
+            oFilter1 = [];
         }
 
-        if (tenantSelected !== "*") {
-          oFilter2 = new Filter(
-            "CustomerDesc",
-            FilterOperator.EQ,
-            tenantSelected
-          );
+        if (selectedStatus === "Sudah dibayar") {
+            oFilter2 = new Filter("Status", FilterOperator.EQ, selectedStatus);
+        } else if (selectedStatus === "Belum dibayar") {
+            oFilter2 = new Filter("Status", FilterOperator.EQ, selectedStatus);
         } else {
-          oFilter2 = [];
+            oFilter2 = [];
         }
 
-        if (monthSelected !== "*") {
-          oFilter3 = new Filter(
-            "BillingDate",
-            FilterOperator.Contains,
-            monthSelected
-          );
+        if (selectedPeriod !== "Semua Periode") {
+            oFilter3 = new Filter("BillingDate", FilterOperator.Contains, selectedPeriod);
         } else {
-          oFilter3 = [];
+            oFilter3 = [];
         }
 
-        oFilters = new Filter({
-          filters: [oFilter1, oFilter2, oFilter3],
-          and: true,
-        });
+        oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
+
+        if (selectedSort === "Ascending") {
+            oSort = new Sorter("BillingNumber", false);
+        } else {
+            oSort = new Sorter("BillingNumber", true);
+        }
+        
         tagihanList.getBinding("items").filter(oFilters);
-      },
-
-      onMonthSelect: function (oEvent) {
-        let oFilter1, oFilter2, oFilter3, oFilters;
-        const oComboBoxMonth = oEvent.getSource();
-        const oComboBoxTenant = this.getView().byId("ComboBoxTagihanTenant");
-        const oComboBoxStatus = this.getView().byId("ComboBoxTagihanStatus");
-        const monthSelected = oComboBoxMonth.getSelectedKey();
-        const tenantSelected = oComboBoxTenant.getSelectedKey();
-        const statusSelected = oComboBoxStatus.getSelectedKey();
-        const tagihanList = this.byId("tagihanList");
-
-        if (monthSelected !== "*") {
-          oFilter1 = new Filter(
-            "BillingDate",
-            FilterOperator.Contains,
-            monthSelected
-          );
-        } else {
-          oFilter1 = [];
-        }
-
-        if (tenantSelected !== "*") {
-          oFilter2 = new Filter(
-            "CustomerDesc",
-            FilterOperator.EQ,
-            tenantSelected
-          );
-        } else {
-          oFilter2 = [];
-        }
-
-        if (statusSelected === "paid") {
-          oFilter3 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
-        } else if (statusSelected === "unpaid") {
-          oFilter3 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
-        } else {
-          oFilter3 = [];
-        }
-        // console.log(oFilter3);
-        // console.log(monthSelected);
-        oFilters = new Filter({
-          filters: [oFilter1, oFilter2, oFilter3],
-          and: true,
-        });
-        tagihanList.getBinding("items").filter(oFilters);
+        tagihanList.getBinding("items").sort(oSort);
+        this.onFilterDialogClose();
       },
 
       onSelectListTagihan: function (oEvent) {
@@ -370,6 +303,10 @@ sap.ui.define(
       onDetailTagihanClose: function () {
         // oDialog.destroyContent(oHtml);
         this.byId("detailListTagihan").close();
+      },
+
+      onFilterDialogClose: function () {
+        this.byId("filterDialog").close();
       },
 
       onDetailTagihanCetak: function () {
