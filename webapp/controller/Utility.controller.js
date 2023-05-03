@@ -53,7 +53,10 @@ sap.ui.define(
               needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
             } 
           } else {
-            if (el.Text !== "") { needToScan.push(el); }
+            if (el.Text !== "") { 
+                needToScan.push(el);
+                needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
+            }
           }
         })
         needToScanDesc = needToScanDesc.slice(0, needToScanDesc.length - 2)
