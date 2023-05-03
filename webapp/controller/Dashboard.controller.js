@@ -160,7 +160,10 @@ sap.ui.define(
               scanned.push(el);
             }
           } else {
-            if (el.Text !== "") { needToScan.push(el); }
+            if (el.Text !== "") { 
+                needToScan.push(el);
+                needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
+             }
           }
 
           if (el.Position === "CONTAINER") {
