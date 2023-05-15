@@ -152,8 +152,10 @@ sap.ui.define(
             const stringMonth = getMonth <= 9 ? `0${getMonth}` : `${getMonth}`;
             const lastMeasDoc = el.MeasPointToMeasDoc.results[0];
 
-          
             if (el.MeasPointToMeasDoc.results.length !== 0) {
+                console.log(Number(stringMonth));
+                console.log(lastMeasDoc.Date.substr(4, 2));
+                // console.log(el);
                 if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
                     needToScan.push(el);
                     needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
@@ -161,9 +163,6 @@ sap.ui.define(
                 } else {
                     scanned.push(el);
                 }
-            } else if (el.Text !== "") {
-                needToScan.push(el);
-                needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
             }
 
             if (el.Position === "CONTAINER") {
@@ -252,8 +251,6 @@ sap.ui.define(
           "NOTIF_TAGIHAN_TERLAMBAT",
           JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp))
         );
-
-        console.log(currentDate);
 
         // this code below is for the Dynamic Number of Tiles in Dashboard
         const notif = [];

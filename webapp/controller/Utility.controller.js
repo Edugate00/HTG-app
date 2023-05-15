@@ -37,6 +37,8 @@ sap.ui.define(
     const oBilling = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
     const MEASPOINT = JSON.parse(sessionStorage.getItem("MEASPOINT"));
 
+    const currentDate = new Date().getDate();
+
     return BaseController.extend("lrlpapp.controller.Utility", {
       onAfterRendering: function () {
         const needToScan = [];
@@ -52,22 +54,19 @@ sap.ui.define(
               needToScan.push(el);
               needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
             } 
-          } else {
-            if (el.Text !== "") { 
-                needToScan.push(el);
-                needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
-            }
           }
         })
+
         needToScanDesc = needToScanDesc.slice(0, needToScanDesc.length - 2)
 
         // this code below is for the Dynamic Number of Tiles in Dashboard
-        const notifCounter = new JSONModel({
-          notif: [
-            { pindaiMeteran: `${needToScan.length}` },
-            { pindaiMeteranDesc: `${needToScanDesc}` }
-          ],
-        });
+        const notif = [];
+        if (currentDate <= 10 || currentDate >= 25) {
+            notif.push({ pindaiMeteran: `${needToScan.length}` })
+            notif.push({ pindaiMeteranDesc: `${needToScanDesc}` })
+        }
+
+        const notifCounter = new JSONModel({ notif });
         this.getView().setModel(notifCounter, "notif");
         
         //Read oData for setting tagihan utilities List
