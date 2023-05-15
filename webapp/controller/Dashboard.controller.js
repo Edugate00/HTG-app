@@ -59,6 +59,8 @@ sap.ui.define(
     const oPenggunaanAir = { data: [] };
     const oPenggunaanListrik = { data: [] };
 
+    const currentDate = new Date().getDate();
+
     // let BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
     // let BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
     // let MEASPOINT = JSON.parse(sessionStorage.getItem("MEASPOINT"));
@@ -82,62 +84,59 @@ sap.ui.define(
         let needToPrint = [];
 
         const oMeasPoint = await this.readOdataService("/measurementPointSet", "MeasPointToMeasDoc" );
-        oMeasPoint.results.forEach((el) => {
-          MEASPOINT.push(el);
-        });
+        oMeasPoint.results.forEach((el) => { MEASPOINT.push(el) });
 
         const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeadToItem" );
 
-        console.log(oBilling)
         oBilling.results.forEach((el) => {
-          let year = el.BillingDate.substr(0, 4);
-          let month = el.BillingDate.substr(4, 2) - 1;
-          let day = el.BillingDate.substr(6, 2);
+            let year = el.BillingDate.substr(0, 4);
+            let month = el.BillingDate.substr(4, 2) - 1;
+            let day = el.BillingDate.substr(6, 2);
 
-          el.Timestamp = new Date(year, month, day).getTime();
-          el.DueDate = this.getFormattedDate(this.getDueDate(el.BillingDate, 7))
-          el.BillingDate = this.getFormattedDate(el.BillingDate);
-          el.MaterialDesc = el.BillingHeadToItem.results[0].Description
+            el.Timestamp = new Date(year, month, day).getTime();
+            el.DueDate = this.getFormattedDate(this.getDueDate(el.BillingDate, 7))
+            el.BillingDate = this.getFormattedDate(el.BillingDate);
+            el.MaterialDesc = el.BillingHeadToItem.results[0].Description
 
-          if (el.NetValue !== "") {
-              el.NetValue = Number(el.NetValue).toLocaleString("IDR-id");
-          }
-
-          if (el.PaymentStatus !== "") {
-            el.PaymentDate = this.getFormattedDate(el.PaymentDate);
-          } else {
-            el.PaymentDate = "-"
-          }
-
-          if (el.PaymentStatus === "X") {
-            el["Status"] = "Sudah dibayar";
-            el["TipeStatus"] = "Success";
-          } else {
-            el["Status"] = "Belum dibayar";
-            el["TipeStatus"] = "Error";
-          }
-
-          if (el.ReleasedStatus === "X" && el.PrintedStatus === "X") {
-            oTagihan.push(el);
-          } else if (el.ReleasedStatus === "X" && el.PrintedStatus !== "X") {
-            needToPrint.push(el);
-          }
-
-          if (el.BillingType === "FV") {
-            // el.PriceListDesc = "20230423 - 20230823"
-            let from = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[0])
-            let to = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[1])
-
-            if (from.slice(-4) === to.slice(-4)) {
-                from = from.slice(0, 6)
+            if (el.NetValue !== "") {
+                el.NetValue = Number(el.NetValue).toLocaleString("IDR-id");
             }
 
-            el.PriceListDesc = `${from} - ${to}`
+            if (el.PaymentStatus !== "") {
+                el.PaymentDate = this.getFormattedDate(el.PaymentDate);
+            } else {
+                el.PaymentDate = "-"
+            }
 
-            BILLING_FV.push(el);
-          } else {
-            BILLING_ZUTL.push(el);
-          }
+            if (el.PaymentStatus === "X") {
+                el["Status"] = "Sudah dibayar";
+                el["TipeStatus"] = "Success";
+            } else {
+                el["Status"] = "Belum dibayar";
+                el["TipeStatus"] = "Error";
+            }
+
+            if (el.ReleasedStatus === "X" && el.PrintedStatus === "X") {
+                oTagihan.push(el);
+            } else if (el.ReleasedStatus === "X" && el.PrintedStatus !== "X") {
+                needToPrint.push(el);
+            }
+
+            if (el.BillingType === "FV") {
+                // el.PriceListDesc = "20230423 - 20230823"
+                let from = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[0])
+                let to = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[1])
+
+                if (from.slice(-4) === to.slice(-4)) {
+                    from = from.slice(0, 6)
+                }
+
+                el.PriceListDesc = `${from} - ${to}`
+
+                BILLING_FV.push(el);
+            } else {
+                BILLING_ZUTL.push(el);
+            }
         });
 
         // Storing data to Session Storage based on billing type
@@ -148,55 +147,54 @@ sap.ui.define(
         sessionStorage.setItem("TO_PRINT", JSON.stringify(needToPrint));
 
         MEASPOINT.forEach((el) => {
-          const getMonth = new Date().getMonth() + 1;
-          const stringMonth = getMonth <= 9 ? `0${getMonth}` : `${getMonth}`;
-          const lastMeasDoc = el.MeasPointToMeasDoc.results[0];
+            const currDate = new Date().getDate();
+            const getMonth = new Date().getMonth() + 1;
+            const stringMonth = getMonth <= 9 ? `0${getMonth}` : `${getMonth}`;
+            const lastMeasDoc = el.MeasPointToMeasDoc.results[0];
 
-          if (el.MeasPointToMeasDoc.results.length !== 0) {
-            if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
-              needToScan.push(el);
-              needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
-            } else {
-              scanned.push(el);
-            }
-          } else {
-            if (el.Text !== "") { 
+          
+            if (el.MeasPointToMeasDoc.results.length !== 0) {
+                if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
+                    needToScan.push(el);
+                    needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
+                    scanned.push(el);
+                } else {
+                    scanned.push(el);
+                }
+            } else if (el.Text !== "") {
                 needToScan.push(el);
                 needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
-             }
-          }
+            }
 
-          if (el.Position === "CONTAINER") {
-            el.MeasPointToMeasDoc.results.forEach((element) => {
-              let year = element.Date.substr(0, 4);
-              let month = element.Date.substr(4, 2);
-              let day = element.Date.substr(6, 2);
-              oPenggunaanAir.data.push({
-                tenant: `${el.Text.split(" - ")[1]} ${
-                  el.Description.split(" ")[0]
-                }`,
-                value: String(Number(element.Value)),
-                period: this.getFormattedDate(element.Date)
-                  .replace(",", "")
-                  .split(" ")[1],
-                date: `${year}.${month}.${day}`,
-              });
-            });
-          } else if (el.Position === "METERAN_LISTRIK") {
-            el.MeasPointToMeasDoc.results.forEach((element) => {
-              let year = element.Date.substr(0, 4);
-              let month = element.Date.substr(4, 2);
-              let day = element.Date.substr(6, 2);
-              oPenggunaanListrik.data.push({
-                value: String(Number(element.Value)),
-                date: `${year}.${month}.${day}`,
-              });
-            });
-          }
+            if (el.Position === "CONTAINER") {
+                el.MeasPointToMeasDoc.results.forEach((element) => {
+                    let year = element.Date.substr(0, 4);
+                    let month = element.Date.substr(4, 2);
+                    let day = element.Date.substr(6, 2);
+                    oPenggunaanAir.data.push({
+                        tenant: `${el.Text.split(" - ")[1]} ${ el.Description.split(" ")[0] }`,
+                        value: String(Number(element.Value)),
+                        period: this.getFormattedDate(element.Date)
+                        .replace(",", "")
+                        .split(" ")[1],
+                        date: `${year}.${month}.${day}`,
+                    });
+                });
+            } else if (el.Position === "METERAN_LISTRIK") {
+                el.MeasPointToMeasDoc.results.forEach((element) => {
+                    let year = element.Date.substr(0, 4);
+                    let month = element.Date.substr(4, 2);
+                    let day = element.Date.substr(6, 2);
+                    oPenggunaanListrik.data.push({
+                        value: String(Number(element.Value)),
+                        date: `${year}.${month}.${day}`,
+                    });
+                });
+            }
         });
 
+        // Hapus tanda "," di paling belakang
         needToScanDesc = needToScanDesc.slice(0, needToScanDesc.length - 2)
-        // console.log(needToScanDesc);
 
         if (needToScan.length !== 0) {
           const months = [
@@ -218,15 +216,9 @@ sap.ui.define(
 
           scanned.forEach((el_1, i) => {
             BILLING_ZUTL.forEach((el_2, j) => {
-              const billingDate = el_2.BillingDate.split(" ")[1].replace(
-                ",",
-                ""
-              );
+              const billingDate = el_2.BillingDate.split(" ")[1].replace(",", "");
               const customer = el_2.Customer.substr(6, 4);
-              if (
-                billingDate === months[getMonth] &&
-                customer === scanned[i].Text.substr(0, 4)
-              ) {
+              if (billingDate === months[getMonth] && customer === scanned[i].Text.substr(0, 4)) {
                 tagihanAir.push(el_2);
               }
             });
@@ -261,30 +253,26 @@ sap.ui.define(
           JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp))
         );
 
-        // console.log(needToScan);
+        console.log(currentDate);
 
         // this code below is for the Dynamic Number of Tiles in Dashboard
-        const notifCounter = new JSONModel({
-          notif: [
-            { pindaiMeteran: `${needToScan.length}` },
-            { pindaiMeteranDesc: `${needToScanDesc}` },
-            { tagihanAir: String(tagihanAirToCreate) },
-            { tagihanSewa: String(isDueDate.length + hasPassed.length) },
-            { belumCetak: String(needToPrint.length) },
-          ],
-        });
+        const notif = [];
+        if (currentDate <= 10 || currentDate >= 25) {
+            notif.push({ pindaiMeteran: `${needToScan.length}` })
+            notif.push({ pindaiMeteranDesc: `${needToScanDesc}` })
+            notif.push({ tagihanAir: String(tagihanAirToCreate) })
+            notif.push({ tagihanSewa: String(isDueDate.length + hasPassed.length) })
+            notif.push({ belumCetak: String(needToPrint.length) })
+        } else {
+            notif.push({ tagihanAir: String(tagihanAirToCreate) })
+            notif.push({ tagihanSewa: String(isDueDate.length + hasPassed.length) })
+            notif.push({ belumCetak: String(needToPrint.length) })
+        }
+
+        const notifCounter = new JSONModel({ notif });
+        
         this.getView().setModel(notifCounter, "notif");
-
-        // oTagihan.forEach(el => {
-        //     el.BillingHeadToItem.for
-        // })
-
-        this.getView().setModel(
-          new JSONModel({ tagihan: oTagihan }),
-          "tagihan"
-        );
-
-        // console.log(oTagihan)
+        this.getView().setModel(new JSONModel({ tagihan: oTagihan }), "tagihan");
 
         // Vizframe chart for Penggunaan Air
         const vizAir = this.getView().byId("vizPenggunaanAir");
