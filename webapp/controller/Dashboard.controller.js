@@ -147,16 +147,20 @@ sap.ui.define(
         sessionStorage.setItem("TO_PRINT", JSON.stringify(needToPrint));
 
         MEASPOINT.forEach((el) => {
-            const currDate = new Date().getDate();
-            const getMonth = new Date().getMonth() + 1;
+            let getMonth;
+
+            if (currentDate <= 10) {
+                getMonth = new Date().getMonth()
+            } else if (currentDate >= 25){
+                getMonth = new Date().getMonth() + 1;
+            }
+
             const stringMonth = getMonth <= 9 ? `0${getMonth}` : `${getMonth}`;
             const lastMeasDoc = el.MeasPointToMeasDoc.results[0];
 
             if (el.MeasPointToMeasDoc.results.length !== 0) {
-                console.log(Number(stringMonth));
-                console.log(lastMeasDoc.Date.substr(4, 2));
-                // console.log(el);
                 if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
+                    console.log(el);
                     needToScan.push(el);
                     needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
                     scanned.push(el);
