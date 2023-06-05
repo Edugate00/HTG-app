@@ -163,7 +163,7 @@ sap.ui.define(
                     console.log(el);
                     needToScan.push(el);
                     needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
-                    scanned.push(el);
+                    // scanned.push(el);
                 } else {
                     scanned.push(el);
                 }
@@ -216,6 +216,7 @@ sap.ui.define(
           ];
 
           const getMonth = new Date().getMonth();
+          console.log(getMonth)
 
           scanned.forEach((el_1, i) => {
             BILLING_ZUTL.forEach((el_2, j) => {
@@ -227,6 +228,9 @@ sap.ui.define(
             });
           });
         }
+
+        console.log(scanned);
+        console.log(BILLING_ZUTL);
 
         tagihanAirToCreate = scanned.length - tagihanAir.length;
         tagihanAirToCreate = (tagihanAirToCreate <= 0) ? 0 : tagihanAirToCreate;
