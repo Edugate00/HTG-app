@@ -87,6 +87,8 @@ sap.ui.define(
         oMeasPoint.results.forEach((el) => { MEASPOINT.push(el) });
 
         const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeadToItem" );
+        const getNotification = await this.RequestReadWithOutExpanded("/dashboardNotificationSet(FuncLoc='LRLP-CITIWALK')");
+        console.log(getNotification);
 
         oBilling.results.forEach((el) => {
             let year = el.BillingDate.substr(0, 4);
@@ -160,10 +162,8 @@ sap.ui.define(
 
             if (el.MeasPointToMeasDoc.results.length !== 0) {
                 if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
-                    console.log(el);
                     needToScan.push(el);
                     needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
-                    // scanned.push(el);
                 } else {
                     scanned.push(el);
                 }
@@ -199,42 +199,6 @@ sap.ui.define(
         // Hapus tanda "," di paling belakang
         needToScanDesc = needToScanDesc.slice(0, needToScanDesc.length - 2)
 
-        if (needToScan.length !== 0) {
-          const months = [
-            "Januari",
-            "Februari",
-            "Maret",
-            "April",
-            "Mei",
-            "Juni",
-            "Juli",
-            "Agustus",
-            "September",
-            "Oktober",
-            "November",
-            "Desember",
-          ];
-
-          const getMonth = new Date().getMonth();
-          console.log(getMonth)
-
-          scanned.forEach((el_1, i) => {
-            BILLING_ZUTL.forEach((el_2, j) => {
-              const billingDate = el_2.BillingDate.split(" ")[1].replace(",", "");
-              const customer = el_2.Customer.substr(6, 4);
-              if (billingDate === months[getMonth] && customer === scanned[i].Text.substr(0, 4)) {
-                tagihanAir.push(el_2);
-              }
-            });
-          });
-        }
-
-        console.log(scanned);
-        console.log(BILLING_ZUTL);
-
-        tagihanAirToCreate = scanned.length - tagihanAir.length;
-        tagihanAirToCreate = (tagihanAirToCreate <= 0) ? 0 : tagihanAirToCreate;
-
         BILLING_FV.forEach((el) => {
           if (el.ReleasedStatus !== "X") {
             if (this.isDueDate(el.Timestamp)) {
@@ -265,11 +229,11 @@ sap.ui.define(
         if (currentDate <= 10 || currentDate >= 25) {
             notif.push({ pindaiMeteran: `${needToScan.length}` })
             notif.push({ pindaiMeteranDesc: `${needToScanDesc}` })
-            notif.push({ tagihanAir: String(tagihanAirToCreate) })
+            notif.push({ tagihanAir: String(getNotification.TagihanAir) })
             notif.push({ tagihanSewa: String(isDueDate.length + hasPassed.length) })
             notif.push({ belumCetak: String(needToPrint.length) })
         } else {
-            notif.push({ tagihanAir: String(tagihanAirToCreate) })
+            notif.push({ tagihanAir: String(getNotification.TagihanAir) })
             notif.push({ tagihanSewa: String(isDueDate.length + hasPassed.length) })
             notif.push({ belumCetak: String(needToPrint.length) })
         }
