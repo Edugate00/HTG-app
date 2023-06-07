@@ -73,9 +73,6 @@ sap.ui.define(
         const isDueDate = [];
         const hasPassed = [];
         const needToScan = [];
-        const scanned = [];
-        const tagihanAir = [];
-        let tagihanAirToCreate;
         
         let needToScanDesc = "";
         let MEASPOINT = [];
@@ -88,7 +85,6 @@ sap.ui.define(
 
         const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeadToItem" );
         const getNotification = await this.RequestReadWithOutExpanded("/dashboardNotificationSet(FuncLoc='LRLP-CITIWALK')");
-        console.log(getNotification);
 
         oBilling.results.forEach((el) => {
             let year = el.BillingDate.substr(0, 4);
@@ -164,8 +160,6 @@ sap.ui.define(
                 if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
                     needToScan.push(el);
                     needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
-                } else {
-                    scanned.push(el);
                 }
             }
 
@@ -429,8 +423,29 @@ sap.ui.define(
         });
       },
 
-      openFilterDialog: function () {
+      openFilterDialog: async function () {
         const oView = this.getView();
+        const tenantDetail = [];
+        
+        const oRentalMaster = await this.readOdataService("/rentalMasterSet", "RentalMasterToDetail");
+        oRentalMaster.results.forEach((el) => {
+            if (el.RentalMasterToDetail.results[0]) {
+                tenantDetail.push(el.RentalMasterToDetail.results[0])
+            }
+        })
+
+        const uniqueTenantDetail = {};
+        const result = tenantDetail.filter((obj) => {
+            if (!uniqueTenantDetail[obj.NamaTenant]) {
+                uniqueTenantDetail[obj.NamaTenant] = true;
+                return true;
+            }
+            return false;
+        });
+
+        result.unshift({NamaTenant: "Semua Tenant", KodeTenant: "*"})
+        console.log(result);
+        
         if (!this.filterDialog) {
             this.filterDialog = Fragment.load({
                 id: oView.getId(),
@@ -438,14 +453,14 @@ sap.ui.define(
                 controller: this,
             }).then(function (oDialog) {
                 oDialog.setModel(oView.getModel());
-                // oDialog.setModel(new JSONModel(oModel), "filter")
+                oDialog.setModel(new JSONModel({tenant: result}), "tenant")
                 return oDialog
             })
         }
 
         this.filterDialog.then(function (oDialog) {
             oDialog.setModel(oView.getModel());
-            // oDialog.setModel(new JSONModel(oModel), "filter")
+            oDialog.setModel(new JSONModel({tenant: result}), "tenant")
             oDialog.open()
         })
       },
@@ -802,13 +817,13 @@ sap.ui.define(
       onApplyFIlter: function () {
         let oFilter1, oFilter2, oFilter3, oFilters, oSort;
 
-        const rbg1 = this.getView().byId("rbg1");
         const rbg2 = this.getView().byId("rbg2");
         const rbg3 = this.getView().byId("rbg3");
+        const comboBoxTenants = this.getView().byId("tenantList");
         const comboBoxPeriode = this.getView().byId("filterPeriod");
         const tagihanList = this.byId("tagihanList");
 
-        const selectedTenant = rbg1.getSelectedButton().getText()
+        const selectedTenant = comboBoxTenants.getValue();
         const selectedStatus = rbg2.getSelectedButton().getText()
         const selectedPeriod = comboBoxPeriode.getValue();
         const selectedSort = rbg3.getSelectedButton().getText()

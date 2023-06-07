@@ -4,19 +4,21 @@
     <Dialog
         id="filterDialog"
         title="Filter"
-        type="Standard"
-        contentHeight="440px">
+        type="Standard">
         <content>
             <VBox class="card-content" width="100%" height="100%">
                 <VBox width="100%" class="sapUiSmallMarginBottom">
-                    <Label labelFor="rbg1" text="Tenant" />
-                    <RadioButtonGroup id="rbg1" columns="2" width="100%">
-                        <RadioButton id="RB1-0" text="Semua Tenant" />
-                        <RadioButton id="RB1-1" text="Butterfield" />
-                        <RadioButton id="RB1-2" text="Karimata" />
-                        <RadioButton id="RB1-3" text="Sharinc" />
-                        <RadioButton id="RB1-4" text="Woori" />
-                    </RadioButtonGroup>
+                    <Label text="Tenant" />
+                    <ComboBox
+                        id="tenantList"
+                        width="100%"
+                        selectedKey="*"
+                        items="{tenant>/tenant}"
+                        class="sapUiTinyMarginEnd sapMCbAutoFocus">
+                        <core:ListItem
+                            key="{tenant>KodeTenant}"
+                            text="{tenant>NamaTenant}" />
+                    </ComboBox>
                 </VBox>
                 <VBox width="100%" class="sapUiSmallMarginBottom">
                     <Label labelFor="rbg2" text="Status Pembayaran" />
