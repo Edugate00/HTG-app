@@ -3,6 +3,7 @@ sap.ui.define(
     "lrlpapp/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
+    "sap/ui/model/Sorter",
     "sap/ui/model/FilterOperator",
     "sap/viz/ui5/data/DimensionDefinition",
     "sap/ui/core/Item",
@@ -16,6 +17,7 @@ sap.ui.define(
     BaseController,
 	JSONModel,
 	Filter,
+	Sorter,
 	FilterOperator,
 	DimensionDefinition,
 	Item,
@@ -57,6 +59,8 @@ sap.ui.define(
     const oPenggunaanAir = { data: [] };
     const oPenggunaanListrik = { data: [] };
 
+    const currentDate = new Date().getDate();
+
     // let BILLING_FV = JSON.parse(sessionStorage.getItem("BILLING_FV"));
     // let BILLING_ZUTL = JSON.parse(sessionStorage.getItem("BILLING_ZUTL"));
     // let MEASPOINT = JSON.parse(sessionStorage.getItem("MEASPOINT"));
@@ -69,9 +73,6 @@ sap.ui.define(
         const isDueDate = [];
         const hasPassed = [];
         const needToScan = [];
-        const scanned = [];
-        const tagihanAir = [];
-        let tagihanAirToCreate;
         
         let needToScanDesc = "";
         let MEASPOINT = [];
@@ -80,62 +81,60 @@ sap.ui.define(
         let needToPrint = [];
 
         const oMeasPoint = await this.readOdataService("/measurementPointSet", "MeasPointToMeasDoc" );
-        oMeasPoint.results.forEach((el) => {
-          MEASPOINT.push(el);
-        });
+        oMeasPoint.results.forEach((el) => { MEASPOINT.push(el) });
 
         const oBilling = await this.readOdataService("/billingHeaderSet", "BillingHeadToItem" );
+        const getNotification = await this.RequestReadWithOutExpanded("/dashboardNotificationSet(FuncLoc='LRLP-CITIWALK')");
 
-        console.log(oBilling)
         oBilling.results.forEach((el) => {
-          let year = el.BillingDate.substr(0, 4);
-          let month = el.BillingDate.substr(4, 2) - 1;
-          let day = el.BillingDate.substr(6, 2);
+            let year = el.BillingDate.substr(0, 4);
+            let month = el.BillingDate.substr(4, 2) - 1;
+            let day = el.BillingDate.substr(6, 2);
 
-          el.Timestamp = new Date(year, month, day).getTime();
-          el.DueDate = this.getFormattedDate(this.getDueDate(el.BillingDate, 7))
-          el.BillingDate = this.getFormattedDate(el.BillingDate);
-          el.MaterialDesc = el.BillingHeadToItem.results[0].Description
+            el.Timestamp = new Date(year, month, day).getTime();
+            el.DueDate = this.getFormattedDate(this.getDueDate(el.BillingDate, 7))
+            el.BillingDate = this.getFormattedDate(el.BillingDate);
+            el.MaterialDesc = el.BillingHeadToItem.results[0].Description
 
-          if (el.NetValue !== "") {
-              el.NetValue = Number(el.NetValue).toLocaleString("IDR-id");
-          }
-
-          if (el.PaymentStatus !== "") {
-            el.PaymentDate = this.getFormattedDate(el.PaymentDate);
-          } else {
-            el.PaymentDate = "-"
-          }
-
-          if (el.PaymentStatus === "X") {
-            el["Status"] = "Sudah dibayar";
-            el["TipeStatus"] = "Success";
-          } else {
-            el["Status"] = "Belum dibayar";
-            el["TipeStatus"] = "Error";
-          }
-
-          if (el.ReleasedStatus === "X" && el.PrintedStatus === "X") {
-            oTagihan.push(el);
-          } else if (el.ReleasedStatus === "X" && el.PrintedStatus !== "X") {
-            needToPrint.push(el);
-          }
-
-          if (el.BillingType === "FV") {
-            // el.PriceListDesc = "20230423 - 20230823"
-            let from = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[0])
-            let to = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[1])
-
-            if (from.slice(-4) === to.slice(-4)) {
-                from = from.slice(0, 6)
+            if (el.NetValue !== "") {
+                el.NetValue = Number(el.NetValue).toLocaleString("IDR-id");
             }
 
-            el.PriceListDesc = `${from} - ${to}`
+            if (el.PaymentStatus !== "") {
+                el.PaymentDate = this.getFormattedDate(el.PaymentDate);
+            } else {
+                el.PaymentDate = "-"
+            }
 
-            BILLING_FV.push(el);
-          } else {
-            BILLING_ZUTL.push(el);
-          }
+            if (el.PaymentStatus === "X") {
+                el["Status"] = "Sudah dibayar";
+                el["TipeStatus"] = "Success";
+            } else {
+                el["Status"] = "Belum dibayar";
+                el["TipeStatus"] = "Error";
+            }
+
+            if (el.ReleasedStatus === "X" && el.PrintedStatus === "X") {
+                oTagihan.push(el);
+            } else if (el.ReleasedStatus === "X" && el.PrintedStatus !== "X") {
+                needToPrint.push(el);
+            }
+
+            if (el.BillingType === "FV") {
+                // el.PriceListDesc = "20230423 - 20230823"
+                let from = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[0])
+                let to = this.getShortFormattedDate(el.PriceListDesc.split(" - ")[1])
+
+                if (from.slice(-4) === to.slice(-4)) {
+                    from = from.slice(0, 6)
+                }
+
+                el.PriceListDesc = `${from} - ${to}`
+
+                BILLING_FV.push(el);
+            } else {
+                BILLING_ZUTL.push(el);
+            }
         });
 
         // Storing data to Session Storage based on billing type
@@ -146,89 +145,53 @@ sap.ui.define(
         sessionStorage.setItem("TO_PRINT", JSON.stringify(needToPrint));
 
         MEASPOINT.forEach((el) => {
-          const getMonth = new Date().getMonth() + 1;
-          const stringMonth = getMonth <= 9 ? `0${getMonth}` : `${getMonth}`;
-          const lastMeasDoc = el.MeasPointToMeasDoc.results[0];
+            let getMonth;
 
-          if (el.MeasPointToMeasDoc.results.length !== 0) {
-            if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
-              needToScan.push(el);
-              needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
-            } else {
-              scanned.push(el);
+            if (currentDate <= 10) {
+                getMonth = new Date().getMonth()
+            } else if (currentDate >= 25){
+                getMonth = new Date().getMonth() + 1;
             }
-          } else {
-            if (el.Text !== "") { needToScan.push(el); }
-          }
 
-          if (el.Position === "CONTAINER") {
-            el.MeasPointToMeasDoc.results.forEach((element) => {
-              let year = element.Date.substr(0, 4);
-              let month = element.Date.substr(4, 2);
-              let day = element.Date.substr(6, 2);
-              oPenggunaanAir.data.push({
-                tenant: `${el.Text.split(" - ")[1]} ${
-                  el.Description.split(" ")[0]
-                }`,
-                value: String(Number(element.Value)),
-                period: this.getFormattedDate(element.Date)
-                  .replace(",", "")
-                  .split(" ")[1],
-                date: `${year}.${month}.${day}`,
-              });
-            });
-          } else if (el.Position === "METERAN_LISTRIK") {
-            el.MeasPointToMeasDoc.results.forEach((element) => {
-              let year = element.Date.substr(0, 4);
-              let month = element.Date.substr(4, 2);
-              let day = element.Date.substr(6, 2);
-              oPenggunaanListrik.data.push({
-                value: String(Number(element.Value)),
-                date: `${year}.${month}.${day}`,
-              });
-            });
-          }
+            const stringMonth = getMonth <= 9 ? `0${getMonth}` : `${getMonth}`;
+            const lastMeasDoc = el.MeasPointToMeasDoc.results[0];
+
+            if (el.MeasPointToMeasDoc.results.length !== 0) {
+                if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
+                    needToScan.push(el);
+                    needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
+                }
+            }
+
+            if (el.Position === "CONTAINER") {
+                el.MeasPointToMeasDoc.results.forEach((element) => {
+                    let year = element.Date.substr(0, 4);
+                    let month = element.Date.substr(4, 2);
+                    let day = element.Date.substr(6, 2);
+                    oPenggunaanAir.data.push({
+                        tenant: `${el.Text.split(" - ")[1]} ${ el.Description.split(" ")[0] }`,
+                        value: String(Number(element.Value)),
+                        period: this.getFormattedDate(element.Date)
+                        .replace(",", "")
+                        .split(" ")[1],
+                        date: `${year}.${month}.${day}`,
+                    });
+                });
+            } else if (el.Position === "METERAN_LISTRIK") {
+                el.MeasPointToMeasDoc.results.forEach((element) => {
+                    let year = element.Date.substr(0, 4);
+                    let month = element.Date.substr(4, 2);
+                    let day = element.Date.substr(6, 2);
+                    oPenggunaanListrik.data.push({
+                        value: String(Number(element.Value)),
+                        date: `${year}.${month}.${day}`,
+                    });
+                });
+            }
         });
 
+        // Hapus tanda "," di paling belakang
         needToScanDesc = needToScanDesc.slice(0, needToScanDesc.length - 2)
-        // console.log(needToScanDesc);
-
-        if (needToScan.length !== 0) {
-          const months = [
-            "Januari",
-            "Februari",
-            "Maret",
-            "April",
-            "Mei",
-            "Juni",
-            "Juli",
-            "Agustus",
-            "September",
-            "Oktober",
-            "November",
-            "Desember",
-          ];
-
-          const getMonth = new Date().getMonth();
-
-          scanned.forEach((el_1, i) => {
-            BILLING_ZUTL.forEach((el_2, j) => {
-              const billingDate = el_2.BillingDate.split(" ")[1].replace(
-                ",",
-                ""
-              );
-              const customer = el_2.Customer.substr(6, 4);
-              if (
-                billingDate === months[getMonth] &&
-                customer === scanned[i].Text.substr(0, 4)
-              ) {
-                tagihanAir.push(el_2);
-              }
-            });
-          });
-        }
-
-        tagihanAirToCreate = scanned.length - tagihanAir.length;
 
         BILLING_FV.forEach((el) => {
           if (el.ReleasedStatus !== "X") {
@@ -255,30 +218,24 @@ sap.ui.define(
           JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp))
         );
 
-        // console.log(needToScan);
-
         // this code below is for the Dynamic Number of Tiles in Dashboard
-        const notifCounter = new JSONModel({
-          notif: [
-            { pindaiMeteran: `${needToScan.length}` },
-            { pindaiMeteranDesc: `${needToScanDesc}` },
-            { tagihanAir: String(tagihanAirToCreate) },
-            { tagihanSewa: String(isDueDate.length + hasPassed.length) },
-            { belumCetak: String(needToPrint.length) },
-          ],
-        });
+        const notif = [];
+        if (currentDate <= 10 || currentDate >= 25) {
+            notif.push({ pindaiMeteran: `${needToScan.length}` })
+            notif.push({ pindaiMeteranDesc: `${needToScanDesc}` })
+            notif.push({ tagihanAir: String(getNotification.TagihanAir) })
+            notif.push({ tagihanSewa: String(isDueDate.length + hasPassed.length) })
+            notif.push({ belumCetak: String(needToPrint.length) })
+        } else {
+            notif.push({ tagihanAir: String(getNotification.TagihanAir) })
+            notif.push({ tagihanSewa: String(isDueDate.length + hasPassed.length) })
+            notif.push({ belumCetak: String(needToPrint.length) })
+        }
+
+        const notifCounter = new JSONModel({ notif });
+        
         this.getView().setModel(notifCounter, "notif");
-
-        // oTagihan.forEach(el => {
-        //     el.BillingHeadToItem.for
-        // })
-
-        this.getView().setModel(
-          new JSONModel({ tagihan: oTagihan }),
-          "tagihan"
-        );
-
-        // console.log(oTagihan)
+        this.getView().setModel(new JSONModel({ tagihan: oTagihan }), "tagihan");
 
         // Vizframe chart for Penggunaan Air
         const vizAir = this.getView().byId("vizPenggunaanAir");
@@ -466,65 +423,46 @@ sap.ui.define(
         });
       },
 
-      onTagihanTenantSelected: function (oEvent) {
-        let oFilter1, oFilter2, oFilters;
-        const oComboBoxTenant = oEvent.getSource();
-        const oComboBoxStatus = this.getView().byId("ComboBoxTagihanStatus");
-        const tenantSelected = oComboBoxTenant.getSelectedKey();
-        const statuSelected = oComboBoxStatus.getSelectedKey();
+      openFilterDialog: async function () {
+        const oView = this.getView();
+        const tenantDetail = [];
+        
+        const oRentalMaster = await this.readOdataService("/rentalMasterSet", "RentalMasterToDetail");
+        oRentalMaster.results.forEach((el) => {
+            if (el.RentalMasterToDetail.results[0]) {
+                tenantDetail.push(el.RentalMasterToDetail.results[0])
+            }
+        })
 
-        const tagihanList = this.byId("tagihanList");
-        if (tenantSelected !== "*") {
-          oFilter1 = new Filter(
-            "CustomerDesc",
-            FilterOperator.Contains,
-            tenantSelected
-          );
-        } else {
-          oFilter1 = [];
+        const uniqueTenantDetail = {};
+        const result = tenantDetail.filter((obj) => {
+            if (!uniqueTenantDetail[obj.NamaTenant]) {
+                uniqueTenantDetail[obj.NamaTenant] = true;
+                return true;
+            }
+            return false;
+        });
+
+        result.unshift({NamaTenant: "Semua Tenant", KodeTenant: "*"})
+        console.log(result);
+        
+        if (!this.filterDialog) {
+            this.filterDialog = Fragment.load({
+                id: oView.getId(),
+                name: "lrlpapp.view.fragments.FilterDialog",
+                controller: this,
+            }).then(function (oDialog) {
+                oDialog.setModel(oView.getModel());
+                oDialog.setModel(new JSONModel({tenant: result}), "tenant")
+                return oDialog
+            })
         }
 
-        if (statuSelected === "paid") {
-          oFilter2 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
-        } else if (statuSelected === "unpaid") {
-          oFilter2 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
-        } else {
-          oFilter2 = [];
-        }
-
-        oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
-        tagihanList.getBinding("items").filter(oFilters);
-      },
-
-      onStatusSelect: function (oEvent) {
-        let oFilter1, oFilter2, oFilters;
-        const oComboBoxStatus = oEvent.getSource();
-        const oComboBoxTenant = this.getView().byId("ComboBoxTagihanTenant");
-        const statuSelected = oComboBoxStatus.getSelectedKey();
-        const tenantSelected = oComboBoxTenant.getSelectedKey();
-
-        const tagihanList = this.byId("tagihanList");
-
-        if (statuSelected === "paid") {
-          oFilter1 = new Filter("Status", FilterOperator.EQ, "Sudah dibayar");
-        } else if (statuSelected === "unpaid") {
-          oFilter1 = new Filter("Status", FilterOperator.EQ, "Belum dibayar");
-        } else {
-          oFilter1 = [];
-        }
-
-        if (tenantSelected !== "*") {
-          oFilter2 = new Filter(
-            "CustomerDesc",
-            FilterOperator.Contains,
-            tenantSelected
-          );
-        } else {
-          oFilter2 = [];
-        }
-
-        oFilters = new Filter({ filters: [oFilter1, oFilter2], and: true });
-        tagihanList.getBinding("items").filter(oFilters);
+        this.filterDialog.then(function (oDialog) {
+            oDialog.setModel(oView.getModel());
+            oDialog.setModel(new JSONModel({tenant: result}), "tenant")
+            oDialog.open()
+        })
       },
 
       onSelectListTagihan: function (oEvent) {
@@ -864,10 +802,67 @@ sap.ui.define(
 
       onBelumCetakDialogClose: function () {
         this.byId("belumCetakDialog").close();
+        const isUpdate = sessionStorage.getItem("UPDATE_ODATA");
+        if (isUpdate) { 
+            sessionStorage.removeItem("UPDATE_ODATA")
+            // window.location.reload()
+            this.onAfterRendering();
+        }
       },
 
       onDetailTagihanClose: function () {
         this.byId("detailListTagihan").close();
+      },
+
+      onApplyFIlter: function () {
+        let oFilter1, oFilter2, oFilter3, oFilters, oSort;
+
+        const rbg2 = this.getView().byId("rbg2");
+        const rbg3 = this.getView().byId("rbg3");
+        const comboBoxTenants = this.getView().byId("tenantList");
+        const comboBoxPeriode = this.getView().byId("filterPeriod");
+        const tagihanList = this.byId("tagihanList");
+
+        const selectedTenant = comboBoxTenants.getValue();
+        const selectedStatus = rbg2.getSelectedButton().getText()
+        const selectedPeriod = comboBoxPeriode.getValue();
+        const selectedSort = rbg3.getSelectedButton().getText()
+
+        if (selectedTenant !== "Semua Tenant") {
+            oFilter1 = new Filter("CustomerDesc", FilterOperator.Contains, selectedTenant);
+        } else {
+            oFilter1 = [];
+        }
+
+        if (selectedStatus === "Sudah dibayar") {
+            oFilter2 = new Filter("Status", FilterOperator.EQ, selectedStatus);
+        } else if (selectedStatus === "Belum dibayar") {
+            oFilter2 = new Filter("Status", FilterOperator.EQ, selectedStatus);
+        } else {
+            oFilter2 = [];
+        }
+
+        if (selectedPeriod !== "Semua Periode") {
+            oFilter3 = new Filter("BillingDate", FilterOperator.Contains, selectedPeriod);
+        } else {
+            oFilter3 = [];
+        }
+
+        oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
+
+        if (selectedSort === "Ascending") {
+            oSort = new Sorter("BillingNumber", false);
+        } else {
+            oSort = new Sorter("BillingNumber", true);
+        }
+        
+        tagihanList.getBinding("items").filter(oFilters);
+        tagihanList.getBinding("items").sort(oSort);
+        this.onFilterDialogClose();
+      },
+
+      onFilterDialogClose: function () {
+        this.byId("filterDialog").close();
       },
 
       formattedChartDateAndTimestamp: function (data) {
@@ -953,8 +948,27 @@ sap.ui.define(
                     text: "Tutup",
                     press: function () {
                         this.oZInvoiceDialog.close();
-                        // if (this.byId("belumCetakDialog")) { this.byId("belumCetakDialog").close() };
-                        // if (this.byId("detailListTagihan")) { this.byId("detailListTagihan").close(); };
+                        if (this.byId("belumCetakDialog")) {
+                            let items = [];
+                            const oList = this.getView().byId("listBelumCetak")
+                            const oSelectedItems = oList.getSelectedItems();
+                            oSelectedItems.forEach((el) => {
+                                items.push(el.getBindingContext("belumCetak").getObject());
+                            });
+
+                            oList.setBusy(true)
+                            setTimeout(() => {
+                                oList.setBusy(false)
+                                oSelectedItems.forEach((el) => { oList.removeItem(el) });
+                            }, 3000)
+
+                            sessionStorage.setItem("UPDATE_ODATA", true);
+                        };
+
+                        if (this.byId("detailListTagihan")) { 
+                            this.byId("detailListTagihan").close();
+                            this.onAfterRendering();
+                        };
                     }.bind(this),
                 })
             })

@@ -92,6 +92,19 @@
                             <IconTabFilter
                                 key="sewa"
                                 text="Skema Sewa">
+                                <FlexBox justifyContent="Start" class="sapUiSmallMarginBegin">
+                                    <Button
+                                        id="btnSewaDesc"
+                                        icon="sap-icon://sort-descending"
+                                        press="onSewaDescending"
+                                        type="Emphasized"
+                                        class="sapUiTinyMarginEnd sapUiSmallMarginTop" />
+                                    <Button
+                                        id="btnSewaAsc"
+                                        icon="sap-icon://sort-ascending"
+                                        press="onSewaAscending"
+                                        class="sapUiSmallMarginTop" />
+                                </FlexBox>
                                 <l:VerticalLayout
                                     class="sapUiContentPadding sapUiLargeMarginBottom"
                                     width="100%">
@@ -128,6 +141,19 @@
                             <IconTabFilter
                                 key="pengelolaan"
                                 text="Skema Pengelolaan">
+                                <FlexBox justifyContent="Start" class="sapUiSmallMarginBegin">
+                                    <Button
+                                        id="btnPengelolaanDesc"
+                                        icon="sap-icon://sort-descending"
+                                        press="onPengelolaanDescending"
+                                        type="Emphasized"
+                                        class="sapUiTinyMarginEnd sapUiSmallMarginTop" />
+                                    <Button
+                                        id="btnPengelolaanAsc"
+                                        icon="sap-icon://sort-ascending"
+                                        press="onPengelolaanAscending"
+                                        class="sapUiSmallMarginTop" />
+                                </FlexBox>
                                 <l:VerticalLayout
                                     class="sapUiContentPadding sapUiLargeMarginBottom"
                                     width="100%">
@@ -164,6 +190,19 @@
                             <IconTabFilter
                                 key="air"
                                 text="Tagihan Air">
+                                <FlexBox justifyContent="Start" class="sapUiSmallMarginBegin">
+                                    <Button
+                                        id="btnAirDesc"
+                                        icon="sap-icon://sort-descending"
+                                        press="onAirDescending"
+                                        type="Emphasized"
+                                        class="sapUiTinyMarginEnd sapUiSmallMarginTop" />
+                                    <Button
+                                        id="btnAirAsc"
+                                        icon="sap-icon://sort-ascending"
+                                        press="onAirAscending"
+                                        class="sapUiSmallMarginTop" />
+                                </FlexBox>
                                 <l:VerticalLayout
                                     class="sapUiContentPadding sapUiLargeMarginBottom"
                                     width="100%">

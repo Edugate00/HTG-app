@@ -1,0 +1,101 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog
+        id="filterDialog"
+        title="Filter"
+        type="Standard">
+        <content>
+            <VBox class="card-content" width="100%" height="100%">
+                <VBox width="100%" class="sapUiSmallMarginBottom">
+                    <Label text="Tenant" />
+                    <ComboBox
+                        id="tenantList"
+                        width="100%"
+                        selectedKey="*"
+                        items="{tenant>/tenant}"
+                        class="sapUiTinyMarginEnd sapMCbAutoFocus">
+                        <core:ListItem
+                            key="{tenant>KodeTenant}"
+                            text="{tenant>NamaTenant}" />
+                    </ComboBox>
+                </VBox>
+                <VBox width="100%" class="sapUiSmallMarginBottom">
+                    <Label labelFor="rbg2" text="Status Pembayaran" />
+                    <RadioButtonGroup id="rbg2" width="100%">
+                        <RadioButton id="RB2-0" text="Semua Status" />
+                        <RadioButton id="RB2-1" text="Sudah dibayar" />
+                        <RadioButton id="RB2-2" text="Belum dibayar" />
+                    </RadioButtonGroup>
+                </VBox>
+                <VBox width="100%" class="sapUiSmallMarginBottom">
+                    <Label text="Periode" />
+                    <ComboBox
+                        id="filterPeriod"
+                        width="100%"
+                        selectedKey="*"
+                        class="sapUiTinyMarginEnd sapMCbAutoFocus">
+                        <core:Item
+                            key="*"
+                            text="Semua Periode" />
+                        <core:Item
+                            key="Januari"
+                            text="Januari" />
+                        <core:Item
+                            key="Februari"
+                            text="Februari" />
+                        <core:Item
+                            key="Maret"
+                            text="Maret" />
+                        <core:Item
+                            key="April"
+                            text="April" />
+                        <core:Item
+                            key="Mei"
+                            text="Mei" />
+                        <core:Item
+                            key="Juni"
+                            text="Juni" />
+                        <core:Item
+                            key="Juli"
+                            text="Juli" />
+                        <core:Item
+                            key="Agustus"
+                            text="Agustus" />
+                        <core:Item
+                            key="September"
+                            text="September" />
+                        <core:Item
+                            key="Oktober"
+                            text="Oktober" />
+                        <core:Item
+                            key="November"
+                            text="November" />
+                        <core:Item
+                            key="Desember"
+                            text="Desember" />
+                    </ComboBox>
+                </VBox>
+                <VBox width="100%" class="sapUiSmallMarginBottom">
+                    <Label labelFor="rbg3" text="Urutkan" />
+                    <RadioButtonGroup id="rbg3" columns="2" width="100%">
+                        <RadioButton id="RB3-1" text="Ascending" />
+                        <RadioButton id="RB3-2" text="Descending" />
+                    </RadioButtonGroup>
+                </VBox>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button
+                text="Tutup"
+                type="Default"
+                press="onFilterDialogClose" />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Terapkan Filter"
+                type="Emphasized"
+                press="onApplyFIlter" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
