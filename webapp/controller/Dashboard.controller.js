@@ -144,6 +144,7 @@ sap.ui.define(
         sessionStorage.setItem("BILLING_ZUTL", JSON.stringify(BILLING_ZUTL));
         sessionStorage.setItem("TO_PRINT", JSON.stringify(needToPrint));
 
+
         MEASPOINT.forEach((el) => {
             let getMonth;
 
@@ -153,14 +154,40 @@ sap.ui.define(
                 getMonth = new Date().getMonth() + 1;
             }
 
-            const stringMonth = getMonth <= 9 ? `0${getMonth}` : `${getMonth}`;
-            const lastMeasDoc = el.MeasPointToMeasDoc.results[0];
+            // const stringMonth = getMonth <= 9 ? `0${getMonth}` : `${getMonth}`;
+            // const lastMeasDoc = el.MeasPointToMeasDoc.results[0];
 
+
+            //New logic to get scan notification 
+            // Jika tanggal lastMeasDoc.Date dalam rentang 27 hari terakhir, berarti udh di scan
+            // kalo engga, berarti harus di scan
             if (el.MeasPointToMeasDoc.results.length !== 0) {
-                if (lastMeasDoc.Date.substr(4, 2) !== stringMonth) {
+                let getDateMeasDoc = el.MeasPointToMeasDoc.results[0].Date;
+                const year = getDateMeasDoc.slice(0, 4);
+                const month = getDateMeasDoc.slice(4, 6);
+                const day = getDateMeasDoc.slice(6, 8);
+          
+                let getMeasdocDateFormated = `${year}/${month}/${day}`;
+                let getTimeStampDateMeasdoc = new Date(getMeasdocDateFormated).getTime();
+
+                let currDate = new Date();
+                let last27days = new Date(currDate.getTime() - 27 * 24 * 60 * 60 * 1000);
+                let getlast27Days = last27days.getTime();
+            
+                if (getlast27Days > getTimeStampDateMeasdoc) {
+                  //Jika disewa atau tidak
+                  if (el.Text !== "") {
+                    console.log("asd")
                     needToScan.push(el);
                     needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
+                  } 
                 }
+            }else{
+              if (el.Text !== "") {
+                console.log("asd")
+                needToScan.push(el);
+                needToScanDesc = `${needToScanDesc}` + `${el.Description.split(" ")[0]}, `;
+              }
             }
 
             if (el.Position === "CONTAINER") {
@@ -220,9 +247,10 @@ sap.ui.define(
 
         // this code below is for the Dynamic Number of Tiles in Dashboard
         const notif = [];
+        notif.push({ pindaiMeteran: `${needToScan.length}` })
+        notif.push({ pindaiMeteranDesc: `${needToScanDesc}` })
         if (currentDate <= 10 || currentDate >= 25) {
-            notif.push({ pindaiMeteran: `${needToScan.length}` })
-            notif.push({ pindaiMeteranDesc: `${needToScanDesc}` })
+            
             notif.push({ tagihanAir: String(getNotification.TagihanAir) })
             notif.push({ tagihanSewa: String(isDueDate.length + hasPassed.length) })
             notif.push({ belumCetak: String(needToPrint.length) })
