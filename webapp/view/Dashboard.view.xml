@@ -151,7 +151,7 @@
                             class="card-header">
                             <Text
                                 class="card-title"
-                                text="Penggunaan Air (m³)">
+                                text="Penggunaan Air (m³)" />
                             <HBox>
                                 <ComboBox
                                     id="ComboBoxTenant"
