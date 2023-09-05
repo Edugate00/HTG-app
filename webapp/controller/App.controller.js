@@ -1,12 +1,16 @@
 sap.ui.define(
-  ["lrlpapp/controller/BaseController", "sap/ui/core/Fragment",
-	"sap/ui/model/json/JSONModel"],
+  ["lrlpapp/controller/BaseController", "sap/ui/core/Fragment", "sap/m/Button",
+	"sap/ui/model/json/JSONModel", 'sap/m/MessageToast', "sap/m/MenuItem", "sap/m/Dialog", "sap/ui/core/HTML"],
   function (BaseController,
 	Fragment,
-	JSONModel) {
+  Button,
+	JSONModel, MessageToast, MenuItem, Dialog, HTML) {
     "use strict";
 
-    
+    const widthWindow = window.screen.width;
+    const PNL_DEV = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE92DFA751C23B4427&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X"
+    const PNL_QAS = "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE92DFA751C23B4427&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X"
+    const PNL_PRD = "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE92DFA751C23B4427&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X"
 
     return BaseController.extend("lrlpapp.controller.App", {
       onInit: async function() {
@@ -100,6 +104,102 @@ sap.ui.define(
         this._getActiveNav("rental");
         this.getRouter().navTo("rental");
       },
+
+      onPNLPress: function () {
+        console.log("Laporan PNL")
+      },
+
+      onCashflowPress: function () {
+        console.log("Laporan CashFlow")
+      },
+
+      onBalancesheetPress: function () {
+        console.log("Laporan Balance Sheet")
+      },
+
+      onReportPress: function () {
+        var oView = this.getView(),
+            oButton = oView.byId("report");
+
+        if (!this._oMenuFragment) {
+            this._oMenuFragment = Fragment.load({
+                id: oView.getId(),
+                name: "lrlpapp.view.fragments.ReportMenu", 
+                controller: this
+            }).then(function(oMenu) {
+                oMenu.openBy(oButton);
+                this._oMenuFragment = oMenu;
+                return this._oMenuFragment;
+            }.bind(this));
+        } else {
+            this._oMenuFragment.openBy(oButton);
+        }
+      },
+
+      onMenuAction: function(oEvent) {
+				var oItem = oEvent.getParameter("item"),
+					sItemPath = "";
+
+				while (oItem instanceof MenuItem) {
+					sItemPath = oItem.getText() + " > " + sItemPath;
+					oItem = oItem.getParent();
+				}
+
+				sItemPath = sItemPath.substr(0, sItemPath.lastIndexOf(" > "));
+
+				// MessageToast.show("Action triggered on item: " + sItemPath);
+          if ( sItemPath == "Profit & Lost"){
+            console.log("PNL")
+            const oView = this.getView();
+
+              let zInvoiceUrl;
+              const portURL = window.location.port
+
+              if (portURL === "8080") { zInvoiceUrl = `<iframe src="${PNL_DEV}" width="100%" height="500px"></iframe>` }
+              if (portURL === "8090") { zInvoiceUrl = `<iframe src="${PNL_QAS}" width="100%" height="500px"></iframe>` }
+              if (portURL === "80") { zInvoiceUrl = `<iframe src="${PNL_PRD}" width="100%" height="500px"></iframe>` }
+
+              const oHtml2 = new HTML({
+                  content: zInvoiceUrl,
+              })
+
+              let width = null;
+              // console.log(widthWindow);
+
+              if (widthWindow < 576 || widthWindow > 1400) {
+                width = "100%";
+              } else {
+                width = "70%";
+              }
+
+              if (!this.oFixedSizeDialog) {
+                this.oFixedSizeDialog = new Dialog({
+                  title: "Profit and Lost Report",
+                  contentWidth: width,
+                  contentHeight: "450px",
+                  content: oHtml2,
+                  endButton: new Button({
+                    text: "Tutup",
+                    press: function () {
+                      // this.oFixedSizeDialog.destroyContent();
+                      this.oFixedSizeDialog.close();
+                    }.bind(this),
+                  }),
+                });
+
+                //to get access to the controller's model
+                this.getView().addDependent(this.oFixedSizeDialog);
+              }
+
+              this.oFixedSizeDialog.open();
+          } 
+          else if ( sItemPath == "Cash Flow"){
+            console.log("Cash flow")
+          }
+          else if ( sItemPath == "Balance Sheet"){
+            console.log("Balance Sheet")
+          }
+			},
 
       _getActiveNav: function (page) {
         const dashboardLink = this.getView().byId("dashbaord");

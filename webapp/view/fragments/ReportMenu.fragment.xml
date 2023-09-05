@@ -1,0 +1,9 @@
+<c:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:c="sap.ui.core">
+	<Menu itemSelected="onMenuAction" class="nav-link">
+		<MenuItem text="PNL"/>
+		<MenuItem text="Cash Flow"/>
+		<MenuItem text="Balance Sheet"/>
+	</Menu>
+</c:FragmentDefinition>

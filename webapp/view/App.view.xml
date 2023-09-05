@@ -31,6 +31,20 @@
                         class="nav-link"
                         text="Sewa"
                         press="onRentalPress" />
+                    <!-- <Link
+                        id="report"
+                        class="nav-link"
+                        text="Report"
+                        press="onReportPress" /> -->
+                    <MenuButton text ="Laporan" >
+                        <menu>
+                            <Menu itemSelected="onMenuAction" >
+                                <MenuItem text="Profit &amp; Lost" />
+                                <MenuItem text="Cash Flow" />
+                                <MenuItem text="Balance Sheet" />
+                            </Menu>
+                        </menu>
+                    </MenuButton>
                 </HBox>
             </HBox>
             <HBox
