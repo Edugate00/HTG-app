@@ -3,7 +3,7 @@ sap.ui.define(
     function (BaseController, HTML) {
         "use strict";
 
-        let zInvoiceUrl;
+        let zPNLReport;
         const PNL_DEV =
             "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE92DFA751C23B4427&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X";
         const PNL_QAS =
@@ -16,19 +16,19 @@ sap.ui.define(
                 const pnlPage = this.getView().byId("pnlPage");
                 const portURL = window.location.port;
                 if (portURL === "8080") {
-                    zInvoiceUrl = `<iframe src="${PNL_DEV}" width="100%" height="100%"></iframe>`;
+                    zPNLReport = `<iframe src="${PNL_DEV}" width="100%" height="100%"></iframe>`;
                 }
                 if (portURL === "8090") {
-                    zInvoiceUrl = `<iframe src="${PNL_QAS}" width="100%" height="100%"></iframe>`;
+                    zPNLReport = `<iframe src="${PNL_QAS}" width="100%" height="100%"></iframe>`;
                 }
                 if (portURL === "80") {
-                    zInvoiceUrl = `<iframe src="${PNL_PRD}" width="100%" height="100%"></iframe>`;
+                    zPNLReport = `<iframe src="${PNL_PRD}" width="100%" height="100%"></iframe>`;
                 }
 
                 pnlPage.removeAllContent();
                 pnlPage.addContent(
                     new HTML({
-                        content: zInvoiceUrl,
+                        content: zPNLReport,
                     })
                 );
             },
