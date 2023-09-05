@@ -140,6 +140,16 @@
           "target": "reportair"
         },
         {
+          "pattern": "utility/reportair",
+          "name": "reportair",
+          "target": "reportair"
+        },
+        {
+          "pattern": "laporan/pnl",
+          "name": "pnl",
+          "target": "pnl"
+        },
+        {
           "pattern": "settings",
           "name": "settings",
           "target": "settings"
@@ -176,6 +186,12 @@
           "id": "reportair",
           "path": "lrlpapp.view.utility",
           "name": "reportair",
+          "viewLevel": 1
+        },
+        "pnl": {
+          "id": "pnl",
+          "path": "lrlpapp.view.laporan",
+          "name": "pnl",
           "viewLevel": 1
         },
         "settings": {
