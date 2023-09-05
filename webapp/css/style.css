@@ -130,6 +130,29 @@ body {
     border-radius: 8px;
 }
 
+/* Style button menu Laporan */
+.sapUiSizeCompact .sapMMenuBtn.sapMMenuBtnRegular .sapMBtnInner {
+    padding-right: 1.625rem;
+    padding-left: 0.5rem;
+    background-color: var(--primary-color-40);
+    border-color: var(--primary-color-40);
+    text-shadow: none;
+    box-shadow: none;
+    color: #ffffff;
+}
+
+.sapMMenuBtn.sapMMenuBtnRegular .sapMBtnInner::after {
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive)>.sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(.sapMBtnTransparent).sapMBtnDefault,.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive)>.sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(.sapMBtnTransparent).sapMBtnBack,.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive)>.sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(.sapMBtnTransparent).sapMBtnGhost {
+    color: var(--primary-color-40);
+    background-color: #ffffff;
+    text-shadow:none;
+}
+/* ------------------------ */
+
 .userName {
     color: #fff;
     text-transform: capitalize;
