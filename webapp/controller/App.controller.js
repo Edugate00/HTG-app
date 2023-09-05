@@ -182,14 +182,16 @@ sap.ui.define(
 
                 if (itemSelected == "Profit & Lost") {
                     this.getRouter().navTo("pnl");
+                } else if (itemSelected == "Cash Flow"){
+                  this.getRouter().navTo("cashflow");
                 }
 
-                sItemPath = sItemPath.substr(0, sItemPath.lastIndexOf(" > "));
+                // sItemPath = sItemPath.substr(0, sItemPath.lastIndexOf(" > "));
 
                 // MessageToast.show("Action triggered on item: " + sItemPath);
-                if (sItemPath == "Profit & Lost") {
-                    console.log("PNL");
-                    this.getRouter().navTo("pnl");
+                // if (sItemPath == "Profit & Lost") {
+                //     console.log("PNL");
+                //     this.getRouter().navTo("pnl");
                     // const oView = this.getView();
 
                     // let zInvoiceUrl;
@@ -238,59 +240,61 @@ sap.ui.define(
                     // }
 
                     // this.oPNLreportDialog.open();
-                } else if (sItemPath == "Cash Flow") {
-                    console.log("Cash flow");
-                    const oView = this.getView();
+                // } else if (sItemPath == "Cash Flow") {
+                //     console.log("Cash flow");
+                //     this.getRouter().navTo("cashflow");
 
-                    let zInvoiceUrl;
-                    const portURL = window.location.port;
+                    // const oView = this.getView();
 
-                    if (portURL === "8080") {
-                        zInvoiceUrl = `<iframe src="${CF_DEV}" width="100%" height="500px"></iframe>`;
-                    }
-                    if (portURL === "8090") {
-                        zInvoiceUrl = `<iframe src="${CF_QAS}" width="100%" height="500px"></iframe>`;
-                    }
-                    if (portURL === "80") {
-                        zInvoiceUrl = `<iframe src="${CF_PRD}" width="100%" height="500px"></iframe>`;
-                    }
+                    // let zInvoiceUrl;
+                    // const portURL = window.location.port;
 
-                    const oHtml2 = new HTML({
-                        content: zInvoiceUrl,
-                    });
+                    // if (portURL === "8080") {
+                    //     zInvoiceUrl = `<iframe src="${CF_DEV}" width="100%" height="500px"></iframe>`;
+                    // }
+                    // if (portURL === "8090") {
+                    //     zInvoiceUrl = `<iframe src="${CF_QAS}" width="100%" height="500px"></iframe>`;
+                    // }
+                    // if (portURL === "80") {
+                    //     zInvoiceUrl = `<iframe src="${CF_PRD}" width="100%" height="500px"></iframe>`;
+                    // }
 
-                    let width = null;
-                    // console.log(widthWindow);
+                    // const oHtml2 = new HTML({
+                    //     content: zInvoiceUrl,
+                    // });
 
-                    if (widthWindow < 576 || widthWindow > 1400) {
-                        width = "100%";
-                    } else {
-                        width = "70%";
-                    }
+                    // let width = null;
+                    // // console.log(widthWindow);
 
-                    if (!this.oCFreportDialog) {
-                        this.oCFreportDialog = new Dialog({
-                            title: "Cash Flow Report",
-                            contentWidth: width,
-                            contentHeight: "450px",
-                            content: oHtml2,
-                            endButton: new Button({
-                                text: "Tutup",
-                                press: function () {
-                                    // this.oCFreportDialog.destroyContent();
-                                    this.oCFreportDialog.close();
-                                }.bind(this),
-                            }),
-                        });
+                    // if (widthWindow < 576 || widthWindow > 1400) {
+                    //     width = "100%";
+                    // } else {
+                    //     width = "70%";
+                    // }
 
-                        //to get access to the controller's model
-                        this.getView().addDependent(this.oCFreportDialog);
-                    }
+                    // if (!this.oCFreportDialog) {
+                    //     this.oCFreportDialog = new Dialog({
+                    //         title: "Cash Flow Report",
+                    //         contentWidth: width,
+                    //         contentHeight: "450px",
+                    //         content: oHtml2,
+                    //         endButton: new Button({
+                    //             text: "Tutup",
+                    //             press: function () {
+                    //                 // this.oCFreportDialog.destroyContent();
+                    //                 this.oCFreportDialog.close();
+                    //             }.bind(this),
+                    //         }),
+                    //     });
 
-                    this.oCFreportDialog.open();
-                } else if (sItemPath == "Balance Sheet") {
-                    console.log("Balance Sheet");
-                }
+                    //     //to get access to the controller's model
+                    //     this.getView().addDependent(this.oCFreportDialog);
+                    // }
+
+                    // this.oCFreportDialog.open();
+                // } else if (sItemPath == "Balance Sheet") {
+                //     console.log("Balance Sheet");
+                // }
             },
 
             _getActiveNav: function (page) {

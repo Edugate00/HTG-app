@@ -1,0 +1,12 @@
+<mvc:View
+    controllerName="lrlpapp.controller.laporan.cashflow"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    displayBlock="true"
+    height="100%"
+    busyIndicatorDelay="0">
+    <Page id="cfPage" showHeader="false">
+        <HBox id="frame" />
+    </Page>
+</mvc:View>
