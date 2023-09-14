@@ -36,12 +36,13 @@
                         class="nav-link"
                         text="Report"
                         press="onReportPress" /> -->
-                    <MenuButton text ="Laporan" >
+                    <MenuButton text ="Laporan" id = "report">
                         <menu>
                             <Menu itemSelected="onMenuAction" >
                                 <MenuItem text="Profit &amp; Lost" />
                                 <MenuItem text="Cash Flow" />
                                 <MenuItem text="Balance Sheet" />
+                                <MenuItem text="Tenant AR" />
                             </Menu>
                         </menu>
                     </MenuButton>
