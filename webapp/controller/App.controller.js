@@ -143,18 +143,6 @@ sap.ui.define(
                 this.getRouter().navTo("rental");
             },
 
-            onPNLPress: function () {
-                console.log("Laporan PNL");
-            },
-
-            onCashflowPress: function () {
-                console.log("Laporan CashFlow");
-            },
-
-            onBalancesheetPress: function () {
-                console.log("Laporan Balance Sheet");
-            },
-
             onReportPress: function () {
                 var oView = this.getView(),
                     oButton = oView.byId("report");
@@ -181,11 +169,18 @@ sap.ui.define(
                 const itemSelected = oItems.getText();
 
                 if (itemSelected == "Profit & Lost") {
+                    this._getActiveNav("pnl");
                     this.getRouter().navTo("pnl");
                 } else if (itemSelected == "Cash Flow"){
+                    this._getActiveNav("cashflow");
                   this.getRouter().navTo("cashflow");
+                } else if (itemSelected == "Tenant AR"){
+                    this._getActiveNav("TenantAR");
+                    this.getRouter().navTo("TenantAR");
                 }
+  
 
+                
                 // sItemPath = sItemPath.substr(0, sItemPath.lastIndexOf(" > "));
 
                 // MessageToast.show("Action triggered on item: " + sItemPath);
@@ -301,31 +296,49 @@ sap.ui.define(
                 const dashboardLink = this.getView().byId("dashbaord");
                 const utilityLink = this.getView().byId("utility");
                 const rentalLink = this.getView().byId("rental");
-
+                const report = this.getView().byId("report")
                 switch (page) {
                     case "dashboard":
                         dashboardLink.addStyleClass("nav-link-active");
                         utilityLink.removeStyleClass("nav-link-active");
                         rentalLink.removeStyleClass("nav-link-active");
+                        report.removeStyleClass("nav-link-active");
                         break;
 
                     case "utility":
                         dashboardLink.removeStyleClass("nav-link-active");
                         utilityLink.addStyleClass("nav-link-active");
                         rentalLink.removeStyleClass("nav-link-active");
+                        report.removeStyleClass("nav-link-active");
                         break;
 
                     case "rental":
                         dashboardLink.removeStyleClass("nav-link-active");
                         utilityLink.removeStyleClass("nav-link-active");
                         rentalLink.addStyleClass("nav-link-active");
+                        report.removeStyleClass("nav-link-active");
                         break;
 
-                    case "maintenance":
+                    case "pnl":
                         dashboardLink.removeStyleClass("nav-link-active");
                         utilityLink.removeStyleClass("nav-link-active");
                         rentalLink.removeStyleClass("nav-link-active");
+                        report.addStyleClass("nav-link-active");
                         break;
+
+                    case "cashflow":
+                        dashboardLink.removeStyleClass("nav-link-active");
+                        utilityLink.removeStyleClass("nav-link-active");
+                        rentalLink.removeStyleClass("nav-link-active");
+                        report.addStyleClass("nav-link-active");
+                    break
+
+                    case "TenantAR":
+                        dashboardLink.removeStyleClass("nav-link-active");
+                        utilityLink.removeStyleClass("nav-link-active");
+                        rentalLink.removeStyleClass("nav-link-active");
+                        report.addStyleClass("nav-link-active");
+                    break;
                 }
             },
 

@@ -155,6 +155,11 @@
           "target": "cashflow"
         },
         {
+          "pattern": "laporan/TenantAR",
+          "name": "TenantAR",
+          "target": "TenantAR"
+        },
+        {
           "pattern": "settings",
           "name": "settings",
           "target": "settings"
@@ -203,6 +208,12 @@
           "id": "cashflow",
           "path": "lrlpapp.view.laporan",
           "name": "cashflow",
+          "viewLevel": 1
+        },
+        "TenantAR": {
+          "id": "TenantAR",
+          "path": "lrlpapp.view.laporan",
+          "name": "TenantAR",
           "viewLevel": 1
         },
         "settings": {

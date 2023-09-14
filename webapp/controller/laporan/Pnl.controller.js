@@ -5,11 +5,11 @@ sap.ui.define(
 
         let zPNLReport;
         const PNL_DEV =
-            "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE92DFA751C23B4427&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X";
+            "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X";
         const PNL_QAS =
-            "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE92DFA751C23B4427&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X";
+            "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X";
         const PNL_PRD =
-            "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE92DFA751C23B4427&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X";
+            "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X";
 
         return BaseController.extend("lrlpapp.controller.laporan.pnl", {
             onAfterRendering: function () {
