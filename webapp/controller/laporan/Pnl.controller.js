@@ -27,7 +27,7 @@ sap.ui.define(
                 }
 
                 pnlPage.removeAllContent();
-                pnlPage.destroy();
+                pnlPage.destroyContent();
                 pnlPage.addContent(
                     new HTML({
                         content: zPNLReport,
