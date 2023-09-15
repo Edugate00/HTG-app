@@ -31,11 +31,6 @@
                         class="nav-link"
                         text="Sewa"
                         press="onRentalPress" />
-                    <!-- <Link
-                        id="report"
-                        class="nav-link"
-                        text="Report"
-                        press="onReportPress" /> -->
                     <MenuButton text ="Laporan" id = "report">
                         <menu>
                             <Menu itemSelected="onMenuAction" >
