@@ -14,6 +14,7 @@ sap.ui.define(
         return BaseController.extend("lrlpapp.controller.laporan.pnl", {
             onAfterRendering: function () {
                 const pnlPage = this.getView().byId("pnlPage");
+                const pnlFrame = this.getView().byId("frame");
                 const portURL = window.location.port;
                 if (portURL === "8080") {
                     zPNLReport = `<iframe src="${PNL_DEV}" width="100%" height="100%"></iframe>`;
@@ -26,6 +27,7 @@ sap.ui.define(
                 }
 
                 pnlPage.removeAllContent();
+                pnlPage.destroy();
                 pnlPage.addContent(
                     new HTML({
                         content: zPNLReport,

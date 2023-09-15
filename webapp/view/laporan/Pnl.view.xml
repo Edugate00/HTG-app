@@ -7,6 +7,11 @@
     height="100%"
     busyIndicatorDelay="0">
     <Page id="pnlPage" showHeader="false">
-        <HBox id="frame" />
+        <content>
+            
+        </content>
+        <HBox id="frame">
+            
+        </HBox>
     </Page>
 </mvc:View>
