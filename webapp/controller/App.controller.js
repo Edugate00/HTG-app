@@ -167,13 +167,23 @@ sap.ui.define(
             onMenuAction: function (oEvent) {
                 const oItems = oEvent.getParameter("item");
                 const itemSelected = oItems.getText();
+                const controllerPNL = sap.ui.controller("lrlpapp.controller.laporan.pnl");
+                const controllerCF = sap.ui.controller("lrlpapp.controller.laporan.cashflow");
 
                 if (itemSelected == "Profit & Lost") {
+                    
+
+                    console.log("Click PNL")
                     this._getActiveNav("pnl");
                     this.getRouter().navTo("pnl");
+
+                    controllerPNL.onAfterRendering();
+
                 } else if (itemSelected == "Cash Flow"){
                     this._getActiveNav("cashflow");
-                  this.getRouter().navTo("cashflow");
+                    this.getRouter().navTo("cashflow");
+                    controllerCF.onAfterRendering();
+
                 } else if (itemSelected == "Tenant AR"){
                     this._getActiveNav("TenantAR");
                     this.getRouter().navTo("TenantAR");
