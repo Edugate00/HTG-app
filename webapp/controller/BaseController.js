@@ -1,22 +1,24 @@
 sap.ui.define(
-  [
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/core/routing/History",
-    "sap/ui/core/UIComponent",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment",
-    "sap/ui/core/BusyIndicator"
-  ],
-  function (Controller,
-	History,
-	UIComponent,
-	JSONModel,
-	Fragment,
-    BusyIndicator) {
-    "use strict";
+    [
+        "sap/ui/core/mvc/Controller",
+        "sap/ui/core/routing/History",
+        "sap/ui/core/UIComponent",
+        "sap/ui/model/json/JSONModel",
+        "sap/ui/core/Fragment",
+        "sap/ui/core/BusyIndicator",
+    ],
+    function (
+        Controller,
+        History,
+        UIComponent,
+        JSONModel,
+        Fragment,
+        BusyIndicator
+    ) {
+        "use strict";
 
-    let oModel = null;
-    return Controller.extend("lrlpapp.controller.BaseController", {
+        let oModel = null;
+        return Controller.extend("lrlpapp.controller.BaseController", {
             getRouter: function () {
                 return UIComponent.getRouterFor(this);
             },
@@ -37,7 +39,7 @@ sap.ui.define(
             getFormattedTime: function (originalTime) {
                 // Original Time "170000"
                 // Change to "17:00:00"
-                const arr = originalTime.split("")
+                const arr = originalTime.split("");
                 const h = `${arr[0]}${arr[1]}`;
                 const m = `${arr[2]}${arr[3]}`;
                 const s = `${arr[4]}${arr[5]}`;
@@ -133,15 +135,15 @@ sap.ui.define(
                             $expand: url,
                         },
                         success: function (oData) {
-                            resolve(oData)
-                            BusyIndicator.hide()
+                            resolve(oData);
+                            BusyIndicator.hide();
                         },
                         error: function (oResult) {
-                            reject(oResult)
-                            BusyIndicator.hide()
-                        }
+                            reject(oResult);
+                            BusyIndicator.hide();
+                        },
                     });
-                })
+                });
             },
 
             createOdataService: function (path, entry) {
@@ -151,16 +153,16 @@ sap.ui.define(
                     oModel.create(path, entry, {
                         success: function (oData) {
                             resolve(oData);
-                            BusyIndicator.hide()
+                            BusyIndicator.hide();
                         },
                         error: function (oResult) {
                             reject(oResult);
-                            BusyIndicator.hide()
-                        }
-                    })
-                })
+                            BusyIndicator.hide();
+                        },
+                    });
+                });
             },
-      
+
             flattenedArr: function (arr) {
                 let flat = [];
                 for (let i = 0; i < arr.length; i++) {
@@ -171,11 +173,11 @@ sap.ui.define(
 
             isDueDate: function (timeStamp) {
                 const now = Date.now();
-                const tenDaysFromNow = now + (10 * 24 * 60 * 60 * 1000);
+                const tenDaysFromNow = now + 10 * 24 * 60 * 60 * 1000;
 
                 return timeStamp >= now && timeStamp < tenDaysFromNow;
             },
-        
+
             hasPassed: function (timeStamp) {
                 const now = Date.now();
                 return timeStamp < now;
@@ -183,7 +185,11 @@ sap.ui.define(
 
             getDueDate: function (dateString, days) {
                 // Parse the input date string into a Date object
-                const date = new Date(dateString.substr(0, 4), parseInt(dateString.substr(4, 2)) - 1, dateString.substr(6, 2));
+                const date = new Date(
+                    dateString.substr(0, 4),
+                    parseInt(dateString.substr(4, 2)) - 1,
+                    dateString.substr(6, 2)
+                );
 
                 // Add the specified number of days to the date
                 date.setDate(date.getDate() + days);
@@ -195,7 +201,12 @@ sap.ui.define(
                 return year + month + day;
             },
 
-            openFragment: function (dialogName, fragmentName, model, modelAlias) {
+            openFragment: function (
+                dialogName,
+                fragmentName,
+                model,
+                modelAlias
+            ) {
                 const oView = this.getView();
 
                 if (!this.dialogName) {
