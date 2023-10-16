@@ -656,7 +656,7 @@ sap.ui.define(
                     itemsForTenant.forEach((el) => {
                         oComboBoxMonth.addItem(new Item(el));
                     });
-                    oComboBoxMonth.setSelectedKey("3bulan");
+                    oComboBoxMonth.setSelectedKey("*");
                     oDataset.removeDimension(oDimension);
 
                     const oNewDimension = new DimensionDefinition({
