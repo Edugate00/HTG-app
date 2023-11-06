@@ -3,18 +3,29 @@ sap.ui.define(
     function (BaseController, HTML) {
         "use strict";
 
+        let pnlPage;
+        
+        const portURL = window.location.port;
         let zPNLReport;
         const PNL_DEV =
-            "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X";
+            "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZPNL_LRLP&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X";
         const PNL_QAS =
-            "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X";
+            "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZPNL_LRLP&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X";
         const PNL_PRD =
-            "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=F.01&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X";
+            "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=ZPNL_LRLP&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X";
+
 
         return BaseController.extend("lrlpapp.controller.laporan.pnl", {
+
+            onInit: function () {
+                pnlPage = this.getView().byId("pnlPage");
+            }, 
+
             onAfterRendering: function () {
-                const pnlPage = this.getView().byId("pnlPage");
-                const portURL = window.location.port;
+                // var oView = this.getView()
+                // const pnlPage = oView.byId("pnlPage");
+
+                console.log("after")
                 if (portURL === "8080") {
                     zPNLReport = `<iframe src="${PNL_DEV}" width="100%" height="100%"></iframe>`;
                 }
@@ -28,10 +39,11 @@ sap.ui.define(
                 pnlPage.removeAllContent();
                 pnlPage.addContent(
                     new HTML({
-                        content: zPNLReport,
+                        content: zPNLReport
                     })
                 );
             },
+
         });
     }
 );
