@@ -140,11 +140,6 @@
           "target": "reportair"
         },
         {
-          "pattern": "utility/reportair",
-          "name": "reportair",
-          "target": "reportair"
-        },
-        {
           "pattern": "laporan/pnl",
           "name": "pnl",
           "target": "pnl"
@@ -153,6 +148,11 @@
           "pattern": "laporan/cashflow",
           "name": "cashflow",
           "target": "cashflow"
+        },
+        {
+          "pattern": "laporan/cashflow2",
+          "name": "cashflow2",
+          "target": "cashflow2"
         },
         {
           "pattern": "laporan/TenantAR",
@@ -208,6 +208,12 @@
           "id": "cashflow",
           "path": "lrlpapp.view.laporan",
           "name": "cashflow",
+          "viewLevel": 1
+        },
+        "cashflow2": {
+          "id": "cashflow2",
+          "path": "lrlpapp.view.laporan",
+          "name": "cashflow2",
           "viewLevel": 1
         },
         "TenantAR": {

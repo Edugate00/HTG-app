@@ -1,0 +1,58 @@
+<mvc:View
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	controllerName="lrlpapp.controller.laporan.cashflow"
+>
+	<App>
+		<pages>
+			<Page
+				title="Cashflow Report Citiwalk"
+				titleLevel="H5"
+				titleAlignment="Center"
+			>
+				<subHeader>
+					<Bar>
+						<contentMiddle>
+							<Text text="Year 2023" />
+						</contentMiddle>
+					</Bar>
+				</subHeader>
+				<content>
+					<Table
+						id="cashFlowTable"
+						items="{cashFlowModel>/CashFlow}"
+					>
+						<columns>
+							<Column>
+								<Label text="" />
+							</Column>
+							<Column>
+								<Label text="Value" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{cashFlowModel>Account Description}" />
+									<Text text="{cashFlowModel>Value}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+				<footer>
+					<OverflowToolbar id="otbFooter">
+						<Button
+							type="Emphasized"
+							text="Back"
+							press="onClickBack"
+							class="buttonPost"
+						/>
+						<ToolbarSpacer />
+					</OverflowToolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
