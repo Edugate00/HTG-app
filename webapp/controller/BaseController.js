@@ -221,7 +221,6 @@ sap.ui.define(
 			RequestReadWithFilter: function (path, url) {
 				const oModel = this.getOwnerComponent().getModel();
 
-				BusyIndicator.show();
 				return new Promise(function (resolve, reject) {
 					oModel.read(path, {
 						urlParameters: {
@@ -229,11 +228,9 @@ sap.ui.define(
 						},
 						success: function (oData) {
 							resolve(oData);
-							BusyIndicator.hide();
 						},
 						error: function (oResult) {
 							reject(oResult);
-							BusyIndicator.hide();
 						},
 					});
 				});

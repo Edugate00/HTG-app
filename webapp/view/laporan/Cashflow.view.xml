@@ -1,10 +1,9 @@
 <mvc:View
     controllerName="lrlpapp.controller.laporan.Cashflow"
     xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
-    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
-    xmlns:smartTable="sap.ui.comp.smarttable">
+    xmlns="sap.m">
     <Page
         id="cashFlowPage"
         showHeader="false"
@@ -13,26 +12,196 @@
             <VBox class="header-container" />
             <VBox class="main-container">
                 <VBox class="card">
+                    <FlexBox
+                        class="card-header" justifyContent="SpaceBetween">
+                        <Text class="card-title" text="Report Cashflow Citiwalk" />
+                    </FlexBox>
+                    <f:SimpleForm
+                        id="formCashflowReport"
+                        editable="true"
+                        layout="ResponsiveGridLayout">
+                        <f:content>
+                            <VBox>
+                                <Label text="Periode From:" />
+                                <ComboBox
+                                    id="perioedFromDD"
+                                    width="100%"
+                                    placeholder="Select Periode"
+                                    selectedKey="">
+                                    <core:Item
+                                        key="01"
+                                        text="01" />
+                                    <core:Item
+                                        key="02"
+                                        text="02" />
+                                    <core:Item
+                                        key="03"
+                                        text="03" />
+                                    <core:Item
+                                        key="04"
+                                        text="04" />
+                                    <core:Item
+                                        key="05"
+                                        text="05" />
+                                    <core:Item
+                                        key="06"
+                                        text="06" />
+                                    <core:Item
+                                        key="07"
+                                        text="07" />
+                                    <core:Item
+                                        key="08"
+                                        text="08" />
+                                    <core:Item
+                                        key="09"
+                                        text="09" />
+                                    <core:Item
+                                        key="10"
+                                        text="10" />
+                                    <core:Item
+                                        key="11"
+                                        text="11" />
+                                    <core:Item
+                                        key="12"
+                                        text="12" />
+                                </ComboBox>
+                            </VBox>
+                            <VBox>
+                                <Label text="Periode To:" />
+                                <ComboBox
+                                    id="perioedToDD"
+                                    width="100%"
+                                    placeholder="Select Periode"
+                                    selectedKey="">
+                                    <core:Item
+                                        key="01"
+                                        text="01" />
+                                    <core:Item
+                                        key="02"
+                                        text="02" />
+                                    <core:Item
+                                        key="03"
+                                        text="03" />
+                                    <core:Item
+                                        key="04"
+                                        text="04" />
+                                    <core:Item
+                                        key="05"
+                                        text="05" />
+                                    <core:Item
+                                        key="06"
+                                        text="06" />
+                                    <core:Item
+                                        key="07"
+                                        text="07" />
+                                    <core:Item
+                                        key="08"
+                                        text="08" />
+                                    <core:Item
+                                        key="09"
+                                        text="09" />
+                                    <core:Item
+                                        key="10"
+                                        text="10" />
+                                    <core:Item
+                                        key="11"
+                                        text="11" />
+                                    <core:Item
+                                        key="12"
+                                        text="12" />
+                                </ComboBox>
+                            </VBox>
+                            <VBox>
+                                <Label text="Year:" />
+                                <ComboBox
+                                    id="yearDD"
+                                    width="100%"
+                                    placeholder="Select Year"
+                                    selectedKey="">
+                                    <core:Item
+                                        key="2023"
+                                        text="2023" />
+                                </ComboBox>
+                            </VBox>
+                            <VBox width="100%">
+                                <Label text="" />
+                                <Button
+                                    width="100%"
+                                    type="Emphasized"
+                                    text="Apply Filter"
+                                    press="onApplyPress"
+                                />
+                            </VBox>
+                        </f:content>
+                    </f:SimpleForm>
+                </VBox>
+                <VBox id="tableContainer" class="card">
                     <Table
-                        id="cashFlowTable"
-                        backgroundDesign="Translucent"
+                        id="bankBalanceTable"
                         noDataText="Tidak ada data"
-                        headerText="Report Cashflow Citiwalk"
-                        items="{cashFlowModel>/cashflow}">
+                        items="{bankBalanceFlows>/bankBalanceFlows}">
+                        <columns>
+                            <Column>
+                                <Label text="Bank Balance" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="Value" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{bankBalanceFlows>account}" />
+                                    <Text text="{bankBalanceFlows>value}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <VBox height="24px"></VBox>
+                    <Table
+                        id="cashInflowTable"
+                        noDataText="Tidak ada data"
+                        items="{cashInflowModel>/cashInflow}"
+                        alternateRowColors="true">
                         <columns>
                             <Column>
                                 <Label text="Cash inflows" />
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label text="" />
+                                <Label text="Value" />
                             </Column>
                         </columns>
                         <items>
                             <ColumnListItem>
                                 <cells>
-                                    <Text text="{cashFlowModel>account}" />
-                                    <Text text="{cashFlowModel>value}" />
+                                    <Text text="{cashInflowModel>account}" />
+                                    <Text text="{cashInflowModel>value}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <VBox height="24px"></VBox>
+                    <Table
+                        id="cashOutflowTable"
+                        noDataText="Tidak ada data"
+                        items="{cashOutflowModel>/cashOutflow}"
+                        alternateRowColors="true">
+                        <columns>
+                            <Column>
+                                <Label text="Cash outflows" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="Value" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{cashOutflowModel>account}" />
+                                    <Text text="{cashOutflowModel>value}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
