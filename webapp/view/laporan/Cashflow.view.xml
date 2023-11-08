@@ -32,8 +32,7 @@
                                 <ComboBox
                                     id="perioedFromDD"
                                     width="100%"
-                                    placeholder="Select Periode"
-                                    selectedKey="">
+                                    placeholder="Select Periode">
                                     <core:Item
                                         key="01"
                                         text="Januari" />
@@ -100,69 +99,213 @@
                     <Table
                         id="bankBalanceTable"
                         noDataText="Tidak ada data"
-                        items="{bankBalanceFlows>/bankBalanceFlows}">
+                        items="{bankBalance>/bankBalance}">
                         <columns>
                             <Column>
                                 <Label text="Bank Balance" />
                             </Column>
                             <Column
-                                hAlign="End">
-                                <Label text="Amount" />
+                                hAlign="Center">
+                                <Label text="Selected Month" />
                             </Column>
+
+                            <!-- <Column
+                                hAlign="Center">
+                                <Label text="Previous Month" />
+                            </Column>
+
+                            <Column
+                                hAlign="Center">
+                                <Label text="Variances" />
+                            </Column> -->
                         </columns>
                         <items>
                             <ColumnListItem>
                                 <cells>
-                                    <Text text="{bankBalanceFlows>account}" />
-                                    <Text text="{bankBalanceFlows>value}" />
+                                    <Text text="{bankBalance>account}" />
+                                    <Text text="{bankBalance>value}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
                     </Table>
                     <VBox height="24px"></VBox>
                     <Table
-                        id="cashInflowTable"
+                        headerText="Cash Inflows"
+                        id="operatingActTableIn"
                         noDataText="Tidak ada data"
-                        items="{cashInflowModel>/cashInflow}"
-                        alternateRowColors="true">
+                        items="{inOperatingActs>/inOperatingActs}">
                         <columns>
                             <Column>
-                                <Label text="Cash inflows" />
+                                <Label text="Operating Activities" />
                             </Column>
                             <Column
-                                hAlign="End">
-                                <Label text="Amount" />
+                                hAlign="Center">
+                                <Label text="" />
                             </Column>
                         </columns>
                         <items>
                             <ColumnListItem>
                                 <cells>
-                                    <Text text="{cashInflowModel>account}" />
-                                    <Text text="{cashInflowModel>value}" />
+                                    <Text text="{inOperatingActs>account}" />
+                                    <Text text="{inOperatingActs>value}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
                     </Table>
                     <VBox height="24px"></VBox>
                     <Table
-                        id="cashOutflowTable"
+                        id="financingActTableIn"
                         noDataText="Tidak ada data"
-                        items="{cashOutflowModel>/cashOutflow}"
-                        alternateRowColors="true">
+                        items="{inFinancingActs>/inFinancingActs}">
                         <columns>
                             <Column>
-                                <Label text="Cash outflows" />
+                                <Label text="Financing Activities" />
                             </Column>
                             <Column
-                                hAlign="End">
-                                <Label text="Amount" />
+                                hAlign="Center">
+                                <Label text="" />
                             </Column>
                         </columns>
                         <items>
                             <ColumnListItem>
                                 <cells>
-                                    <Text text="{cashOutflowModel>account}" />
-                                    <Text text="{cashOutflowModel>value}" />
+                                    <Text text="{inFinancingActs>account}" />
+                                    <Text text="{inFinancingActs>value}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <Table
+                        id="investingActTableIn"
+                        noDataText="Tidak ada data"
+                        items="{inInvestingActs>/inInvestingActs}">
+                        <columns>
+                            <Column>
+                                <Label text="Investing Activities" />
+                            </Column>
+                            <Column
+                                hAlign="Center">
+                                <Label text="" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{inInvestingActs>account}" />
+                                    <Text text="{inInvestingActs>value}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <Table
+                        id="otherAndTotalTableIn"
+                        noDataText="Tidak ada data"
+                        items="{inOtherAndTotal>/inOtherAndTotal}">
+                        <columns>
+                            <Column>
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="Center">
+                                <Label text="" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{inOtherAndTotal>account}" />
+                                    <Text text="{inOtherAndTotal>value}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <!-- Cash Outflows mulai dari sini yak!!!! -->
+                    <Table
+                        headerText="Cash Outflows"
+                        id="operatingActTableOut"
+                        noDataText="Tidak ada data"
+                        items="{outOperatingActs>/outOperatingActs}">
+                        <columns>
+                            <Column>
+                                <Label text="Operating Activities" />
+                            </Column>
+                            <Column
+                                hAlign="Center">
+                                <Label text="" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{outOperatingActs>account}" />
+                                    <Text text="{outOperatingActs>value}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <VBox height="24px"></VBox>
+                    <Table
+                        id="financingActTableOut"
+                        noDataText="Tidak ada data"
+                        items="{outFinancingActs>/outFinancingActs}">
+                        <columns>
+                            <Column>
+                                <Label text="Financing Activities" />
+                            </Column>
+                            <Column
+                                hAlign="Center">
+                                <Label text="" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{outFinancingActs>account}" />
+                                    <Text text="{outFinancingActs>value}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <Table
+                        id="investingActTableOut"
+                        noDataText="Tidak ada data"
+                        items="{outInvestingActs>/outInvestingActs}">
+                        <columns>
+                            <Column>
+                                <Label text="Investing Activities" />
+                            </Column>
+                            <Column
+                                hAlign="Center">
+                                <Label text="" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{outInvestingActs>account}" />
+                                    <Text text="{outInvestingActs>value}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <Table
+                        id="otherAndTotalTableOut"
+                        noDataText="Tidak ada data"
+                        items="{outOtherAndTotal>/outOtherAndTotal}">
+                        <columns>
+                            <Column>
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="Center">
+                                <Label text="" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{outOtherAndTotal>account}" />
+                                    <Text text="{outOtherAndTotal>value}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
