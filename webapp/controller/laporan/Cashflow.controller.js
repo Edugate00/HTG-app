@@ -18,10 +18,8 @@ sap.ui.define(
 		return BaseController.extend('lrlpapp.controller.laporan.Cashflow', {
 			onAfterRendering: async function () {
 				const dropdownPeriodeFrom = this.byId('perioedFromDD');
-				const dropdownPeriodeTo = this.byId('perioedToDD');
 				const dropdownYear = this.byId('yearDD');
 
-				dropdownPeriodeTo.setSelectedKey(month);
 				dropdownYear.setSelectedKey(year);
 
 				if (dropdownYear.getSelectedKey() == '2023') {
@@ -35,13 +33,11 @@ sap.ui.define(
 
 			onApplyPress: async function () {
 				const dropdownPeriodeFrom = this.byId('perioedFromDD');
-				const dropdownPeriodeTo = this.byId('perioedToDD');
 				const dropdownYear = this.byId('yearDD');
 
 				const tableContainer = this.byId('tableContainer');
 
 				const selectedPeriodFrom = dropdownPeriodeFrom.getSelectedKey();
-				const selectedPeriodTo = dropdownPeriodeTo.getSelectedKey();
 				const selectedYear = dropdownYear.getSelectedKey();
 
 				// console.log(selectedPeriodFrom);
@@ -65,10 +61,10 @@ sap.ui.define(
 					try {
 						const cashflowData = await this.RequestReadWithFilter(
 							'/cashflowSet',
-							`CompanyCode eq 'LRLP'and PeriodeFrom eq '${selectedPeriodFrom}'and PeriodeTo eq '${selectedPeriodTo}'and Year eq '${selectedYear}'`,
+							`CompanyCode eq 'LRLP'and PeriodeFrom eq '${selectedPeriodFrom}'and PeriodeTo eq '${selectedPeriodFrom}'and Year eq '${selectedYear}'`,
 						);
 
-						// console.log(cashflowData);
+						console.log(cashflowData);
 
 						const cashflowPropsName = Object.keys(cashflowData.results[0]);
 						const cashflowValue = Object.values(cashflowData.results[0]);
@@ -80,6 +76,9 @@ sap.ui.define(
 						let totalIn = null;
 						let totalOut = null;
 
+						let otherInOutFlowsName = null;
+						let otherInOutFlowsValue = null;
+
 						cashflowPropsName.forEach((el, i) => {
 							if (
 								el !== '__metadata' &&
@@ -88,6 +87,11 @@ sap.ui.define(
 								el !== 'PeriodeTo' &&
 								el !== 'Year'
 							) {
+								if (el.includes('CF_Other_In_Out_Flows')) {
+									otherInOutFlowsName = el.replace(el, 'Other Inflows/Outflows');
+									otherInOutFlowsValue = Number(cashflowValue[i]);
+								}
+
 								if (el.includes('CF_IN')) {
 									if (el.includes('CF_IN_Bank_Balance_brought_forward')) {
 										bankBalance = Number(cashflowValue[i]);
@@ -134,14 +138,22 @@ sap.ui.define(
 							}
 						});
 
+						// Add other inflow/outflow
 						// Add surplus/deficit
 						let surplusDeficit = bankBalance + totalIn - totalOut;
+						otherInOutFlowsValue = surplusDeficit - otherInOutFlowsValue;
 
 						// Input Row kosong
 						cashOutflow.push({ account: '', value: '' });
-
 						cashOutflow.push({
-							account: 'Surplus/Deficit',
+							account: otherInOutFlowsName,
+							value: otherInOutFlowsValue.toLocaleString('id-ID', {
+								style: 'currency',
+								currency: 'IDR',
+							}),
+						});
+						cashOutflow.push({
+							account: 'End Bank Balance',
 							value: surplusDeficit.toLocaleString('id-ID', {
 								style: 'currency',
 								currency: 'IDR',
