@@ -22,7 +22,13 @@
                         layout="ResponsiveGridLayout">
                         <f:content>
                             <VBox>
-                                <Label text="Periode From:" />
+                                <Label text="Company:" />
+                                <Input
+                                    enabled="false"
+                                    value="LRLP" />
+                            </VBox>
+                            <VBox>
+                                <Label text="Periode:" />
                                 <ComboBox
                                     id="perioedFromDD"
                                     width="100%"
@@ -30,85 +36,40 @@
                                     selectedKey="">
                                     <core:Item
                                         key="01"
-                                        text="01" />
+                                        text="Januari" />
                                     <core:Item
                                         key="02"
-                                        text="02" />
+                                        text="Februari" />
                                     <core:Item
                                         key="03"
-                                        text="03" />
+                                        text="Maret" />
                                     <core:Item
                                         key="04"
-                                        text="04" />
+                                        text="April" />
                                     <core:Item
                                         key="05"
-                                        text="05" />
+                                        text="Mei" />
                                     <core:Item
                                         key="06"
-                                        text="06" />
+                                        text="Juni" />
                                     <core:Item
                                         key="07"
-                                        text="07" />
+                                        text="Juli" />
                                     <core:Item
                                         key="08"
-                                        text="08" />
+                                        text="Agustus" />
                                     <core:Item
                                         key="09"
-                                        text="09" />
+                                        text="September" />
                                     <core:Item
                                         key="10"
-                                        text="10" />
+                                        text="Oktober" />
                                     <core:Item
                                         key="11"
-                                        text="11" />
+                                        text="November" />
                                     <core:Item
                                         key="12"
-                                        text="12" />
-                                </ComboBox>
-                            </VBox>
-                            <VBox>
-                                <Label text="Periode To:" />
-                                <ComboBox
-                                    id="perioedToDD"
-                                    width="100%"
-                                    placeholder="Select Periode"
-                                    selectedKey="">
-                                    <core:Item
-                                        key="01"
-                                        text="01" />
-                                    <core:Item
-                                        key="02"
-                                        text="02" />
-                                    <core:Item
-                                        key="03"
-                                        text="03" />
-                                    <core:Item
-                                        key="04"
-                                        text="04" />
-                                    <core:Item
-                                        key="05"
-                                        text="05" />
-                                    <core:Item
-                                        key="06"
-                                        text="06" />
-                                    <core:Item
-                                        key="07"
-                                        text="07" />
-                                    <core:Item
-                                        key="08"
-                                        text="08" />
-                                    <core:Item
-                                        key="09"
-                                        text="09" />
-                                    <core:Item
-                                        key="10"
-                                        text="10" />
-                                    <core:Item
-                                        key="11"
-                                        text="11" />
-                                    <core:Item
-                                        key="12"
-                                        text="12" />
+                                        text="Desember" />
                                 </ComboBox>
                             </VBox>
                             <VBox>
@@ -146,7 +107,7 @@
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label text="Value" />
+                                <Label text="Amount" />
                             </Column>
                         </columns>
                         <items>
@@ -170,7 +131,7 @@
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label text="Value" />
+                                <Label text="Amount" />
                             </Column>
                         </columns>
                         <items>
@@ -194,7 +155,7 @@
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label text="Value" />
+                                <Label text="Amount" />
                             </Column>
                         </columns>
                         <items>
