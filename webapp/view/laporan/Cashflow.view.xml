@@ -105,25 +105,29 @@
                                 <Label text="Bank Balance" />
                             </Column>
                             <Column
-                                hAlign="Center">
-                                <Label text="Selected Month" />
+                                hAlign="End">
+                                <Label
+                                    id="idSelectedMonthLabel"
+                                >
+                                </Label>
                             </Column>
-
-                            <!-- <Column
-                                hAlign="Center">
-                                <Label text="Previous Month" />
+                            <Column
+                                hAlign="End">
+                                <Label id="idPrevMonthLabel" />
                             </Column>
 
                             <Column
-                                hAlign="Center">
+                                hAlign="End">
                                 <Label text="Variances" />
-                            </Column> -->
+                            </Column>
                         </columns>
                         <items>
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{bankBalance>account}" />
-                                    <Text text="{bankBalance>value}" />
+                                    <Text text="{bankBalance>valueSelected}" />
+                                    <Text text="{bankBalance>valuePrev}" />
+                                    <Text text="{bankBalance>variances}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -139,7 +143,15 @@
                                 <Label text="Operating Activities" />
                             </Column>
                             <Column
-                                hAlign="Center">
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
                                 <Label text="" />
                             </Column>
                         </columns>
@@ -147,7 +159,9 @@
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{inOperatingActs>account}" />
-                                    <Text text="{inOperatingActs>value}" />
+                                    <Text text="{inOperatingActs>valueSelected}" />
+                                    <Text text="{inOperatingActs>valuePrev}" />
+                                    <Text text="{inOperatingActs>variances}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -162,7 +176,15 @@
                                 <Label text="Financing Activities" />
                             </Column>
                             <Column
-                                hAlign="Center">
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
                                 <Label text="" />
                             </Column>
                         </columns>
@@ -170,7 +192,9 @@
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{inFinancingActs>account}" />
-                                    <Text text="{inFinancingActs>value}" />
+                                    <Text text="{inFinancingActs>valueSelected}" />
+                                    <Text text="{inFinancingActs>valuePrev}" />
+                                    <Text text="{inFinancingActs>variances}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -184,7 +208,15 @@
                                 <Label text="Investing Activities" />
                             </Column>
                             <Column
-                                hAlign="Center">
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
                                 <Label text="" />
                             </Column>
                         </columns>
@@ -192,7 +224,9 @@
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{inInvestingActs>account}" />
-                                    <Text text="{inInvestingActs>value}" />
+                                    <Text text="{inInvestingActs>valueSelected}" />
+                                    <Text text="{inInvestingActs>valuePrev}" />
+                                    <Text text="{inInvestingActs>variances}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -206,7 +240,15 @@
                                 <Label text="" />
                             </Column>
                             <Column
-                                hAlign="Center">
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
                                 <Label text="" />
                             </Column>
                         </columns>
@@ -214,7 +256,9 @@
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{inOtherAndTotal>account}" />
-                                    <Text text="{inOtherAndTotal>value}" />
+                                    <Text text="{inOtherAndTotal>valueSelected}" />
+                                    <Text text="{inOtherAndTotal>valuePrev}" />
+                                    <Text text="{inOtherAndTotal>variances}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -230,7 +274,15 @@
                                 <Label text="Operating Activities" />
                             </Column>
                             <Column
-                                hAlign="Center">
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
                                 <Label text="" />
                             </Column>
                         </columns>
@@ -238,7 +290,10 @@
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{outOperatingActs>account}" />
-                                    <Text text="{outOperatingActs>value}" />
+                                    <Text text="{outOperatingActs>valueSelected}" />
+                                    <Text text="{outOperatingActs>valuePrev}" />
+                                    <Text text="{outOperatingActs>variances}" />
+
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -253,7 +308,15 @@
                                 <Label text="Financing Activities" />
                             </Column>
                             <Column
-                                hAlign="Center">
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
                                 <Label text="" />
                             </Column>
                         </columns>
@@ -261,7 +324,9 @@
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{outFinancingActs>account}" />
-                                    <Text text="{outFinancingActs>value}" />
+                                    <Text text="{outFinancingActs>valueSelected}" />
+                                    <Text text="{outFinancingActs>valuePrev}" />
+                                    <Text text="{outFinancingActs>variances}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -275,7 +340,15 @@
                                 <Label text="Investing Activities" />
                             </Column>
                             <Column
-                                hAlign="Center">
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
                                 <Label text="" />
                             </Column>
                         </columns>
@@ -283,7 +356,9 @@
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{outInvestingActs>account}" />
-                                    <Text text="{outInvestingActs>value}" />
+                                    <Text text="{outInvestingActs>valueSelected}" />
+                                    <Text text="{outInvestingActs>valuePrev}" />
+                                    <Text text="{outInvestingActs>variances}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -297,7 +372,15 @@
                                 <Label text="" />
                             </Column>
                             <Column
-                                hAlign="Center">
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
                                 <Label text="" />
                             </Column>
                         </columns>
@@ -305,7 +388,9 @@
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{outOtherAndTotal>account}" />
-                                    <Text text="{outOtherAndTotal>value}" />
+                                    <Text text="{outOtherAndTotal>valueSelected}" />
+                                    <Text text="{outOtherAndTotal>valuePrev}" />
+                                    <Text text="{outOtherAndTotal>variances}" />
                                 </cells>
                             </ColumnListItem>
                         </items>

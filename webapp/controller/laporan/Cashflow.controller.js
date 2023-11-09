@@ -15,6 +15,13 @@ sap.ui.define(
 		const currDate = `${year}${month}${day}`;
 		const currTime = date.toLocaleTimeString('it-IT').replace(/:/g, '');
 
+		const convertToIdCurr = (value) => {
+		return	value.toLocaleString('id-ID', {
+								style: 'currency',
+								currency: 'IDR',
+							})
+		}
+
 		return BaseController.extend('lrlpapp.controller.laporan.Cashflow', {
 			onAfterRendering: async function () {
 				const dropdownPeriodeFrom = this.byId('perioedFromDD');
@@ -204,6 +211,8 @@ sap.ui.define(
 				const selectedPeriod = dropdownPeriode.getSelectedKey();
 				const selectedYear = dropdownYear.getSelectedKey();
 
+				const monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
 				if (selectedYear == '2023' && selectedPeriod < '09') {
 					const that = this;
 					MessageBox.show('Tidak bisa memilih periode sebelum periode 09 untuk Report Cashflow tahun 2023.', {
@@ -220,8 +229,6 @@ sap.ui.define(
 					const selectedPeriodCashflow = await this.getSelectedPeriodeCashflow(selectedPeriod, selectedYear);
 					const prevPeriodCashflow = await this.getPrevPeriodeCashflow(selectedPeriod, selectedYear);
 
-					console.log(selectedPeriodCashflow);
-					console.log(prevPeriodCashflow);
 
 					const bankBalance = [];
 
@@ -237,73 +244,182 @@ sap.ui.define(
 					const outInvestingActs = [];
 					const outOtherAndTotal = [];
 
-					selectedPeriodCashflow.forEach((el) => {
-						if (el.account.includes('CF_IN')) {
-							// Get bank balance
-							if (el.account === 'CF_IN_Bank_Balance_brought_forward') {
-								el.account = el.account.replace('CF_IN_', '');
-								el.account = el.account.replace(/_/g, ' ');
-								bankBalance.push(el);
-							}
-							// Get cashin operating acts
-							else if (
-								el.account === 'CF_IN_Citiwalk_Rent_Payment' ||
-								el.account === 'CF_IN_Other_Income' ||
-								el.account === 'CF_IN_Banks_Interest'
+					if(selectedPeriodCashflow.length === prevPeriodCashflow.length){
+						for(let index = 0; index < selectedPeriodCashflow.length; index++){
+							if(selectedPeriodCashflow[index].account.includes('CF_IN')){
+								if (selectedPeriodCashflow[index].account === 'CF_IN_Bank_Balance_brought_forward') {
+								const data = {
+									account: selectedPeriodCashflow[index].account.replace('CF_IN_', '').replace(/_/g, ' '),
+									valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+									valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+									variances: convertToIdCurr(prevPeriodCashflow[index].value - selectedPeriodCashflow[index].value),
+								}
+								bankBalance.push(data);
+							} else if (
+								selectedPeriodCashflow[index].account === 'CF_IN_Citiwalk_Rent_Payment' ||
+								selectedPeriodCashflow[index].account === 'CF_IN_Other_Income' ||
+								selectedPeriodCashflow[index].account === 'CF_IN_Banks_Interest'
 							) {
-								el.account = el.account.replace('CF_IN_', '');
-								el.account = el.account.replace(/_/g, ' ');
-								inOperatingActs.push(el);
+								const data = {
+									account: selectedPeriodCashflow[index].account.replace('CF_IN_', '').replace(/_/g, ' '),
+									valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+									valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+									variances: convertToIdCurr(prevPeriodCashflow[index].value - selectedPeriodCashflow[index].value)
+								}
+								inOperatingActs.push(data);
 							}
 							// Get cashin financing acts
-							else if (el.account === 'CF_IN_Transfer_in_from_Related_Companies') {
-								el.account = el.account.replace('CF_IN_', '');
-								el.account = el.account.replace(/_/g, ' ');
-								inFinancingActs.push(el);
+							else if (selectedPeriodCashflow[index].account === 'CF_IN_Transfer_in_from_Related_Companies') {
+								const data = {
+									account: selectedPeriodCashflow[index].account.replace('CF_IN_', '').replace(/_/g, ' '),
+									valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+									valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+									variances: convertToIdCurr(prevPeriodCashflow[index].value - selectedPeriodCashflow[index].value)
+								}
+								inFinancingActs.push(data);
 							}
 							// Get cashin investing acts
-							else if (el.account === 'CF_IN_Transfer_from_SIBO') {
-								el.account = el.account.replace('CF_IN_', '');
-								el.account = el.account.replace(/_/g, ' ');
-								inInvestingActs.push(el);
+							else if (selectedPeriodCashflow[index].account === 'CF_IN_Transfer_from_SIBO') {
+								const data = {
+									account: selectedPeriodCashflow[index].account.replace('CF_IN_', '').replace(/_/g, ' '),
+									valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+									valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+									variances: convertToIdCurr(prevPeriodCashflow[index].value - selectedPeriodCashflow[index].value)
+								}
+								inInvestingActs.push(data);
 							} else {
-								el.account = el.account.replace('CF_IN_', '');
-								el.account = el.account.replace(/_/g, ' ');
-								inOtherAndTotal.push(el);
+								const data = {
+									account: selectedPeriodCashflow[index].account.replace('CF_IN_', '').replace(/_/g, ' '),
+									valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+									valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+									variances: convertToIdCurr(prevPeriodCashflow[index].value - selectedPeriodCashflow[index].value)
+								}
+								inOtherAndTotal.push(data);
 							}
-						} else if (el.account.includes('CF_OUT')) {
-							// Get cashout operating acts
+							} else if (selectedPeriodCashflow[index].account.includes('CF_OUT')) {
+								// Get cashout operating acts
 							if (
-								el.account === 'CF_OUT_Payment_to_Third_Party_Vendors' ||
-								el.account === 'CF_OUT_Tax_Payment' ||
-								el.account === 'CF_OUT_Utilities_Payment' ||
-								el.account === 'CF_OUT_Bank_Administration'
+								selectedPeriodCashflow[index].account === 'CF_OUT_Payment_to_Third_Party_Vendors' ||
+								selectedPeriodCashflow[index].account === 'CF_OUT_Tax_Payment' ||
+								selectedPeriodCashflow[index].account === 'CF_OUT_Utilities_Payment' ||
+								selectedPeriodCashflow[index].account === 'CF_OUT_Bank_Administration'
 							) {
-								el.account = el.account.replace('CF_OUT_', '');
-								el.account = el.account.replace(/_/g, ' ');
-								outOperatingActs.push(el);
+								const data = {
+									account: selectedPeriodCashflow[index].account.replace('CF_OUT_', '').replace(/_/g, ' '),
+									valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+									valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+									variances: convertToIdCurr(prevPeriodCashflow[index].value - selectedPeriodCashflow[index].value)
+								}
+								outOperatingActs.push(data);
 							}
 							// Get cashout financing acts
 							else if (
-								el.account === 'CF_OUT_Transfer_out_to_Related_Companies' ||
-								el.account === 'CF_OUT_Owner_Expense'
+								selectedPeriodCashflow[index].account === 'CF_OUT_Transfer_out_to_Related_Companies' ||
+								selectedPeriodCashflow[index].account === 'CF_OUT_Owner_Expense'
 							) {
-								el.account = el.account.replace('CF_OUT_', '');
-								el.account = el.account.replace(/_/g, ' ');
-								outFinancingActs.push(el);
+								const data = {
+									account: selectedPeriodCashflow[index].account.replace('CF_OUT_', '').replace(/_/g, ' '),
+									valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+									valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+									variances: convertToIdCurr(prevPeriodCashflow[index].value - selectedPeriodCashflow[index].value)
+								}
+								outFinancingActs.push(data);
 							}
 							// Get cashout investing acts
-							else if (el.account === 'CF_OUT_Payment_to_Share_Holder') {
-								el.account = el.account.replace('CF_OUT_', '');
-								el.account = el.account.replace(/_/g, ' ');
-								outInvestingActs.push(el);
+							else if (selectedPeriodCashflow[index].account === 'CF_OUT_Payment_to_Share_Holder') {
+								const data = {
+									account: selectedPeriodCashflow[index].account.replace('CF_OUT_', '').replace(/_/g, ' '),
+									valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+									valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+									variances: convertToIdCurr(prevPeriodCashflow[index].value - selectedPeriodCashflow[index].value)
+								}
+								outInvestingActs.push(data);
 							} else {
-								el.account = el.account.replace('CF_OUT_', '');
-								el.account = el.account.replace(/_/g, ' ');
-								outOtherAndTotal.push(el);
+								const data = {
+									account: selectedPeriodCashflow[index].account.replace('CF_OUT_', '').replace(/_/g, ' '),
+									valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+									valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+									variances: convertToIdCurr(prevPeriodCashflow[index].value - selectedPeriodCashflow[index].value)
+								}
+								outOtherAndTotal.push(data);
+							}
 							}
 						}
-					});
+					}
+
+					// selectedPeriodCashflow.forEach((el) => {
+					// 	if (el.account.includes('CF_IN')) {
+					// 		// Get bank balance
+					// 		if (el.account === 'CF_IN_Bank_Balance_brought_forward') {
+					// 			el.account = el.account.replace('CF_IN_', '');
+					// 			el.account = el.account.replace(/_/g, ' ');
+
+					// 			const data = {
+					// 				account: el.account = el.account.replace('CF_IN_', '').replace(/_/g, ' '),
+					// 				valueSelected: el.value,
+					// 				valuePrev: null
+					// 			}
+					// 			bankBalance.push(data);
+					// 		}
+					// 		// Get cashin operating acts
+					// 		else if (
+					// 			el.account === 'CF_IN_Citiwalk_Rent_Payment' ||
+					// 			el.account === 'CF_IN_Other_Income' ||
+					// 			el.account === 'CF_IN_Banks_Interest'
+					// 		) {
+					// 			el.account = el.account.replace('CF_IN_', '');
+					// 			el.account = el.account.replace(/_/g, ' ');
+					// 			inOperatingActs.push(el);
+					// 		}
+					// 		// Get cashin financing acts
+					// 		else if (el.account === 'CF_IN_Transfer_in_from_Related_Companies') {
+					// 			el.account = el.account.replace('CF_IN_', '');
+					// 			el.account = el.account.replace(/_/g, ' ');
+					// 			inFinancingActs.push(el);
+					// 		}
+					// 		// Get cashin investing acts
+					// 		else if (el.account === 'CF_IN_Transfer_from_SIBO') {
+					// 			el.account = el.account.replace('CF_IN_', '');
+					// 			el.account = el.account.replace(/_/g, ' ');
+					// 			inInvestingActs.push(el);
+					// 		} else {
+					// 			el.account = el.account.replace('CF_IN_', '');
+					// 			el.account = el.account.replace(/_/g, ' ');
+					// 			inOtherAndTotal.push(el);
+					// 		}
+					// 	} else if (el.account.includes('CF_OUT')) {
+					// 		// Get cashout operating acts
+					// 		if (
+					// 			el.account === 'CF_OUT_Payment_to_Third_Party_Vendors' ||
+					// 			el.account === 'CF_OUT_Tax_Payment' ||
+					// 			el.account === 'CF_OUT_Utilities_Payment' ||
+					// 			el.account === 'CF_OUT_Bank_Administration'
+					// 		) {
+					// 			el.account = el.account.replace('CF_OUT_', '');
+					// 			el.account = el.account.replace(/_/g, ' ');
+					// 			outOperatingActs.push(el);
+					// 		}
+					// 		// Get cashout financing acts
+					// 		else if (
+					// 			el.account === 'CF_OUT_Transfer_out_to_Related_Companies' ||
+					// 			el.account === 'CF_OUT_Owner_Expense'
+					// 		) {
+					// 			el.account = el.account.replace('CF_OUT_', '');
+					// 			el.account = el.account.replace(/_/g, ' ');
+					// 			outFinancingActs.push(el);
+					// 		}
+					// 		// Get cashout investing acts
+					// 		else if (el.account === 'CF_OUT_Payment_to_Share_Holder') {
+					// 			el.account = el.account.replace('CF_OUT_', '');
+					// 			el.account = el.account.replace(/_/g, ' ');
+					// 			outInvestingActs.push(el);
+					// 		} else {
+					// 			el.account = el.account.replace('CF_OUT_', '');
+					// 			el.account = el.account.replace(/_/g, ' ');
+					// 			outOtherAndTotal.push(el);
+					// 		}
+					// 	}
+					// });
 
 					const oBankBalanceModel = new JSONModel({ bankBalance: bankBalance });
 					const oInOperatingActsModel = new JSONModel({ inOperatingActs: inOperatingActs });
@@ -316,17 +432,22 @@ sap.ui.define(
 					const oOutInvestingActsModel = new JSONModel({ outInvestingActs: outInvestingActs });
 					const oOutOtherModel = new JSONModel({ outOtherAndTotal: outOtherAndTotal });
 
+					// Set selected month in header table
+					this.byId('idSelectedMonthLabel').setText(`${monthList[Number(selectedPeriod) - 1]} ${selectedYear}`)
+					this.byId('idPrevMonthLabel').setText(`${monthList[Number(selectedPeriod) - 2]} ${selectedYear}`)
+
 					this.getView().setModel(oBankBalanceModel, 'bankBalance');
 					this.getView().setModel(oInOperatingActsModel, 'inOperatingActs');
 					this.getView().setModel(oInFinancingActsModel, 'inFinancingActs');
 					this.getView().setModel(oInInvestingActsModel, 'inInvestingActs');
 					this.getView().setModel(oInOtherModel, 'inOtherAndTotal');
+					console.log(bankBalance)
+
 					this.getView().setModel(oOutOperatingActsModel, 'outOperatingActs');
 					this.getView().setModel(oOutFinancingActsModel, 'outFinancingActs');
 					this.getView().setModel(oOutInvestingActsModel, 'outInvestingActs');
 					this.getView().setModel(oOutOtherModel, 'outOtherAndTotal');
 
-					console.log(this.getView().getModel('inFinancingActs'));
 				}
 			},
 
@@ -345,10 +466,7 @@ sap.ui.define(
 					cashflowPropsName.forEach((el, i) => {
 						results.push({
 							account: el,
-							value: Number(cashflowValue[i]).toLocaleString('id-ID', {
-								style: 'currency',
-								currency: 'IDR',
-							}),
+							value: Number(cashflowValue[i])
 						});
 					});
 
@@ -387,10 +505,7 @@ sap.ui.define(
 					cashflowPropsName.forEach((el, i) => {
 						results.push({
 							account: el,
-							value: Number(cashflowValue[i]).toLocaleString('id-ID', {
-								style: 'currency',
-								currency: 'IDR',
-							}),
+							value: Number(cashflowValue[i])
 						});
 					});
 
