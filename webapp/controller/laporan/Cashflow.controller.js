@@ -4,9 +4,11 @@ sap.ui.define(
 		'sap/ui/model/json/JSONModel',
 		'lrlpapp/utils/BoldTextFormatter',
 		'sap/m/MessageBox',
+		'sap/m/HBox',
 		'sap/m/FlexBox',
+		'sap/m/Text',
 	],
-	function (BaseController, JSONModel, BoldTextFormatter, MessageBox, FlexBox) {
+	function (BaseController, JSONModel, BoldTextFormatter, MessageBox, HBox, FlexBox, Text) {
 		'use strict';
 
 		const date = new Date();
@@ -47,20 +49,7 @@ sap.ui.define(
 				const selectedPeriod = dropdownPeriode.getSelectedKey();
 				const selectedYear = dropdownYear.getSelectedKey();
 
-				const monthList = [
-					'Januari',
-					'Februari',
-					'Maret',
-					'April',
-					'Mei',
-					'Juni',
-					'Juli',
-					'Agusuts',
-					'September',
-					'Oktober',
-					'November',
-					'Desember',
-				];
+				const monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
 				if (selectedYear == '2023' && selectedPeriod < '09') {
 					const that = this;
@@ -226,8 +215,8 @@ sap.ui.define(
 					let totalInMinOutFlowsSelected = totalInSelected - totalOutSelected;
 					let totalInMinOutFlowsPrev = totalInPrev - totalOutPrev;
 
-					let endBankBalanceSelected = bankBalanceSelected + totalInMinOutFlowsSelected;
-					let endBankBalancePrev = bankBalancePrev + totalInMinOutFlowsPrev;
+					let endBankBalanceSelected = bankBalanceSelected - (totalInSelected + totalOutSelected);
+					let endBankBalancePrev = bankBalancePrev - (totalInPrev + totalOutPrev);
 
 					const totalEndBalance = [
 						{
@@ -243,6 +232,48 @@ sap.ui.define(
 							variances: convertToIdCurr(endBankBalanceSelected - endBankBalancePrev),
 						},
 					];
+
+					const cashflowContainer = this.getView().byId('cashflowContainer');
+
+					bankBalance.forEach((el) => {
+						let record = new HBox('bankBalanceRecord').addStyleClass('cf-record');
+						let descCol = new FlexBox({ width: '40%' }).addStyleClass('cf-header');
+						let selectedMonthCol = new FlexBox({ width: '20%', justifyContent: 'End' });
+						let prevMonthCol = new FlexBox({ width: '20%', justifyContent: 'End' });
+						let varianceCol = new FlexBox({ width: '20%', justifyContent: 'End' });
+
+						descCol.addItem(new Text({ text: el.account }));
+						selectedMonthCol.addItem(new Text({ text: el.valueSelected }).addStyleClass('cf-selectedMonth'));
+						prevMonthCol.addItem(new Text({ text: el.valuePrev }).addStyleClass('cf-selectedMonth'));
+						varianceCol.addItem(new Text({ text: el.variances }).addStyleClass('cf-selectedMonth'));
+
+						// Add to the recordList
+						record.addItem(descCol);
+						record.addItem(selectedMonthCol);
+						record.addItem(prevMonthCol);
+						record.addItem(varianceCol);
+						cashflowContainer.addItem(record);
+					});
+
+					inOperatingActs.forEach((el) => {
+						let record = new HBox(el.account.replace(/ /g, '')).addStyleClass('cf-record');
+						let descCol = new FlexBox({ width: '40%' }).addStyleClass('cf-header');
+						let selectedMonthCol = new FlexBox({ width: '20%', justifyContent: 'End' });
+						let prevMonthCol = new FlexBox({ width: '20%', justifyContent: 'End' });
+						let varianceCol = new FlexBox({ width: '20%', justifyContent: 'End' });
+
+						descCol.addItem(new Text({ text: el.account }));
+						selectedMonthCol.addItem(new Text({ text: el.valueSelected }).addStyleClass('cf-selectedMonth'));
+						prevMonthCol.addItem(new Text({ text: el.valuePrev }).addStyleClass('cf-selectedMonth'));
+						varianceCol.addItem(new Text({ text: el.variances }).addStyleClass('cf-selectedMonth'));
+
+						// Add to the recordList
+						record.addItem(descCol);
+						record.addItem(selectedMonthCol);
+						record.addItem(prevMonthCol);
+						record.addItem(varianceCol);
+						cashflowContainer.addItem(record);
+					});
 
 					const oBankBalanceModel = new JSONModel({ bankBalance: bankBalance });
 					const oInOperatingActsModel = new JSONModel({ inOperatingActs: inOperatingActs });

@@ -14,7 +14,7 @@
                 <VBox class="card">
                     <FlexBox
                         class="card-header" justifyContent="SpaceBetween">
-                        <Text class="card-title" text="Report Cashflow Citiwalk" />
+                        <Text class="card-title" text="Cashflow Report Citiwalk" />
                     </FlexBox>
                     <f:SimpleForm
                         id="formCashflowReport"
@@ -95,6 +95,24 @@
                         </f:content>
                     </f:SimpleForm>
                 </VBox>
+                <VBox
+                    id="cashflowContainer"
+                    class="cashflow-container card">
+                    <HBox class="cf-record">
+                        <FlexBox class='cf-header' width="40%">
+                            <Text class='cf-acc' text="" />
+                        </FlexBox>
+                        <FlexBox class='cf-header' width="20%" justifyContent="End">
+                            <Text class='cf-selectedMonth' id="idSelectedMonthLabel" />
+                        </FlexBox>
+                        <FlexBox class='cf-header' width="20%" justifyContent="End">
+                            <Text class='cf-prevMonth' id="idPrevMonthLabel" />
+                        </FlexBox>
+                        <FlexBox class='cf-header' width="20%" justifyContent="End">
+                            <Text class='cf-variances' text="Variances" />
+                        </FlexBox>
+                    </HBox>
+                </VBox>
                 <VBox id="tableContainer" class="card">
                     <Table
                         id="bankBalanceTable"
@@ -106,14 +124,11 @@
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label
-                                    id="idSelectedMonthLabel"
-                                >
-                                </Label>
+                                <Label />
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label id="idPrevMonthLabel" />
+                                <Label />
                             </Column>
 
                             <Column

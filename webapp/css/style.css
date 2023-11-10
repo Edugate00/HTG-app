@@ -332,6 +332,24 @@ body {
     font-size: 10rem;
 }
 
+
+/* Start of Styling for Report Cashflow */
+.cf-record {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 24px;
+    padding: 8px 16px;
+}
+
+.cf-record .cf-header {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* End of Styling for Report Cashflow */
+
 @media (width <=992px) {
     .main-container {
         padding: 0 40px;
