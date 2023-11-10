@@ -14,7 +14,7 @@
                 <VBox class="card">
                     <FlexBox
                         class="card-header" justifyContent="SpaceBetween">
-                        <Text class="card-title" text="Report Cashflow Citiwalk" />
+                        <Text class="card-title" text="Cashflow Report Citiwalk" />
                     </FlexBox>
                     <f:SimpleForm
                         id="formCashflowReport"
@@ -89,11 +89,29 @@
                                     width="100%"
                                     type="Emphasized"
                                     text="Apply Filter"
-                                    press="onApplyPress"
+                                    press="getCashflowData"
                                 />
                             </VBox>
                         </f:content>
                     </f:SimpleForm>
+                </VBox>
+                <VBox
+                    id="cashflowContainer"
+                    class="cashflow-container card">
+                    <HBox class="cf-record">
+                        <FlexBox class='cf-header' width="40%">
+                            <Text class='cf-acc' text="" />
+                        </FlexBox>
+                        <FlexBox class='cf-header' width="20%" justifyContent="End">
+                            <Text class='cf-selectedMonth' id="idSelectedMonthLabel" />
+                        </FlexBox>
+                        <FlexBox class='cf-header' width="20%" justifyContent="End">
+                            <Text class='cf-prevMonth' id="idPrevMonthLabel" />
+                        </FlexBox>
+                        <FlexBox class='cf-header' width="20%" justifyContent="End">
+                            <Text class='cf-variances' text="Variances" />
+                        </FlexBox>
+                    </HBox>
                 </VBox>
                 <VBox id="tableContainer" class="card">
                     <Table
@@ -106,14 +124,11 @@
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label
-                                    id="idSelectedMonthLabel"
-                                >
-                                </Label>
+                                <Label />
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label id="idPrevMonthLabel" />
+                                <Label />
                             </Column>
 
                             <Column
@@ -391,6 +406,38 @@
                                     <Text text="{outOtherAndTotal>valueSelected}" />
                                     <Text text="{outOtherAndTotal>valuePrev}" />
                                     <Text text="{outOtherAndTotal>variances}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <Table
+                        id="inMinOutFlowAndEndBankBalance"
+                        noDataText="Tidak ada data"
+                        items="{totalEndBalance>/totalEndBalance}">
+                        <columns>
+                            <Column>
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{totalEndBalance>account}" />
+                                    <Text text="{totalEndBalance>valueSelected}" />
+                                    <Text text="{totalEndBalance>valuePrev}" />
+                                    <Text text="{totalEndBalance>variances}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
