@@ -15,6 +15,7 @@ sap.ui.define(
     const day = date.getDate() <= 9 ? `0${date.getDate()}` : date.getDate();
     const month = date.getMonth() + 1 <= 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
     const year = date.getFullYear();
+
     const currDate = `${year}${month}${day}`;
     const currTime = date.toLocaleTimeString("it-IT").replace(/:/g, "");
 
@@ -24,6 +25,102 @@ sap.ui.define(
         currency: "IDR",
       });
     };
+
+    // Default value for previous cash flow. When the user choose periode 09, then value of previous cash flow will be Rp.00 follow by this variable
+    const defaultPrevPeriodCashflow = [
+      {
+        account: "__metadata",
+        value: 0,
+      },
+      {
+        account: "CF_Other_In_Out_Flows",
+        value: 0,
+      },
+      {
+        account: "CF_IN_Other_Inflows",
+        value: 0,
+      },
+      {
+        account: "CF_OUT_Other_Outflows",
+        value: 0,
+      },
+      {
+        account: "CompanyCode",
+        value: 0,
+      },
+      {
+        account: "PeriodeFrom",
+        value: 0,
+      },
+      {
+        account: "PeriodeTo",
+        value: 0,
+      },
+      {
+        account: "Year",
+        value: 0,
+      },
+      {
+        account: "CF_IN_Bank_Beginning_Balance",
+        value: 0,
+      },
+      {
+        account: "CF_IN_Citiwalk_Rent_Payment",
+        value: 0,
+      },
+      {
+        account: "CF_IN_Transfer_from_SIBO",
+        value: 0,
+      },
+      {
+        account: "CF_IN_Transfer_in_from_Related_Companies",
+        value: 0,
+      },
+      {
+        account: "CF_IN_Other_Income",
+        value: 0,
+      },
+      {
+        account: "CF_IN_Banks_Interest",
+        value: 0,
+      },
+      {
+        account: "CF_IN_Total_Cash_Inflows",
+        value: 0,
+      },
+      {
+        account: "CF_OUT_Payment_to_Third_Party_Vendors",
+        value: 0,
+      },
+      {
+        account: "CF_OUT_Transfer_out_to_Related_Companies",
+        value: 0,
+      },
+      {
+        account: "CF_OUT_Payment_to_Share_Holder",
+        value: 0,
+      },
+      {
+        account: "CF_OUT_Owner_Expense",
+        value: 0,
+      },
+      {
+        account: "CF_OUT_Tax_Payment",
+        value: 0,
+      },
+      {
+        account: "CF_OUT_Utilities_Payment",
+        value: 0,
+      },
+      {
+        account: "CF_OUT_Bank_Administration",
+        value: 0,
+      },
+      {
+        account: "CF_OUT_Total_Cash_Outflows",
+        value: 0,
+      },
+    ];
 
     return BaseController.extend("lrlpapp.controller.laporan.Cashflow", {
       onAfterRendering: async function () {
@@ -65,7 +162,13 @@ sap.ui.define(
         } else {
           tableContainer.setBusy(true);
           const selectedPeriodCashflow = await this.getSelectedPeriodeCashflow(selectedPeriod, selectedYear);
-          const prevPeriodCashflow = await this.getPrevPeriodeCashflow(selectedPeriod, selectedYear);
+
+          // Initialized previous period
+          const prevPeriodMonth = selectedPeriod === "01" ? "12" : (Number(selectedPeriod) - 1).toString();
+          const prevPeriodYear = selectedPeriod === "01" ? (Number(selectedYear) - 1).toString() : selectedYear;
+
+          // Initialized previous cashflow when user choose periode eq 09 or not, if not, then get cashflow data from function getPrevPeriodeCashflow()
+          const prevPeriodCashflow = (await selectedPeriod) === "09" ? defaultPrevPeriodCashflow : await this.getPrevPeriodeCashflow(prevPeriodMonth, prevPeriodYear);
 
           const bankBalance = [];
 
@@ -266,6 +369,8 @@ sap.ui.define(
           //     cashflowContainer.addItem(record);
           //   });
 
+          const oSelectedYear = new JSONModel({ selectedYear: [{ selectedYear: selectedYear }] });
+
           const oBankBalanceModel = new JSONModel({ bankBalance: bankBalance });
           const oInOperatingActsModel = new JSONModel({ inOperatingActs: inOperatingActs });
           const oInFinancingActsModel = new JSONModel({ inFinancingActs: inFinancingActs });
@@ -283,6 +388,8 @@ sap.ui.define(
           this.byId("idSelectedMonthLabel").setText(`${monthList[Number(selectedPeriod) - 1]} ${selectedYear}`);
           this.byId("idPrevMonthLabel").setText(`${monthList[Number(selectedPeriod) - 2]} ${selectedYear}`);
 
+          this.getView().setModel(oSelectedYear, "selectedYear");
+          console.log(this.getView().setModel(oSelectedYear, "selectedYear"));
           this.getView().setModel(oBankBalanceModel, "bankBalance");
           this.getView().setModel(oInOperatingActsModel, "inOperatingActs");
           this.getView().setModel(oInFinancingActsModel, "inFinancingActs");
