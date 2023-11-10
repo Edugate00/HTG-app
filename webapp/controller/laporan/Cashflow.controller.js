@@ -4,8 +4,9 @@ sap.ui.define(
 		'sap/ui/model/json/JSONModel',
 		'lrlpapp/utils/BoldTextFormatter',
 		'sap/m/MessageBox',
+		'sap/m/FlexBox',
 	],
-	function (BaseController, JSONModel, BoldTextFormatter, MessageBox) {
+	function (BaseController, JSONModel, BoldTextFormatter, MessageBox, FlexBox) {
 		'use strict';
 
 		const date = new Date();
@@ -91,6 +92,14 @@ sap.ui.define(
 					const outInvestingActs = [];
 					const outOtherAndTotal = [];
 
+					// Get total Inflows - Outflows and End Bank Balance
+					let bankBalanceSelected = null,
+						bankBalancePrev = null,
+						totalInSelected = null,
+						totalInPrev = null,
+						totalOutSelected = null,
+						totalOutPrev = null;
+
 					if (selectedPeriodCashflow.length === prevPeriodCashflow.length) {
 						for (let index = 0; index < selectedPeriodCashflow.length; index++) {
 							if (selectedPeriodCashflow[index].account.includes('CF_IN')) {
@@ -101,6 +110,8 @@ sap.ui.define(
 										valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
 										variances: convertToIdCurr(selectedPeriodCashflow[index].value - prevPeriodCashflow[index].value),
 									};
+									bankBalanceSelected = selectedPeriodCashflow[index].value;
+									bankBalancePrev = prevPeriodCashflow[index].value;
 									bankBalance.push(data);
 								} else if (
 									selectedPeriodCashflow[index].account === 'CF_IN_Citiwalk_Rent_Payment' ||
@@ -141,6 +152,15 @@ sap.ui.define(
 										valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
 										variances: convertToIdCurr(selectedPeriodCashflow[index].value - prevPeriodCashflow[index].value),
 									};
+
+									totalInSelected = selectedPeriodCashflow[index].account.includes('Total')
+										? selectedPeriodCashflow[index].value
+										: 0;
+
+									totalInPrev = selectedPeriodCashflow[index].account.includes('Total')
+										? prevPeriodCashflow[index].value
+										: 0;
+
 									inOtherAndTotal.push(data);
 								}
 							} else if (selectedPeriodCashflow[index].account.includes('CF_OUT')) {
@@ -188,11 +208,41 @@ sap.ui.define(
 										valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
 										variances: convertToIdCurr(selectedPeriodCashflow[index].value - prevPeriodCashflow[index].value),
 									};
+
+									totalOutSelected = selectedPeriodCashflow[index].account.includes('Total')
+										? selectedPeriodCashflow[index].value
+										: 0;
+
+									totalOutPrev = selectedPeriodCashflow[index].account.includes('Total')
+										? prevPeriodCashflow[index].value
+										: 0;
+
 									outOtherAndTotal.push(data);
 								}
 							}
 						}
 					}
+
+					let totalInMinOutFlowsSelected = totalInSelected - totalOutSelected;
+					let totalInMinOutFlowsPrev = totalInPrev - totalOutPrev;
+
+					let endBankBalanceSelected = bankBalanceSelected + totalInMinOutFlowsSelected;
+					let endBankBalancePrev = bankBalancePrev + totalInMinOutFlowsPrev;
+
+					const totalEndBalance = [
+						{
+							account: 'Total Inflows - Outflows',
+							valueSelected: convertToIdCurr(totalInMinOutFlowsSelected),
+							valuePrev: convertToIdCurr(totalInMinOutFlowsPrev),
+							variances: convertToIdCurr(totalInMinOutFlowsSelected - totalInMinOutFlowsPrev),
+						},
+						{
+							account: 'End Bank Balance',
+							valueSelected: convertToIdCurr(endBankBalanceSelected),
+							valuePrev: convertToIdCurr(endBankBalancePrev),
+							variances: convertToIdCurr(endBankBalanceSelected - endBankBalancePrev),
+						},
+					];
 
 					const oBankBalanceModel = new JSONModel({ bankBalance: bankBalance });
 					const oInOperatingActsModel = new JSONModel({ inOperatingActs: inOperatingActs });
@@ -205,6 +255,8 @@ sap.ui.define(
 					const oOutInvestingActsModel = new JSONModel({ outInvestingActs: outInvestingActs });
 					const oOutOtherModel = new JSONModel({ outOtherAndTotal: outOtherAndTotal });
 
+					const oTotalEndBalanceModel = new JSONModel({ totalEndBalance: totalEndBalance });
+
 					// Set selected month in header table
 					this.byId('idSelectedMonthLabel').setText(`${monthList[Number(selectedPeriod) - 1]} ${selectedYear}`);
 					this.byId('idPrevMonthLabel').setText(`${monthList[Number(selectedPeriod) - 2]} ${selectedYear}`);
@@ -214,12 +266,15 @@ sap.ui.define(
 					this.getView().setModel(oInFinancingActsModel, 'inFinancingActs');
 					this.getView().setModel(oInInvestingActsModel, 'inInvestingActs');
 					this.getView().setModel(oInOtherModel, 'inOtherAndTotal');
-					console.log(bankBalance);
+					console.log(outInvestingActs);
+					console.log(outOtherAndTotal);
 
 					this.getView().setModel(oOutOperatingActsModel, 'outOperatingActs');
 					this.getView().setModel(oOutFinancingActsModel, 'outFinancingActs');
 					this.getView().setModel(oOutInvestingActsModel, 'outInvestingActs');
 					this.getView().setModel(oOutOtherModel, 'outOtherAndTotal');
+
+					this.getView().setModel(oTotalEndBalanceModel, 'totalEndBalance');
 					tableContainer.setBusy(false);
 				}
 			},

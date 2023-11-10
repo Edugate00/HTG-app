@@ -395,6 +395,38 @@
                             </ColumnListItem>
                         </items>
                     </Table>
+                    <Table
+                        id="inMinOutFlowAndEndBankBalance"
+                        noDataText="Tidak ada data"
+                        items="{totalEndBalance>/totalEndBalance}">
+                        <columns>
+                            <Column>
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                            <Column
+                                hAlign="End">
+                                <Label text="" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{totalEndBalance>account}" />
+                                    <Text text="{totalEndBalance>valueSelected}" />
+                                    <Text text="{totalEndBalance>valuePrev}" />
+                                    <Text text="{totalEndBalance>variances}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
                 </VBox>
             </VBox>
         </content>
