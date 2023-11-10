@@ -95,7 +95,7 @@
                         </f:content>
                     </f:SimpleForm>
                 </VBox>
-                <VBox
+                <!-- <VBox
                     id="cashflowContainer"
                     class="cashflow-container card">
                     <HBox class="cf-record">
@@ -112,7 +112,7 @@
                             <Text class='cf-variances' text="Variances" />
                         </FlexBox>
                     </HBox>
-                </VBox>
+                </VBox> -->
                 <VBox id="tableContainer" class="card">
                     <Table
                         id="bankBalanceTable"
@@ -120,15 +120,15 @@
                         items="{bankBalance>/bankBalance}">
                         <columns>
                             <Column>
-                                <Label text="Bank Balance" />
+                                <Label text=""/>
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label />
+                                <Label id="idSelectedMonthLabel"/>
                             </Column>
                             <Column
                                 hAlign="End">
-                                <Label />
+                                <Label id="idPrevMonthLabel"/>
                             </Column>
 
                             <Column
