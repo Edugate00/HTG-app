@@ -89,7 +89,7 @@
                                     width="100%"
                                     type="Emphasized"
                                     text="Apply Filter"
-                                    press="onApplyPress"
+                                    press="getCashflowData"
                                 />
                             </VBox>
                         </f:content>
