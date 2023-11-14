@@ -8,16 +8,11 @@ sap.ui.define(
     "sap/m/FlexBox",
     "sap/m/Text",
   ],
-  function (BaseController, JSONModel, BoldTextFormatter, MessageBox, HBox, FlexBox, Text) {
+  function (BaseController, JSONModel, MessageBox, HBox, FlexBox, Text) {
     "use strict";
 
     const date = new Date();
-    const day = date.getDate() <= 9 ? `0${date.getDate()}` : date.getDate();
-    const month = date.getMonth() + 1 <= 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
     const year = date.getFullYear();
-
-    const currDate = `${year}${month}${day}`;
-    const currTime = date.toLocaleTimeString("it-IT").replace(/:/g, "");
 
     const convertToIdCurr = (value) => {
       return value.toLocaleString("id-ID", {
@@ -26,8 +21,6 @@ sap.ui.define(
       });
     };
 
-    let onSelectPeriode = "00";
-    const onSelectYear = "";
     // Default value for previous cash flow. When the user choose periode 09, then value of previous cash flow will be Rp.00 follow by this variable
     const defaultPrevPeriodCashflow = [
       {
@@ -140,17 +133,9 @@ sap.ui.define(
         this.getCashflowData();
       },
 
-      changePeriode: function (oEvent, data) {
-        var oValidatedComboBox = oEvent.getSource(),
-          sSelectedKey = oValidatedComboBox.getSelectedKey();
-
-        onSelectPeriode = sSelectedKey;
-      },
-
       getCashflowData: async function () {
         const dropdownPeriode = this.byId("perioedFromDD");
         const dropdownYear = this.byId("yearDD");
-        // const tableContainer = this.byId("tableContainer");
 
         const selectedPeriod = dropdownPeriode.getSelectedKey();
         const selectedYear = dropdownYear.getSelectedKey();
@@ -498,15 +483,7 @@ sap.ui.define(
           return results;
         } catch (error) {
           const that = this;
-          MessageBox.show(`${error.statusCode} - ${error.statusText}`, {
-            icon: MessageBox.Icon.ERROR,
-            title: `${error.message}`,
-            action: [MessageBox.Action.OK],
-            emphasizedAction: MessageBox.Action.OK,
-            onClose: (oAction) => {
-              that.onAfterRendering();
-            },
-          });
+          this.errorMessageBox(`${error.statusCode} - ${error.statusText}`, error.message, that.onAfterRendering());
         }
       },
 
@@ -534,15 +511,7 @@ sap.ui.define(
           return results;
         } catch (error) {
           const that = this;
-          MessageBox.show(`${error.statusCode} - ${error.statusText}`, {
-            icon: MessageBox.Icon.ERROR,
-            title: `${error.message}`,
-            action: [MessageBox.Action.OK],
-            emphasizedAction: MessageBox.Action.OK,
-            onClose: (oAction) => {
-              that.onAfterRendering();
-            },
-          });
+          this.errorMessageBox(`${error.statusCode} - ${error.statusText}`, error.message, that.onAfterRendering());
         }
       },
 

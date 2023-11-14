@@ -33,7 +33,6 @@
                                     id="perioedFromDD"
                                     width="100%"
                                     placeholder="Select Periode"
-                                    change="changePeriode"
                                     >
                                     <core:Item
                                         key="01"
