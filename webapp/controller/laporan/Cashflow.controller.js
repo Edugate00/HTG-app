@@ -515,6 +515,8 @@ sap.ui.define(
             },
 
             getSelectedPeriodeCashflow: async function (selectedPeriod, selectedYear) {
+                console.log('now selectedPeriod', selectedPeriod);
+                console.log('now selectedYear', selectedYear);
                 try {
                     const cashflowData = await this.RequestReadWithFilter(
                         '/cashflowSet',
@@ -543,8 +545,8 @@ sap.ui.define(
             },
 
             getPrevPeriodeCashflow: async function (selectedPeriod, selectedYear) {
-                let prevPeriod = Number(selectedPeriod) - 1;
-                prevPeriod = prevPeriod < 9 ? `0${prevPeriod}` : `${prevPeriod}`;
+                let prevPeriod = Number(selectedPeriod);
+                prevPeriod = prevPeriod <= 9 ? `0${prevPeriod}` : `${prevPeriod}`;
 
                 try {
                     const cashflowData = await this.RequestReadWithFilter(
