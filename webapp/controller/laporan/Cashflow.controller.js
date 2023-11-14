@@ -411,16 +411,16 @@ sap.ui.define(
                 cashflow.forEach((el) => {
                   const record = new HBox(generateNewAccountId(el.account)).addStyleClass("cf-record");
                   const descCol = new FlexBox({ width: "40%" }).addStyleClass("cf-header");
-                  const selectedMonthCol = new FlexBox({ width: "20%", justifyContent: "End" });
-                  const prevMonthCol = new FlexBox({ width: "20%", justifyContent: "End" });
-                  const varianceCol = new FlexBox({ width: "20%", justifyContent: "End" });
+                  const selectedMonthCol = new FlexBox({ width: "20%", justifyContent: "End" }).addStyleClass("cf-header");
+                  const prevMonthCol = new FlexBox({ width: "20%", justifyContent: "End" }).addStyleClass("cf-header");
+                  const varianceCol = new FlexBox({ width: "20%", justifyContent: "End" }).addStyleClass("cf-header");
 
                   const boldTextInit = el.account.includes("Total") || el.account.includes("Bank Ending Balance") ? "cf-acc-bold" : "cf-acc";
 
                   descCol.addItem(new Text({ text: el.account }).addStyleClass(boldTextInit));
-                  selectedMonthCol.addItem(new Text({ text: el.valueSelected }).addStyleClass("cf-selectedMonth"));
-                  prevMonthCol.addItem(new Text({ text: el.valuePrev }).addStyleClass("cf-selectedMonth"));
-                  varianceCol.addItem(new Text({ text: el.variances }).addStyleClass("cf-selectedMonth"));
+                  selectedMonthCol.addItem(new Text({ text: el.valueSelected }).addStyleClass(boldTextInit));
+                  prevMonthCol.addItem(new Text({ text: el.valuePrev }).addStyleClass(boldTextInit));
+                  varianceCol.addItem(new Text({ text: el.variances }).addStyleClass(boldTextInit));
 
                   // Add to the recordList
                   record.addItem(descCol);
