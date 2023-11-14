@@ -8,16 +8,11 @@ sap.ui.define(
     "sap/m/FlexBox",
     "sap/m/Text",
   ],
-  function (BaseController, JSONModel, BoldTextFormatter, MessageBox, HBox, FlexBox, Text) {
+  function (BaseController, JSONModel, MessageBox, HBox, FlexBox, Text) {
     "use strict";
 
     const date = new Date();
-    const day = date.getDate() <= 9 ? `0${date.getDate()}` : date.getDate();
-    const month = date.getMonth() + 1 <= 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
     const year = date.getFullYear();
-
-    const currDate = `${year}${month}${day}`;
-    const currTime = date.toLocaleTimeString("it-IT").replace(/:/g, "");
 
     const convertToIdCurr = (value) => {
       return value.toLocaleString("id-ID", {
@@ -141,12 +136,35 @@ sap.ui.define(
       getCashflowData: async function () {
         const dropdownPeriode = this.byId("perioedFromDD");
         const dropdownYear = this.byId("yearDD");
-        const tableContainer = this.byId("tableContainer");
 
         const selectedPeriod = dropdownPeriode.getSelectedKey();
         const selectedYear = dropdownYear.getSelectedKey();
 
+        const cashflowContainer = this.byId("cashflowContainer");
+
         const monthList = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+
+        let bankBalance = [];
+
+        // cashinflows
+        const inOperatingActs = [];
+        const inFinancingActs = [];
+        const inInvestingActs = [];
+        const inOtherAndTotal = [];
+
+        // cashoutflows
+        const outOperatingActs = [];
+        const outFinancingActs = [];
+        const outInvestingActs = [];
+        const outOtherAndTotal = [];
+
+        // Get total Inflows - Outflows and End Bank Balance
+        let bankBalanceSelected = null,
+          bankBalancePrev = null,
+          totalInSelected = null,
+          totalInPrev = null,
+          totalOutSelected = null,
+          totalOutPrev = null;
 
         if (selectedYear == "2023" && selectedPeriod < "09") {
           const that = this;
@@ -160,7 +178,7 @@ sap.ui.define(
             },
           });
         } else {
-          tableContainer.setBusy(true);
+          cashflowContainer.setBusy(true);
           const selectedPeriodCashflow = await this.getSelectedPeriodeCashflow(selectedPeriod, selectedYear);
 
           // Initialized previous period
@@ -169,28 +187,6 @@ sap.ui.define(
 
           // Initialized previous cashflow when user choose periode eq 09 or not, if not, then get cashflow data from function getPrevPeriodeCashflow()
           const prevPeriodCashflow = (await selectedPeriod) === "09" ? defaultPrevPeriodCashflow : await this.getPrevPeriodeCashflow(prevPeriodMonth, prevPeriodYear);
-
-          const bankBalance = [];
-
-          // cashinflows
-          const inOperatingActs = [];
-          const inFinancingActs = [];
-          const inInvestingActs = [];
-          const inOtherAndTotal = [];
-
-          // cashoutflows
-          const outOperatingActs = [];
-          const outFinancingActs = [];
-          const outInvestingActs = [];
-          const outOtherAndTotal = [];
-
-          // Get total Inflows - Outflows and End Bank Balance
-          let bankBalanceSelected = null,
-            bankBalancePrev = null,
-            totalInSelected = null,
-            totalInPrev = null,
-            totalOutSelected = null,
-            totalOutPrev = null;
 
           if (selectedPeriodCashflow.length === prevPeriodCashflow.length) {
             for (let index = 0; index < selectedPeriodCashflow.length; index++) {
@@ -306,6 +302,7 @@ sap.ui.define(
               }
             }
           }
+
           let totalInMinOutFlowsSelected = totalInSelected - totalOutSelected;
           let totalInMinOutFlowsPrev = totalInPrev - totalOutPrev;
 
@@ -327,87 +324,146 @@ sap.ui.define(
             },
           ];
 
-          //   const cashflowContainer = this.getView().byId("cashflowContainer");
+          // Clear base container to return new values
+          await this.clearContainer()
+            .then(async () => {
+              // generate new id to handle error duplicate id when create new cash flow in different period
+              const generateNewAccountId = (account) => {
+                const newId = `${account.replace(/ /g, "")}${Math.round(Math.random() * 100)}`;
+                return newId;
+              };
 
-          //   bankBalance.forEach((el) => {
-          //     let record = new HBox("bankBalanceRecord").addStyleClass("cf-record");
-          //     let descCol = new FlexBox({ width: "40%" }).addStyleClass("cf-header");
-          //     let selectedMonthCol = new FlexBox({ width: "20%", justifyContent: "End" });
-          //     let prevMonthCol = new FlexBox({ width: "20%", justifyContent: "End" });
-          //     let varianceCol = new FlexBox({ width: "20%", justifyContent: "End" });
+              // set period and show to XML view
+              const setSelectedPeriod = async () => {
+                const record = new HBox("").addStyleClass("cf-record");
+                const descCol = new FlexBox({ width: "40%" }).addStyleClass("cf-header");
+                const selectedMonth = new FlexBox({ width: "20%", justifyContent: "End" }).addStyleClass("cf-header");
+                const prevMonth = new FlexBox({ width: "20%", justifyContent: "End" }).addStyleClass("cf-header");
+                const varianceCol = new FlexBox({ width: "20%", justifyContent: "End" }).addStyleClass("cf-header");
 
-          //     descCol.addItem(new Text({ text: el.account }));
-          //     selectedMonthCol.addItem(new Text({ text: el.valueSelected }).addStyleClass("cf-selectedMonth"));
-          //     prevMonthCol.addItem(new Text({ text: el.valuePrev }).addStyleClass("cf-selectedMonth"));
-          //     varianceCol.addItem(new Text({ text: el.variances }).addStyleClass("cf-selectedMonth"));
+                // add text
+                descCol.addItem(new Text({ text: "" })).addStyleClass("cf-acc");
+                selectedMonth.addItem(new Text({ text: `${monthList[Number(selectedPeriod) - 1]} ${selectedYear}` })).addStyleClass("cf-selectedMonth");
+                prevMonth.addItem(new Text({ text: `${monthList[Number(selectedPeriod) - 2]} ${selectedYear}` })).addStyleClass("cf-prevMonth");
+                varianceCol.addItem(new Text({ text: "Variances" })).addStyleClass("cf-variances");
 
-          //     // Add to the recordList
-          //     record.addItem(descCol);
-          //     record.addItem(selectedMonthCol);
-          //     record.addItem(prevMonthCol);
-          //     record.addItem(varianceCol);
-          //     cashflowContainer.addItem(record);
-          //   });
+                record.addItem(descCol);
+                record.addItem(selectedMonth);
+                record.addItem(prevMonth);
+                record.addItem(varianceCol);
+                cashflowContainer.addItem(record);
+              };
+              // call function to set period and show to XML view
+              await setSelectedPeriod();
 
-          //   inOperatingActs.forEach((el) => {
-          //     let record = new HBox(el.account.replace(/ /g, "")).addStyleClass("cf-record");
-          //     let descCol = new FlexBox({ width: "40%" }).addStyleClass("cf-header");
-          //     let selectedMonthCol = new FlexBox({ width: "20%", justifyContent: "End" });
-          //     let prevMonthCol = new FlexBox({ width: "20%", justifyContent: "End" });
-          //     let varianceCol = new FlexBox({ width: "20%", justifyContent: "End" });
+              // loop bank balance to get bank balance to show to XML view
+              bankBalance.forEach((el) => {
+                const record = new HBox(generateNewAccountId(el.account)).addStyleClass("cf-record");
+                const descCol = new FlexBox({ width: "40%" }).addStyleClass("cf-header");
+                const selectedMonthCol = new FlexBox({ width: "20%", justifyContent: "End" });
+                const prevMonthCol = new FlexBox({ width: "20%", justifyContent: "End" });
+                const varianceCol = new FlexBox({ width: "20%", justifyContent: "End" });
 
-          //     descCol.addItem(new Text({ text: el.account }));
-          //     selectedMonthCol.addItem(new Text({ text: el.valueSelected }).addStyleClass("cf-selectedMonth"));
-          //     prevMonthCol.addItem(new Text({ text: el.valuePrev }).addStyleClass("cf-selectedMonth"));
-          //     varianceCol.addItem(new Text({ text: el.variances }).addStyleClass("cf-selectedMonth"));
+                descCol.addItem(new Text({ text: el.account }).addStyleClass("cf-acc-bold"));
+                selectedMonthCol.addItem(new Text({ text: el.valueSelected }).addStyleClass("cf-selectedMonth"));
+                prevMonthCol.addItem(new Text({ text: el.valuePrev }).addStyleClass("cf-selectedMonth"));
+                varianceCol.addItem(new Text({ text: el.variances }).addStyleClass("cf-selectedMonth"));
 
-          //     // Add to the recordList
-          //     record.addItem(descCol);
-          //     record.addItem(selectedMonthCol);
-          //     record.addItem(prevMonthCol);
-          //     record.addItem(varianceCol);
-          //     cashflowContainer.addItem(record);
-          //   });
+                // Add to the recordList
+                record.addItem(descCol);
+                record.addItem(selectedMonthCol);
+                record.addItem(prevMonthCol);
+                record.addItem(varianceCol);
 
-          const oSelectedYear = new JSONModel({ selectedYear: [{ selectedYear: selectedYear }] });
+                cashflowContainer.addItem(record);
+              });
 
-          const oBankBalanceModel = new JSONModel({ bankBalance: bankBalance });
-          const oInOperatingActsModel = new JSONModel({ inOperatingActs: inOperatingActs });
-          const oInFinancingActsModel = new JSONModel({ inFinancingActs: inFinancingActs });
-          const oInInvestingActsModel = new JSONModel({ inInvestingActs: inInvestingActs });
+              // Function to Set header/title cash flow data
+              const setHeaderTitle = (title) => {
+                const wrapperTitle = new HBox().addStyleClass("cf-record");
+                const wrapperHeader = new FlexBox({ width: "40%" }).addStyleClass("cf-header");
+                const blank = title === "Operating Activities" ? "cf-title-section" : "cf-title-section-content";
+                wrapperHeader.addItem(new Text({ text: title }).addStyleClass(blank));
 
-          const oInOtherModel = new JSONModel({ inOtherAndTotal: inOtherAndTotal });
-          const oOutOperatingActsModel = new JSONModel({ outOperatingActs: outOperatingActs });
-          const oOutFinancingActsModel = new JSONModel({ outFinancingActs: outFinancingActs });
-          const oOutInvestingActsModel = new JSONModel({ outInvestingActs: outInvestingActs });
-          const oOutOtherModel = new JSONModel({ outOtherAndTotal: outOtherAndTotal });
+                wrapperTitle.addItem(wrapperHeader);
+                return wrapperTitle;
+              };
+              await cashflowContainer.addItem(setHeaderTitle("Cash Inflows")); // call function set header to create Cash Inflows title
 
-          const oTotalEndBalanceModel = new JSONModel({ totalEndBalance: totalEndBalance });
+              // function to show all cash flows to XML with any cash flow
+              const displayCashflow = async (cashflow, titleHeader) => {
+                await cashflowContainer.addItem(setHeaderTitle(titleHeader));
+                cashflow.forEach((el) => {
+                  const record = new HBox(generateNewAccountId(el.account)).addStyleClass("cf-record");
+                  const descCol = new FlexBox({ width: "40%" }).addStyleClass("cf-header");
+                  const selectedMonthCol = new FlexBox({ width: "20%", justifyContent: "End" }).addStyleClass("cf-header");
+                  const prevMonthCol = new FlexBox({ width: "20%", justifyContent: "End" }).addStyleClass("cf-header");
+                  const varianceCol = new FlexBox({ width: "20%", justifyContent: "End" }).addStyleClass("cf-header");
 
-          // Set selected month in header table
-          this.byId("idSelectedMonthLabel").setText(`${monthList[Number(selectedPeriod) - 1]} ${selectedYear}`);
-          this.byId("idPrevMonthLabel").setText(`${monthList[Number(selectedPeriod) - 2]} ${selectedYear}`);
+                  const boldTextInit = el.account.includes("Total") || el.account.includes("Bank Ending Balance") ? "cf-acc-bold" : "cf-acc";
 
-          this.getView().setModel(oSelectedYear, "selectedYear");
-          console.log(this.getView().setModel(oSelectedYear, "selectedYear"));
-          this.getView().setModel(oBankBalanceModel, "bankBalance");
-          this.getView().setModel(oInOperatingActsModel, "inOperatingActs");
-          this.getView().setModel(oInFinancingActsModel, "inFinancingActs");
-          this.getView().setModel(oInInvestingActsModel, "inInvestingActs");
-          this.getView().setModel(oInOtherModel, "inOtherAndTotal");
+                  descCol.addItem(new Text({ text: el.account }).addStyleClass(boldTextInit));
+                  selectedMonthCol.addItem(new Text({ text: el.valueSelected }).addStyleClass(boldTextInit));
+                  prevMonthCol.addItem(new Text({ text: el.valuePrev }).addStyleClass(boldTextInit));
+                  varianceCol.addItem(new Text({ text: el.variances }).addStyleClass(boldTextInit));
 
-          this.getView().setModel(oOutOperatingActsModel, "outOperatingActs");
-          this.getView().setModel(oOutFinancingActsModel, "outFinancingActs");
-          this.getView().setModel(oOutInvestingActsModel, "outInvestingActs");
-          this.getView().setModel(oOutOtherModel, "outOtherAndTotal");
+                  // Add to the recordList
+                  record.addItem(descCol);
+                  record.addItem(selectedMonthCol);
+                  record.addItem(prevMonthCol);
+                  record.addItem(varianceCol);
 
-          this.getView().setModel(oTotalEndBalanceModel, "totalEndBalance");
-          tableContainer.setBusy(false);
+                  cashflowContainer.addItem(record);
+                });
+              };
+
+              // call function displayCashflow for cash in only
+              const displayInCashflow = async () => {
+                await displayCashflow(inOperatingActs, "Operating Activities");
+                await displayCashflow(inFinancingActs, "Financing Activities");
+                await displayCashflow(inInvestingActs, "Investing Activities");
+                await displayCashflow(inOtherAndTotal, "");
+              };
+
+              // call function displayCashflow for cash out only
+              const displayOutCashflow = async () => {
+                await cashflowContainer.addItem(setHeaderTitle("Cash Outflows"));
+                await displayCashflow(outOperatingActs, "Operating Activities");
+                await displayCashflow(outFinancingActs, "Financing Activities");
+                await displayCashflow(outInvestingActs, "Investing Activities");
+                await displayCashflow(outOtherAndTotal, "");
+                await displayCashflow(totalEndBalance, "");
+              };
+
+              // call function display cash in and cash out
+              await displayInCashflow();
+              await displayOutCashflow();
+
+              // create oSelectedyear to save selected year and can be used to XML view
+              const oSelectedYear = new JSONModel({ selectedYear: [{ selectedYear: selectedYear }] });
+              this.getView().setModel(oSelectedYear, "selectedYear");
+
+              cashflowContainer.setBusy(false); // turn off busy indicator when proses finish
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
       },
 
+      clearContainer: async function () {
+        const cashflowContainer = this.byId("cashflowContainer");
+        return new Promise(async (resolve, reject) => {
+          try {
+            await cashflowContainer.removeAllItems();
+            resolve("Container removed successfully");
+          } catch (error) {
+            reject("Something Error when clear container");
+          }
+        });
+      },
+
       getSelectedPeriodeCashflow: async function (selectedPeriod, selectedYear) {
-        const tableContainer = this.byId("tableContainer");
         try {
           const cashflowData = await this.RequestReadWithFilter(
             "/cashflowSet",
@@ -424,27 +480,14 @@ sap.ui.define(
               value: Number(cashflowValue[i]),
             });
           });
-
-          // tableContainer.setBusy(false);
           return results;
         } catch (error) {
-          tableContainer.setBusy(false);
-
           const that = this;
-          MessageBox.show(`${error.statusCode} - ${error.statusText}`, {
-            icon: MessageBox.Icon.ERROR,
-            title: `${error.message}`,
-            action: [MessageBox.Action.OK],
-            emphasizedAction: MessageBox.Action.OK,
-            onClose: (oAction) => {
-              that.onAfterRendering();
-            },
-          });
+          this.errorMessageBox(`${error.statusCode} - ${error.statusText}`, error.message, that.onAfterRendering());
         }
       },
 
       getPrevPeriodeCashflow: async function (selectedPeriod, selectedYear) {
-        const tableContainer = this.byId("tableContainer");
         let prevPeriod = Number(selectedPeriod) - 1;
         prevPeriod = prevPeriod < 9 ? `0${prevPeriod}` : `${prevPeriod}`;
 
@@ -465,21 +508,10 @@ sap.ui.define(
             });
           });
 
-          // tableContainer.setBusy(false);
           return results;
         } catch (error) {
-          tableContainer.setBusy(false);
-
           const that = this;
-          MessageBox.show(`${error.statusCode} - ${error.statusText}`, {
-            icon: MessageBox.Icon.ERROR,
-            title: `${error.message}`,
-            action: [MessageBox.Action.OK],
-            emphasizedAction: MessageBox.Action.OK,
-            onClose: (oAction) => {
-              that.onAfterRendering();
-            },
-          });
+          this.errorMessageBox(`${error.statusCode} - ${error.statusText}`, error.message, that.onAfterRendering());
         }
       },
 

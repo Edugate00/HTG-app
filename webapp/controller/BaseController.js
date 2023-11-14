@@ -126,6 +126,26 @@ sap.ui.define(
 				});
 			},
 
+			errorMessageBox: function (msg, title, fnOnClose) {
+				MessageBox.show(msg, {
+					icon: MessageBox.Icon.ERROR,
+					title: title,
+					actions: [MessageBox.Action.CLOSE],
+					emphasizedAction: MessageBox.Action.CLOSE,
+					onClose: fnOnClose,
+				});
+			},
+	
+			successMessageBox: function (msg, title, fnOnClose) {
+				MessageBox.show(msg, {
+					icon: MessageBox.Icon.SUCCESS,
+					title: title,
+					actions: [MessageBox.Action.CLOSE, MessageBox.Action],
+					emphasizedAction: MessageBox.Action.CLOSE,
+					onClose: fnOnClose,
+				});
+			},
+			
 			createOdataService: function (path, entry) {
 				BusyIndicator.show();
 				oModel = this.getOwnerComponent().getModel();
