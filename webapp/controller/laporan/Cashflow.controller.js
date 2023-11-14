@@ -515,8 +515,6 @@ sap.ui.define(
             },
 
             getSelectedPeriodeCashflow: async function (selectedPeriod, selectedYear) {
-                console.log('now selectedPeriod', selectedPeriod);
-                console.log('now selectedYear', selectedYear);
                 try {
                     const cashflowData = await this.RequestReadWithFilter(
                         '/cashflowSet',
