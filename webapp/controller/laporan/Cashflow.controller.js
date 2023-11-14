@@ -350,8 +350,8 @@ sap.ui.define(
                     let totalInMinOutFlowsSelected = totalInSelected - totalOutSelected;
                     let totalInMinOutFlowsPrev = totalInPrev - totalOutPrev;
 
-                    let endBankBalanceSelected = bankBalanceSelected - (totalInSelected + totalOutSelected);
-                    let endBankBalancePrev = bankBalancePrev - (totalInPrev + totalOutPrev);
+                    let endBankBalanceSelected = bankBalanceSelected + totalInMinOutFlowsSelected;
+                    let endBankBalancePrev = bankBalancePrev + totalInMinOutFlowsPrev;
 
                     const totalEndBalance = [
                         {
