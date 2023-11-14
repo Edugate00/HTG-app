@@ -113,8 +113,13 @@ sap.ui.define(
 			onAfterRendering: async function () {
 				const dropdownPeriodeFrom = this.byId('perioedFromDD');
 				const dropdownYear = this.byId('yearDD');
+				let selectedYear = [{ year: year }];
 
-				dropdownYear.setSelectedKey(year);
+				// create oSelectedyear to save selected year and can be used to XML view
+				const oSelectedYearModel = new JSONModel({ selectedYear: selectedYear });
+				this.getView().setModel(oSelectedYearModel, 'selectedYear');
+
+				dropdownYear.setSelectedKey('2023');
 
 				if (dropdownYear.getSelectedKey() == '2023') {
 					dropdownPeriodeFrom.setSelectedKey('10');
@@ -450,10 +455,6 @@ sap.ui.define(
 							// call function display cash in and cash out
 							await displayInCashflow();
 							await displayOutCashflow();
-
-							// create oSelectedyear to save selected year and can be used to XML view
-							const oSelectedYear = new JSONModel({ selectedYear: [{ selectedYear: selectedYear }] });
-							this.getView().setModel(oSelectedYear, 'selectedYear');
 
 							cashflowContainer.setBusy(false); // turn off busy indicator when proses finish
 						})

@@ -33,7 +33,7 @@
                                     id="perioedFromDD"
                                     width="100%"
                                     placeholder="Select Periode"
-                                    >
+                                >
                                     <core:Item
                                         key="01"
                                         text="Januari" />
@@ -79,11 +79,11 @@
                                     width="100%"
                                     placeholder="Select Year"
                                     selectedKey=""
-                                    items= "{selectedYear>/selectedYear}"
-                                    >
+                                    items="{selectedYear>/selectedYear}"
+                                >
                                     <core:ListItem
-                                        key="{selectedYear>selectedYear}"
-                                        text="{selectedYear>selectedYear}" />
+                                        key="{selectedYear>year}"
+                                        text="{selectedYear>year}" />
                                 </ComboBox>
                             </VBox>
                             <VBox width="100%">
