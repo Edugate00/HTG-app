@@ -100,7 +100,7 @@
                 </VBox>
                 <VBox
                     id="cashflowContainer"
-                    class="cashflow-container card">
+                    class="cashflow-container card-cashflow">
                 </VBox>
             </VBox>
         </content>

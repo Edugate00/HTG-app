@@ -1,14 +1,6 @@
 sap.ui.define(
-  [
-    "lrlpapp/controller/BaseController",
-    "sap/ui/model/json/JSONModel",
-    "lrlpapp/utils/BoldTextFormatter",
-    "sap/m/MessageBox",
-    "sap/m/HBox",
-    "sap/m/FlexBox",
-    "sap/m/Text",
-  ],
-  function (BaseController, JSONModel, MessageBox, HBox, FlexBox, Text) {
+  ["lrlpapp/controller/BaseController", "sap/ui/model/json/JSONModel", "sap/m/HBox", "sap/m/FlexBox", "sap/m/Text"],
+  function (BaseController, JSONModel, HBox, FlexBox, Text) {
     "use strict";
 
     const date = new Date();
@@ -168,15 +160,7 @@ sap.ui.define(
 
         if (selectedYear == "2023" && selectedPeriod < "09") {
           const that = this;
-          MessageBox.show("Tidak bisa memilih periode sebelum periode 09 untuk Report Cashflow tahun 2023.", {
-            icon: MessageBox.Icon.INFORMATION,
-            title: "Report Cashflow Message",
-            action: [MessageBox.Action.OK],
-            emphasizedAction: MessageBox.Action.OK,
-            onClose: (oAction) => {
-              that.onAfterRendering();
-            },
-          });
+          this.errorMessageBox("Tidak bisa memilih periode sebelum periode 09 untuk Report Cashflow tahun 2023", "Report Cashflow Message", that.onAfterRendering());
         } else {
           cashflowContainer.setBusy(true);
           const selectedPeriodCashflow = await this.getSelectedPeriodeCashflow(selectedPeriod, selectedYear);
