@@ -163,6 +163,12 @@ sap.ui.define(
                     totalOutSelected = null,
                     totalOutPrev = null;
 
+                let otherOutFlowsSelected = null,
+                    otherOutFlowsPrev = null;
+
+                let otherInFlowsSelected = null,
+                    otherInFlowsPrev = null;
+
                 if (selectedYear == '2023' && selectedPeriod < '09') {
                     const that = this;
                     this.errorMessageBox(
@@ -249,15 +255,36 @@ sap.ui.define(
                                     };
                                     inInvestingActs.push(data);
                                 } else {
+                                    if (selectedPeriodCashflow[index].account.includes('Other')) {
+                                        otherInFlowsSelected = selectedPeriodCashflow[index].value;
+                                        otherInFlowsPrev = prevPeriodCashflow[index].value;
+                                    }
+
+                                    let valueSelected = 0;
+                                    let valuePrev = 0;
+                                    let variances = 0;
+
+                                    if (selectedPeriodCashflow[index].account.includes('Total')) {
+                                        valueSelected = selectedPeriodCashflow[index].value + otherInFlowsSelected;
+                                        valuePrev = prevPeriodCashflow[index].value + otherInFlowsPrev;
+                                        variances =
+                                            selectedPeriodCashflow[index].value +
+                                            otherInFlowsSelected -
+                                            (prevPeriodCashflow[index].value + otherInFlowsPrev);
+                                    } else if (selectedPeriodCashflow[index].account.includes('Other')) {
+                                        valueSelected = selectedPeriodCashflow[index].value;
+                                        valuePrev = prevPeriodCashflow[index].value;
+                                        variances =
+                                            selectedPeriodCashflow[index].value - prevPeriodCashflow[index].value;
+                                    }
+
                                     const data = {
                                         account: selectedPeriodCashflow[index].account
                                             .replace('CF_IN_', '')
                                             .replace(/_/g, ' '),
-                                        valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
-                                        valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
-                                        variances: convertToIdCurr(
-                                            selectedPeriodCashflow[index].value - prevPeriodCashflow[index].value,
-                                        ),
+                                        valueSelected: convertToIdCurr(valueSelected),
+                                        valuePrev: convertToIdCurr(valuePrev),
+                                        variances: convertToIdCurr(variances),
                                     };
 
                                     totalInSelected = selectedPeriodCashflow[index].account.includes('Total')
@@ -322,15 +349,37 @@ sap.ui.define(
                                     };
                                     outInvestingActs.push(data);
                                 } else {
+                                    if (selectedPeriodCashflow[index].account.includes('Other')) {
+                                        otherOutFlowsSelected = selectedPeriodCashflow[index].value;
+                                        otherOutFlowsPrev = prevPeriodCashflow[index].value;
+                                    }
+
+                                    let valueSelected = 0;
+                                    let valuePrev = 0;
+                                    let variances = 0;
+
+                                    if (selectedPeriodCashflow[index].account.includes('Total')) {
+                                        valueSelected = selectedPeriodCashflow[index].value + otherOutFlowsSelected;
+                                        valuePrev = prevPeriodCashflow[index].value + otherOutFlowsPrev;
+                                        variances =
+                                            selectedPeriodCashflow[index].value +
+                                            otherOutFlowsSelected -
+                                            prevPeriodCashflow[index].value +
+                                            otherOutFlowsPrev;
+                                    } else if (selectedPeriodCashflow[index].account.includes('Other')) {
+                                        valueSelected = selectedPeriodCashflow[index].value;
+                                        valuePrev = prevPeriodCashflow[index].value;
+                                        variances =
+                                            selectedPeriodCashflow[index].value - prevPeriodCashflow[index].value;
+                                    }
+
                                     const data = {
                                         account: selectedPeriodCashflow[index].account
                                             .replace('CF_OUT_', '')
                                             .replace(/_/g, ' '),
-                                        valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
-                                        valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
-                                        variances: convertToIdCurr(
-                                            selectedPeriodCashflow[index].value - prevPeriodCashflow[index].value,
-                                        ),
+                                        valueSelected: convertToIdCurr(valueSelected),
+                                        valuePrev: convertToIdCurr(valuePrev),
+                                        variances: convertToIdCurr(variances),
                                     };
 
                                     totalOutSelected = selectedPeriodCashflow[index].account.includes('Total')
@@ -346,9 +395,19 @@ sap.ui.define(
                             }
                         }
                     }
+                    // Other values merupakan nilai dari pilihan antara other inflow dengan other outflows yang bukan 0
+                    const otherValuesSelected =
+                        otherInFlowsSelected !== 0
+                            ? otherInFlowsSelected
+                            : otherOutFlowsSelected !== 0
+                            ? otherOutFlowsSelected
+                            : 0;
+                    const otherValuesPrev =
+                        otherInFlowsPrev !== 0 ? otherInFlowsPrev : otherOutFlowsPrev !== 0 ? otherOutFlowsPrev : 0;
 
-                    let totalInMinOutFlowsSelected = totalInSelected - totalOutSelected;
-                    let totalInMinOutFlowsPrev = totalInPrev - totalOutPrev;
+                    // Nilai ini merupakan nilai sesudah ditambahkan other in/out
+                    let totalInMinOutFlowsSelected = totalInSelected - totalOutSelected + otherValuesSelected;
+                    let totalInMinOutFlowsPrev = totalInPrev - totalOutPrev + otherValuesPrev;
 
                     let endBankBalanceSelected = bankBalanceSelected + totalInMinOutFlowsSelected;
                     let endBankBalancePrev = bankBalancePrev + totalInMinOutFlowsPrev;
