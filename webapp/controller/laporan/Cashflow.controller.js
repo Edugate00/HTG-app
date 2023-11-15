@@ -397,8 +397,13 @@ sap.ui.define(
                     }
                     // Other values merupakan nilai dari pilihan antara other inflow dengan other outflows yang bukan 0
                     const otherValuesSelected =
-                        otherInFlowsSelected !== 0 ? otherInFlowsSelected : otherOutFlowsSelected;
-                    const otherValuesPrev = otherOutFlowsPrev !== 0 ? otherOutFlowsPrev : otherInFlowsPrev;
+                        otherInFlowsSelected !== 0
+                            ? otherInFlowsSelected
+                            : otherOutFlowsSelected !== 0
+                            ? otherOutFlowsSelected
+                            : 0;
+                    const otherValuesPrev =
+                        otherInFlowsPrev !== 0 ? otherInFlowsPrev : otherOutFlowsPrev !== 0 ? otherOutFlowsPrev : 0;
 
                     // Nilai ini merupakan nilai sesudah ditambahkan other in/out
                     let totalInMinOutFlowsSelected = totalInSelected - totalOutSelected + otherValuesSelected;
