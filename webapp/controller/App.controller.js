@@ -111,16 +111,59 @@ sap.ui.define(
                 navMobileRental.attachBrowserEvent(
                     'click',
                     () => {
-                        this.getRouter().navTo("rental");
-                        navMobileDashboard.removeStyleClass(
-                            "navMobile-link-active"
-                        );
-                        navMobileUtility.removeStyleClass(
-                            "navMobile-link-active"
-                        );
-                        navMobileRental.addStyleClass("navMobile-link-active");
+                        this.getRouter().navTo('rental');
+                        this._getActiveNav('rental');
                     },
-                    this
+                    this,
+                );
+
+                // Laporan
+                navMobileLaporan.attachBrowserEvent(
+                    'click',
+                    () => {
+                        this._getActiveNav('laporan');
+
+                        // Check if the popover is already open
+                        if (oPopover && oPopover.isOpen()) {
+                            oPopover.close();
+                        } else {
+                            oPopover = new Popover({
+                                showHeader: false,
+                                placement: 'VerticalPreferredTop',
+                                contentWidth: '30rem',
+                                content: [
+                                    new List({
+                                        items: [
+                                            new StandardListItem({
+                                                title: 'Profit & Lost',
+                                                type: 'Active',
+                                            }),
+                                            new StandardListItem({
+                                                title: 'Cashflow',
+                                                type: 'Active',
+                                            }),
+                                        ],
+                                        itemPress: (oEvent) => {
+                                            var oListItem = oEvent.getParameter('listItem');
+                                            var sTitle = oListItem.getTitle();
+                                            // Handle click on the list item
+                                            if (sTitle === 'Profit & Lost') {
+                                                this.getRouter().navTo('pnl');
+                                            } else if (sTitle === 'Cashflow') {
+                                                this.getRouter().navTo('cashflow');
+                                            }
+
+                                            oPopover.close();
+                                        },
+                                    }),
+                                ],
+                            });
+
+                            // Open the Popover
+                            oPopover.openBy(navMobileLaporan);
+                        }
+                    },
+                    this,
                 );
             },
 
