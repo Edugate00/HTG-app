@@ -107,6 +107,17 @@
                     class="navMobile-text"
                     text="Sewa" />
             </VBox>
+            <VBox
+                id="navMobileLaporan"
+                class="navMobile-link">
+                <core:Icon
+                    src="sap-icon://expense-report"
+                    class="sizeNavIcon"
+                    color="#ffffff" />
+                <Text
+                    class="navMobile-text"
+                    text="Laporan" />
+            </VBox>
         </HBox>
     </VBox>
 </mvc:View>
