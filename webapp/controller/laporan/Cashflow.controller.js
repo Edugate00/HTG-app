@@ -155,6 +155,8 @@ sap.ui.define(
                 const outInvestingActs = [];
                 const outOtherAndTotal = [];
 
+                const anyCashFlow = [];
+
                 // Get total Inflows - Outflows and End Bank Balance
                 let bankBalanceSelected = null,
                     bankBalancePrev = null,
@@ -392,9 +394,26 @@ sap.ui.define(
 
                                     outOtherAndTotal.push(data);
                                 }
+                            } else if (
+                                selectedPeriodCashflow[index].account === 'CF_Account_Balance_1010102013' ||
+                                selectedPeriodCashflow[index].account === 'CF_Account_Balance_1010102018' ||
+                                selectedPeriodCashflow[index].account === 'CF_First_Bank_Ending_Balance'
+                            ) {
+                                const data = {
+                                    account: selectedPeriodCashflow[index].account
+                                        .replace('CF_', '')
+                                        .replace(/_/g, ' '),
+                                    valueSelected: convertToIdCurr(selectedPeriodCashflow[index].value),
+                                    valuePrev: convertToIdCurr(prevPeriodCashflow[index].value),
+                                    variances: convertToIdCurr(
+                                        selectedPeriodCashflow[index].value - prevPeriodCashflow[index].value,
+                                    ),
+                                };
+                                anyCashFlow.push(data);
                             }
                         }
                     }
+                    console.log(anyCashFlow);
                     // Other values merupakan nilai dari pilihan antara other inflow dengan other outflows yang bukan 0
                     const otherValuesSelected =
                         otherInFlowsSelected !== 0
@@ -508,7 +527,9 @@ sap.ui.define(
                                     const boldTextInit =
                                         el.account.includes('Total') ||
                                         el.account === 'Bank Ending Balance' ||
-                                        el.account === 'Bank Beginning Balance'
+                                        el.account === 'Bank Beginning Balance' ||
+                                        el.account.includes('Account Balance') ||
+                                        el.account.includes('First Bank')
                                             ? 'cf-acc-bold'
                                             : 'cf-acc';
 
@@ -544,6 +565,7 @@ sap.ui.define(
                                 await displayCashflow(outInvestingActs, 'Investing Activities', false);
                                 await displayCashflow(outOtherAndTotal, '', false);
                                 await displayCashflow(totalEndBalance, '', false);
+                                await displayCashflow(anyCashFlow, '', false);
                             };
 
                             // call function display cash in and cash out
