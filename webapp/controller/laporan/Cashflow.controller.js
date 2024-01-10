@@ -181,18 +181,18 @@ sap.ui.define(
                 } else {
                     cashflowContainer.setBusy(true);
                     const selectedPeriodCashflow = await this.getSelectedPeriodeCashflow(selectedPeriod, selectedYear);
-
+                    
                     // Initialized previous period
                     const prevPeriodMonth = selectedPeriod === '01' ? '12' : (Number(selectedPeriod) - 1).toString();
                     const prevPeriodYear =
                         selectedPeriod === '01' ? (Number(selectedYear) - 1).toString() : selectedYear;
 
-                    // Initialized previous cashflow when user choose periode eq 09 or not, if not, then get cashflow data from function getPrevPeriodeCashflow()
+                                        // Initialized previous cashflow when user choose periode eq 09 or not, if not, then get cashflow data from function getPrevPeriodeCashflow()
                     const prevPeriodCashflow =
                         (await selectedPeriod) === '09'
                             ? defaultPrevPeriodCashflow
                             : await this.getPrevPeriodeCashflow(prevPeriodMonth, prevPeriodYear);
-
+                            
                     if (selectedPeriodCashflow.length === prevPeriodCashflow.length) {
                         for (let index = 0; index < selectedPeriodCashflow.length; index++) {
                             if (selectedPeriodCashflow[index].account.includes('CF_IN')) {
@@ -468,7 +468,8 @@ sap.ui.define(
                                 const varianceCol = new FlexBox({width: '20%', justifyContent: 'End'}).addStyleClass(
                                     'cf-header',
                                 );
-
+                                const prevMontTextIdx =  Number(selectedPeriod) - 2 === -1 ?  11 : Number(selectedPeriod) - 2
+                                const prevSelectedYear = monthList[prevMontTextIdx] == 'Des' ? selectedYear - 1 : selectedYear
                                 // add text
                                 descCol.addItem(new Text({text: ''})).addStyleClass('cf-acc');
                                 selectedMonth
@@ -478,7 +479,7 @@ sap.ui.define(
                                     .addStyleClass('cf-selectedMonth');
                                 prevMonth
                                     .addItem(
-                                        new Text({text: `${monthList[Number(selectedPeriod) - 2]} ${selectedYear}`}),
+                                        new Text({text: `${monthList[prevMontTextIdx]} ${prevSelectedYear}`}),
                                     )
                                     .addStyleClass('cf-prevMonth');
                                 varianceCol.addItem(new Text({text: 'Variances'})).addStyleClass('cf-variances');
@@ -601,7 +602,7 @@ sap.ui.define(
                         '/cashflowSet',
                         `CompanyCode eq 'LRLP'and PeriodeFrom eq '${selectedPeriod}'and PeriodeTo eq '${selectedPeriod}'and Year eq '${selectedYear}'`,
                     );
-
+                    
                     const cashflowPropsName = Object.keys(cashflowData.results[0]);
                     const cashflowValue = Object.values(cashflowData.results[0]);
                     const results = [];
@@ -646,7 +647,7 @@ sap.ui.define(
 
                     return results;
                 } catch (error) {
-                    const that = this;
+                                        const that = this;
                     this.errorMessageBox(
                         `${error.statusCode} - ${error.statusText}`,
                         error.message,
