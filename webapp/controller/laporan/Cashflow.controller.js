@@ -112,9 +112,21 @@ sap.ui.define(
 
         return BaseController.extend('lrlpapp.controller.laporan.Cashflow', {
             onAfterRendering: async function () {
+                const currentYear = new Date().getFullYear();
+                const firstYear = 2023;
+                let yearPayload = 2023; // for first indicator
+
+                /* -------------------------------- init year ------------------------------- */
                 const dropdownPeriodeFrom = this.byId('perioedFromDD');
                 const dropdownYear = this.byId('yearDD');
-                let selectedYear = [{year: yearBefore}, {year: year}];
+                let selectedYear = [{year: firstYear}];
+                if (currentYear - firstYear !== 0) {
+                    for (let i = 0; i < currentYear - firstYear; i++) {
+                        selectedYear.push({
+                            year: (yearPayload += 1),
+                        });
+                    }
+                }
 
                 // create oSelectedyear to save selected year and can be used to XML view
                 const oSelectedYearModel = new JSONModel({selectedYear: selectedYear});
@@ -128,6 +140,29 @@ sap.ui.define(
                     dropdownPeriodeFrom.setSelectedKey('01');
                 }
 
+                this.getCashflowData();
+            },
+            getCashflowDataClick: function () {
+                const dropdownPeriode = this.byId('perioedFromDD');
+                const dropdownYear = this.byId('yearDD');
+
+                const currentDate = new Date();
+                const currentMonth = currentDate.getMonth() + 1;
+                const currentYear = currentDate.getFullYear();
+
+                const selectedMonth = Number(dropdownPeriode.getSelectedKey());
+                const selectedYear = Number(dropdownYear.getSelectedKey());
+
+                /* ---------------------------- Start validation ---------------------------- */
+                // jika bulan dipilih lebih dari bulan sekarang ditahun sekarang, maka return warning
+                if (selectedYear === currentYear && selectedMonth >= currentMonth) {
+                    this.errorMessageBox(
+                        `Tidak dapat memilih periode ini karena Anda tidak dapat memilih bulan yang sama atau bulan selanjutnya dari tahun ${selectedYear}`,
+                        'Report Cashflow Message',
+                        () => {},
+                    );
+                    return;
+                }
                 this.getCashflowData();
             },
 
@@ -462,7 +497,7 @@ sap.ui.define(
                         .then(async () => {
                             // generate new id to handle error duplicate id when create new cash flow in different period
                             const generateNewAccountId = (account) => {
-                                const newId = `${account.replace(/ /g, '')}${Math.round(Math.random() * 100)}`;
+                                const newId = `${account.replace(/ /g, '')}${Date.now()}`;
                                 return newId;
                             };
 
@@ -599,7 +634,7 @@ sap.ui.define(
                 const cashflowContainer = this.byId('cashflowContainer');
                 return new Promise(async (resolve, reject) => {
                     try {
-                        await cashflowContainer.removeAllItems();
+                        await cashflowContainer.destroyItems();
                         resolve('Container removed successfully');
                     } catch (error) {
                         reject('Something Error when clear container');

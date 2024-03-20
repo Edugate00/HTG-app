@@ -3,29 +3,38 @@
     xmlns:core="sap.ui.core"
     xmlns:f="sap.ui.layout.form"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+    xmlns="sap.m"
+>
     <Page
         id="cashFlowPage"
         showHeader="false"
-        class="sapUiResponsivePadding--header">
+        class="sapUiResponsivePadding--header"
+    >
         <content>
             <VBox class="header-container" />
             <VBox class="main-container">
                 <VBox class="card">
                     <FlexBox
-                        class="card-header" justifyContent="SpaceBetween">
-                        <Text class="card-title" text="Cashflow Report Citiwalk" />
+                        class="card-header"
+                        justifyContent="SpaceBetween"
+                    >
+                        <Text
+                            class="card-title"
+                            text="Cashflow Report Citiwalk"
+                        />
                     </FlexBox>
                     <f:SimpleForm
                         id="formCashflowReport"
                         editable="true"
-                        layout="ResponsiveGridLayout">
+                        layout="ResponsiveGridLayout"
+                    >
                         <f:content>
                             <VBox>
                                 <Label text="Company:" />
                                 <Input
                                     enabled="false"
-                                    value="LRLP" />
+                                    value="LRLP"
+                                />
                             </VBox>
                             <VBox>
                                 <Label text="Periode:" />
@@ -36,40 +45,52 @@
                                 >
                                     <core:Item
                                         key="01"
-                                        text="Januari" />
+                                        text="Januari"
+                                    />
                                     <core:Item
                                         key="02"
-                                        text="Februari" />
+                                        text="Februari"
+                                    />
                                     <core:Item
                                         key="03"
-                                        text="Maret" />
+                                        text="Maret"
+                                    />
                                     <core:Item
                                         key="04"
-                                        text="April" />
+                                        text="April"
+                                    />
                                     <core:Item
                                         key="05"
-                                        text="Mei" />
+                                        text="Mei"
+                                    />
                                     <core:Item
                                         key="06"
-                                        text="Juni" />
+                                        text="Juni"
+                                    />
                                     <core:Item
                                         key="07"
-                                        text="Juli" />
+                                        text="Juli"
+                                    />
                                     <core:Item
                                         key="08"
-                                        text="Agustus" />
+                                        text="Agustus"
+                                    />
                                     <core:Item
                                         key="09"
-                                        text="September" />
+                                        text="September"
+                                    />
                                     <core:Item
                                         key="10"
-                                        text="Oktober" />
+                                        text="Oktober"
+                                    />
                                     <core:Item
                                         key="11"
-                                        text="November" />
+                                        text="November"
+                                    />
                                     <core:Item
                                         key="12"
-                                        text="Desember" />
+                                        text="Desember"
+                                    />
                                 </ComboBox>
                             </VBox>
                             <VBox>
@@ -83,7 +104,8 @@
                                 >
                                     <core:ListItem
                                         key="{selectedYear>year}"
-                                        text="{selectedYear>year}" />
+                                        text="{selectedYear>year}"
+                                    />
                                 </ComboBox>
                             </VBox>
                             <VBox width="100%">
@@ -92,7 +114,7 @@
                                     width="100%"
                                     type="Emphasized"
                                     text="Apply Filter"
-                                    press="getCashflowData"
+                                    press="getCashflowDataClick"
                                 />
                             </VBox>
                         </f:content>
@@ -100,8 +122,8 @@
                 </VBox>
                 <VBox
                     id="cashflowContainer"
-                    class="cashflow-container card-cashflow">
-                </VBox>
+                    class="cashflow-container card-cashflow"
+                />
             </VBox>
         </content>
     </Page>
