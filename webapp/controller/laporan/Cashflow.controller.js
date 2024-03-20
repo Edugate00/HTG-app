@@ -113,7 +113,7 @@ sap.ui.define(
             onAfterRendering: async function () {
                 const dropdownPeriodeFrom = this.byId('perioedFromDD');
                 const dropdownYear = this.byId('yearDD');
-                let selectedYear = [{year: year}];
+                let selectedYear = [{year: 2023},{year: year}];
 
                 // create oSelectedyear to save selected year and can be used to XML view
                 const oSelectedYearModel = new JSONModel({selectedYear: selectedYear});
