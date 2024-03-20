@@ -116,6 +116,9 @@ sap.ui.define(
                 const firstYear = 2023;
                 let yearPayload = 2023; // for first indicator
 
+                const currentDate = new Date();
+                const currentMonth = currentDate.getMonth() + 1;
+
                 /* -------------------------------- init year ------------------------------- */
                 const dropdownPeriodeFrom = this.byId('perioedFromDD');
                 const dropdownYear = this.byId('yearDD');
@@ -137,7 +140,7 @@ sap.ui.define(
                 if (dropdownYear.getSelectedKey() == '2023') {
                     dropdownPeriodeFrom.setSelectedKey('10');
                 } else {
-                    dropdownPeriodeFrom.setSelectedKey('01');
+                    dropdownPeriodeFrom.setSelectedKey(`0${currentMonth - 1}`);
                 }
 
                 this.getCashflowData();
@@ -171,6 +174,7 @@ sap.ui.define(
                 const dropdownYear = this.byId('yearDD');
 
                 const selectedPeriod = dropdownPeriode.getSelectedKey();
+
                 const selectedYear = dropdownYear.getSelectedKey();
 
                 const cashflowContainer = this.byId('cashflowContainer');
@@ -216,7 +220,9 @@ sap.ui.define(
                     );
                 } else {
                     cashflowContainer.setBusy(true);
-                    const selectedPeriodCashflow = await this.getSelectedPeriodeCashflow(selectedPeriod, selectedYear);
+                    const resultSelectedPeriod = await this.getSelectedPeriodeCashflow(selectedPeriod, selectedYear);
+                    const selectedPeriodCashflow =
+                        resultSelectedPeriod.length > 0 ? resultSelectedPeriod : defaultPrevPeriodCashflow;
 
                     // Initialized previous period
                     const prevPeriodMonth = selectedPeriod === '01' ? '12' : (Number(selectedPeriod) - 1).toString();
@@ -459,7 +465,6 @@ sap.ui.define(
                             }
                         }
                     }
-                    console.log(anyCashFlow);
                     // Other values merupakan nilai dari pilihan antara other inflow dengan other outflows yang bukan 0
                     const otherValuesSelected =
                         otherInFlowsSelected !== 0
