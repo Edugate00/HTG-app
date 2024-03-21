@@ -18,39 +18,51 @@ sap.ui.define(
         const defaultPrevPeriodCashflow = [
             {
                 account: '__metadata',
-                value: 0,
+                value: null,
             },
             {
                 account: 'CF_Other_In_Out_Flows',
-                value: 0,
+                value: 0.0,
+            },
+            {
+                account: 'CF_Account_Balance_1010102013',
+                value: 0.0,
             },
             {
                 account: 'CF_IN_Other_Inflows',
-                value: 0,
+                value: 0.0,
+            },
+            {
+                account: 'CF_Account_Balance_1010102018',
+                value: 0.0,
             },
             {
                 account: 'CF_OUT_Other_Outflows',
                 value: 0,
             },
             {
+                account: 'CF_First_Bank_Ending_Balance',
+                value: 0.0,
+            },
+            {
                 account: 'CompanyCode',
-                value: 0,
+                value: null,
             },
             {
                 account: 'PeriodeFrom',
-                value: 0,
+                value: 9,
             },
             {
                 account: 'PeriodeTo',
-                value: 0,
+                value: 9,
             },
             {
                 account: 'Year',
-                value: 0,
+                value: 2023,
             },
             {
                 account: 'CF_IN_Bank_Beginning_Balance',
-                value: 0,
+                value: 0.0,
             },
             {
                 account: 'CF_IN_Citiwalk_Rent_Payment',
@@ -58,11 +70,11 @@ sap.ui.define(
             },
             {
                 account: 'CF_IN_Transfer_from_SIBO',
-                value: 0,
+                value: 0.0,
             },
             {
                 account: 'CF_IN_Transfer_in_from_Related_Companies',
-                value: 0,
+                value: 0.0,
             },
             {
                 account: 'CF_IN_Other_Income',
@@ -74,11 +86,11 @@ sap.ui.define(
             },
             {
                 account: 'CF_IN_Total_Cash_Inflows',
-                value: 0,
+                value: 0.0,
             },
             {
                 account: 'CF_OUT_Payment_to_Third_Party_Vendors',
-                value: 0,
+                value: 0.0,
             },
             {
                 account: 'CF_OUT_Transfer_out_to_Related_Companies',
@@ -94,7 +106,7 @@ sap.ui.define(
             },
             {
                 account: 'CF_OUT_Tax_Payment',
-                value: 0,
+                value: 0.0,
             },
             {
                 account: 'CF_OUT_Utilities_Payment',
@@ -106,7 +118,42 @@ sap.ui.define(
             },
             {
                 account: 'CF_OUT_Total_Cash_Outflows',
-                value: 0,
+                value: 0.0,
+            },
+        ];
+        // use this value when value from odata is empty
+        const defaultValue = [
+            {
+                __metadata: {
+                    id: "https://lrna.edugate.web.id:8080/sap/opu/odata/sap/ZLRLP_APP_SRV/cashflowSet('LRLP')",
+                    uri: "https://lrna.edugate.web.id:8080/sap/opu/odata/sap/ZLRLP_APP_SRV/cashflowSet('LRLP')",
+                    type: 'ZLRLP_APP_SRV.cashflow',
+                },
+                CF_Other_In_Out_Flows: '0.0000',
+                CF_Account_Balance_1010102013: '0.0000',
+                CF_IN_Other_Inflows: '0.0000',
+                CF_Account_Balance_1010102018: '0.0000',
+                CF_OUT_Other_Outflows: '0.0000',
+                CF_First_Bank_Ending_Balance: '0.0000',
+                CompanyCode: 'LRLP',
+                PeriodeFrom: '09',
+                PeriodeTo: '09',
+                Year: '2023',
+                CF_IN_Bank_Beginning_Balance: '0.0000',
+                CF_IN_Citiwalk_Rent_Payment: '0.0000',
+                CF_IN_Transfer_from_SIBO: '0.0000',
+                CF_IN_Transfer_in_from_Related_Companies: '0.0000',
+                CF_IN_Other_Income: '0.0000',
+                CF_IN_Banks_Interest: '0.0000',
+                CF_IN_Total_Cash_Inflows: '0.0000',
+                CF_OUT_Payment_to_Third_Party_Vendors: '0.0000',
+                CF_OUT_Transfer_out_to_Related_Companies: '0.0000',
+                CF_OUT_Payment_to_Share_Holder: '0.0000',
+                CF_OUT_Owner_Expense: '0.0000',
+                CF_OUT_Tax_Payment: '0.0000',
+                CF_OUT_Utilities_Payment: '0.0000',
+                CF_OUT_Bank_Administration: '0.0000',
+                CF_OUT_Total_Cash_Outflows: '0.0000',
             },
         ];
 
@@ -140,7 +187,7 @@ sap.ui.define(
                 if (dropdownYear.getSelectedKey() == '2023') {
                     dropdownPeriodeFrom.setSelectedKey('10');
                 } else {
-                    dropdownPeriodeFrom.setSelectedKey(`0${currentMonth - 1}`);
+                    dropdownPeriodeFrom.setSelectedKey(`01`);
                 }
 
                 this.getCashflowData();
@@ -216,7 +263,7 @@ sap.ui.define(
                     this.errorMessageBox(
                         'Tidak bisa memilih periode sebelum periode 09 untuk Report Cashflow tahun 2023',
                         'Report Cashflow Message',
-                        that.onAfterRendering(),
+                        () => {},
                     );
                 } else {
                     cashflowContainer.setBusy(true);
@@ -231,7 +278,7 @@ sap.ui.define(
 
                     // Initialized previous cashflow when user choose periode eq 09 or not, if not, then get cashflow data from function getPrevPeriodeCashflow()
                     const prevPeriodCashflow =
-                        (await selectedPeriod) === '09'
+                        selectedPeriod === '09' && selectedYear === '2023'
                             ? defaultPrevPeriodCashflow
                             : await this.getPrevPeriodeCashflow(prevPeriodMonth, prevPeriodYear);
 
@@ -630,6 +677,7 @@ sap.ui.define(
                             cashflowContainer.setBusy(false); // turn off busy indicator when proses finish
                         })
                         .catch((err) => {
+                            cashflowContainer.setBusy(true);
                             console.log(err);
                         });
                 }
@@ -649,11 +697,22 @@ sap.ui.define(
 
             getSelectedPeriodeCashflow: async function (selectedPeriod, selectedYear) {
                 try {
-                    const cashflowData = await this.RequestReadWithFilter(
+                    const cashFlowDataReturn = await this.RequestReadWithFilter(
                         '/cashflowSet',
                         `CompanyCode eq 'LRLP'and PeriodeFrom eq '${selectedPeriod}'and PeriodeTo eq '${selectedPeriod}'and Year eq '${selectedYear}'`,
                     );
 
+                    // let cashflowData = cashFlowDataReturn;
+                    let cashflowData =
+                        cashFlowDataReturn.results.length === 0
+                            ? {
+                                  results: defaultValue,
+                              }
+                            : cashFlowDataReturn;
+                    if (cashFlowDataReturn.results.length === 0) {
+                        console.log('tidak ada data sekarang');
+                        // this.errorMessageBox(`500 - Tidak ada data ditemukan`, error.message, () => {});
+                    }
                     const cashflowPropsName = Object.keys(cashflowData.results[0]);
                     const cashflowValue = Object.values(cashflowData.results[0]);
                     const results = [];
@@ -668,10 +727,12 @@ sap.ui.define(
                 } catch (error) {
                     const that = this;
                     this.errorMessageBox(
-                        `${error.statusCode} - ${error.statusText}`,
-                        error.message,
-                        that.onAfterRendering(),
+                        `${error.statusCode || 500} - ${error.statusText || error}`,
+                        `Request Time out - Tidak ada data ditemukan pada periode ${selectedPeriod} tahun ${selectedYear}`,
+                        // that.onAfterRendering(),
+                        () => {},
                     );
+                    return defaultPrevPeriodCashflow;
                 }
             },
 
@@ -680,11 +741,26 @@ sap.ui.define(
                 prevPeriod = prevPeriod <= 9 ? `0${prevPeriod}` : `${prevPeriod}`;
 
                 try {
-                    const cashflowData = await this.RequestReadWithFilter(
+                    const cashFlowDataReturn = await this.RequestReadWithFilter(
                         '/cashflowSet',
                         `CompanyCode eq 'LRLP'and PeriodeFrom eq '${prevPeriod}'and PeriodeTo eq '${prevPeriod}'and Year eq '${selectedYear}'`,
                     );
 
+                    // const cashflowData = await this.RequestReadWithFilter(
+                    //     '/cashflowSet',
+                    //     `CompanyCode eq 'LRLP'and PeriodeFrom eq '${prevPeriod}'and PeriodeTo eq '${prevPeriod}'and Year eq '${selectedYear}'`,
+                    // );
+                    let cashflowData =
+                        cashFlowDataReturn.results.length < 1
+                            ? {
+                                  results: defaultValue,
+                              }
+                            : cashFlowDataReturn;
+
+                    if (cashFlowDataReturn.results.length === 0) {
+                        console.log('tidak ada data periode sebelumnya');
+                        // this.errorMessageBox(`500 - Tidak ada data ditemukan`, error.message, () => {});
+                    }
                     const cashflowPropsName = Object.keys(cashflowData.results[0]);
                     const cashflowValue = Object.values(cashflowData.results[0]);
                     const results = [];
@@ -700,10 +776,12 @@ sap.ui.define(
                 } catch (error) {
                     const that = this;
                     this.errorMessageBox(
-                        `${error.statusCode} - ${error.statusText}`,
-                        error.message,
-                        that.onAfterRendering(),
+                        `${error.statusCode || 500} - ${error.statusText || error}`,
+                        `Request Time out - Tidak ada data ditemukan pada periode ${selectedPeriod} tahun ${selectedYear}`,
+                        // that.onAfterRendering(),
+                        () => {},
                     );
+                    return defaultPrevPeriodCashflow;
                 }
             },
 
