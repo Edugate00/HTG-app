@@ -727,8 +727,8 @@ sap.ui.define(
                 } catch (error) {
                     const that = this;
                     this.errorMessageBox(
-                        `${error.statusCode || 500} - ${error.statusText || error}`,
                         `Request Time out - Tidak ada data ditemukan pada periode ${selectedPeriod} tahun ${selectedYear}`,
+                        `${error.statusCode || 500} - ${error.statusText || error}`,
                         // that.onAfterRendering(),
                         () => {},
                     );
