@@ -103,7 +103,7 @@
                                 class="dynamic-number"
                                 text="{notif>belumCetak}" />
                         </FlexBox>
-                        <Text text="Tagihan untuk dicetak" />
+                        <Text text="Tagihan untuk dirilis" />
                     </VBox>
                 </VBox>
             </HBox>

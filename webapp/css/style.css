@@ -146,9 +146,18 @@ body {
     color: #ffffff;
 }
 
-.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive)>.sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(.sapMBtnTransparent).sapMBtnDefault,
-.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive)>.sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(.sapMBtnTransparent).sapMBtnBack,
-.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive)>.sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(.sapMBtnTransparent).sapMBtnGhost {
+.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive)
+    > .sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(
+        .sapMBtnTransparent
+    ).sapMBtnDefault,
+.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive)
+    > .sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(
+        .sapMBtnTransparent
+    ).sapMBtnBack,
+.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive)
+    > .sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(
+        .sapMBtnTransparent
+    ).sapMBtnGhost {
     color: var(--primary-color-40);
     background-color: #ffffff;
     text-shadow: none;
@@ -275,7 +284,7 @@ body {
     overflow: hidden;
 }
 
-.card-cashflow{
+.card-cashflow {
     width: 100%;
     min-height: 200px;
     border-radius: 16px;
@@ -342,7 +351,6 @@ body {
     font-size: 10rem;
 }
 
-
 /* Start of Styling for Report Cashflow */
 .cf-record {
     width: 100%;
@@ -363,15 +371,13 @@ body {
     font-weight: 900;
 }
 
-.cf-title-section-content{
+.cf-title-section-content {
     margin-top: 1rem;
 }
 
-.cf-acc{
+.cf-acc {
     font-weight: lighter;
 }
-
-
 
 /* End of Styling for Report Cashflow */
 
@@ -576,3 +582,33 @@ body {
 }
 
 /* End SIZE for ICON */
+
+/*  Start of Status Kontrak */
+.textStatusKontrak
+    .sapMLIBContent
+    .sapMObjLTopRow
+    .sapMObjLNumberDiv
+    .sapMObjectNumber
+    .sapMObjectNumberInner
+    .sapMObjectNumberText {
+    /* color: #00925d; */
+    font-size: 0.825rem;
+    font-weight: bold;
+    text-transform: capitalize !important;
+    font-family: '72-Semibold', '72-Semiboldfull', '72', '72full', Arial, Helvetica, sans-serif;
+}
+
+.idProductStatusLabel {
+    padding-top: 8px;
+    padding-left: 12px;
+}
+
+.radioButtonGroupRental {
+    padding-left: 8px;
+}
+
+.textBold {
+    font-weight: bold;
+}
+
+/* End of Status Kontrak */

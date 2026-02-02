@@ -4,6 +4,7 @@ sap.ui.define([], function () {
 
   return {
     BoldTextFormatter: function (isBold) {
+      
       if (isBold) {
         return "boldText"; // You can define a CSS class for bold text
       }

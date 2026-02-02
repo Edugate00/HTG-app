@@ -32,5 +32,8 @@
       "@sap/ux-ui5-fe-mockserver-middleware"
     ]
   },
-  "sapuxLayer": "CUSTOMER_BASE"
+  "sapuxLayer": "CUSTOMER_BASE",
+  "dependencies": {
+    "nwabap-ui5uploader": "^1.2.0"
+  }
 }

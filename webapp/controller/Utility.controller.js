@@ -252,10 +252,10 @@ sap.ui.define(
 
         oFilters = new Filter({ filters: [oFilter1, oFilter2, oFilter3], and: true });
 
-        if (selectedSort === "Ascending") {
-            oSort = new Sorter("BillingNumber", false);
-        } else {
+        if (selectedSort === "Tertinggi") {
             oSort = new Sorter("BillingNumber", true);
+        } else {
+            oSort = new Sorter("BillingNumber", false);
         }
         
         tagihanList.getBinding("items").filter(oFilters);

@@ -1,0 +1,157 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+>
+    <Dialog
+        id="idFilterProdDialog"
+        title="Activity Filter and Sort"
+        contentWidth="25%"
+    >
+        <customHeader>
+            <Bar id="idBar">
+                <contentLeft>
+                    <Text
+                        id="idActivityFilterAndSortText"
+                        class="textBold"
+                        text="Filter Kontrak Sewa"
+                    />
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        id="idResetButton"
+                        text="Reset"
+                        enabled="false"
+                        press="pressResetFilterButton"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <content>
+            <VBox
+                class="cardContentDialog"
+                id="idWrapperDialogVBox"
+            >
+                <VBox
+                    width="100%"
+                    id="idStatusVBox"
+                >
+                    <Label
+                        text="Status Kontrak Sewa"
+                        class="idProductStatusLabel"
+                        id="idProductStatusLabel"
+                    />
+                    <RadioButtonGroup
+                    id="idStatusRadioButtonGroup"
+                    class="radioButtonGroupRental"
+                        columns="1"
+                        editable="true"
+                        enabled="true"
+                        selectedIndex="1"
+                        textDirection="Inherit"
+                        valueState="None"
+                        width=""
+                    >
+                        <buttons>
+                            <RadioButton
+                            id="idSemuaRadioButton"
+                                groupName="sapMRbDefaultGroup"
+                                selected="false"
+                                text="Semua"
+                            >
+                            </RadioButton>
+                            <RadioButton
+                            id="idBerlakuRadioButton"
+                                groupName="sapMRbDefaultGroup"
+                                selected="true"
+                                text="Berlaku"
+                            >
+                            </RadioButton>
+                            <RadioButton
+                            id="idTidakBerlakuRadioButton"
+                                groupName="sapMRbDefaultGroup"
+                                selected="false"
+                                text="Tidak Berlaku"
+                            >
+                            </RadioButton>
+                        </buttons>
+                    </RadioButtonGroup>
+
+                    <Label
+                    text="Urutkan masa kontrak"
+                    class="idProductStatusLabel"
+                />
+                <RadioButtonGroup
+                id="idSortRadioButtonGroup"
+                class="radioButtonGroupRental"
+                    columns="2"
+                    editable="true"
+                    enabled="true"
+                    selectedIndex="1"
+                    textDirection="Inherit"
+                    valueState="None"
+                    width=""
+                >
+                    <buttons>
+                        <RadioButton
+                            groupName="sapMRbDefaultGroup"
+                            selected="false"
+                            text="Terbaru"
+
+                        >
+                        </RadioButton>
+                        <RadioButton
+                            groupName="sapMRbDefaultGroup"
+                            selected="true"
+                            text="Terlama"
+                        >
+                        </RadioButton>
+                    </buttons>
+                </RadioButtonGroup>
+                    <!-- <CheckBox
+                        id="idSelectDeselectAllCheckBox"
+                        text="Select / deselect all"
+                        selected="{= ${/isz} || ${/isReleased} || ${/isConfirmed} || ${/isSettle} }"
+                        partiallySelected="{= !(${/isCreated} &amp;&amp; ${/isReleased} &amp;&amp; ${/isConfirmed} &amp;&amp; ${/isSettle})
+                           }"
+                        select="onStatusParentClicked"
+                    />
+                    <CheckBox
+                        id="idCreatedCheckBox"
+                        text="Created"
+                        selected="{/isCreated}"
+                    />
+                    <CheckBox
+                        id="idReleasedCheckBox"
+                        text="Released"
+                        selected="{/isReleased}"
+                    />
+                    <CheckBox
+                        id="idConfirmedCheckBox"
+                        text="Confirmed"
+                        selected="{/isConfirmed}"
+                    />
+                    <CheckBox
+                        id="idSettledCheckBox"
+                        text="Settled"
+                        selected="{/isSettle}"
+                    /> -->
+                </VBox>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button
+                id="idCancelButton"
+                text="Cancel"
+                press="onCloseFragments"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                id="idApplyButton"
+                text="Apply"
+                type="Emphasized"
+                press="onApplyFilter"
+            />
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>

@@ -12,31 +12,69 @@
         <masterPages>
             <Page
                 id="master"
-                showHeader="true"
                 backgroundDesign="List"
-                title="Kontrak Sewa"
-                class="sapUiResponsivePadding--header">
+                >
+                <headerContent>
+                    <HBox
+                        width="100%"
+                        class="wrapperListHeader"
+                        justifyContent="SpaceBetween"
+                    >
+                        <Button
+                            id="idNavBackButton"
+                            icon="sap-icon://navigation-left-arrow"
+                            tooltip="Back"
+                            press=".onNavBack"
+                        />
+                        <Text
+                            text="Kontrak Sewa"
+                            class="sapUiResponsivePadding--header textBold"
+                        />
+                        <Button
+                            id="idFilterButton"
+                            icon="sap-icon://filter"
+                            tooltip="Filter"
+                            press="onButtonFilterPress"
+                        />
+                    </HBox>
+                </headerContent>
                 <List
                     id="tagihanRentalList"
                     itemPress=".onTagihanRentalSelect"
                     items="{rentalMaster>/rentalMaster}">
                     <items>
                         <ObjectListItem
+                        class="textStatusKontrak"
                             type="Active"
                             custom:to="detail"
+                            numberState="{= ${rentalMaster>KontrakStatus} === 'Berlaku' ? 'Success' : 'Error'}" 
+                            number="{rentalMaster>KontrakStatus}"
                             title="{rentalMaster>NamaTenant}">
                             <ObjectAttribute
-                                title="Kontainer"
+                                title="Unit"
                                 text="{rentalMaster>KontainerDesc}" />
+                                
                             <ObjectAttribute
                                 title="No. Kontrak"
                                 text="{rentalMaster>NomorKontrak}" />
+
                             <ObjectAttribute
                                 title="Masa Kontrak"
                                 text="{rentalMaster>KontrakStart} - {rentalMaster>KontrakEnd}" />
                         </ObjectListItem>
                     </items>
                 </List>
+                <subHeader>
+                    <OverflowToolbar>
+                        <Input
+                            id="idSearchKontrakInput"
+                            placeholder="Cari Kontrak Sewa"
+                            showValueHelp="true"
+                            valueHelpIconSrc="sap-icon://search"
+                            liveChange="onInputSearchDebounceLiveChange"
+                        />
+                    </OverflowToolbar>
+                </subHeader>
             </Page>
         </masterPages>
         <detailPages>
@@ -54,7 +92,7 @@
                     fullScreenOptimized="true">
                     <attributes>
                         <ObjectAttribute text="{rentalDetail>/NomorKontrak}" title="No. Kontrak" />
-                        <ObjectAttribute text="{rentalDetail>/KontainerDesc}" title="Kontainer" />
+                        <ObjectAttribute text="{rentalDetail>/KontainerDesc}" title="Unit" />
                         <ObjectAttribute title="Masa Kontrak"
                             text="{rentalDetail>/KontrakStart} - {rentalDetail>/KontrakEnd}" />
                         <ObjectAttribute title="Nilai Sewa per bulan"
@@ -64,6 +102,8 @@
                         <ObjectAttribute title="Ditagih setiap"
                             text="{rentalDetail>/TagihanSetiapDesc}" />
                         <ObjectAttribute text="{rentalDetail>/TipePajakDesc}" />
+                        <ObjectAttribute text="Status Kontrak : {rentalDetail>/KontrakStatus}" />
+
                     </attributes>
                     <statuses>
                         <ObjectStatus
@@ -244,7 +284,7 @@
                 id="detailEmpty"
                 backgroundDesign="List"
                 title="Detail Kontrak Sewa"
-                class="sapUiResponsivePadding--header">
+                class="sapUiResponsivePadding--header ">
                 <FlexBox
                     justifyContent="Center"
                     alignItems="Center"

@@ -22,10 +22,10 @@
                 </VBox>
                 <VBox width="100%" class="sapUiSmallMarginBottom">
                     <Label labelFor="rbg2" text="Status Pembayaran" />
-                    <RadioButtonGroup id="rbg2" width="100%">
-                        <RadioButton id="RB2-0" text="Semua Status" />
-                        <RadioButton id="RB2-1" text="Sudah dibayar" />
-                        <RadioButton id="RB2-2" text="Belum dibayar" />
+                    <RadioButtonGroup selectedKey="0" id="rbg2" width="100%">
+                        <RadioButton id="RB2-0" key="0" text="Semua Status" />
+                        <RadioButton id="RB2-1" key="1" text="Sudah dibayar" />
+                        <RadioButton id="RB2-2" key="2" text="Belum dibayar" />
                     </RadioButtonGroup>
                 </VBox>
                 <VBox width="100%" class="sapUiSmallMarginBottom">
@@ -39,48 +39,50 @@
                             key="*"
                             text="Semua Periode" />
                         <core:Item
-                            key="Januari"
+                            key="01"
                             text="Januari" />
                         <core:Item
-                            key="Februari"
+                            key="02"
                             text="Februari" />
                         <core:Item
-                            key="Maret"
+                            key="00"
                             text="Maret" />
                         <core:Item
-                            key="April"
+                            key="04"
                             text="April" />
                         <core:Item
-                            key="Mei"
+                            key="05"
                             text="Mei" />
                         <core:Item
-                            key="Juni"
+                            key="06"
                             text="Juni" />
                         <core:Item
-                            key="Juli"
+                            key="07"
                             text="Juli" />
                         <core:Item
-                            key="Agustus"
+                            key="08"
                             text="Agustus" />
                         <core:Item
-                            key="September"
+                            key="09"
                             text="September" />
                         <core:Item
-                            key="Oktober"
+                            key="10"
                             text="Oktober" />
                         <core:Item
-                            key="November"
+                            key="11"
                             text="November" />
                         <core:Item
-                            key="Desember"
+                            key="12"
                             text="Desember" />
                     </ComboBox>
                 </VBox>
                 <VBox width="100%" class="sapUiSmallMarginBottom">
-                    <Label labelFor="rbg3" text="Urutkan" />
-                    <RadioButtonGroup id="rbg3" columns="2" width="100%">
-                        <RadioButton id="RB3-1" text="Ascending" />
-                        <RadioButton id="RB3-2" text="Descending" />
+                    <Label labelFor="rbg3" text="Urutkan Nilai Sewa" />
+                    <RadioButtonGroup id="rbg3" columns="2" width="100%"
+                        selectedIndex="1"
+                    >
+                        <RadioButton id="RB3-1" text="Tertinggi" />
+                        <RadioButton id="RB3-2" text="Terendah" />
                     </RadioButtonGroup>
                 </VBox>
             </VBox>
