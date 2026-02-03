@@ -282,7 +282,22 @@ sap.ui.define(
                     'NOTIF_TAGIHAN_SEWA',
                     JSON.stringify(isDueDate.sort((a, b) => a.Timestamp - b.Timestamp)),
                 );
+                // console.log("test hasPassed", hasPassed);
 
+                const currentTimestamp = new Date().getTime();
+               const top100HasPassed = hasPassed
+                .map(item => ({
+                    ...item,
+                    timeDiff: Math.abs(item.Timestamp - currentTimestamp)
+                     }))
+                    .sort((a, b) => a.timeDiff - b.timeDiff)
+                 .slice(0, 100)
+                    .map(({ timeDiff, ...item }) => item);
+
+sessionStorage.setItem(
+    'NOTIF_TAGIHAN_TERLAMBAT',
+    JSON.stringify(top100HasPassed)
+);
                 // sessionStorage.setItem(
                 //     'NOTIF_TAGIHAN_TERLAMBAT',
                 //     JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp)),
