@@ -31,11 +31,11 @@ sap.ui.define(
 
         // Link ZInvoice Slipstream
         const PRD_366 =
-            'https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X';
+            'https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=300&sap-language=EN&sap-accessibility=X';
         const QAS_400 =
-            'https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X';
+            'https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=110&sap-language=EN&sap-accessibility=X';
         const DEV_116 =
-            'https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X';
+            'https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=388&sap-language=EN&sap-accessibility=X';
 
         const itemsForTenant = [
             { key: '3bulan', text: '3 Bulan' },
@@ -56,7 +56,7 @@ sap.ui.define(
             { key: 'September', text: 'September' },
             { key: 'Oktober', text: 'Oktober' },
             { key: 'November', text: 'November' },
-            { key: 'Desember', text: 'Desember' },
+            { key: 'Desember', text: 'Desember' },\
         ];
 
         const oPenggunaanAir = { data: [] };
@@ -104,7 +104,6 @@ sap.ui.define(
 
 
                 const oMeasPoint = await this.readOdataService('/measurementPointSet', 'MeasPointToMeasDoc');
-
                 oMeasPoint.results.forEach((el) => {
                     MEASPOINT.push(el);
                 });
@@ -118,12 +117,10 @@ sap.ui.define(
                     $orderby: `NilaiSewa ${sortNilaiSewa}`
                 }
 
-
-
                 const oBilling = await this.RequestReadWithFilterAndSort('/billingHeaderSet', urlParameters);
 
-                const getNotification = await this.RequestReadWithOutExpanded(
-                    "/dashboardNotificationSet(FuncLoc='LRLP-CITIWALK')",
+                const getNotification = await this.RequestReadWithFilter(
+                    "/dashboardNotifSet", `FuncLoc eq 'EDUGATE_BUILDING'`,
                 );
 
                 oBilling.results.forEach((el) => {
@@ -180,8 +177,6 @@ sap.ui.define(
                         BILLING_ZUTL.push(el);
                     }
                 });
-
-
 
                 // Storing data to Session Storage based on billing type
                 // sessionStorage.setItem("ALL_BILLING", JSON.stringify(oBilling))
@@ -285,45 +280,31 @@ sap.ui.define(
                 // console.log("test hasPassed", hasPassed);
 
                 const currentTimestamp = new Date().getTime();
-               const top100HasPassed = hasPassed
-                .map(item => ({
-                    ...item,
-                    timeDiff: Math.abs(item.Timestamp - currentTimestamp)
-                     }))
+                const top100HasPassed = hasPassed
+                    .map(item => ({
+                        ...item,
+                        timeDiff: Math.abs(item.Timestamp - currentTimestamp)
+                    }))
                     .sort((a, b) => a.timeDiff - b.timeDiff)
-                 .slice(0, 100)
+                    .slice(0, 100)
                     .map(({ timeDiff, ...item }) => item);
 
-sessionStorage.setItem(
-    'NOTIF_TAGIHAN_TERLAMBAT',
-    JSON.stringify(top100HasPassed)
-);
-                // sessionStorage.setItem(
-                //     'NOTIF_TAGIHAN_TERLAMBAT',
-                //     JSON.stringify(hasPassed.sort((a, b) => a.Timestamp - b.Timestamp)),
-                // );
+                sessionStorage.setItem(
+                    'NOTIF_TAGIHAN_TERLAMBAT',
+                    JSON.stringify(top100HasPassed)
+                );
 
                 // this code below is for the Dynamic Number of Tiles in Dashboard
                 const notif = [];
                 notif.push({ pindaiMeteran: `${needToScan.length}` });
                 notif.push({ pindaiMeteranDesc: `${needToScanDesc}` });
-                if (currentDate <= 10 || currentDate >= 25) {
-                    notif.push({
-                        tagihanAir: String(getNotification.TagihanAir),
-                    });
-                    notif.push({
-                        tagihanSewa: String(isDueDate.length + hasPassed.length),
-                    });
-                    notif.push({ belumCetak: String(needToPrint.length) });
-                } else {
-                    notif.push({
-                        tagihanAir: String(getNotification.TagihanAir),
-                    });
-                    notif.push({
-                        tagihanSewa: String(isDueDate.length + hasPassed.length),
-                    });
-                    notif.push({ belumCetak: String(needToPrint.length) });
-                }
+                notif.push({
+                    tagihanAir: String(getNotification.TagihanAir),
+                });
+                notif.push({
+                    tagihanSewa: String(isDueDate.length + hasPassed.length),
+                });
+                notif.push({ belumCetak: String(needToPrint.length) });
 
                 const notifCounter = new JSONModel({ notif });
 
@@ -331,31 +312,7 @@ sessionStorage.setItem(
                 this.getView().setModel(new JSONModel({ tagihan: oTagihan }), 'tagihan');
 
                 // Vizframe chart for Penggunaan Air
-                const vizAir = this.getView().byId('vizPenggunaanAir');
                 const vizListrik = this.byId('vizPenggunaanListrik');
-
-                vizAir.setVizProperties({
-                    plotArea: {
-                        dataLabel: {
-                            visible: true,
-                        },
-                        colorPalette: ['#00925D'],
-                    },
-                    valueAxis: {
-                        title: {
-                            visible: false,
-                        },
-                    },
-                    categoryAxis: {
-                        title: {
-                            visible: false,
-                        },
-                    },
-                    title: {
-                        visible: false,
-                        text: '',
-                    },
-                });
 
                 vizListrik.setVizProperties({
                     plotArea: {
@@ -396,8 +353,6 @@ sessionStorage.setItem(
                 const penggunaanListrikModel = new JSONModel({
                     data: penggunaanListrik.sort((a, b) => a.timeStamp - b.timeStamp),
                 });
-
-                const oComboBoxTenant = this.getView().byId('ComboBoxTenant');
                 const oComboBoxListrikTimestamp = this.getView().byId('ListrikTimestampFilter');
 
                 const tilePindaiMeteran = this.getView().byId('tilePindaiMeteran');
@@ -406,23 +361,10 @@ sessionStorage.setItem(
                 const tileBelumCetak = this.getView().byId('tileBelumCetak');
 
                 tilePindaiMeteran.attachBrowserEvent('click', this._onPindaiMeteranClick, this);
-                tileTagihanAir.attachBrowserEvent('click', this._onTagihanAirClick, this);
                 tileTagihanSewa.attachBrowserEvent('click', this._onTagihanSewaClick, this);
                 tileBelumCetak.attachBrowserEvent('click', this._onBelumCetak, this);
 
-                vizAir.setModel(penggunaanAirModel, 'penggunaanAir');
                 vizListrik.setModel(penggunaanListrikModel, 'penggunaanListrik');
-
-                oComboBoxTenant.destroyItems();
-                oComboBoxTenant.addItem(new Item({ key: '*', text: 'Semua Tenant' }));
-
-                const uniqueTenants = [...new Set(penggunaanAir.map((item) => item.tenant))];
-                uniqueTenants.forEach((el) => {
-                    oComboBoxTenant.addItem(new Item({ key: el, text: el }));
-                });
-                oComboBoxTenant.setSelectedKey('*');
-
-                oComboBoxTenant.fireSelectionChange();
                 oComboBoxListrikTimestamp.fireSelectionChange();
 
                 _doTransaction = false;

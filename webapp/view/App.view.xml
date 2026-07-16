@@ -24,7 +24,7 @@
                     <Link
                         id="utility"
                         class="nav-link"
-                        text="Air/Listrik"
+                        text="Parkir/Listrik"
                         press="onUtilityPress" />
                     <Link
                         id="rental"

@@ -37,29 +37,7 @@
                         </HBox>
                     </VBox>
                 </VBox>
-                <VBox
-                    class="tile"
-                    id="tileTagihanAir">
-                    <FlexBox class="tile-header">
-                        <VBox class="tile-icon sapUiSmallMarginEnd">
-                            <core:Icon
-                                src="sap-icon://blur"
-                                class="size1"
-                                color="#ffffff" />
-                        </VBox>
-                        <Text
-                            class="tile-title"
-                            text="Tagihan Air" />
-                    </FlexBox>
-                    <VBox class="tile-info">
-                        <FlexBox alignItems="Center" items="{notif>/notif}">
-                            <Text
-                                class="dynamic-number"
-                                text="{notif>tagihanAir}" />
-                        </FlexBox>
-                        <Text text="Tagihan untuk dibuat" />
-                    </VBox>
-                </VBox>
+                
                 <VBox
                     class="tile"
                     id="tileTagihanSewa">
@@ -103,7 +81,7 @@
                                 class="dynamic-number"
                                 text="{notif>belumCetak}" />
                         </FlexBox>
-                        <Text text="Tagihan untuk dirilis" />
+                        <Text text="Tagihan untuk dicetak" />
                     </VBox>
                 </VBox>
             </HBox>
@@ -146,119 +124,6 @@
                     </ScrollContainer>
                 </VBox>
                 <VBox class="utility-charts">
-                    <VBox class="card">
-                        <FlexBox
-                            class="card-header">
-                            <Text
-                                class="card-title"
-                                text="Penggunaan Air (m³)" />
-                            <HBox>
-                                <ComboBox
-                                    id="ComboBoxTenant"
-                                    width="132px"
-                                    placeholder="Pilih Tenant"
-                                    selectionChange="onChartTenantSelected"
-                                    selectedKey="*"
-                                    class="sapUiTinyMarginEnd sapMCbAutoFocus">
-                                    <core:Item
-                                        key="*"
-                                        text="Semua Tenant" />
-                                    <core:Item
-                                        key="Karimata"
-                                        text="Karimata" />
-                                    <core:Item
-                                        key="Butterfield"
-                                        text="Butterfield" />
-                                    <core:Item
-                                        key="Woori"
-                                        text="Woori" />
-                                    <core:Item
-                                        key="Sharinc"
-                                        text="Sharinc" />
-                                </ComboBox>
-                                <ComboBox
-                                    id="ComboBoxMonth"
-                                    width="120px"
-                                    placeholder="Pilih bulan"
-                                    selectionChange="onChartMonthSelected"
-                                    selectedKey="*"
-                                    class="sapUiTinyMarginEnd sapMCbAutoFocus">
-                                    <core:Item
-                                        key="Januari"
-                                        text="Januari" />
-                                    <core:Item
-                                        key="Februari"
-                                        text="Februari" />
-                                    <core:Item
-                                        key="Maret"
-                                        text="Maret" />
-                                    <core:Item
-                                        key="April"
-                                        text="April" />
-                                    <core:Item
-                                        key="Mei"
-                                        text="Mei" />
-                                    <core:Item
-                                        key="Juni"
-                                        text="Juni" />
-                                    <core:Item
-                                        key="Juli"
-                                        text="Juli" />
-                                    <core:Item
-                                        key="Agustus"
-                                        text="Agustus" />
-                                    <core:Item
-                                        key="September"
-                                        text="September" />
-                                    <core:Item
-                                        key="Oktober"
-                                        text="Oktober" />
-                                    <core:Item
-                                        key="November"
-                                        text="November" />
-                                    <core:Item
-                                        key="Desember"
-                                        text="Desember" />
-                                </ComboBox>
-                            </HBox>
-                        </FlexBox>
-                        <VBox>
-                            <viz:VizFrame
-                                id="vizPenggunaanAir"
-                                height="210px"
-                                width="100%"
-                                vizType="column"
-                                busyIndicatorDelay="500"
-                                legendVisible="false">
-                                <viz:dataset>
-                                    <viz.data:FlattenedDataset data="{penggunaanAir>/data}">
-                                        <viz.data:dimensions>
-                                            <viz.data:DimensionDefinition
-                                                name="Category"
-                                                value="{penggunaanAir>tenant}" />
-                                        </viz.data:dimensions>
-                                        <viz.data:measures>
-                                            <viz.data:MeasureDefinition
-                                                name="Value"
-                                                value="{penggunaanAir>value}" />
-                                        </viz.data:measures>
-                                    </viz.data:FlattenedDataset>
-                                </viz:dataset>
-                                <viz:feeds>
-                                    <viz.feeds:FeedItem
-                                        id="valueAxisFeed"
-                                        uid="valueAxis"
-                                        type="Measure"
-                                        values="Value" />
-                                    <viz.feeds:FeedItem
-                                        id="categoryAxisFeed"
-                                        uid="categoryAxis"
-                                        type="Dimension"
-                                        values="Category" />
-                                </viz:feeds>
-                            </viz:VizFrame>
-                        </VBox>
-                    </VBox>
                     <VBox class="card">
                         <FlexBox
                             class="card-header">

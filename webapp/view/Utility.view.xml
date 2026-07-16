@@ -42,7 +42,7 @@
                             class="tile-title"
                             text="Pindai Meteran" />
                     </FlexBox>
-                    <VBox class="tile-info">
+                    <VBox class="tile-info">    
                         <FlexBox alignItems="Center" items="{notif>/notif}">
                             <Text
                                 class="dynamic-number"
@@ -53,48 +53,7 @@
                         </HBox>
                     </VBox>
                 </VBox>
-                <VBox
-                    class="tile"
-                    id="tileAirBulanan">
-                    <FlexBox class="tile-header">
-                        <VBox class="tile-icon sapUiSmallMarginEnd">
-                            <core:Icon
-                                src="sap-icon://activity-2"
-                                class="size1"
-                                color="#ffffff" />
-                        </VBox>
-                        <Text
-                            class="tile-title"
-                            text="Pemakaian Air" />
-                    </FlexBox>
-                    <VBox class="tile-info">
-                        <!-- <Text
-							class="dynamic-number"
-							text="3" />
-						<Text text="Tagihan untuk dicetak" /> -->
-                    </VBox>
-                </VBox>
-                <VBox
-                    class="tile"
-                    id="tileTagihanAir">
-                    <FlexBox class="tile-header">
-                        <VBox class="tile-icon sapUiSmallMarginEnd">
-                            <core:Icon
-                                src="sap-icon://my-sales-order"
-                                class="size1"
-                                color="#ffffff" />
-                        </VBox>
-                        <Text
-                            class="tile-title"
-                            text="Perhitungan Tagihan Air" />
-                    </FlexBox>
-                    <VBox class="tile-info">
-                        <!-- <Text
-							class="dynamic-number"
-							text="3" />
-						<Text text="Tagihan untuk dicetak" /> -->
-                    </VBox>
-                </VBox>
+                
             </HBox>
             <VBox class="card-tagihan card" height="600px">
                 <FlexBox

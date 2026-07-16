@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/sap/ZLRLP_APP_SRV/",
+        "uri": "/sap/opu/odata/sap/ZEDU_BUILDING_APP_SRV/",
         "type": "OData",
         "settings": {
           "annotations": [],

@@ -3,7 +3,7 @@
     xmlns:c="sap.ui.core">
     <Dialog
         id="tagihanSewaDialog"
-        title="Tagihan Sewa untuk dicetak"
+        title="Tagihan Sewa untuk dirilis"
         type="Standard"
         afterClose="onAfterCloseTagihanSewaDialog"
         contentHeight="400px">
