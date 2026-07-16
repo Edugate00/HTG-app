@@ -56,7 +56,7 @@ sap.ui.define(
             { key: 'September', text: 'September' },
             { key: 'Oktober', text: 'Oktober' },
             { key: 'November', text: 'November' },
-            { key: 'Desember', text: 'Desember' },\
+            { key: 'Desember', text: 'Desember' },
         ];
 
         const oPenggunaanAir = { data: [] };
