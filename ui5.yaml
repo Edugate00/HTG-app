@@ -28,7 +28,7 @@ server:
         - name: fiori-tools-preview
           afterMiddleware: fiori-tools-appreload
           configuration:
-              component: lrlpapp
+              component: htgapp
               ui5Theme: sap_horizon
 framework:
     name: SAPUI5

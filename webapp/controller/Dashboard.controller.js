@@ -707,12 +707,13 @@ sap.ui.define(
                     items.push(el.getBindingContext('tagihanSewa').getObject());
                 });
 
-                const request = { IT_VBRK: [] };
+                const request = { ItVbrk: [] };
                 items.forEach((el) => {
-                    request.IT_VBRK.push({ Vbeln: el.BillingNumber });
+                    request.ItVbrk.push({ Vbeln: el.BillingNumber });
                 });
 
-                if (request.IT_VBRK.length !== 0) {
+                if (request.ItVbrk.length !== 0) {
+                    console.log(request)
                     const releaseBilling = await this.createOdataService('/releaseBillingSet', request);
 
                     if (releaseBilling.return === 'Sukses') {
