@@ -933,7 +933,7 @@ sap.ui.define(
                 let zInvoiceUrl;
                 const portURL = window.location.port;
 
-                if (portURL === '8028') {
+                if (portURL === '8028' || portURL === '8080') {
                     zInvoiceUrl = `<iframe src="${DEV_116}" width="100%" height="500px"></iframe>`;
                 }
 
