@@ -1,12 +1,12 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "lrlpapp/model/models"
+        "htgapp/model/models"
     ],
     function (UIComponent, Device, models) {
         "use strict";
 
-        return UIComponent.extend("lrlpapp.Component", {
+        return UIComponent.extend("htgapp.Component", {
             metadata: {
                 manifest: "json"
             },

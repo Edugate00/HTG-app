@@ -2,7 +2,7 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
-	controllerName="lrlpapp.controller.laporan.cashflow"
+	controllerName="htgapp.controller.laporan.cashflow"
 >
 	<App>
 		<pages>

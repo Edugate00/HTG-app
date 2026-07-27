@@ -1,6 +1,6 @@
 sap.ui.define(
     [
-        'lrlpapp/controller/BaseController',
+        'htgapp/controller/BaseController',
         'sap/ui/core/Fragment',
         'sap/m/Button',
         'sap/ui/model/json/JSONModel',
@@ -42,7 +42,7 @@ sap.ui.define(
         const CF_PRD =
             'https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=FAGLB03&sap-personas-flavor=D037450CC64D1EDE92F0DEBDBE000427&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X';
 
-        return BaseController.extend('lrlpapp.controller.App', {
+        return BaseController.extend('htgapp.controller.App', {
             onInit: async function () {
                 const userName = this.getView().byId('userName');
                 const userImg = this.getView().byId('userImg');
@@ -189,7 +189,7 @@ sap.ui.define(
                 if (!this._oMenuFragment) {
                     this._oMenuFragment = Fragment.load({
                         id: oView.getId(),
-                        name: 'lrlpapp.view.fragments.ReportMenu',
+                        name: 'htgapp.view.fragments.ReportMenu',
                         controller: this,
                     }).then(
                         function (oMenu) {
@@ -206,8 +206,8 @@ sap.ui.define(
             onMenuAction: function (oEvent) {
                 const oItems = oEvent.getParameter('item');
                 const itemSelected = oItems.getText();
-                const controllerPNL = sap.ui.controller('lrlpapp.controller.laporan.pnl');
-                const controllerCF = sap.ui.controller('lrlpapp.controller.laporan.cashflow');
+                const controllerPNL = sap.ui.controller('htgapp.controller.laporan.pnl');
+                const controllerCF = sap.ui.controller('htgapp.controller.laporan.cashflow');
 
                 if (itemSelected == 'Profit & Lost') {
                     console.log('Click PNL');

@@ -1,5 +1,5 @@
 sap.ui.define([
-	"lrlpapp/controller/BaseController",
+	"htgapp/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
@@ -14,7 +14,7 @@ sap.ui.define([
     let dataMeasPoint = null;
     let oModel = null;
 
-	return BaseController.extend("lrlpapp.controller.utility.ReportAir", 
+	return BaseController.extend("htgapp.controller.utility.ReportAir", 
     {
         onInit: async function () {
           let measDoc1, measDoc=[];
@@ -75,7 +75,7 @@ sap.ui.define([
           // Create dialog lazily
           if (!oDialog) {
               // create dialog via fragment factory
-              oDialog = sap.ui.xmlfragment(oView.getId(), "lrlpapp.view.fragments.Filter", this);
+              oDialog = sap.ui.xmlfragment(oView.getId(), "htgapp.view.fragments.Filter", this);
               oView.addDependent(oDialog);
           }
           oDialog.open();

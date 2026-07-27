@@ -66,7 +66,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "lrlpapp.i18n.i18n"
+          "bundleName": "htgapp.i18n.i18n"
         }
       },
       "penggunaanAir": {
@@ -99,7 +99,7 @@
         "routerClass": "sap.m.routing.Router",
         "type": "View",
         "viewType": "XML",
-        "path": "lrlpapp.view",
+        "path": "htgapp.view",
         "controlId": "mainContents",
         "controlAggregation": "pages",
         "transition": "slide",
@@ -188,37 +188,37 @@
         },
         "meteran": {
           "id": "meteran",
-          "path": "lrlpapp.view.utility",
+          "path": "htgapp.view.utility",
           "name": "meteran",
           "viewLevel": 1
         },
         "reportair": {
           "id": "reportair",
-          "path": "lrlpapp.view.utility",
+          "path": "htgapp.view.utility",
           "name": "reportair",
           "viewLevel": 1
         },
         "pnl": {
           "id": "pnl",
-          "path": "lrlpapp.view.laporan",
+          "path": "htgapp.view.laporan",
           "name": "pnl",
           "viewLevel": 1
         },
         "cashflow": {
           "id": "cashflow",
-          "path": "lrlpapp.view.laporan",
+          "path": "htgapp.view.laporan",
           "name": "cashflow",
           "viewLevel": 1
         },
         "cashflow2": {
           "id": "cashflow2",
-          "path": "lrlpapp.view.laporan",
+          "path": "htgapp.view.laporan",
           "name": "cashflow2",
           "viewLevel": 1
         },
         "TenantAR": {
           "id": "TenantAR",
-          "path": "lrlpapp.view.laporan",
+          "path": "htgapp.view.laporan",
           "name": "TenantAR",
           "viewLevel": 1
         },
@@ -230,7 +230,7 @@
       }
     },
     "rootView": {
-      "viewName": "lrlpapp.view.App",
+      "viewName": "htgapp.view.App",
       "type": "XML",
       "async": true,
       "id": "App"

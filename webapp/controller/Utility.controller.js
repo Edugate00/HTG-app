@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    "lrlpapp/controller/BaseController",
+    "htgapp/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment",
     "sap/m/Dialog",
@@ -39,7 +39,7 @@ sap.ui.define(
 
     const currentDate = new Date().getDate();
 
-    return BaseController.extend("lrlpapp.controller.Utility", {
+    return BaseController.extend("htgapp.controller.Utility", {
       onAfterRendering: function () {
         const needToScan = [];
         let needToScanDesc = "";
@@ -197,7 +197,7 @@ sap.ui.define(
         if (!this.filterDialog) {
           this.filterDialog = Fragment.load({
             id: oView.getId(),
-            name: "lrlpapp.view.fragments.FilterDialog",
+            name: "htgapp.view.fragments.FilterDialog",
             controller: this,
           }).then(function (oDialog) {
             oDialog.setModel(oView.getModel());
@@ -277,7 +277,7 @@ sap.ui.define(
         if (!this.dialogName) {
           this.dialogName = Fragment.load({
             id: oView.getId(),
-            name: `lrlpapp.view.fragments.DetailListTagihan`,
+            name: `htgapp.view.fragments.DetailListTagihan`,
             controller: this,
           }).then(function (oDialog) {
             oDialog.setModel(oView.getModel());

@@ -12,7 +12,7 @@ sap.ui.define(
         'use strict';
 
         let oModel = null;
-        return Controller.extend('lrlpapp.controller.BaseController', {
+        return Controller.extend('htgapp.controller.BaseController', {
             getRouter: function () {
                 return UIComponent.getRouterFor(this);
             },
@@ -208,7 +208,7 @@ sap.ui.define(
                 if (!this.dialogName) {
                     this.dialogName = Fragment.load({
                         id: oView.getId(),
-                        name: `lrlpapp.view.fragments.${fragmentName}`,
+                        name: `htgapp.view.fragments.${fragmentName}`,
                         controller: this,
                     }).then(function (oDialog) {
                         oDialog.setModel(oView.getModel());

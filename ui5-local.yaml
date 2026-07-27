@@ -2,7 +2,7 @@
 
 specVersion: '2.5'
 metadata:
-    name: lrlpapp
+    name: htgapp
 type: application
 framework:
     name: SAPUI5
@@ -44,5 +44,5 @@ server:
         - name: fiori-tools-preview
           afterMiddleware: fiori-tools-appreload
           configuration:
-              component: lrlpapp
+              component: htgapp
               ui5Theme: sap_horizon

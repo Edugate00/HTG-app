@@ -1,5 +1,5 @@
 sap.ui.define(
-    ['lrlpapp/controller/BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/HBox', 'sap/m/FlexBox', 'sap/m/Text'],
+    ['htgapp/controller/BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/HBox', 'sap/m/FlexBox', 'sap/m/Text'],
     function (BaseController, JSONModel, HBox, FlexBox, Text) {
         'use strict';
 
@@ -157,7 +157,7 @@ sap.ui.define(
             },
         ];
 
-        return BaseController.extend('lrlpapp.controller.laporan.Cashflow', {
+        return BaseController.extend('htgapp.controller.laporan.Cashflow', {
             onAfterRendering: async function () {
                 const currentYear = new Date().getFullYear();
                 const firstYear = 2023;

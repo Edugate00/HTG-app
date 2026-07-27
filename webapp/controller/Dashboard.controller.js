@@ -1,6 +1,6 @@
 sap.ui.define(
     [
-        'lrlpapp/controller/BaseController',
+        'htgapp/controller/BaseController',
         'sap/ui/model/json/JSONModel',
         'sap/ui/model/Filter',
         'sap/ui/model/Sorter',
@@ -76,7 +76,7 @@ sap.ui.define(
         // let MEASPOINT = JSON.parse(sessionStorage.getItem("MEASPOINT"));
         // let needToPrint = JSON.parse(sessionStorage.getItem("TO_PRINT"))
 
-        return BaseController.extend('lrlpapp.controller.Dashboard', {
+        return BaseController.extend('htgapp.controller.Dashboard', {
 
             onAfterRendering: function () {
                 this._initData();
@@ -403,7 +403,7 @@ sap.ui.define(
                 if (!this.tagihanSewaDialog) {
                     this.tagihanSewaDialog = Fragment.load({
                         id: oView.getId(),
-                        name: 'lrlpapp.view.fragments.TagihanSewaDialog',
+                        name: 'htgapp.view.fragments.TagihanSewaDialog',
                         controller: this,
                     }).then(function (oDialog) {
                         oDialog.setModel(oView.getModel());
@@ -429,7 +429,7 @@ sap.ui.define(
                 if (!this.belumCetakDialog) {
                     this.belumCetakDialog = Fragment.load({
                         id: oView.getId(),
-                        name: 'lrlpapp.view.fragments.BelumCetakDialog',
+                        name: 'htgapp.view.fragments.BelumCetakDialog',
                         controller: this,
                     }).then(function (oDialog) {
                         oDialog.setModel(oView.getModel());
@@ -472,7 +472,7 @@ sap.ui.define(
                 if (!this.filterDialog) {
                     this.filterDialog = Fragment.load({
                         id: oView.getId(),
-                        name: 'lrlpapp.view.fragments.FilterDialog',
+                        name: 'htgapp.view.fragments.FilterDialog',
                         controller: this,
                     }).then(function (oDialog) {
                         oDialog.setModel(oView.getModel());
@@ -499,7 +499,7 @@ sap.ui.define(
                 if (!this.dialogName) {
                     this.dialogName = Fragment.load({
                         id: oView.getId(),
-                        name: `lrlpapp.view.fragments.DetailListTagihan`,
+                        name: `htgapp.view.fragments.DetailListTagihan`,
                         controller: this,
                     }).then(function (oDialog) {
                         oDialog.setModel(oView.getModel());

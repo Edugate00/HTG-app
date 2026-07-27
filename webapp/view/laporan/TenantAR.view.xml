@@ -5,7 +5,7 @@
 	xmlns:smartTable="sap.ui.comp.smarttable"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-	controllerName="lrlpapp.controller.laporan.TenantAR"
+	controllerName="htgapp.controller.laporan.TenantAR"
 	height="100%">
 
 		<!-- use this to make the table occupy the available screen height -->

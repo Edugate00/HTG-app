@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="lrlpapp.controller.laporan.pnl"
+    controllerName="htgapp.controller.laporan.pnl"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:c="sap.ui.core"

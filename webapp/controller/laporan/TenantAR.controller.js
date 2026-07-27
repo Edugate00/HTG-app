@@ -1,11 +1,11 @@
 // sap.ui.define([
 // 	'sap/ui/core/mvc/Controller',
 // 	'sap/ui/model/odata/v2/ODataModel',
-// 	'lrlpapp/mockserver/DemoMockServer'
+// 	'htgapp/mockserver/DemoMockServer'
 // ], function (Controller, ODataModel, DemoMockServer) {
 // 	"use strict";
 
-// 	return Controller.extend("lrlpapp.controller.laporan.TenantAR", {
+// 	return Controller.extend("htgapp.controller.laporan.TenantAR", {
 // 		onInit: function () {
 // 			var oModel, oView;
 

@@ -6,7 +6,7 @@ sap.ui.define([
 ], function(Controller, Fragment, MessageToast, MenuItem) {
 	"use strict";
 
-	return Controller.extend("lrlpapp.controller.Reporting", {
+	return Controller.extend("htgapp.controller.Reporting", {
         onPress: function () {
             var oView = this.getView(),
                 oButton = oView.byId("button");

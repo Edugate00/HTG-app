@@ -7,7 +7,7 @@ sap.ui.define([
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "lrlpapp.view.",
+		viewNamespace: "htgapp.view.",
 		autoWait: true
 	});
 });

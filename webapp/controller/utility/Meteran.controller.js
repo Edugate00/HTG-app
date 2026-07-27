@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    "lrlpapp/controller/BaseController",
+    "htgapp/controller/BaseController",
     "sap/ui/core/BusyIndicator",
     "sap/m/MessageBox",
   ],
@@ -22,7 +22,7 @@ sap.ui.define(
 
     let oModel = null;
 
-    return BaseController.extend("lrlpapp.controller.utility.Meteran", {
+    return BaseController.extend("htgapp.controller.utility.Meteran", {
       onInit: function () {
         // current measurement
         currentMeasurementPoint = this.getView().byId("CurrentMeasPoint");

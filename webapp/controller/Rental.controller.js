@@ -1,6 +1,6 @@
 sap.ui.define(
     [
-        'lrlpapp/controller/BaseController',
+        'htgapp/controller/BaseController',
         'sap/m/MessageToast',
         'sap/ui/Device',
         'sap/ui/core/Fragment',
@@ -26,7 +26,7 @@ sap.ui.define(
 
       
 
-        return BaseController.extend('lrlpapp.controller.Rental', {
+        return BaseController.extend('htgapp.controller.Rental', {
             onAfterRendering: async function () {
                 this.getSplitAppObj().setHomeIcon({
                     phone: 'phone-icon.png',
@@ -152,7 +152,7 @@ sap.ui.define(
             },
 
             onCloseFragments: function () {
-                this.getViewSettingsDialog('lrlpapp.view.fragments.FilterDialogRental').then(function (
+                this.getViewSettingsDialog('htgapp.view.fragments.FilterDialogRental').then(function (
                     oViewSettingsDialog,
                 ) {
                     oViewSettingsDialog.close();
@@ -180,7 +180,7 @@ sap.ui.define(
             },
 
             onButtonFilterPress: function () {
-                this.getViewSettingsDialog('lrlpapp.view.fragments.FilterDialogRental').then(function (
+                this.getViewSettingsDialog('htgapp.view.fragments.FilterDialogRental').then(function (
                     oViewSettingsDialog,
                 ) {
                     oViewSettingsDialog.open();
@@ -337,7 +337,7 @@ sap.ui.define(
                 if (!this.dialogName) {
                     this.dialogName = Fragment.load({
                         id: oView.getId(),
-                        name: `lrlpapp.view.fragments.DetailListTagihanInRental`,
+                        name: `htgapp.view.fragments.DetailListTagihanInRental`,
                         controller: this,
                     }).then(function (oDialog) {
                         if (isRilis) {

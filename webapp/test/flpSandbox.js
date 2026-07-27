@@ -40,7 +40,7 @@ sap.ui.define([
 								"tileType": "sap.ushell.ui.tile.StaticTile",
 								"properties": {
 									"title": "Lorena Latersia App",
-									"targetURL": "#lrlpapp-display"
+									"targetURL": "#htgapp-display"
 								}
 							}]
 						}]
@@ -51,8 +51,8 @@ sap.ui.define([
 				"adapter": {
 					"config": {
 						"inbounds": {
-							"lrlpapp-display": {
-								"semanticObject": "lrlpapp",
+							"htgapp-display": {
+								"semanticObject": "htgapp",
 								"action": "display",
 								"description": "Lorena Latersia App",
 								"title": "Lorena Latersia App",
@@ -61,8 +61,8 @@ sap.ui.define([
 								},
 								"resolutionResult": {
 									"applicationType": "SAPUI5",
-									"additionalInformation": "SAPUI5.Component=lrlpapp",
-									"url": sap.ui.require.toUrl("lrlpapp")
+									"additionalInformation": "SAPUI5.Component=htgapp",
+									"url": sap.ui.require.toUrl("htgapp")
 								}
 							}
 						}

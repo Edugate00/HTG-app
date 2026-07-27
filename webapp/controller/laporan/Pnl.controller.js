@@ -1,5 +1,5 @@
 sap.ui.define(
-    ["lrlpapp/controller/BaseController", "sap/ui/core/HTML"],
+    ["htgapp/controller/BaseController", "sap/ui/core/HTML"],
     function (BaseController, HTML) {
         "use strict";
 
@@ -15,7 +15,7 @@ sap.ui.define(
             "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=ZPNL_LRLP&sap-personas-flavor=D037450CC64D1EDE94D9AA4A0F00E427&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X";
 
 
-        return BaseController.extend("lrlpapp.controller.laporan.pnl", {
+        return BaseController.extend("htgapp.controller.laporan.pnl", {
 
             onInit: function () {
                 pnlPage = this.getView().byId("pnlPage");
