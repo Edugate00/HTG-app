@@ -28,9 +28,9 @@ sap.ui.define(
     const QAS_400 = "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X"
     const DEV_116 = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZAIR&sap-personas-flavor=D0374502C7081EDDAB89ADB78698441C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X"
 
-    const ZINVOICE_PRD_366 = "https://lrna.edugate.web.id:80/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=366&sap-language=EN&sap-accessibility=X"
-    const ZINVOICE_QAS_400 = "https://lrna.edugate.web.id:8090/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=400&sap-language=EN&sap-accessibility=X"
-    const ZINVOICE_DEV_116 = "https://lrna.edugate.web.id:8080/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=116&sap-language=EN&sap-accessibility=X"
+    const ZINVOICE_PRD_366 = "https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=7C8BCA03F3F51FD1A2B393B759F9C3A7&sap-se-hide-splashscreen=X&sap-client=300&sap-language=EN&sap-accessibility=X"
+    const ZINVOICE_QAS_400 = "https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=7C8BCA03F3F51FD1A2B393B759F9C3A7&sap-se-hide-splashscreen=X&sap-client=110&sap-language=EN&sap-accessibility=X"
+    const ZINVOICE_DEV_116 = "https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=7C8BCA03F3F51FD1A2B393B759F9C3A7&sap-se-hide-splashscreen=X&sap-client=388&sap-language=EN&sap-accessibility=X"
 
     const widthWindow = window.screen.width;
     const fromDashboard = sessionStorage.getItem("TAGIHAN_AIR_FROM_DASHBOARD");
@@ -314,6 +314,7 @@ sap.ui.define(
 
         // Set sessionStorage for ZInvoice Flavor
         sessionStorage.setItem("BILL_NUMBER", oData.BillingNumber);
+        sessionStorage.setItem("INVOICE_TYPE", oData.BusinessAreaDesc)
 
         this.cetakTagihan();
         // console.log(oData);

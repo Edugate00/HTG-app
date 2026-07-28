@@ -31,11 +31,11 @@ sap.ui.define(
 
         // Link ZInvoice Slipstream
         const PRD_366 =
-            'https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=300&sap-language=EN&sap-accessibility=X';
+            'https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=7C8BCA03F3F51FD1A2B393B759F9C3A7&sap-se-hide-splashscreen=X&sap-client=300&sap-language=EN&sap-accessibility=X';
         const QAS_400 =
-            'https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=110&sap-language=EN&sap-accessibility=X';
+            'https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=7C8BCA03F3F51FD1A2B393B759F9C3A7&sap-se-hide-splashscreen=X&sap-client=110&sap-language=EN&sap-accessibility=X';
         const DEV_116 =
-            'https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=D0374502C7081EDDADCD647C3260841C&sap-se-hide-splashscreen=X&sap-client=388&sap-language=EN&sap-accessibility=X';
+            'https://netweaver74.edugate.web.id:8028/sap/bc/se/m/index.html?~transaction=ZINVOICE&sap-personas-flavor=7C8BCA03F3F51FD1A2B393B759F9C3A7&sap-se-hide-splashscreen=X&sap-client=388&sap-language=EN&sap-accessibility=X';
 
         const itemsForTenant = [
             { key: '3bulan', text: '3 Bulan' },
@@ -132,6 +132,7 @@ sap.ui.define(
                     el.DueDate = this.getFormattedDate(this.getDueDate(el.BillingDate, 7));
                     el.BillingDate = this.getFormattedDate(el.BillingDate);
                     el.MaterialDesc = el.BillingHeadToItem.results[0].Description;
+                    el.BusinessAreaDesc = el.BillingHeadToItem.results[0].BusinessAreaDesc;
 
                     if (el.NetValue !== '') {
                         el.NetValue = Number(el.NetValue).toLocaleString('IDR-id');
@@ -414,8 +415,9 @@ sap.ui.define(
 
                 this.tagihanSewaDialog.then(function (oDialog) {
                     oDialog.setModel(oView.getModel());
-                    oDialog.setModel(new JSONModel(oModel), 'tagihanSewa');
-
+                    if (!oDialog.getModel("tagihanSewa")) {
+                        oDialog.setModel(new JSONModel(oModel), "tagihanSewa");
+                    }
                     oDialog.open();
                 });
             },
@@ -440,7 +442,9 @@ sap.ui.define(
 
                 this.belumCetakDialog.then(function (oDialog) {
                     oDialog.setModel(oView.getModel());
-                    oDialog.setModel(new JSONModel(oModel), 'belumCetak');
+                    if (!oDialog.getModel("belumCetak")) {
+                        oDialog.setModel(new JSONModel(oModel), "belumCetak");
+                    }
 
                     oDialog.open();
                 });
